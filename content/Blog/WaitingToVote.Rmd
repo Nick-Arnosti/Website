@@ -1,0 +1,47 @@
+---
+title: 'Long Lines at the Polls'
+date: "2020-03-26"
+author: Nick Arnosti
+tags:
+  Elections
+categories:
+  Operations
+---
+
+Before COVID-19 took over, the hottest news story was the 2020 Democratic Presidential Primary. On "Super Tuesday" (March 3rd), 14 states voted. Joe Biden won 10 of them, solidifying his status as front-runner and causing Mike Bloomberg and Elizabeth Warren to drop out of the race.
+
+This post will focus on a different aspect of Super Tuesday: the long lines that some voters experienced at the polls. In Harris County (which includes the city of Houston), some voters waited past 1 am to cast their votes. This is obviously unacceptable, and has prompted [investigatory hearings by the state legislature](https://www.texastribune.org/2020/03/05/texas-lawmakers-excessive-voting-lines-primary/). One unit of my Operations Management class addresses wait times. In this post, I will apply ideas from class to assess some of the decisions made in Harris County.
+
+##A Positive Change: County-Wide Voting
+
+Harris County made several changes to their voting procedures. 
+
+One was to allow people to vote at any polling location in the county, rather than only at a designated location in their precinct. This has some obvious advantages. For example, people who commute can go vote during their lunch break, rather than having to vote during the peak morning or evening hours. Furthermore (and more closely related to operations), it unlocks the power of *pooling*. Previously, there might have been one polling location with long lines while another had excess capacity. After the change, voters can balance across polling locations.
+
+Of course, this theoretical benefit will only arise in practice of voters can see wait times at different locations. With this in mind, the county created a map showing live waiting times. So far, so good.
+
+##Things go Astray
+
+Harris County [closed 52 polling places](http://civilrightsdocs.info/pdf/reports/Democracy-Diverted.pdf) in recent years. One cited justification is the move to county-wide polling: a pooled system can operate at higher utilization while maintaining low wait times. Even after the closures, the county still has [over 350 polling places](https://www.harrisvotes.com/VotingCenters?lang=en-US).
+
+More importantly, the waiting time information provided by the clerk's office [was not accurate](https://www.texastribune.org/2020/03/06/harris-county-clerk-apologizes-long-waits-vote-houston/). Voters showed up at Texas Southern University in part because it showed short wait times, despite the reality of an hours-long wait. Without reliable wait time information, the power of pooling is lost. In fact, delayed (or faulty) information might be worse than no information, as voters who looked up waiting times were all guided to the same location.
+
+Perhaps the dumbest decision made in advance of the elections concerned the allocation of electronic voting machines. Although the Democratic and Republican primaries were held in the same physical locations, they were conducted separately, and each machine was designated for use by only one party. This meant that in many locations, long lines of Democrats waited while machines dedicated for use in the Republican primary sat idle.^[This is a political problem, rather than a technical one: the Harris County Republican party had rejected the county's proposal to hold a "joint" primary. Meanwhile, Travis county held joint primaries.]
+
+If you're going to have designated machines for each party, at least you want to account for anticipated turnout when allocating these machines.^[One natural policy might be to allocate machines in proportion to the expected number of voters for each party: if the Democratic primary is expected to attract three times the number of voters, then it would receive three times as many machines. While this is a reasonable benchmark, queueing theory suggests that under this policy, wait times will be longer for the minority party. Therefore, it might be better to add an adjustment so that the machines are slightly more evenly split than voters are.] However, because of the change to county-wide polling places, the clerk's office decided that historical data could not be used to predict voting numbers, and that the only "fair" solution was to give each party half of the machines at each location. This is of course colossaly unfair, as most neighborhoods do not have an equal split of voters. In Harris county, Democrats significantly outnumber Republicans, and therefore [Democrats faced much longer waits](https://twitter.com/AriBerman/status/1234978110631624704). The Harris County GOP spokesperson [blamed the clerk](https://www.texastribune.org/2020/03/04/harris-countys-texas-southern-university-voting-delays-what-happened/) for the "even split" decision, and claimed that the Republicans proposed to have only four of the twenty machines at Texas Southern University (rather than ten).^[The Tarrant County GOP Spokesperson provided a perhaps more honest assessment when he said "Our job is not to make it easier for elections administrators or the other party, it’s to make it easy and fair for our voters."] This misses the point that a joint primary is a superior decision -- especially when there is a lot of uncertainty about who will vote at each location.
+
+
+
+##Eliminating the Bottleneck
+
+While holding joint primaries would help to reduce wait times, there are many factors that contributed to the delays, including machines breaking down, high Democratic turnout, and a long ballot that included many uncontested races (increasing the "activity time" required for each voter to complete their ballot).
+
+The real question that we should be asking is, how can we eliminate the voting machine bottleneck? One solution is to lower peak demand (or in the modern parlance, "flatten the curve"). For example, we could allow early in-person voting (which Texas does), or voting by mail (which is not available to most Texas voters). Another obvious solution would be to buy more machines. Some quick google searching suggests that each machine costs approximately $3,000, and that it is recommended to have [one machine for every 250-300](https://www.pewtrusts.org/en/research-and-analysis/blogs/stateline/2016/03/02/aging-voting-machines-cost-local-state-governments) registered voters.^[This seems like too few machines to me. If each voter takes 4 minutes completing their ballot, and polls are open for 12 hours, this implies that each machine could handle 180 voters per day. Especially given that demand is low mid-day and spikes after work, we should want our capacity to significantly exceed demand.] This implies a cost of approximately \$10 per registered voter. On the bright side, machines can be used for a decade or more, bringing this cost down. However, counties also [pay for services](https://www.wired.com/2008/04/the-cost-of-e-v/) such as repair and maintenance, storage, testing, and transportation of the machines to the polls. Furthermore, some locations (such as grocery stores) do not have the space to accommodate more machines.
+
+It seems to me that a better solution would be to move away from electronic voting machines to [optical scanning](https://en.wikipedia.org/wiki/Optical_scan_voting_system).^[In addition to their operational benefits, optical scanners are cheaper (given that only one machine is required per precinct) and leave a paper trail that can be audited.] This way, if a machine breaks down, voters can continue to fill out forms, which would be scanned later. Furthermore, many more voters could simultaneously complete their ballots: instead of an expensive machine, each voter needs only a writing implement and a little privacy. This would keep waits short, even if voters arrive more quickly than ballots can be scanned.
+
+##Closing Thoughts
+
+As a society, we should be able to provide an efficient voting process. Yet it seems that too often, we do not. Certainly, intentional voter suppression is one contributor, but not the only one: the Harris county clerk, like most Harris county voters, is a Democrat. Often, problems arise out of operational errors, rather than malice. When a system is only used once per year, developing best practices and training workers to follow these practices becomes challenging.
+
+I'd love to hear your thoughts! Have you experienced long lines at the polls? If so, what do you think caused these lines? And what changes would you like to see in order to make voting more accessible to all?

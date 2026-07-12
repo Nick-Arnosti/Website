@@ -1,0 +1,104 @@
+---
+title: "Detecting Bias in the Allocation of Public Resources"
+author: "Nick Arnosti"
+date: "2024-09-03"
+---
+
+
+
+<p>This post is about using data to detect bias in systems that allocate public resources.</p>
+<p>For example, in the US there are approximately 90,000 people waiting for a kidney transplant.
+<!-- In 2023, approximately 21,000 people received a transplant from a deceased donor, but 44,000 people were added to the list (all data from [OPTN](https://optn.transplant.hrsa.gov/data/), accessed September 2024).
+-->
+When kidneys from a deceased donor become available, the Organ Procurement and Optimization Network (OPTN) must decide which of these waiting patients to make offers to.
+As another example, in Hennepin County there are currently around 1,000 homeless single adults on a priority list waiting for housing assistance. When housing providers have openings, they contact the county’s “Coordinated Entry” system, which “refers” individuals from its priority list to the providers.</p>
+<p>In these applications, it is important to assess whether the prioritization and offer policy is biased towards or against particular groups – especially for protected classes such as race and gender. However, defining and detecting bias are both difficult, for many reasons.</p>
+<p>In this post, I will focus on one reason (survivorship bias) that detecting bias can be difficult. I will say a system is “biased” against a group if that group gets worse outcomes than it would under random allocation. I am <em>not</em> saying that this is necessarily the right definition of bias – that is a topic for a different post. But at the very least, this definition is natural and succinct, and turns the nebulous question of “Is the system biased?” to the seemingly more straightforward “If we changed to allocating resources randomly, which groups would be helped and which would be hurt?”</p>
+<div id="a-simple-example" class="section level1">
+<h1>A Simple Example</h1>
+<p>I will consider an agency that operates as follows. For each individual that requests assistance, the agency calculates a “score” based on various attributes of that individual. When resources become available, they are offered to applicants with the highest scores.</p>
+<p>This agency comes to you to do analysis. They give you the list of all individuals waiting for assistance (including the attributes needed to calculate each individual’s score), and ask a very straightforward question: does their scoring system tend to give higher scores to men or to women? And which group would benefit from a switch to a lottery system that simply allocated resources at random?</p>
+<p>You are no stranger to spreadsheets, and quickly calculate the averages for both groups. Women have an average score of 1.5 out of 3, while men have an average score of 1. Digging deeper, you find that almost all of the highest-scoring people on the list are women. You calculate the <span class="math inline">\(p\)</span>-values associated with these findings, and get that both findings are highly statistically significant (<span class="math inline">\(p&lt;.001\)</span>). What can you conclude?</p>
+<p>It’s natural to say that because women have significantly higher scores than men, and most top positions on the list are held by women, moving to a lottery system would most likely benefit men. However, this may not be correct! The reason for caution is that you are only looking at people who have not yet received assistance, who are not representative of the full set of applicants. This is sometimes referred to as “survivorship bias.”</p>
+<p>To illustrate this idea, suppose that each month, 100 new applicants arrive, half men and half women. Men are equally likely to score 1 or 3. Women are equally likely to score 1 or 2. Each month, you can assist 25 people. Generally, these will almost all be men with a score of 3. This means that the remaining list will consist of women who score 2, women who score 1, and men who score 1. As a result, the women on the list have an average score of 1.5, versus 1 for the men, and almost all of the top spots on the list at any moment in time are held by women. Yet, if we look at <em>all</em> arrivals, we see that men actually receive higher scores (an average of 2 instead of 1.5) and almost all assistance currently goes to men! Switching to random allocation in this case would actually help women substantially.</p>
+</div>
+<div id="simulations" class="section level1">
+<h1>Simulations</h1>
+<p>The example above was very stylized to make the idea clear, but this effect arises in settings that feel much less artificial. The following code simulates an arrival process in which men and women are equally likely to arrive requesting help. There are only enough resources to help approximately 1/3 of all clients. Resources must be allocated immediately, and are always given to the waiting client with the highest score. Men’s and women’s are both normally distributed with a mean of 6, but the standard deviation of men’s scores is 3, and the standard deviation for women is 1.</p>
+<pre class="r"><code>sample_types = function(n,t,d){
+	arrival_times = sort(runif(n,min=0,max=t))
+	departure_times = arrival_times + rexp(n)/d
+	gender = sample(c(&#39;M&#39;,&#39;W&#39;),n,replace=TRUE) #Half men, half women 
+	men_score_dist = function(n){return(rnorm(n,mean=6,sd=3))} #Men have avg score 6, sd of 3
+	women_score_dist = function(n){return(rnorm(n,mean=6,sd=1))} #Women have avg score 6, sd of 1
+	score = men_score_dist(n)*(gender==&#39;M&#39;)+women_score_dist(n)*(gender==&#39;W&#39;)
+	return(list(gender=gender,score=score,arrival_times=arrival_times,departure_times=departure_times))
+}
+
+#Prioritize clients by score (resources must be used immediately)
+determine_outcomes = function(clients,resource_arrival_times){
+	match_time = rep(NA,length(clients$arrival_times))
+	for(i in 1:length(resource_arrival_times)){
+		waiting_clients = which((clients$arrival_times&lt;resource_arrival_times[i]) &amp; (clients$departure_times &gt; resource_arrival_times[i]) &amp; (is.na(match_time)))
+		if(length(waiting_clients)&gt;0){
+			scores = clients$score[waiting_clients]
+			j = waiting_clients[which(scores==max(scores))]
+			match_time[j] = resource_arrival_times[i]
+		}
+	}	
+	return(match_time)
+}
+
+#Given data, find the average outcome for different groups
+avg_outcome = function(outcome,groups,who,data){
+	return(tapply(data[[outcome]][who],data[[groups]][who],mean))
+}
+
+set.seed(123)
+t = 10000 #time at which we examine the list
+lambda = 1 #client arrival rate
+mu = 1/3 #resource arrival rate
+d = 0.001 #client departure rate
+N = rpois(1,t*lambda) #Number of client arrivals in [0,t]
+R = rpois(1,t*mu) #Number of resource arrivals in [0,t]
+clients =  sample_types(N,t,d) #Generating client data base
+resource_arrival_times = sort(runif(R,min=0,max=t))
+match_time = determine_outcomes(clients,resource_arrival_times)
+
+matched = which(!is.na(match_time)) #Identifying clients that have been matched
+remaining = which(is.na(match_time)&amp;(clients$departure_times&gt;t)) #Identifying clients that remain in pool
+top_100 = remaining[which(rank(-clients$score[remaining])&lt;=100)]
+
+avg_outcome(&#39;score&#39;,&#39;gender&#39;,1:N,clients) #Avg score of all clients, split by gender</code></pre>
+<pre><code>##        M        W 
+## 6.035184 5.986527</code></pre>
+<pre class="r"><code>table(clients$gender[matched]) #Number of matched clients of each gender</code></pre>
+<pre><code>## 
+##    M    W 
+## 2093 1309</code></pre>
+<pre class="r"><code>avg_outcome(&#39;score&#39;,&#39;gender&#39;,matched,clients) #Avg score of matched clients, split by gender</code></pre>
+<pre><code>##        M        W 
+## 8.863266 7.216513</code></pre>
+<pre class="r"><code>table(clients$gender[remaining]) #Number of remaining clients of each gender</code></pre>
+<pre><code>## 
+##   M   W 
+## 278 307</code></pre>
+<pre class="r"><code>avg_outcome(outcome=&#39;score&#39;,groups=&#39;gender&#39;,who=remaining,data = clients) #Avg score of remaining clients, split by gender</code></pre>
+<pre><code>##        M        W 
+## 3.828991 5.454920</code></pre>
+<pre class="r"><code>table(clients$gender[top_100]) #Number of each gender in the top 100 positions</code></pre>
+<pre><code>## 
+##  M  W 
+## 33 67</code></pre>
+<!--
+plot_test(clients$gender[remaining],rank(-clients$score[remaining]),plot_title='')
+-->
+<p>In this example, when the simulation ends there are 585 clients remaining on the list: 287 men, and 307 women. In this group, men have an average score of 3.8, and women an average score of 5.5. This is a significant difference! If you look at the top 100 spots on the list, 67 are occupied by women. In other words, looking at the list of clients waiting for help makes it look like the system is biased against men.</p>
+<p>And yet, if we look at who has been helped by the system, we see 2093 men and only 1309 women! So clearly, the system is biased against women!</p>
+<p>On the other hand, if we looked at average scores given to each group (which is a common approach in practice), we would see that both are right around 6, as expected. So we might conclude that there is no bias either way.</p>
+</div>
+<div id="closing-remarks" class="section level1">
+<h1>Closing Remarks</h1>
+<p>Defining and detecting bias is difficult. In this post, I gave one simple definition of bias, and identified that depending on which statistics you choose, the system could look biased against women, biased against men, or fair. In particular, this shows the importance of getting data on <em>all</em> arrivals to the system, not just those still in need of help. While I have long been aware of survivorship bias, I think I previously under-estimated how easily it can cause seemingly natural analysis to point to the wrong conclusion. I hope that the examples in this post make this idea clear.</p>
+<p>This topic is no longer purely hypothetical to me, as I have begun working with several organizations to help with assessing their prioritization and allocation policies. One take-away I have is that if someone wants find bias, they can almost always support their accusation with a seemingly damning statistic. This tells me that policymakers should not merely react to criticism and negative press, but must be proactive about how to define and detect bias. That way, they will hopefully identify and improve biased systems, and be prepared to defend well-designed systems against spurious accusations.</p>
+</div>

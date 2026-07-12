@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Social Goods on b</title>
+    <link>/tags/social-goods/</link>
+    <description>Recent content in Social Goods on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/social-goods/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Rationing Medical Supplies</title>
+      <link>/blog/rationingmedicalsupplies/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingmedicalsupplies/</guid>
+      <description>Overview  Traditional Approach: Points System This approach gives people “points” based on observable characteristics such as their medical condition and whether they are emergency personnel. The vaccine is given first to those with the most points.
+My understanding is that most states would like to give additional points to emergency personnel, but fear that if they do so, all items will go to this group, leaving none for the general population.</description>
+    </item>
+    
+  </channel>
+</rss>

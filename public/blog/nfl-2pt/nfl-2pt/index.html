@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When to go for 2 | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">When to go for 2</span></h1>
+<h2 class="author">Nick Arnosti</h2>
+<h2 class="date">2019/11/11</h2>
+</div>
+
+<main>
+
+
+
+<p>Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two. <a href="http://www.espn.com/blog/nflnation/post/_/id/283846/doug-pederson-does-it-again-why-two-point-decision-was-easy-call">This ESPN article</a> does a good job of working through an example. I will attempt to summarize and simplify.</p>
+<p>Let’s start by assuming that our opponents will not score again in regulation, and that we will score another touchdown. This is really the only case where our decision matters: if our opponents score again (or if we fail to score), then we will lose the game regardless of our two-point strategy.</p>
+<p>Let us now analyze possibile strategies. The <strong>traditional</strong> approach is to kick two extra points, and go to overtime. A more <strong>aggressive</strong> approach is to go for two on the second touchdown, thereby winning or losing the game on a single play. When coaches make this decision, they frequently get second-guessed. As we will see, both of these strategies are far inferior to the <strong>analytics</strong> approach, which goes for 2 after the first touchdown, and then either goes for 2 again (if the first conversion failed) or kicks an extra point (if the first conversion succeeded).</p>
+<pre class="r"><code>#Win Probability of Traditional Approach
+WinProbTraditional = function(XPSuccess, TwoPtSuccess, OTWin){
+  return(XPSuccess^2*OTWin)
+}
+
+#Win Probability of Aggressive Approach
+WinProbAggressive = function(XPSuccess, TwoPtSuccess, OTWin){
+  return(XPSuccess*TwoPtSuccess + (1-XPSuccess)*TwoPtSuccess*OTWin)
+}
+
+#Win Probability of Aggressive Approach
+WinProbAnalytics = function(XPSuccess, TwoPtSuccess, OTWin){
+  return(TwoPtSuccess*XPSuccess + TwoPtSuccess*(1-XPSuccess)*OTWin + (1-TwoPtSuccess)*TwoPtSuccess*OTWin)
+}
+
+
+TwoPtSuccess = 0.5
+XPSuccess = 1
+OTWin = 0.5
+rbind(c(&quot;Traditional&quot;,&quot;Aggressive&quot;,&quot;Analytics&quot;),
+      c(WinProbTraditional(XPSuccess,TwoPtSuccess,OTWin),
+        WinProbAggressive(XPSuccess,TwoPtSuccess,OTWin),
+        WinProbAnalytics(XPSuccess,TwoPtSuccess,OTWin)))</code></pre>
+<pre><code>##      [,1]          [,2]         [,3]       
+## [1,] &quot;Traditional&quot; &quot;Aggressive&quot; &quot;Analytics&quot;
+## [2,] &quot;0.5&quot;         &quot;0.5&quot;        &quot;0.625&quot;</code></pre>
+<p>We can try this with different numbers. For example, if we think that we only have a 45 percent chance of making each 2-point conversion, we get the following results.</p>
+<pre class="r"><code>TwoPtSuccess = 0.45
+XPSuccess = 1
+OTWin = 0.4
+rbind(c(&quot;Traditional&quot;,&quot;Aggressive&quot;,&quot;Analytics&quot;),
+      c(WinProbTraditional(XPSuccess,TwoPtSuccess,OTWin),
+        WinProbAggressive(XPSuccess,TwoPtSuccess,OTWin),
+        WinProbAnalytics(XPSuccess,TwoPtSuccess,OTWin)))</code></pre>
+<pre><code>##      [,1]          [,2]         [,3]       
+## [1,] &quot;Traditional&quot; &quot;Aggressive&quot; &quot;Analytics&quot;
+## [2,] &quot;0.4&quot;         &quot;0.45&quot;       &quot;0.549&quot;</code></pre>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+  
+  <hr/>
+  &copy; <a href="https://nickarnosti.com">Nick Arnosti</a> 2019
+  
+  </footer>
+  </body>
+</html>

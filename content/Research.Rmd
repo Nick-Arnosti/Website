@@ -1,0 +1,44 @@
+---
+title: Research
+layout: single-nocomments
+categories: []
+tags: []
+---
+
+
+# Journal Publications
+
+  * [Tight Guarantees for Threshold Policies in the Prophet Secretary Problem](https://pubsonline.informs.org/doi/abs/10.1287/opre.2022.2419?journalCode=opre)  (with [Will Ma](http://www.columbia.edu/~wm2428/)). __Operations Research__, 2022. (Extended Abstract in EC 2022.) [Ungated pdf](https://arxiv.org/abs/2108.12893).
+
+  * [Lottery Design For School Choice](/ResearchPapers/Arnosti_LotteryDesignForSchoolChoice.pdf), and [Online Appendix](/ResearchPapers/Arnosti_LotteryDesignForSchoolChoice_OnlineAppendix.pdf).
+  __Management Science__, forthcoming. (Extended Abstract in EC 2015: [Short Lists in Centralized Clearinghouses](/ResearchPapers/Arnosti_ShortLists.pdf))
+  
+  * [Bitcoin: A Natural Oligopoly](https://pubsonline.informs.org/doi/abs/10.1287/mnsc.2021.4095?af=R) (with [Matt Weinberg](https://www.cs.princeton.edu/~smattw/)). 
+  __Management Science__, 2022. (Extended Abstract in ITCS 2019.) [Ungated pdf](/ResearchPapers/Arnosti-Weinberg_BitcoinNaturalOligopoly.pdf).
+
+  * [Parallel Lotteries: Insights from Alaskan Hunting Permit Allocation](https://pubsonline.informs.org/doi/abs/10.1287/mnsc.2021.4120?journalCode=mnsc) (with [Tim Randolph](https://twrand.github.io/)). 
+  __Management Science__, 2021. (Extended Abstract in EC 2021.) [Ungated pdf](/ResearchPapers/Arnosti-Randolph_AlaskanHuntingPermitLotteries.pdf).
+
+  * [Greedy Matching in Bipartite Random Graphs](https://pubsonline.informs.org/doi/10.1287/stsy.2021.0082), __Stochastic Systems__, 2021. [Ungated pdf](/ResearchPapers/Arnosti_GreedyMatching.pdf).
+
+  * [Managing Congestion in Matching Markets](https://pubsonline.informs.org/doi/abs/10.1287/msom.2020.0927?journalCode=msom) (with [Ramesh Johari](http://web.stanford.edu/~rjohari/) and [Yash Kanoria](http://www.columbia.edu/~yk2577/)).  __Manufacturing and Services Operations Management__, 2021. (Extended Abstract in EC 2014: "Managing Congestion in Decentralized Matching Markets".) [Ungated pdf](/ResearchPapers/Arnosti-Johari-Kanoria_ManagingCongestion.pdf).
+
+  * [Design of Lotteries and Waitlists for Affordable Housing Allocation](https://pubsonline.informs.org/doi/10.1287/mnsc.2019.3311) (with [Peng Shi](http://faculty.marshall.usc.edu/Peng-Shi/)).  
+__Management Science__, 2020. (Extended Abstract in EC 2017: "How (Not) to Allocate Affordable Housing".) [Ungated pdf](/ResearchPapers/Arnosti-Shi_AffordableHousing.pdf).
+
+  * [Adverse Selection and Auction Design for Internet Display Advertising](https://www.aeaweb.org/articles?id=10.1257/aer.20141198) (with [Marissa Beck](http://www.crai.com/expert/marissa-beck) and [Paul Milgrom](https://milgrom.people.stanford.edu/)).   __American Economic Review__, 2016. (Extended Abstract in EC 2015.) [Ungated pdf](/ResearchPapers/Arnosti-Beck-Milgrom_AdverseSelection.pdf).
+  
+
+# Papers Accepted to Peer-Reviewed Conferences
+
+* [Target the Vulnerable? An Analysis of Rapid Rehousing Prioritization. ](/ResearchPapers/Arnosti-Simon.pdf) (with [Felipe Simon](https://cse.umn.edu/isye/felipe-simon)). Abstract in **EC 2024**.
+
+* [Explainable Affirmative Action ](/ResearchPapers/Arnosti-Bonet-Sethuraman_ExplainableAffirmativeAction.pdf) (with with [Carlos Bonet](https://www8.gsb.columbia.edu/cbs-directory/phd/CBonet23) and [Jay Sethuraman](https://www.columbia.edu/~js1353/)). Abstract in **EC 2024**.
+
+* [Lotteries for Shared Experiences](/ResearchPapers/Arnosti-Bonet_SharedExperiences.pdf) (with [Carlos Bonet](https://www8.gsb.columbia.edu/cbs-directory/phd/CBonet23)), Abstract in **EC 2022**.
+
+* [A Continuum Model of Stable Matching with Finite Capacities](/ResearchPapers/Arnosti_ContinuumModel.pdf), Abstract in **EC 2022**.
+
+* [The (Non)-Existence of Stable Mechanisms in Incomplete Information Environments](/ResearchPapers/Arnosti-Immorlica-Lucier_IncompleteInformation.pdf) (with [Nicole Immorlica](https://www.microsoft.com/en-us/research/people/nicimm/) and [Brendan Lucier](https://www.microsoft.com/en-us/research/people/brlucier/)), **Match Up 2015**.
+
+* [Welfare-Improving Cascades and the Effect of Noisy Reviews](/ResearchPapers/Arnosti-Russo_WelfareImprovingCascades.pdf) (with [Dan Russo](https://djrusso.github.io/)), **WINE 2013**.

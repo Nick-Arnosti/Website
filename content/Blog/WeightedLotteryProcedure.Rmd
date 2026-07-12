@@ -1,0 +1,79 @@
+---
+title: "Exact Weighted Lottery"
+output: html_document
+date: "2025-12-20"
+---
+
+
+In my [previous post](https://nickarnosti.com/blog/westernstates/), I described the lottery for the Western States Endurance Run, which uses a weighted lottery to allocate $m$ identical prizes among $n$ participants. Each participant $i$ has $t_i$ tickets, and tickets are drawn in a uniformly random order until $m$ distinct participants have been selected.
+
+The point of the previous post was that it's not so easy to calculate the probability of selection for a given applicant (even if you know all of the $t_i$ and are good at math). I came up with some exact methods that are intractable with a large number of contestants and prizes, and some approximations.
+
+The thought that inspired this post is as follows:
+
+> Instead of fixing a procedure and analyzing the resulting selection probabilities, we could fix desired *selection probabilities* and design a procedure to achieve them.
+
+A good way to visualize this is to imagine that we are dividing our $m$ prizes among $n$ applicants. We can divide our $m$ prizes into "slices" and give each applicant as big or small of a slice as we wish. To simplify exposition, assume that the size of each slice is a rational number. In other words, we can divide each prize into $k$ equal-sized pieces (called "tickets" below), and then allocate the resulting $k\cdot m$ pieces arbitrarily among applicants.
+
+Let's make this concrete. Suppose that there are $m = 2$ prizes, and $n = 4$ applicants, and $k = 10$. We want to select applicant $A$ with probability $0.2$, applicant $B$ with probability $0.3$, applicant $C$ with probability $0.6$, and applicant $D$ with probability $0.9$. How could we do this?
+
+If you're mathematically inclined and have never thought about this before, I encourage you to pause here. How would you do this? How would you program a computer to do this? The answer was not obvious to me.
+
+One approach is to explicitly define a probability distribution over possible outcomes (sets of $m$ applicants) with the right marginals. For example, we could select $\{A,B\}$ with probability $0.1$, $\{A,D\}$ with probability $0.1$, $\{B,D\}$ with probability $0.2$ and $\{C,D\}$ with probability $0.6$. These outcomes are disjoint, so it is easy to write code to sample one of them. It's also easy to verify that for every individual applicant, their selection probability is correct. However, there are ${n \choose m}$ possible outcomes, so it's not obvious how to come up with an appropriate distribution over these outcomes for larger instances.
+
+# A Clever Sampling Procedure
+
+Here's a procedure that samples from an appropriate distribution over outcomes (without explicitly enumerating this distribution). I didn't come up with it myself -- ChatGPT told me about it (and of course, ChatGPT is just copying from previous literature). However, the exact description is my own, and is intended to be accessible to non-mathematicians.
+
+To start, give each applicant an appropriate number of lottery tickets. In our concrete example above, we have a total of $k\cdot m = 20$ tickets, each representing a $1/10$ chance of being selected. Two of these go to A, three to B, six to C and 9 to D. Our goal is to have each applicant's chance of being selected be exactly proportional to the number of tickets that they receive initially.
+
+From here, procede with a series of "faceoffs" between two applicants. In each faceoff, either one applicant will be eliminated, or one will be selected for sure (or both). The rules of a faceoff are as follows.
+
+1. If the sum of the applicants' probabilities is less than or equal to $1$ (combined number of tickets is less than or equal to $k$), the faceoff results in elimination. The applicants put all of their tickets into a bowl, and one is drawn. The winner keeps all tickets from both applicants; the loser is eliminated.
+
+2. If the sum of the applicants' probabilities is greater than $1$ (combined number of tickets is greater than $k$), the faceoff results in one applicant being selected. Calculate the "excess tickets" $t_i + t_j - k$. Each applicant sets aside that many tickets. All of their remaining tickets are placed into a bowl. One ticket is drawn, and the winner receives all tickets from the bowl. When combined with tickets set aside, they now have $k$ tickets, which represent being selected for sure. The loser keeps only the tickets that they set aside.
+
+That's a bit abstract, so let's apply this procedure to our example. 
+
+* First, $A$ faces off with $B$. In total, they have only 5 tickets (representing a combined 50% probability of being selected), so this is an elimination round. All five tickets are placed into a bowl. Suppose that $A$'s ticket is drawn. $A$ keeps all $5$ tickets, and $B$ is eliminated. 
+* Now $A$ faces off with $C$. Since $A$ now has 5 tickets, they have 11 in total, so this is a selection round. There is one excess ticket, so *each candidate* sets aside a ticket. The remaining 9 tickets go into the bowl (4 from $A$ and 5 from $C$). Suppose that a ticket from $A$ is drawn: $A$ keeps the 9 tickets in the bowl, to go with the one they set aside. They have been selected! $C$ still has the one ticket they set aside. 
+* Finally, $C$ faces off with $D$. They have exactly 10 tickets between them (1 for $C$ and 9 for $D$), so this functions both as a selection and an elimination round. All 10 tickets are placed in the bowl. Suppose that one of $D$'s tickets is drawn. $D$ keeps the 10 tickets and has been selected; $C$ is eliminated.
+
+
+# Why Does This Work?
+
+A natural question is, why does this procedure select each applicant with the desired probability? Note that at each stage, we are simply reallocating tickets (not creating or destroying them). The key properties are as follows:
+
+1. Each drawing keeps the *expected* number of tickets held by an applicant the same. This is ensured by having the winner keep all tickets entered into the drawing: if you put in $s$ tickets and I put in $t$ tickets, then I will either win $s+t$ tickets (with probability $t/(s+t)$) or zero tickets. Therefore, my expected tickets won is exactly $t/(s+t)\cdot (s+t) = t$.^[For those with more formal training in probability, the number of tickets held by each individual is a martingale.]
+
+2. Every applicant eventually ends up with either $0$ or $k$ tickets. Setting tickets aside during selection rounds ensures that no applicant ends with more than $k$ tickets.
+
+The first property ensures that if I start with $t$ tickets, then *on average*, I end with $t$ tickets. But the second property ensures that on any given instance, I end with either $k$ or $0$ tickets (corresponding to being selected or not). Therefore, my chance $p$ of ending with $k$ tickets must satisfy $p \cdot k = t$, or $p = t/k$, as desired.^[In fact, this argument shows that there is substantial flexibility in how many tickets go into the bowl for each faceoff. For example, a faceoff could be divided into multiple "rounds" where each contestant enters a single ticket. Instead of resolving the uncertainty at once, their odds would go up or down gradually until someone loses their last ticket (or receives their $k^{th}$). We could even allow applicants to choose how many tickets to put in (up to a maximum limit for selection rounds). This choice won't affect their final selection probability, but that won't stop people from over-analyzing it. However, all of these variants could take longer (because you might have a drawing that neither selects or eliminates an applicant) and are arguably less dramatic (for the same reason).]
+
+# Is this Practical?
+
+It is not surprising to me that organizations don't come up with this procedure "on their own", and instead use sequential sampling procedures where the probability of success rises sublinearly with the number of tickets. This procedure is more complex than sequential sampling! But is it practical?
+
+The word practical can mean many things. 
+
+First, *can this procedure be explained to participants?* The description of the procedure is explicit, and fairly concise. The explanation of why it works requires some math, but nothing too complex (and most applicants probably won't ask for it anyway).
+
+Second, *can the procedure be conducted transparently?* This is important to many organizations, who want to show applicants that there is no funny business or favoritism. This is why, for example, the Minnesota Fringe Festival runs their lottery as a televised and in-person event, with ping-pong balls being physically drawn one after another. I actually feel that this could be a good "made for TV" event. In each face off, some outcome is finalized (an acceptance or a rejection). Individual contestants can see their chances go up (as $A$'s did after taking $B$'s tickets) or down (as $C$'s did after losing to $A$) before their fate is decided. This makes it quite dramatic! Furthermore, faceoffs can occur any order you want, and the procedure will still give the correct probabilities. This allows for all sorts of possibilities: the remaining player from the previous round could choose their next opponent, audience members could vote on who gets paired next, there could be a predefined "bracket", etc.
+
+Third, *can the procedure be completed in a practical amount of time?* This of course depends on $n$ and $m$. In general, with $n$ applicants, we need up to $n-1$ faceoffs (since the last faceoff always results in both a selection and an elimination). For the Western States Lottery, $n$ is approximately $11,000$ while $m$ was less than $300$, so we might need to speed things up. Fortunately, this is possible! Instead of each elimination round eliminating a single applicant, we can put tickets from many applicants into a single bowl (so long as in total they have at most $k$ tickets) and draw one name, who gets to keep all tickets. Partition applicants into separate bowls, such that no two bowls can be combined without exceeding $k$ tickets. This implies that we have at most $2m-1$ bowls.^[For this footnote only, let $t_i$ be the number of tickets in bowl $i$ (rather than the number held by applicant $i$), and let $b$ the number of bowls. The basic idea is that all but one bowl must have at least $k/2$ tickets in it, so there can only be approximately $2m$ bowls. Being more precise, let $t_{min} = \min_i t_i$. If $t_{min} > k/2$, we immediately get $b < 2m-1$, since $\sum t_i = km$. If $t_{min} \le k/2$, then note that any bowl but the one with the fewest tickets must have at least $k - t_{min}+1 \ge k/2 + 1$ tickets in it (since any two bowls together have at least $k+1$ tickets). Take any $b-2$ of the bowls other than the smallest one. Collectively, these have fewer than $k(m-1)$ tickets (since the two remaining bowls have more than $k$ tickets), but each one has at least $k/2 + 1$ tickets. Rearrange $(b-2)(k/2+1) \le k(m-1)$ to get $b \le 2 + \frac{2k}{k+2}(m-1) < 2 + 2(m-1) = 2m$, implying $b \le 2m-1$.] Thus, after at most $2m-1$ elimination faceoffs, we are down to at most $2m-1$ remaining contenders, and can use the "standard" procedure from here to select our final set. In total, this requires fewer than $4m$ faceoffs.^[In practice, most selection probabilities are small, so we should be able to get away with approximately $m$ buckets and $2m$ faceoffs.] Current procedures must draw at least $m$ names (and often more, since some names will be drawn multiple times), so this procedure would not require many more draws than current practice.
+
+So, would I recommend this procedure for real applications? **Not yet.** My main hesitation is that in all of these applications, some winners withdraw. As a result, organizations typically don't just draw $m$ names, but also generate an ordered waitlist (indicating who will receive invitations when withdrawals occur). Existing sequential sampling procedures naturally produce this (just keep drawing until you have the desired length of waitlist). I don't yet know of a way to generate this list for the procedure described above -- could be a fun research question!
+
+<!--
+Western States: could go even further! Those with 512 tickets selected for sure. Have lotteries within categories. So for example, calculate expected number of winners within each category. Then have a simple unweighted lottery among all people in that category. (Expected number of winners will not be an integer, so draw one more name that has a chance to move on...)
+
+For simplicity, add 48 more singles (to make math nice; not needed). Then each ticket represents 1/365 chance. Draw names, selecting level one applicants, then one more name and give "extra" tickets to them. Then play this game only among remaining tiered applicants. So if there are $k$ tiers, this requires fewer than $m+k$ names drawn. (But how would we generate a waitlist? Not so clear... In some sense, $m$ is unknown, so truly do want an ordered list.)
+
+TODO: mention sortition? (That's likely a future post -- less a weighted lottery and more lottery with constraints.)
+
+TODO: mention other literature/chatGPT (not my procedure, but my description).
+
+In particular, it is not true that someone with $3$ tickets has three times the chance as someone with one ticket.
+-->
+
+

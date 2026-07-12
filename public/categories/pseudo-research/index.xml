@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Pseudo-Research on b</title>
+    <link>/categories/pseudo-research/</link>
+    <description>Recent content in Pseudo-Research on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 02 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/pseudo-research/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>IID Prophet Inequalities</title>
+      <link>/blog/iidprophet/</link>
+      <pubDate>Fri, 02 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/iidprophet/</guid>
+      <description>Last week I had the pleasure of seeing Nikhil Devanur present Static pricing for multi-unit prophet inequalities, which is joint with Thodoris Lykouris and Shuchi Chawla. I greatly enjoyed the paper, and discussed it in a blog post last week. Today, I will go beyond what is in their paper to tackle a question asked by my colleague Will Ma.
+1 Setting the Stage The original paper considers a setting where we are presented with a sequence of values.</description>
+    </item>
+    
+  </channel>
+</rss>

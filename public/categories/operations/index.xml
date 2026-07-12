@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Operations on b</title>
+    <link>/categories/operations/</link>
+    <description>Recent content in Operations on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/operations/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How Useful is Pooled Testing?</title>
+      <link>/blog/poolingtests/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poolingtests/</guid>
+      <description>In a previous post, I wrote about several strategies for reducing turnaround times for COVID tests. One interesting strategy that I did not write about is pooling, also known as pooled testing. What is pooling? I&#39;ll let the CDC Interim Guidance for Use of Pooling Procedures explain:
+ Pooling... means combining respiratory samples from several people and conducting one laboratory test on the combined pool of samples. If a pooled test result is negative, then all specimens can be presumed negative with the single test.</description>
+    </item>
+    
+    <item>
+      <title>Reducing Turnaround Times for COVID Tests</title>
+      <link>/blog/testingdelays/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/testingdelays/</guid>
+      <description>COVID testing is a key tool for fighting the virus. If readily available with quick results, it can be used to identify and isolate positive cases, preventing further spread. Although there are several types of COVID test, I will focus on the PCR test, which is the most common (and most accurate) option. If you want to learn a bit more about the testing process, I recommend this video, which I assigned as &amp;quot;reading&amp;quot; for my Operations Management class.</description>
+    </item>
+    
+    <item>
+      <title>Centralized Registration for COVID Vaccines</title>
+      <link>/blog/centralizedcovidvaccines/</link>
+      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/centralizedcovidvaccines/</guid>
+      <description>The Power of Pooling One of the central lessons from the waiting time unit of my operations management course is &amp;quot;the power of pooling&amp;quot;1: a single centralized system can result in lower waiting times than many independent systems. The reason for this is that when you have separate systems, it&#39;s possible to have a backlog in one, while servers remain idle in the other. This is inefficient! A (properly designed) centralized system ensures that whenever there is a queue, all servers are busy.</description>
+    </item>
+    
+    <item>
+      <title>Why Are Waits So Long At High Utilization?</title>
+      <link>/blog/longwaits/</link>
+      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/longwaits/</guid>
+      <description>One of the units in my operations management course is on variability and waiting time. I really enjoy this unit, for several reasons. First, we all have experience waiting in lines, so the topic feels personally relevant. Second, despite our experience waiting in lines, we don&#39;t have experience thinking about them systematically, and our intuition is actually quite poor.
+One of the most important insights from queueuing theory is that as utilization rises, average waiting time &amp;quot;blows up.</description>
+    </item>
+    
+    <item>
+      <title>Long Lines at the Polls</title>
+      <link>/blog/waitingtovote/</link>
+      <pubDate>Thu, 26 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/waitingtovote/</guid>
+      <description>Before COVID-19 took over, the hottest news story was the 2020 Democratic Presidential Primary. On &amp;quot;Super Tuesday&amp;quot; (March 3rd), 14 states voted. Joe Biden won 10 of them, solidifying his status as front-runner and causing Mike Bloomberg and Elizabeth Warren to drop out of the race.
+This post will focus on a different aspect of Super Tuesday: the long lines that some voters experienced at the polls. In Harris County (which includes the city of Houston), some voters waited past 1 am to cast their votes.</description>
+    </item>
+    
+    <item>
+      <title>A Visual Approach to Optimal Orders</title>
+      <link>/blog/newsvendor/</link>
+      <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/newsvendor/</guid>
+      <description>The final unit of my operations course is on inventory management. Among other topics, we study the classic “Newsvendor” model.1 In my first year teaching at Columbia, I came up with a neat visualization of this model. The goal of this post is to share my visualization – hopefully you will agree that it’s helpful!
+The Newsvendor Model You are planning to sell a product – let’s say a new board game that you have developed.</description>
+    </item>
+    
+    <item>
+      <title>Are Cramped Quarters on Planes a Safety Hazard?</title>
+      <link>/blog/seatpitch/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/seatpitch/</guid>
+      <description>Continuing on a theme from yesterday’s post, let’s stick with the airline industry.
+Many people are familiar with the fact that legroom in airplane seats has been declining over the years. Some people are upset about this fact. A few even sued the Federal Aviation Administration, arguing that the cramped quarters increase the risk during an emergency evacuation. Setting aside that I generally believe that emergency safety measures on planes are not cost-effective (emergencies are rare, and emergencies in which life vests, safety slides, etc are actually helpful appear to be almost non-existent), the argument sounds logical – doesn’t it take longer to get in and out of a cramped seat than a spacious one?</description>
+    </item>
+    
+    <item>
+      <title>Biometric Scans at Airports: Where is the Bottleneck?</title>
+      <link>/blog/biometricscans/</link>
+      <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/biometricscans/</guid>
+      <description>In the past year, Delta has rolled out biometric boarding for international flights from Atlanta, Salt Lake City, and my home airport of Minneapolis/Saint Paul. The idea is that rather than having to repeatedly scan your boarding pass and passport, facial recognition software will identify you.1 Delta claims that this can reduce the time to scan each passenger by several seconds, shaving up to 9 minutes from the boarding process.</description>
+    </item>
+    
+    <item>
+      <title>How to Raise Money for Your Startup</title>
+      <link>/blog/icofunding/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/icofunding/</guid>
+      <description>\(\newcommand{\fbar}{\overline{F}}\) \(\newcommand{\E}{\mathbb{E}}\)
+1 Motivation At INFORMS, I saw a talk by Jingxing (Rowena) Gan, about her paper Inventory, Speculators, and Initial Coin Offerings (joint with Gerry Tsoukalas and Serguei Netessine). I really liked the model, so I thought I&#39;d give my take on it. Although the paper is framed as pertaining to certain classes of ICOs, I think its applicability is much broader, and will describe it accordingly.
+Suppose you&#39;ve got an idea for a company, but no money on hand.</description>
+    </item>
+    
+  </channel>
+</rss>

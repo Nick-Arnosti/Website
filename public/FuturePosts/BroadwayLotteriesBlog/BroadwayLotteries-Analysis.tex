@@ -1,0 +1,78 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=1 in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+\usepackage{url}
+\usepackage{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+
+\usepackage{listings}
+\usepackage{setspace}
+%SetFonts
+
+%SetFonts
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\link}[2]{{ \color{blue} \tt{\href{#1}{#2}}}}
+\newcommand{\na}[1]{{\color{blue} #1}}
+
+\title{Broadway Lotteries}
+\author{Nick Arnosti}
+\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+\onehalfspacing
+
+There are $k$ identical tickets to be allocated. There are $M$ individuals. Individual $i$ requests $n_i$ tickets. Let $N = \max_i n_i$. 
+
+\begin{enumerate}
+\item Each individual can apply once, and can list the number of tickets requested. For each individual $i$, generate $l_i \sim Exp(1)$, and rank individuals 
+\item Each individual can apply once. Draw lotteries from $U[0,1]$ and scale appropriately.
+\item Each individual can apply once. Give $N!/n_i$ tickets.
+\item Each group can apply once. Hold uniform random lottery. 
+\end{enumerate}
+\na{Assume that we draw until number of remaining seats is less than $N$ (then can discuss non-wasteful version).}
+
+
+\begin{theorem}
+Methods 1, 3, 4 are equivalent. (But 4 is a pain to verify)
+\end{theorem}
+
+\na{Not quite -- under 4, groups can win multiple times.}
+
+\begin{theorem}
+For any profile of requests, let $p_i$ be the probability of winning for agent $i$.  Fix $k$. Under exponential draws, there exists $c$ (depends on $k$, or $N$?) such that $|p_i/p_j - n_j/n_i| \leq c/M$.
+\end{theorem}
+
+\begin{theorem}
+For any profile of requests, let $p_i$ be the probability of winning for agent $i$. Suppose that $k < \sum_i 1/n_i$. 
+
+Under uniform draws, there exists $c$ such that $|p_i/p_j - n_j/n_i| \leq c/M$. \na{Key here is that we allow $k = \mathcal{O}(1)$ or $k$ growing with $M$ -- linearly or otherwise.}
+\end{theorem}
+
+\begin{theorem}
+Under uniform draws, with $k$ constant and $M$ growing, things look like exponential. Could potentially get Theorem 2 as consequence of Theorems 3 and 4.
+\end{theorem}
+
+
+
+There are $m$ groups of people who want to go to the show together. Group $j$ consists of $n_j$ individuals. Let $N = \max_i n_i$. Consider the following proposals:
+
+
+\end{document}  

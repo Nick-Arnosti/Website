@@ -1,0 +1,35 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\title{Online Reviews and Simpson's Paradox}
+\author{Nick Arnosti}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+While browsing speakers on Amazon, I noticed something interesting: all of the expensive speakers had lower average ratings than the cheap ones!
+
+It seems implausible that the expensive speakers are actually of lower quality than the cheap ones. A more plausible hypothesis is that ratings reflect a combination of quality and price, so the ratings indicate that the low-cost speakers are in some aggregate sense a better buy. However, a third (and in my mind, most plausible) explanation is selection bias.
+
+Let's imagine there are two types of speakers, crappy and costly, and two types of consumers: music snobs and satisficers. The satisficers are likely to be happy with most speakers: they would give the crappy speakers a rating of 4/5 and the costly speakers a rating of 5/5. The snobs, on the other hand, can always find something to criticize: they rate the crappy speakers a 2/5 and the costly speakers a 3/5. The satisficers know that they aren't very discerning, and so mostly buy and review crappy speakers. The snobs rarely bother to review these speakers, and mostly buy and review costly speakers. As a result, the costly speakers get a rating only slightly above 3, whereas the crappy ones get a rating closer to 4. In other words, the average rating for crappy speakers is higher than for costly ones, despite the fact that everyone agrees the costly ones are better! This phenomena is known as Simpson's Paradox, and arises in many situations (see this {\color{blue} \href{https://en.wikipedia.org/wiki/Simpson\%27s_paradox}{wikipedia article}} for more examples). 
+
+One way that review platforms could combat this is to move to {\em relative rankings} rather than an absolutes scale. In particular, the platform could ask anyone who had bought multiple speakers which set they preferred, and display or incorporate this head-to-head information into search results. While it might be uncommon for people to buy multiple sets of speakers in a short timeframe, there are many other contexts in which relative ratings might prove helpful! For example, interpreting a 3-star rating on Yelp can be challenging, given the differences in clientele across restaurants (New Yorkers frequently complain about being disappointed in highly-reviewed restaurants in other cities). 
+
+In practice, most ratings platforms use some sort of five star system, and few if any incorporate direct head-to-head comparisons. {\bf Why do you think that is?}
+
+\end{document}  

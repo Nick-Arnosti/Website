@@ -1,0 +1,101 @@
+---
+title: 'Welfare Maximizing Pooled Testing'
+date: ""
+author: Nick Arnosti
+tags:
+draft: true
+---
+
+```{r}
+find_best_testset = function(q,u){
+	n = length(q)
+	if(n != length(u)){ print("ERROR") }
+	score = 0
+	B = NULL
+	for(i in 1:(2^n-1)){
+		S = which(intToBits(i)==1)
+		if(prod(q[S])*sum(u[S])>score){
+			B = S
+			score = prod(q[S])*sum(u[S])
+		}
+	}
+	#return(score) #Could also return B
+	return(B)
+}
+
+
+
+#Greedily merge or drop things
+greedy_loss = function(q,u){
+	n = length(q) #assume q and u are same length
+	if(n==1){return(q*u)}
+	k = which(q*u==min(q*u))[1] #Find best single item to drop
+	l = min(q*u) #loss from dropping this item
+	for(i in 1:(n-1)){
+		for(j in (i+1):n){
+			if(q[i]*u[i]*(1-q[j])+q[j]*u[j]*(1-q[i])<l){
+				k = c(i,j)
+				l = q[i]*u[i]*(1-q[j])+q[j]*u[j]*(1-q[i])
+			}
+		}
+	}
+	if(length(k)==1){
+		#print(paste("removing",k))
+		return(c(l,greedy_loss(q[-k],u[-k])))
+	} else {
+		i = k[1]
+		j = k[2]
+		#print(paste("combining",i,"and",j))
+		q[i] = q[i]*q[j]
+		u[i] = u[i]+u[j]
+		q = q[-j]
+		u = u[-j]
+		return(c(l,greedy_loss(q,u)))
+	}
+}
+
+
+greedy_index = function(q,u){
+	n = length(q)
+	index = q*u/(1-q)
+	high_to_low = rev(order(index))
+	size = sum(cumsum(c(0,u[high_to_low[-n]])) < index[high_to_low])
+	return(sum(u[high_to_low[1:size]])*prod(q[high_to_low[1:size]]))
+}
+
+
+n = 3
+numT = 1000000
+min_r = 1
+for(t in 1:numT){
+	q = runif(n)
+	u = runif(n)
+	#gl = greedy_loss(q,u)
+	gi = greedy_index(q,u)
+	b1 = find_best_testset(q,u)
+	#if(!all(order(gl) == (1:n))){
+	#	print("greedy_loss is not monotonically increasing")
+	#	print(q)
+	#	print(u)
+	#}
+	#if(gl[n]/b1<min_r){
+		#min_r = gl[n]/b1
+	if(gi/b1<min_r){
+		min_r = gi/b1
+		print(paste("worse ratio found:",min_r))
+		print(q)
+		print(u)
+	}
+}
+
+#This gets 0.692:
+#q = c(0.5153830, 0.9725758, 0.5176620)
+#u = c(0.2630198, 0.2673083, 0.5497125)
+
+#slightly worse (0.681):
+#q = 0.7131551 0.5559134 0.8333014 0.7696703 0.9519997
+#u = 0.1845555 0.6977766 0.6131404 0.6862155 0.1243915
+
+#for n = 6, found ratio of 0.67...
+
+```

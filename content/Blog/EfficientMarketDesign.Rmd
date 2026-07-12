@@ -1,0 +1,49 @@
+---
+title: 'Reflections on "Efficient Market Design"'
+date: '2023-01-06'
+author: Nick Arnosti
+tags:
+  
+categories:
+  Market Design, Matching
+---
+
+I recently read the working paper "Efficient Market Design" by Isa Hafalir, Fuhito Kojima, and Bumin Yenmez. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look. In this post, I briefly summarize the paper, and then offer some thoughts on the applicability of the model.
+
+**Disclaimer.** This is part of a series of posts in which I discuss others' work. My goal with these posts is to organize my thoughts, and share these thoughts with the authors (and anyone else who may be interested). However, I want to make several things clear.
+
+1. To prevent the task from being overwhelming, I am not trying to be "comprehensive" (as I would if I officially reviewed the paper). Instead, I will focus on the aspects of the paper that catch my attention. 
+2. While my comments may come across as critical, my goal is to understand and discuss ideas. I would not be writing these posts if I did not find the ideas in the papers interesting or worthwhile. 
+3. These posts are not intended for a general audience. Read only if you are interested in the topic.
+
+# Brief Summary
+
+The setting is as follows. There is a set of schools (each with a known capacity), and a set of students (each of a known type). Students have (unknown) preferences over schools. The designer has preferences over how student types are allocated to schools: for any matching $\mu$, the designer assigns it a score which depends on the number of students of each type matched to each school. Finally, there is an initial "default" matching $\mu_0$.
+
+The goal is to use reported student preferences to find a matching $\mu$ that Pareto improves upon $\mu_0$ when considering both student and designer preferences (that is, the designer's score for $\mu$ is weakly higher than the score for $\mu_0$), and to do this in a truthful manner.
+
+In general, this may be impossible: the authors give an example where there are two matchings that Pareto improve on $\mu_0$, but no matter which is chosen, some student could improve their outcome by changing their report to "block" this matching and ensure the other.
+
+However, the authors show that if the scoring function satisfies a property that they call pseudo-$M^\natural$ concavity, then it is always possible to use a generalization of Top Trading Cycles to find a Pareto efficient matching that weakly improves upon $\mu_0$. They then provide several examples of objectives that satisfy pseudo-$M^\natural$ concavity.
+
+# Reflections
+
+I will comment on three modeling assumptions.
+
+1. **Presence of a distributional objective.** In practice, it seems to be rare for designers to specify a "distributional objective" (function to score a matching). Much more common is to impose constraints (i.e. the school must have a certain number of low-income students). 
+
+     The authors call such constraints a "distributional goal." As they point out, any distributional objective can be naturally turned into a constraint by requiring that the score of the final matching exceeds a specified threshold. Conversely, constraints can be converted to a simple distributional objective that is $1$ if the constraints are satisfied and $0$ otherwise. So assuming that the designer has distributional objective doesn't seem too problematic.
+
+2. **Exogenous $\mu_0$.** The premise of the paper is that we have a default matching $\mu_0$ that we want to improve upon. I found myself wondering about where this $\mu_0$ comes from.  
+
+     The most natural answer is that it results from applying some mechanism to students' reported preferences (i.e. run DA without diversity considerations). However, the authors' result that a variant of TTC is truthful relies on the assumption that $\mu_0$ is exogenous to reported preferences: it is well-known that (for example) calculating an initial matching $\mu_0$ with DA and then applying TTC is not truthful, even though both DA and TTC are truthful in isolation.  
+
+     While I am sure that there are some contexts where an exogenous $\mu_0$ arises (i.e. neighborhood assignment in school choice), the assumption of an exogenous $\mu_0$ seems to limit the applicability of the model.
+
+3. **$M^\natural$-concave distributional goal.** The authors claim that several natural distributional objectives are $M^\natural$-concave. This may be true, but my sense is that many more distributional objectives are not. For example, the designer may wish for each school to have balanced gender *and* socio-economic demographics.   
+
+     To be more specific, suppose that there are two schools, each with two seats, and that the designer wishes for each school to have one male and one female student, and one low-income and one high-income student. If there are four students who are respectively a low-income male, a low-income female, a high-income male and a high-income female, this distributional goal can be achieved. However, it is not $M^\natural$ convex.^[An astute reader may notice that previously I referred to $M^\natural$-concavity, and now I say convexity. This is an unfortunate consequence of terminology: a pseudo-$M^\natural$-concave distributional objective induces $M^\natural$-convex constraints, and vice versa (Theorem 2).]
+     ^[This claim may seem to contradict their Proposition 1, which establishes that target minimum and maximum quotas for each type *do* result in $M^\natural$ convexity. But it's important to note that in their model, each student has only one type. Thus, to satisfy Proposition 1, the designer would have to separately specify quotas on the number of low-income males, low-income females, high-income males, and high-income females.]
+     
+     The examples of $M^\natural$-convex constraints that they give in the paper are all very simple (much simpler than most constraints that I see arising in practice), and they point out that the intersection of $M^\natural$-convex constraints need not be $M^\natural$-convex. Thus, I am not convinced that their positive result will directly apply in many contexts.
+

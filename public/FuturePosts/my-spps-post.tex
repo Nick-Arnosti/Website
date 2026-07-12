@@ -1,0 +1,525 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={The Saint Paul Public School Budget},
+  pdfauthor={Nick Arnosti},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{The Saint Paul Public School Budget}
+\author{Nick Arnosti}
+\date{}
+
+\begin{document}
+\maketitle
+
+Saint Paul just approved an increase in property taxes that will provide
+an additional \$37 million per year for public schools. This is
+approximately \$1,100 for each student in the district. This made me
+wonder, what is the current budget? How does this compare to historical
+budgets, and to budgets of other nearby districts? And how is this money
+being spent?
+
+\section{Quiz}\label{quiz}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How much is SPPS spending per student (total expenditures/total
+  enrollment)?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Less than \$10,000
+\item
+  \$10,000-\$15,000\\
+\item
+  \$15,000-\$20,000
+\item
+  \$20,000-\$25,000
+\item
+  More than \$25,000
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Compared to 20 years ago (2004-2005), are (inflation-adjusted)
+  per-student expenditures higher or lower today? By what percentage?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Lower, by approximately 20\%
+\item
+  Lower, by approximately 10\%\\
+\item
+  Higher, by approximately 10\%
+\item
+  Higher, by approximately 20\%
+\item
+  Higher, by more than 20\%
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Among the following 15 Public School Districts (all in the Twin Cities
+  Metro Area), where does Saint Paul rank in terms of per-student
+  expenditures?
+\end{enumerate}
+
+Anoka-Hennepin; Burnsville-Eagan-Savage; Minneapolis;\\
+Mounds View; North Saint Paul-Maplewood-Oakdale; Osseo;\\
+Roseville; Rosemount-Apple Valley-Eagan; Saint Paul;\\
+South Washington County; White Bear Lake; Edina;\\
+Minnetonka; Shakopee; Wayzata
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Saint Paul Public Schools spends money from five funds. Two of these
+  are ``Building Construction'' and ``Debt Services'' (which pays off
+  debts from past construction projects). Last year, how much did Saint
+  Paul spend per student from these two funds combined?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Under \$1,000
+\item
+  \$1,000 - \$2,000
+\item
+  \$2,000 - \$3,000
+\item
+  \$3,000 - \$4,000
+\item
+  Over \$4,000
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  General Fund Expenditures are also categorized. Rank the following
+  categories (which I placed in a random order) in terms of total
+  expenditure. For bonus points, approximately how much money goes to
+  each of these categories?
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Special Education
+\item
+  Student Transportation
+\item
+  Pupil Support Services
+\item
+  Instructional Support Services
+\item
+  Regular Instruction
+\item
+  Student Activities and Athletics
+\end{itemize}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  The majority of the SPPS budget comes from the General Fund, which
+  accounts for just over \$23,000 per student. General Fund Expenditures
+  are categorized as either ``Site Based'' (costs for staff and other
+  expenses at individual schools) or ``District Based'' (costs for
+  district administration, curriculum and professional development,
+  human resources and finance, transportation, etc). How many of the
+  \$23,000 are District Based spending?
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\tightlist
+\item
+  Under \$2,000
+\item
+  \$2,000 - \$5,000
+\item
+  \$5,000 - \$8,000
+\item
+  \$8,000 - \$11,000
+\item
+  Over \$11,000
+\end{enumerate}
+
+\section{Answers}\label{answers}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(e)\) SPPS spends approximately \textbf{\$32,000} per student.
+\item
+  \(e)\) \$32,000 is about \textbf{42\% higher} than it was in the
+  2004-2005 school year (when expenditures were \$14,000 per student,
+  equivalent to a little over \$23,000 in 2025 dollars).
+\item
+  Saint Paul ranks \textbf{first} among these 15 districts in
+  per-student expenditures, narrowly beating out Minneapolis. On
+  average, the other 14 districts spend \$24,000 per student;
+  approximately 3/4 of Saint Paul's costs.
+\item
+  \(e)\) Construction and debt servicing cost Saint Paul approximately
+  \textbf{\$7,000 per student} last year.
+\item
+  The breakdown is as follows (totals do not add to \$23,000 because
+  some categories were omitted from the question).
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Regular Instruction (\$9,000/student, 39.1\% of General Fund)
+\item
+  Special Education (\$4,400/student, 19.1\% of General Fund)
+\item
+  Student Transportation (\$1,300/student, 5.7\% of General Fund)
+\item
+  Pupil Support Services (\$1,200/student, 5.2\% of General Fund)
+\item
+  Instructional Support Services (\$1,100/student, 4.9\% of General
+  Fund)
+\item
+  Student Activities and Athletics (\$300/student, 1.3\% of General
+  Fund)
+\end{itemize}
+
+A natural follow-up question is, which expenses count towards each of
+these categories. In particular, what are ``Pupil Support Services'' and
+``Instructional Support Services''? We'll discuss that more below.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  \(d)\) Approximately \textbf{\$9,400/student} of the general fund
+  budget goes to district-based expenses.
+\end{enumerate}
+
+To help put that number into context, consider the following chart,
+which shows site-based and district-based expenditures per student for
+each of the 15 districts mentioned previously. Minneapolis and Saint
+Paul are in the upper right corner.
+
+\pandocbounded{\includegraphics[keepaspectratio]{/GeneralFundExpenditures.png}}
+
+Note that district-based expenditures range widely: from \$3,600 to
+\$9,400. In other words, Saint Paul spends more than 2.5 times as much
+as the lowest-cost district on these expenses (an extra \$5,800 per
+student). The variation in site-based expenditures is smaller: these
+expenditures range from \$10,000 to \$13,700. I would like to do a
+deeper dive into what counts as ``District-Based Expenditures'' and why
+Saint Paul's costs are much higher than many other districts, but I
+think that will have to wait for another post.
+
+\section{High-Level Conclusions}\label{high-level-conclusions}
+
+The conclusions I draw from this quiz are as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  There is plenty of money available to educate our students.
+\item
+  SPPS is spending \emph{a lot} on buildings, which I don't see as
+  central to providing a good education.
+\item
+  A lot of money is going to central district staff and to special
+  education. We should make sure that these investments are actually
+  helping our students.
+\end{enumerate}
+
+Below, I elaborate on each point, and provide more context.
+
+\section{There is plenty of money
+available}\label{there-is-plenty-of-money-available}
+
+To put the spending in context, SPPS per-student expenditures are
+
+\begin{itemize}
+\tightlist
+\item
+  Higher than daycare costs.
+\item
+  Approximately equal to in-state tuition, room and board at the
+  University of Minnesota.
+\item
+  Significantly higher than they have been historically.
+\item
+  Significantly higher than they are in nearby districts.
+\end{itemize}
+
+\textbf{All Education is Expensive}
+
+I include the first two reference points because people often speak
+about the high cost of daycare and of higher education. I agree that
+these are costly! But in fact, they are no more costly than the rest of
+our education system.\footnote{There are reasons we should expect a year
+  of public education to cost less than daycare or college. For example,
+  daycare has much lower child:staff ratios (4:1 for infants, 7:1 for
+  toddlers, and 10:1 for pre-school) than public schools do (my wife
+  regularly teaches classes with 30+ students). And tuition, room and
+  board includes an apartment and all of your meals! \(\newline\)
+  Conversely, it's important to recognize that this is not an
+  apples-to-apples comparison. Teachers are paid better than daycare
+  providers, and ``tuition, room and board'' is what the \emph{student}
+  pays, but not necessarily the actual cost: it ignores additional money
+  provided by the state. Nevertheless, I think these are useful
+  comparisons to make, because most people believe erroneously that
+  daycare and college are much more costly than primary and secondary
+  school.}
+
+The key difference is how we pay for them. K-12 education costs are
+shared by all of society, and spread out over time (I pay into the
+system for my entire adult life, even though each of my children will
+attend for 12-13 years). Meanwhile, daycare and college expenses are
+paid by individual families in the year that they occur.
+
+\textbf{Misleading Marketing}
+
+I include the third and fourth comparisons (to other years and
+districts) because marketing materials often provide the impression that
+financial support for schools is eroding, or higher elsewhere. As an
+example, consider the referendum handout created by SPPS, which includes
+the following figures.
+
+\pandocbounded{\includegraphics[keepaspectratio]{/StateFunding.png}}
+
+\pandocbounded{\includegraphics[keepaspectratio]{/LocalLevy.png}}
+
+I trust that the numbers are accurate, but I feel they are misleading.
+The point is, school funding comes from many sources! Focusing on just
+the state funding allowance of \$7,500/student and the operating levy of
+\$1,200/student misses the vast majority of money that is spent.
+
+\textbf{Declining Enrollment is (only) Part of the Story}
+
+As mentioned above, inflation-adjusted per-student costs are up 42\%
+over the past 20 years. Some of this can be explained by a 22\% decrease
+in enrollment during that time. If enrollment drops but you have the
+same buildings and teachers as before, per-student expenditures rise.
+
+However, declining enrollment isn't the whole story, as total
+inflation-adjusted expenditures (not per-student) have \emph{risen} by
+11\% over that period. In other words, suppose that enrollment increased
+by 8,000 - 9,000 students overnight, back to 2005 levels, and the
+district managed to add these students without spending a single penny
+more than it currently does (which is of course an absurd assumption).
+Even after this miracle, SPPS would be spending 11\% more per student
+than it did 20 years ago.
+
+\section{Buildings are Expensive}\label{buildings-are-expensive}
+
+As mentioned above, last year SPPS spent over \$7,000 per enrolled
+student on construction and debt servicing. This is approximately 22\%
+of total expenditures.\footnote{The district regularly claims to spend
+  80\% of its money on salaries, but this is misleading because it means
+  80\% of the \emph{general fund}, and completely ignores other funds
+  (construction, debt servicing, and food) which are almost entirely
+  non-salary expenses.} For that much money, the district could rent an
+apartment for 12 months for every two students it supports!
+
+For context, I noticed that spending in this category varies widely
+across districts. White Bear Lake is spending over \$10,000 per student
+on these expenses, but the following chart shows that 10 of the 14
+neighboring districts are spending \$4,100 per student or less.
+
+\pandocbounded{\includegraphics[keepaspectratio]{/Buildings.png}}
+
+It is important to note, the \$7,000 per student number is a significant
+increase from the historical norm. Five years ago, this number was
+\$2,350 (or about \$2,900 after adjusting for inflation). The increased
+spending is because of an ``SPPS Builds'' campaign to majorly renovate
+facilities. Thus, one could argue that we should amortize these costs
+over many years of benefits. This makes some sense, but only if
+construction and debt costs truly go down in a few years.
+
+``The greater the impact to student learning, the greater the need to
+complete the project.''
+
+But what does this mean in practice?
+
+Let's look at some of the individual projects underway for SPPS Builds:
+
+Hidden River Middle School is undergoing a renovation that will cost
+over \$54 million. The school serves just under 600 students, so this is
+over \$90,000 per pupil enrolled. (Of course, this is not an annual
+number -- the renovations will presumably benefit many years' worth of
+students. But still.)
+
+Bruce Vento Elementary: \$90 Million budget, fewer than 500 students
+(over \$180,000 per enrolled student). \$6.9 Million/year budget.
+
+Farnsworth Elementary: \$90 Million budget, fewer than 500 students
+(over \$180,000 per enrolled student). Budget allocation to school:
+about \$6 million (be careful with this).
+
+Barack Obama Elementary (450 students) and Middle Schools (growing from
+zero to a maximum of 450), \$72 Million (after school of
+\textasciitilde350 on same site closed). Current annual budget: \$6.4
+Million (elementary 4.5 + middle 1.9; presumably middle will grow).
+
+Overall, I am just not convinced that this is a good use of money.
+
+\section{Is the Remaining Money Well
+Spent?}\label{is-the-remaining-money-well-spent}
+
+\textbf{Special Education}
+
+Special Education (SPED) expenses include SPED Teachers,
+Paraprofessionals, some Psychologists and Social Workers, and SPED
+Administrators and Support Staff. These expenses come to \$4,400 for
+\emph{every student enrolled in the district} (more than 3 times the
+transportation budget). Approximately 19\% of students are enrolled in
+special education. This means that we spend approximately \$22,000 on
+SPED support for each SPED student (in addition to \$9,000 for their
+``regular'' teachers)!
+
+I haven't done a deep dive into how this money is being spent. I believe
+some of it actually goes to providing services for SPED students at
+private schools. But overall, these numbers seem \emph{very} high to me:
+both the number of students enrolled in SPED, and the cost per student
+in SPED. I am perfectly willing to spend money (even lots of it) to
+educate students. But when the amounts are this large, it's important to
+look more closely and ask the question, ``Are we sure that this money is
+actually helping students learn?''
+
+\textbf{Instructional Support Services}
+
+What are ``Instructional Support Services''? My understanding (which is
+probably incomplete) is that this is primarily money spent on
+curriculum, professional development, and IT support.
+
+I suspect that most SPPS professional development has almost no impact
+on what happens in the classroom. (It would be interesting to survey
+teachers to see if they agree.) At the same time, I believe that you can
+train someone to be a better teacher. That is, professional development
+\emph{can} be very useful. But making it useful requires more than just
+``better'' materials. Rather, it requires time, commitment, and likely
+significant structural changes.
+
+For context, my wife has worked in many different settings: a public
+school on the Navajo Reservation through Teach for America, a Charter
+School in Brooklyn serving entirely students of color, a wealthy private
+school in Manhattan, and a Gifted and Talented Public school in Saint
+Paul. She feels that the Professional Development from Teach for America
+and at the Brookly Charter school were \emph{much, much} more impactful
+than anything she has done through Saint Paul Public Schools.
+
+While there are many possible reasons for this, I think the biggest one
+is how committed these organizations were to it. In Teach for America,
+corps members spent roughly six weeks getting full-time coaching, which
+included the opportunity to practice techniques under supervision with
+summer school students. The charter in Brooklyn required staff to return
+to the building 3-4 weeks before students arrived. Teachers were trained
+in specific pedagogical techniques, and asked to practice these
+techniques. During the school year, students were let out several hours
+early \emph{every Friday afternoon} so that staff could do additional
+professional development. Teachers were regularly observed and given
+feedback. In summary, these schools asked teachers to spend \textbf{a
+lot} of time providing and/or receiving professional development.
+
+It's worth noting that Teach For America corps members are new to
+teaching, and turnover at the charter school was much higher than at
+SPPS (so most teachers were pretty young). As a result, professional
+development is perhaps more necessary for these organizations than it is
+for Saint Paul Public Schools.
+
+In summary, if we really want professional development to be useful, we
+need to set aside a lot more time for it. This seems likely to be
+unpopular with parents (if the time is coming out of the regular school
+day) and/or the teachers union (if it is coming out of the summer,
+evenings or weekends). Furthermore, veteran teachers are likely more
+resistant to learning new techniques than are teachers in their
+twenties. Without significant structural changes to how professional
+development is done, I am inclined to think a lot of the \$1,100/year
+going to instructional support services is not making a big impact in
+the classroom.
+
+\section{Data Sources}\label{data-sources}
+
+\end{document}

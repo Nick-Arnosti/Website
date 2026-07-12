@@ -1,0 +1,83 @@
+---
+title: 'Should Nate Silver Bet on his own Predictions?'
+date: '2020-05-17'
+author: Nick Arnosti
+tags:
+categories:
+  Miscellaneous
+---
+
+
+
+<div id="the-proposal" class="section level1">
+<h1>The Proposal</h1>
+<p>My friend <a href="https://www.shengwu.li/">Shengwu Li</a> pointed me to the following (eight year old) <a href="https://marginalrevolution.com/marginalrevolution/2012/11/a-bet-is-a-tax-on-bullshit.html">Marginal Revolution blog post</a> titled “A Bet is a Tax on Bullshit.” In it, Alex Tabarrok argues that pundits should stake part of their salary on their predictions:</p>
+<blockquote>
+<p>The NYTimes should require that Silver, and other pundits, bet their beliefs. Furthermore, to remove any possibility of manipulation, the NYTimes should escrow a portion of Silver’s salary in a blind trust bet. In other words, the NYTimes should bet a portion of Silver’s salary, at the odds implied by Silver’s model, randomly choosing which side of the bet to take, only revealing to Silver the bet and its outcome after the election is over. A blind trust bet creates incentives for Silver to be disinterested in the outcome but <em>very</em> interested in the accuracy of the forecast.</p>
+</blockquote>
+<p>There are many reactions you might have to the idea of forecasters betting on their own predictions. In this post, we will focus on Alex’s final claim: does this create an incentive for Silver to produce accurate forecasts?</p>
+</div>
+<div id="analysis-betting-a-fixed-amount" class="section level1">
+<h1>Analysis: Betting a Fixed Amount</h1>
+<p>Suppose that Silver is asked to report an estimated probability <span class="math inline">\(p\)</span> of Trump winning reelection. Then, a coin is flipped to decide whether he takes the Trump or Biden side of the bet. He bets a fixed amount of his salary (normalized to 1) at “fair” odds, according to his estimate <span class="math inline">\(p\)</span>. Formally, the payoff matrix looks as follows.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Biden Wins</th>
+<th align="left">Trump Wins</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bet Biden</td>
+<td align="left">p/(1-p)</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td>Bet Trump</td>
+<td align="left">-1</td>
+<td align="left">(1-p)/p</td>
+</tr>
+</tbody>
+</table>
+<p>Note that if the probability of Trump winning is in fact <span class="math inline">\(p\)</span>, then either bet has an expected value of zero. Does it follow that if Silver believes that the probability of a Trump victory is <span class="math inline">\(q\)</span>, he wants to report <span class="math inline">\(p = q\)</span>? The answer is a resounding ‘no!’ To take one extreme, <strong>if Silver is sure that Biden will win (<span class="math inline">\(q = 0\)</span>) his optimal strategy is actually to report certainty that Trump will win</strong>! By doing so, he gives himself a great bet: a coin flip between losing $1 and winning an arbitrarily large amount. Conversely, if he is certain that Trump will win (<span class="math inline">\(q=1\)</span>), he wants to report <span class="math inline">\(p = 0\)</span>. When he holds intermediate beliefs (<span class="math inline">\(q \in (0,1)\)</span>), his optimal bet depends on his utility function, but these extreme examples illustrate how poorly aligned his incentives are.</p>
+</div>
+<div id="an-alternative-payoff-matrix" class="section level1">
+<h1>An Alternative Payoff Matrix</h1>
+<p>The previous payoff matrix allowed Silver to set up a bet with limited downside and unlimited upside. An alternative implementation that avoids this concern is the following.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Biden Wins</th>
+<th align="left">Trump Wins</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bet Biden</td>
+<td align="left">p/(1-p)</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td>Bet Trump</td>
+<td align="left">-p/(1-p)</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+<p>As before, if the true probability of a Trump victory is <span class="math inline">\(p\)</span>, either bet is fair. Also as before, Silver has no incentive to report his true belief <span class="math inline">\(q\)</span>. If we assume that he is risk averse, then his optimal report is actually <span class="math inline">\(p = 0\)</span>, regardless of his beliefs! In fact, the for <strong>any</strong> utility function that he has, the set of optimal reports <strong>does not depend on his beliefs</strong>! This is because his report only matters when Biden wins: thus, his beliefs about how likely this is are irrelevant.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>To me, this is a good illustration of the value of mathematical modeling. The claim “A blind trust bet creates incentives for Silver to be… very interested in the accuracy of the forecast” sounds reasonable (even to me!) on its face. However, as soon as you try to formalize this claim, it becomes immediately obvious that it is incorrect. To play off of the title of Alex’s post, a mathematical model is a bullshit detector: it enforces precision that catches incorrect arguments that might slide by if stated only in English.</p>
+<p>I admit, the idea of requiring pundits to put their money where their mouth is has a certain appeal. This post says that a random blind trust bet is a terrible idea, but doesn’t actually answer the question of whether pundits’ salaries should be based on their predictions.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> What say you?</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Even if Silver can perfectly predict the election, he cannot give himself a sweetheart deal: any report <span class="math inline">\(p\)</span> that gives him the possibility of a big gain also carries an equal probability of a big loss.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>For a discussion of alternative reward schemes that might better elicit truthful reports, see <a href="https://healy.econ.ohio-state.edu/papers/Healy-ExplainingBDM_Note.pdf">this paper</a>. Thanks again to <a href="https://www.shengwu.li/">Shengwu</a> for the pointer.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>

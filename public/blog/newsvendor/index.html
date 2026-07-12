@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Visual Approach to Optimal Orders | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>A Visual Approach to Optimal Orders</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2020/03/11</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>The final unit of my operations course is on inventory management. Among other topics, we study the classic “Newsvendor” model.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> In my first year teaching at Columbia, I came up with a neat visualization of this model. The goal of this post is to share my visualization – hopefully you will agree that it’s helpful!</p>
+<div id="the-newsvendor-model" class="section level2">
+<h2>The Newsvendor Model</h2>
+<p>You are planning to sell a product – let’s say a new board game that you have developed. You pay a manufacturer to print your game. There are high setup costs, so you are only planning to do a single print run. The problem is, you don’t know how popular your game will be! Thus, you must make an informed guess when deciding a production quantity. Order too many games, and you’ll lose money. Order too few, and you’ll miss out on potential sales!</p>
+<p>More formally, in the first period, you face must decide on a production quantity <span class="math inline">\(q\)</span>, and incur a marginal cost of <span class="math inline">\(c\)</span> for each game produced. Then, demand <span class="math inline">\(D\)</span> is realized. Your total sales are <span class="math inline">\(\min(D,q)\)</span>, and all sales occur at price <span class="math inline">\(p\)</span>. You do not know demand <span class="math inline">\(D\)</span> in advance, but capture your uncertainty by assuming that it follows a distribution with cdf <span class="math inline">\(F\)</span>. What production quantity <span class="math inline">\(q\)</span> maximizes your expected profit?</p>
+</div>
+<div id="several-solutions" class="section level2">
+<h2>Several Solutions</h2>
+<p>The most obvious approach to solve this problem is to calculate expected profit for each order quantity, and then choose the order quantity for which this profit is largest. Although valid, this approach is cumbersome and unilluminating.</p>
+<p>Instead of calculating total profit, it is more helpful to think about <em>marginal</em> profit from producing one more copy.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Presumably, you are certain to sell the first copy you produce – at the very least, your parents will take pity on you and buy it! However, if you are already planning to make <span class="math inline">\(10,0000\)</span> copies, then printing additional copies may not be a great idea: they will help you only if demand exceeds <span class="math inline">\(10,000\)</span>. More precisely, if I move from producing <span class="math inline">\(q\)</span> copies to producing <span class="math inline">\(q+1\)</span>, I will pick up an extra sale whenever demand is greater than <span class="math inline">\(q\)</span>, but will incur additional production costs, resulting in regret when demand is less than or equal to <span class="math inline">\(q\)</span>. Thus, the marginal benefit from the <span class="math inline">\((q+1)^{st}\)</span> copy produced is <span class="math display">\[MB(q+1) = P(D &gt; q) p - c = (1 - F(q))p-c.\]</span> This is positive so long as <span class="math inline">\(F(q) \leq 1 - c/p\)</span>, so I want to increase my order quantity <span class="math inline">\(q\)</span> until my probability of having excess inventory (that is, <span class="math inline">\(P(D &lt; q)\)</span>) is roughly <span class="math inline">\(1 - c/p\)</span>. The quantity <span class="math inline">\(1 - c/p\)</span> gets a special name: the “critical ratio.” If you think the chance of being stuck with an extra copy is higher than the critical ratio, then you’re better not producing that copy at all. Note that in this problem, the critical ratio is equal to your profit margin: for very profitable games, you have a high tolerance for excess inventory and low willingness to lose out on sales, so you will produce a large quantity.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>One quick aside. In this scenario, we assume that excess copies are useless, and whenever you have a shortage, you lose the sale. In many business situations, excess inventory will have some salvage value, and you can place backorders if demand exceeds your supply. These possibilities affect the calculations above: in particular, we can still calculate a critical ratio, but it may no longer equal the profit margin. To address this, in general we say that there is some <em>underage cost</em> <span class="math inline">\(c_u\)</span>, representing the regret you experience each time you are short one item, and an <em>overage cost</em> <span class="math inline">\(c_o\)</span> that you experience for each item that you produce beyond demand. In the example above, the underage cost is the cost of a lost sale <span class="math inline">\(p - c\)</span> and the overage cost is the production cost <span class="math inline">\(c\)</span>. Once you know the overage and underage costs, the marginal benefit analysis above tells us that we should continue producing copies until our probability of excess inventory equals <span class="math inline">\(c_u/(c_u+c_o)\)</span>, which is the general formula for the critical ratio.</p>
+</div>
+<div id="a-visual-approach" class="section level2">
+<h2>A Visual Approach</h2>
+<p>Suppose that we produce <span class="math inline">\(q\)</span> copies. For each <span class="math inline">\(n \in \{1, \ldots, q\}\)</span>, the probability that we sell our <span class="math inline">\((n+1)^{st}\)</span> copy is <span class="math inline">\(1 - F(n)\)</span>. By linearity of expectation, our total expected sales can be calculated by adding up the sales probabilities of individual items: <span class="math display">\[S(q) = \mathbb{E}[\min(D,q)] = \sum_{n = 0}^{q-1} (1 - F(n)).\]</span></p>
+<p>Let’s “see” this visually. Start by plotting the cdf <span class="math inline">\(F\)</span>. Then draw a vertical line at the proposed production quantity <span class="math inline">\(q\)</span>. The equation above implies that our total expected sales <span class="math inline">\(S(q)\)</span> is the area of the region to the left of our order quantity and above <span class="math inline">\(F\)</span>. In Figure <a href="#fig:news">1</a>, this region is shaded in blue. Once we know our expected sales, we can calculate two other quantities of interest. First, expected excess inventory is <span class="math inline">\(q - S(q)\)</span>, which is equal to the area of the red region. Second, expected lost sales (from lack of inventory) is equal to <span class="math inline">\(\mathbb{E}[D] - S(q)\)</span>, which is equal to the area of the orange region.</p>
+<p>Now, we can see the consequences of changing our production quantity: as we move the vertical line to the right, sales increase (lost sales decrease), but so does expected excess inventory! We want to choose our order quantity to strike an appropriate balance: that is, to minimize a weighted sum of the red and orange regions.</p>
+<p>This is where the economics of the situation come in. The red and orange regions represent excess inventory and lost sales in <em>quantities of games</em>. We want to translate these to dollars. The critical ratio tells us how costly “overage” is relative to “underage.” More specifically, it tells us how often we should have excess inventory when ordering optimally. We can plot the critical ratio as a horizontal line. This line intersects the demand distribution <span class="math inline">\(F\)</span> at the optimal order quantity.</p>
+<pre class="r"><code>plotnews = function(cr,F,qMin = 0, qMax,q){
+  plot(F,xlim = c(qMin,qMax), ylim=c(0,1),ylab=&#39;P(Excess Inventory)&#39;,yaxs=&#39;i&#39;,xaxs=&#39;i&#39;,xlab=&#39;Order Quantity&#39;,las=1) #Plot Demand Distribution
+  x = c(qMin:qMax)
+  y = F(x)
+  polygon(c(x[1:q],x[q],0),c(y[1:q],1,1),col=&#39;light blue&#39;) #Expected Sales
+  polygon(c(x[1:q],x[q],0),c(y[1:q],0,0),col=&#39;red&#39;) #Expected Excess Inventory
+  polygon(c(x[q:qMax],x[q],x[q]),c(y[q:qMax],1,1),col=&#39;orange&#39;) #Expected Lost Sales
+  abline(h=cr) #Plot Critical Ratio
+}
+
+cr = 0.6
+mean = 100
+sd = 30
+qStar = ceiling(qnorm(cr,mean,sd))
+qMax = mean+3*sd
+F = function(x){return(pnorm(x,mean,sd))}
+
+plotnews(cr,F,qMin = 0,qMax,qStar)</code></pre>
+<div class="figure"><span id="fig:news"></span>
+<img src="/Blog/Newsvendor_files/figure-html/news-1.png" alt="A visualization of the classical newsvendor problem. The curve represents the CDF of the demand distribution. The vertical line gives our order quantity. The blue region represents expected sales, and the red and orange regions represent expected overage and underage, respectively. The horizontal line shows our critical ratio: the optimal order quantity is where this line intersects the demand distribution." width="672" />
+<p class="caption">
+Figure 1: A visualization of the classical newsvendor problem. The curve represents the CDF of the demand distribution. The vertical line gives our order quantity. The blue region represents expected sales, and the red and orange regions represent expected overage and underage, respectively. The horizontal line shows our critical ratio: the optimal order quantity is where this line intersects the demand distribution.
+</p>
+</div>
+<p>To me, the resulting picture is beautiful. It captures so much about the problem! We know that we’re trying to adjust the production quantity (vertical line) to balance overage (red) and underage (yellow). To determine an optimal order quantity, we need both a demand forecast (<span class="math inline">\(F\)</span>) and an understanding of the relative costs of overage and underage (the critical ratio). Each of these is represented by a single curve in Figure <a href="#fig:news">1</a>.</p>
+<p>Several insights arise.</p>
+<ul>
+<li><p>No matter what demand distribution you draw, you should order so that our probability of excess inventory is equal to the critical ratio.</p></li>
+<li><p>As the critical ratio increases, so does our optimal production quantity, as shown in Figure <a href="#fig:cr">2</a>. When you have a lot of certainty about demand, the distribution <span class="math inline">\(F\)</span> will rise very steeply. In these cases, changes to the critical ratio do not have a large effect on our production quantity: you roughly produce to match demand. Meanwhile, when demand is very uncertain, the distribution <span class="math inline">\(F\)</span> will be flatter, and the critical ratio will greatly influence our order.</p></li>
+<li><p>As you become more certain about demand, <span class="math inline">\(F\)</span> becomes steeper and both the red and orange regions shrink, as shown in Figure <a href="#fig:sd">3</a>. Thus, increased certainty does not change our chance of having overage or underage (see the first insight), but it does decrease the expected amount by which you err. Note also that increased certainty could either increase or decrease your optimal order. Your order will decrease when your critical ratio is high and you were previously hedging by over-ordering (as shown in <a href="#fig:sd">3</a>); it will increase when your critical ratio is low.</p></li>
+<li><p>You don’t need perfect demand information to make reasonable ordering decisions. For example, you can assess whether our current policy systematically over-produces or under-produces using only the critical ratio and knowledge of how frequently you sell out. In addition, if our critical ratio is bounded away from 0 or 1, then you don’t need to account for very rare events that dramatically shift demand.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p></li>
+</ul>
+<pre class="r"><code>plotnews(cr,F,qMin = 0,qMax,qStar)
+
+crNew = 0.8
+qNew = ceiling(qnorm(crNew,mean,sd))
+abline(h=crNew)
+arrows(qStar-1,cr,qStar-1,crNew,lwd=2) #Increase in CR
+arrows(qStar-1,crNew,qNew,crNew,lwd=2)
+
+text(85,(cr+2*crNew)/3,&quot;Increased&quot;)
+text(85,(2*cr+crNew)/3,&quot;Critical Ratio&quot;)
+text(122,0.93,&quot;Increased&quot;)
+text(122,.87,&quot;Order&quot;)</code></pre>
+<div class="figure"><span id="fig:cr"></span>
+<img src="/Blog/Newsvendor_files/figure-html/cr-1.png" alt="As the critical ratio increases, so does the optimal order quantity. The rate of increase is largest when demand is very uncertain." width="672" />
+<p class="caption">
+Figure 2: As the critical ratio increases, so does the optimal order quantity. The rate of increase is largest when demand is very uncertain.
+</p>
+</div>
+<pre class="r"><code>cr = 0.8
+plotnews(cr,F,qMin=0,qMax, q =  ceiling(qnorm(cr,mean,sd)))
+
+sd = 15
+plotnews(cr,F,qMin=0,qMax, q =  ceiling(qnorm(cr,mean,sd)))</code></pre>
+<div class="figure"><span id="fig:sd"></span>
+<img src="/Blog/Newsvendor_files/figure-html/sd-1.png" alt="Outcomes when demand is uncertain (left) and more certain (right). When ordering optimally, the probability of having _some_ overage is the same in both cases, but the _expected_ overage and underage (in red and orange, respectively) is much lower when demand is more certain." width="50%" /><img src="/Blog/Newsvendor_files/figure-html/sd-2.png" alt="Outcomes when demand is uncertain (left) and more certain (right). When ordering optimally, the probability of having _some_ overage is the same in both cases, but the _expected_ overage and underage (in red and orange, respectively) is much lower when demand is more certain." width="50%" />
+<p class="caption">
+Figure 3: Outcomes when demand is uncertain (left) and more certain (right). When ordering optimally, the probability of having <em>some</em> overage is the same in both cases, but the <em>expected</em> overage and underage (in red and orange, respectively) is much lower when demand is more certain.
+</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This model forms the backbone for many papers in operations. See this <a href="/Blog/icofunding">previous blog post</a> for one example.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>For those of you who worry about these things, our objective function is quasi-concave, so first order methods will identify the optimal solution.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Note that this is the <em>marginal</em> profit margin, not the <em>average</em> profit margin. That is, the cost <span class="math inline">\(c\)</span> should not incorporate fixed costs of production.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>To relate this topic to current events, this helps to explain why companies don’t proactively produce and store vaccines that will only be needed in rare circumstances. For more on vaccine production, see this <a href="https://www.npr.org/2020/03/06/812943907/episode-977-wheres-the-vaccine">Planet Money episode</a>.<a href="#fnref4">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

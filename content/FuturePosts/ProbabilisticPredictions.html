@@ -1,0 +1,83 @@
+---
+title: 'A Simple Analysis of Random Matching Markets'
+date: '2025-03-09'
+author: Nick Arnosti
+---
+
+
+
+<p>Ashlagi, Kanoria and Leshno</p>
+<p>Azevedo and Leshno</p>
+<p>This is really from my paper “Lottery Design for School Choice.” (Do a separate post for Probabilistic Predictions in Random Matching Markets.)</p>
+<p>Note that I have a chip on my shoulder.</p>
+<p>Without my work, this would be a dissertation. With my work, it becomes a class exercise for a PhD student. (Reference “which markets lead to stark effect of competition”?)</p>
+<p>If people aren’t using it, I need to do a better job of making it seem usable.</p>
+<ul>
+<li>The title might cause someone to think that this is only of interest to those who care about tie-breaking.</li>
+<li>Also mentioned “Short Lists in Centralized Clearinghouses” misleading.</li>
+</ul>
+<p>I chose the title to emphasize the “managerial insights” that come out of the paper, but I view the biggest contribution of the paper to be developing the analytical model.</p>
+<p>Although a rigorous proof exists only for cases where preferences are “sparse”, we will see that the method can generate predictions for any list lengths. (I was most excited by number of matches, as no other work had really been able to do this, and this quantity is only interesting when lists are not too long)</p>
+<p>Analyzing the number of unmatched agents becomes tractable.</p>
+<div id="the-heuristic-a-special-case" class="section level1">
+<h1>The Heuristic (A Special Case)</h1>
+<p>Consider a random matching market with four parameters:</p>
+<ul>
+<li><span class="math inline">\(m\)</span> students</li>
+<li><span class="math inline">\(n\)</span> schools</li>
+<li><span class="math inline">\(C\)</span> seats at each school</li>
+<li><span class="math inline">\(\ell\)</span> schools listed by each student</li>
+</ul>
+<p>Schools have uniform random priorities, and student preferences are also uniformly random. This is of course a very stylized set of assumptions, but many papers have made these assumptions, and precise analysis of these markets is a challenging problem that has already resulted in a number of high-profile publications.</p>
+<p>This post will show how to make analysis of these markets easy.</p>
+<p>My analysis techniques will make the following assumptions:
+1. The number of proposals at each school is Poisson with mean <span class="math inline">\(\lambda\)</span>.
+2. From a student’s perspective, each of their proposals is accepted independently with probability <span class="math inline">\(p\)</span>.</p>
+<p>I leave these unjustified for now: my focus in this post is on <em>how</em> to make predictions, not why it works. If you are the skeptical type, know that my paper does provide some rigorous justification for the equations in this post, and also that these equations can be used to reproduce most of the insights shown for uniform markets.</p>
+<p>Given <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(p\)</span>, we can calculate the expected number of matches from the perspective of each side of the market. If a school receives more proposals than its capacity, it fills all <span class="math inline">\(C\)</span> seats. Otherwise, it accepts all proposals. Therefore, Assumption 1 above implies that each school’s expected <em>enrollment</em> (number of accepted proposals) is<br />
+<span class="math display">\[\mathcal{E}(\lambda,C) = \mathbb{E}[\min(Pois(\lambda),C)]\]</span>
+Meanwhile, looking from students’ perspectives, Assumption 2 implies that each student is matched with probability <span class="math inline">\(1 - (1-p)^\ell\)</span>. Therefore the number of matches must be
+<span class="math display">\[{\tt Matches} = m(1-(1-p)^\ell) = n \mathcal{E}(\lambda,C)\]</span>
+The other equation we need is one that relates <span class="math inline">\(p\)</span> and <span class="math inline">\(\lambda\)</span>. I use the following equation.
+<span class="math display">\[p(\lambda) = \mathcal{E}(\lambda,C)/\lambda\]</span>
+For a heuristic argument justifying this choice, note that Assumption 1 implies that there are <span class="math inline">\(n \lambda\)</span> total proposals sent, and <span class="math inline">\(n \mathcal{E}(\lambda,C)\)</span> of them are accepted, so <span class="math inline">\(p(\lambda)\)</span> is the ratio of accepted proposals to total proposals.</p>
+<p>Alternatively, we could express <span class="math inline">\(\lambda\)</span> as a function of <span class="math inline">\(p\)</span>. In that case, we could calculate that the expected number of proposals sent by each student is <span class="math inline">\(\frac{1}{p}(1 - (1-p)^\ell)\)</span>, and therefore, the expected number of proposals sent to any given school is
+<span class="math display">\[\lambda(p) = \frac{m}{n} \cdot \frac{1}{p}(1 - (1-p)^\ell)\]</span></p>
+<p>Combining <span class="math inline">\(\eqref{}\)</span> and <span class="math inline">\(\eqref{}\)</span>, we get…</p>
+<p><span class="math display">\[n \cdot \mathcal{E}(\lambda,C) = m(1-(1-p(\lambda))^\ell)\]</span></p>
+<p>It is easy to see that for any <span class="math inline">\(m\)</span>, <span class="math inline">\(n\)</span>, <span class="math inline">\(\ell\)</span>, and <span class="math inline">\(C\)</span> this equation has a unique solution <span class="math inline">\(\lambda &gt; 0\)</span>: as <span class="math inline">\(\lambda\)</span> increases from <span class="math inline">\(0\)</span> to <span class="math inline">\(\infty\)</span>, the left side increases continuously from <span class="math inline">\(0\)</span> to <span class="math inline">\(nC\)</span>, while <span class="math inline">\(p(\lambda)\)</span> decreases continuously from <span class="math inline">\(1\)</span> to <span class="math inline">\(0\)</span>, causing the right side to decrease continuously from <span class="math inline">\(m\)</span> to <span class="math inline">\(0\)</span>. Therefore, there must be a unique choice of <span class="math inline">\(\lambda\)</span> such that the two sides are equal.</p>
+<p>Let <span class="math inline">\(\hat{\lambda}\)</span> be the solution to this equation, and $ = p().</p>
+<p>Then the predicted fraction of students who receive their <span class="math inline">\(k^{th}\)</span> choice is <span class="math inline">\(\hat{p}(1- \hat{p})^{k-1}\)</span>. From this, we can calculate all sorts of statistics, including matched students’ average rank (which has been a focus of prior work).</p>
+</div>
+<div id="generating-predictions-for-the-student-rank-distribution" class="section level1">
+<h1>Generating Predictions for the Student Rank Distribution</h1>
+<p>For example, the setting of Ashlagi, Kanoria, and Leshno assumes that <span class="math inline">\(C = 1\)</span>, <span class="math inline">\(\ell = n\)</span>, and <span class="math inline">\(m = n + k\)</span>. Plugging these choices into <span class="math inline">\(\eqref{}\)</span> and solving can yield all of the insights present in their paper.</p>
+<p>Note that when <span class="math inline">\(\ell = n\)</span> (students list all schools), the number of matches “should be” <span class="math inline">\(\min(m,nC)\)</span> (the minimum of the number of students and the number of seats). The equation above will predict a slightly smaller number. This is because it implicitly assumes that students sample schools on their list <em>with replacement</em>.</p>
+<p>Note that I prove this is rigorous when <span class="math inline">\(\ell\)</span> and <span class="math inline">\(C\)</span> are bounded and <span class="math inline">\(m, n \rightarrow \infty\)</span>. But I think it works much more broadly than that. At the very least, we can plug in whatever values we want.</p>
+<p>Strictly speaking, I didn’t prove their result. But I do provide all of the same insights, with much less work. And I show how their formulas would extend to other settings. For example, you can use this to analyze what happens if students submit shorter lists, or if each school has two seats instead of one.</p>
+<p>Think about it as, these equations will almost always give you the right answer. There might still be a little work to prove it.</p>
+<p><strong>Show figures?</strong></p>
+</div>
+<div id="agent-heterogeneity" class="section level1">
+<h1>Agent Heterogeneity</h1>
+<p>Suppose that we relax our assumption that schools have the same number of seats. Now school <span class="math inline">\(h\)</span> has capacity <span class="math inline">\(C_h \in \mathbb{N}\)</span>. Furthermore, we will allow students to list different numbers of schools, and schools to differ in their popularity. Specifically, student <span class="math inline">\(s\)</span> lists <span class="math inline">\(\ell_s\)</span> schools, and the schools listed by <span class="math inline">\(s\)</span> are sampled from a fixed distribution over the set of schools. Specifically, let <span class="math inline">\(p_h\)</span> be <span class="math inline">\(n\)</span> times the…</p>
+<p>Mention Immorlica-Mahdian, Kojima-Pathak.</p>
+<p>Define <span class="math inline">\(p_h = n q_h\)</span>, so that the average “school popularity” is <span class="math inline">\(1\)</span>.</p>
+<p>Then the modification becomes</p>
+<p><span class="math display">\[ \sum_{h} \mathcal{E}(p_h\lambda(p),C) = \sum_{s} (1-(1-p)^{\ell_s})\]</span>
+Where <span class="math display">\[\lambda(p) = \frac{1}{np}\sum_{s} (1-(1-p)^{\ell_s}).\]</span></p>
+</div>
+<div id="predicting-individual-outcomes" class="section level1">
+<h1>Predicting Individual Outcomes</h1>
+<p>So far, we have focused on predicting aggregate outcomes (i.e. the total number of proposals, or the fraction of students who receive their <span class="math inline">\(k^{th}\)</span> choice). But this model can also be used to make predictions for individual students and schools.</p>
+<p>Suppose that student <span class="math inline">\(s\)</span> proposes to school <span class="math inline">\(h\)</span>. Their probability of admission is <span class="math display">\[a_h = \mathcal{E}(p_h\lambda,C_h)/(p_h \lambda).\]</span> Applying our independence assumption, we conclude that for a student who listed schools in the order <span class="math inline">\(h_1, h_2, h_3...\)</span> the probability of being matched to school <span class="math inline">\(h_3\)</span> is <span class="math inline">\((1-a_{h_1})(1-a_{h_2})a_{h_3}\)</span>.</p>
+<p>We can also predict the cutoff score distribution for an individual school. For example, suppose that student priorities are sampled uniformly on <span class="math inline">\([0,1]\)</span>. (This is without loss of generality – because only the ordering of students matters, any atomless distribution would work.)</p>
+<p>Suppose that we want to know the chance that the cutoff score at school <span class="math inline">\(h\)</span> is at most <span class="math inline">\(t \in [0,1)\)</span>. This is simply <span class="math inline">\(\mathbb{P}(Pois(p_h \lambda(1-t))&lt;C_h)\)</span>.</p>
+<p>When the cutoff at a school is zero, we might be interested to know how many of its seats are filled. The chance that school <span class="math inline">\(h\)</span> is</p>
+</div>
+<div id="a-relationship-to-the-continuum-model-of-azevedo-and-leshno" class="section level1">
+<h1>A Relationship to the Continuum Model of Azevedo and Leshno</h1>
+<p>Mention that of course we can take the same limit as them: scale up <span class="math inline">\(C\)</span> and <span class="math inline">\(n\)</span> by a large constant (keeping distribution over <span class="math inline">\(\ell\)</span> fixed). In this limit, the predictions coincide: my <span class="math inline">\(p\)</span> converges to one minus their cutoff score.</p>
+<p>But there is actually an easier way! We can just replace the function <span class="math inline">\(\mathcal{E}(\lambda,C)\)</span> with <span class="math inline">\(\hat{\mathcal{E}}(\lambda,C) = \min(\lambda,C)\)</span> in <span class="math inline">\(\eqref{heterogeneous}\)</span>, and solve the model identically from there.</p>
+<p>Note that this shows how to recover their prediction in this special case, and how to improve upon it by allowing school capacities to be arbitrary (rather than assuming they are large). But we have still made some very restrictive assumptions on priorities (iid uniformly random, or in the paper they can also be identical across schools) and preferences (sampled iid from a fixed distribution over schools). Azevedo Leshno works much more generally! My next post will explain how to recover their results, and produce probabilistic predictions in markets with almost arbitrary preferences and priorities.</p>
+</div>

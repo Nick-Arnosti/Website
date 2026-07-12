@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Unifying Model of Dynamic Matching | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>A Unifying Model of Dynamic Matching</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/05/29</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>There is a finite set of item types <span class="math inline">\(\mathcal{T}\)</span>. Items arrive according to a Poisson process of rate <span class="math inline">\(\lambda\)</span>, and each item is of type <span class="math inline">\(\tau\)</span> with probability <span class="math inline">\(p_\tau\)</span> (so items of type <span class="math inline">\(\tau\)</span> arrive according to a Poisson process with rate <span class="math inline">\(p_\tau \lambda\)</span>).</p>
+<p>While they remain in the system, agents of type <span class="math inline">\(\tau\)</span> incur linear waiting costs of <span class="math inline">\(c_{\tau} \ge 0\)</span>. These agents also depart if unmatched by their critical time. We assume that maximum sojourn times are exponentially distributed with mean <span class="math inline">\(\mu_\tau\)</span>.</p>
+<p>Let <span class="math inline">\(A(t)\)</span> denote the set of agents who have arrived up to time <span class="math inline">\(t\)</span>. For each agent <span class="math inline">\(i\)</span>, let <span class="math inline">\(\tau(i)\)</span> denote the type of <span class="math inline">\(i\)</span>.
+For each pair of agents <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> that are present concurrently, there is a match value <span class="math inline">\(v_{ij} \ge 0\)</span>. We assume that <span class="math inline">\(v_{ij}\)</span> is drawn from a distribution <span class="math inline">\(F_{\tau(i)\tau(j)}\)</span>, independently from all other match values. That is, the distribution of <span class="math inline">\(v_{ij}\)</span> depends only on the types of <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>.</p>
+</div>
+<div id="special-cases" class="section level1">
+<h1>Special Cases</h1>
+<ul>
+<li>Collina, Immorlica, Leyton-Brown, Lucier, Newman. This model with no waiting costs and deterministic match values (same as Arnosti Simon).</li>
+<li>Auad Saritac: same model as above, but with costs when agents depart or are matched (cost minimization). Show arbitrary ratio between offline optimal and online optimal for some instances. When costs satisfy triangle inequality and abandonment rates are identical, they get a constant factor approximation to ONLINE optimal. They get constant factor for reward maximization (relative to ONLINE optimal), with better constants when graph is bipartite, and better still when one side must be matched immediately (in that case, get <span class="math inline">\(1 - 1/e &gt; 1/2\)</span>).</li>
+</ul>
+<p>Assume 0-1 values:</p>
+<ul>
+<li>Akbarpour Li Gharan: one type of agent, no waiting cost, arrival rate <span class="math inline">\(\lambda = m\)</span>, departure rate <span class="math inline">\(\mu = 1\)</span>, <span class="math inline">\(v_{ij} \in {0,1}\)</span> is Bernoulli(<span class="math inline">\(d/m\)</span>).</li>
+<li>Anderson et al: same as above, but with no departures. (Their main focus is on matches involving more than two agents – i.e. 3-cycles or chains – which is not captured by this model.)</li>
+</ul>
+<p>Assume Bipartite (“Agent-Item”) matching:</p>
+<ul>
+<li>Kessel Saberi Shameli Wajc (EC22). Bipartite matching: one type is an “item”, the rest are “agents”. Agents are all infinitely impatient <span class="math inline">\(\mu = \infty\)</span>, items have some <span class="math inline">\(\mu \in (0,\infty)\)</span>. There are no waiting costs. Matching two agents together is impossible (given infinite impatience), while the value of matching an agent of a given type to an item is deterministic.</li>
+<li>Bloch Cantala: in their perfect correlation case, items have different types, and values are deterministic. In their independent case, there is one type of item. In both cases, one type of agent with <span class="math inline">\(\mu = 0\)</span> (so we don’t have a proper steady state), but we focus on the head of the queue.</li>
+<li>Leshno: items belong to two types, as do agents, values are deterministic. Agents are long-lived (<span class="math inline">\(\mu = 0\)</span>), while items must be matched immediately <span class="math inline">\((\mu = \infty)\)</span>.</li>
+<li>Schummer: one type of agent, multiple types of object. Values are deterministic, no agent departures, objects must be matched immediately.</li>
+<li>Arnosti-Shi is not a special case of this, but is trying to capture a world with heterogeneous agent types and stochastic match values.</li>
+<li>Ozkan Ward consider this as a model of ridesharing, with driver types denoting their location. (Seems like a bad model, as it doesn’t capture that drivers appear in new location once ride is complete– in other words, driver arrivals are exogenous).</li>
+</ul>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a> 2023
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

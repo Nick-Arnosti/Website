@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Market Design on b</title>
+    <link>/categories/market-design/</link>
+    <description>Recent content in Market Design on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/market-design/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lottery Glitch in NYC Public Schools</title>
+      <link>/blog/lotteryglitch/</link>
+      <pubDate>Tue, 19 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/lotteryglitch/</guid>
+      <description>The New York Post recently reported on a “lottery glitch” in the application process for New York City Public Schools. Basically, parents could see their child’s lottery number, and could get a new lottery number by cancelling and re-starting their application. This creates an obvious issue, as applications can be repeatedly canceled until the child receives a good lottery number.
+What I want to focus on, however, is the line in the article, where a Manhattan mom learned that her daughter had a good lottery number, and “decided her daughter should re-do her list by putting more desirable schools at the top.</description>
+    </item>
+    
+    <item>
+      <title>The Devilish Details of H2B Visa Lotteries</title>
+      <link>/blog/h2bvisas/</link>
+      <pubDate>Sat, 26 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/h2bvisas/</guid>
+      <description>Today I’m writing about the allocation of H2B visas. This can be thought of as a sister post to my previous writing on H1B visas, although the technical content is quite different. I describe how the H2B allocation procedure evolved from first-come first-served to a lottery. I examine the rules of the current lottery, and propose and analyze several alternative designs. I also look into recent data, which suggests that companies are finding loopholes in the application process.</description>
+    </item>
+    
+    <item>
+      <title>A Better Way to Schedule Vaccinations</title>
+      <link>/blog/schedulingvaccines/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/schedulingvaccines/</guid>
+      <description>Over the past months, eligibility for COVID-19 vaccination has expanded, and it was recently announced that all Americans are now eligible. However, just because you are eligible doesn&#39;t mean you can schedule an appointment, and I know a lot of people who have spent hours refreshing webpages in an effort to book one.
+In a previous post, I expressed concerns that the system for scheduling vaccination appointments is (i) a challenging and frustrating process, and (ii) inequitable, as the challenges are likely most acute for elderly and low-income populations that have been hardest-hit by the virus.</description>
+    </item>
+    
+    <item>
+      <title>Optimizing for Students</title>
+      <link>/futureposts/funwithda/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/funwithda/</guid>
+      <description>Increasingly, priorities viewed as design lever. Only two problems: not clear what objective is, and not clear how to achieve it.
+This post will go through a very stylized set of results.
+Designing DA Priorities Consider a market with \(n\) students and \(n\) schools, each with a single seat. We are going to assign students using the student-proposing deferred acceptance algorithm. The student preference profile \(P\) is drawn from known distribution \(D\).</description>
+    </item>
+    
+    <item>
+      <title>An Analogy Between Matching and Queueing, Part I: Modeling Approaches</title>
+      <link>/blog/queueinganalogy1/</link>
+      <pubDate>Sun, 23 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/queueinganalogy1/</guid>
+      <description>I often find myself explaining stable matching to researchers who have little background in matching, but are familiar with queueing theory. Through these conversations, I have come to realize that there are a lot of parallels between queueing and matching!
+This is the first of several blog posts that will present an extended analogy between these fields. It describes the advantages and disadvantages of several several classes of models (deterministic, stochastic, and fluid limit) that have been used for both queueing and matching.</description>
+    </item>
+    
+    <item>
+      <title>Deferred Acceptance is Unpredictable</title>
+      <link>/blog/da-predictability/</link>
+      <pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/da-predictability/</guid>
+      <description>In February 2019, the Brookings Institution published The Opportunities and Risks of K-12 Student Placement Algorithms, which includes the following quote:
+ Even if DA algorithms are relatively simple, predicting how student assignment policies will affect enrollment and outcomes is difficult.
+ In this post, I explore both parts of this claim: what makes the Deferred Acceptance (DA) algorithm simple, and why is it difficult to predict the effect of using it?</description>
+    </item>
+    
+    <item>
+      <title>Rationing Medical Supplies</title>
+      <link>/blog/rationingmedicalsupplies/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingmedicalsupplies/</guid>
+      <description>Overview The Coronavirus pandemic has resulted in a need to ration scarce medical supplies. Most people agree that test kits, ventilators, antiviral medication, and vaccines should not necessarily go to those willing to pay the most for them. States have been revising their allocation guidelines to reflect various ethical considerations.1
+One question that emerges is whether to give priority to certain categories of people, such as emergency personnel. A recent working paper by Parag Pathak, Tayfun Sonmez, Utku Unver, Bumin Yenmez examines existing guidelines, and notes that some states prioritize emergency personnel, whereas others (including my home states of New York and Minnesota) do not.</description>
+    </item>
+    
+    <item>
+      <title>How Can You Move Back on a Waiting List?</title>
+      <link>/blog/movingbackonawaitlist/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/movingbackonawaitlist/</guid>
+      <description>Changes to School Admissions in NYC New York has made some recent changes to their middle and high school admissions process. Previously, all students would submit preference lists, which were processed using a variant of the Deferred Acceptance algorithm. Students who were not admitted to any school on their list1 could apply to schools with vacancies in a second round. In addition, those who were unhappy with their assignment could participate in an opaque appeals process.</description>
+    </item>
+    
+    <item>
+      <title>Should Grants be Awarded by Lottery?</title>
+      <link>/blog/grantfunding/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/grantfunding/</guid>
+      <description>Motivation Many researchers rely on grants to fund their work. Typically, they write a proposal for a future project. Proposals are scored and ranked by a panel, and the top-ranking proposals are funded. The percentage of proposals that receive funding is referred to as the &amp;quot;payline,&amp;quot; and has fallen dramatically over time.
+Recent papers in mBio and PLOS Biology have called for a change to this process. They propose using a lottery, rather than a ranking system, to select proposals for funding.</description>
+    </item>
+    
+    <item>
+      <title>What do Toilet Paper and License Plates Have in Common?</title>
+      <link>/blog/rationingcreatesscarcity/</link>
+      <pubDate>Sun, 12 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingcreatesscarcity/</guid>
+      <description>My research usually starts from the premise that there is a shortage of some item, which triggers the need for an allocation policy. However, sometimes the allocation policy can cause a shortage – especially in the presence of uncertainty. This, in turn, results in an inefficient allocation.
+For one topical example, consider toilet paper. In normal times, people have confidence that they will be able to buy toilet paper whenever they need it.</description>
+    </item>
+    
+    <item>
+      <title>The Devilish Details of H1B Visa Lotteries</title>
+      <link>/blog/h1bvisas/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/h1bvisas/</guid>
+      <description>Today I&#39;m writing about a process that many of my friends from graduate school have faced: the lottery for H1B visas. Earlier this year, the government announced a seemingly small change to the process. This post explains the change, which will have the effect of granting more visas to applicants with advanced degrees from US institutions (and fewer to applicants without such degrees).
+Background Each year, US Citizenship and Immigration Services (USCIS) offers a total of 85,000 H1B visas: 65,000 are available to anybody, and the remaining 20,000 are only available to applicants with an advanced degree from a US institution.</description>
+    </item>
+    
+    <item>
+      <title>School Choice Lotteries</title>
+      <link>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

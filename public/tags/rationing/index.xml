@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rationing on b</title>
+    <link>/tags/rationing/</link>
+    <description>Recent content in Rationing on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/rationing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rationing Medical Supplies</title>
+      <link>/blog/rationingmedicalsupplies/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingmedicalsupplies/</guid>
+      <description>Overview The Coronavirus pandemic has resulted in a need to ration scarce medical supplies. Most people agree that test kits, ventilators, antiviral medication, and vaccines should not necessarily go to those willing to pay the most for them. States have been revising their allocation guidelines to reflect various ethical considerations.1
+One question that emerges is whether to give priority to certain categories of people, such as emergency personnel. A recent working paper by Parag Pathak, Tayfun Sonmez, Utku Unver, Bumin Yenmez examines existing guidelines, and notes that some states prioritize emergency personnel, whereas others (including my home states of New York and Minnesota) do not.</description>
+    </item>
+    
+  </channel>
+</rss>

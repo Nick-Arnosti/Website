@@ -1,0 +1,67 @@
+---
+title: "Question from Kris Iyer"
+author: "Nick Arnosti"
+date: '2025-04-05'
+output: html
+draft: true
+---
+
+#Question
+
+There are $n$ agents. Each agent $i$ has a unique endowed object $o_i$. Let $\mathcal{O} = \bigcup_i o_i$ be the set of objects. Each agent has a utility function $u_i : \mathcal{O} \rightarrow [0,1]$. We assume strict preferences, meaning that for any two objects $o,o' \in \mathcal{O}$ and any $i$, $u_i(o) \neq u_i(o')$.
+
+A mechanism takes as input the $u_i$, and produces a randomized assignment (a distribution over assignments). We say that a mechanism is {\em ordinal} if this distribution depends only on the ordinal ranking $\succ_i$ induces by $u_i$ (that is, if $u_i$ and $u_i'$ correspond to the same ordinal ranking, then the mechanism produces the same randomized assignment).
+
+A mechanism $\pi$ is truthful if for all $u_i$ and deviating report $u_i'$, $\sum_{o} u_i(o) \pi_i(o; u_i) \ge \sum_{o} u_i(o) \pi_i(o; u_i')$.
+
+A mechanism is (ex post) Pareto efficient and Individually Rational if it only places positive mass on Pareto efficient and Individually Rational allocations. (One could imagine only requiring ex ante IR, but in many contexts, it would be easy for agents to deviate if not ex post IR.)
+
+A celebrated result of Ma (1994) says that there is a unique ordinal mechanism that is Pareto efficient, Individually Rational, and Truthful, and it is TTC.
+
+The question: could there be a non-ordinal mechanism that satisfies the other three properties?
+
+# Example: Truthful + IR + non-ordinal
+
+As a starting point, let us construct a non-ordinal mechanism that is truthful and individually rational. There are three agents (1, 2, 3) endowed with objects (a, b, c).
+
+If 1 ranks $c$ above $a$ and 2 ranks $c$ above $b$, then offer 3 the choice between the following:
+
+* abc with probability 1
+* acb with probability 1
+* cba with probability 0.5 and abc with probability 0.5
+
+If either 1 or 2 prefers their own object to $c$, then give every agent their endowment (abc).
+
+This is clearly individually rational. It is also truthful for 3 (who either has no agency or gets to choose most preferred bundle) and for 1 and 2 (if they prefer $c$ to their object, they want to enable trades; if they do not, then enabling trades cannot help them). Finally, it is not ordinal. Note that if $c$ reports utilities $u(a) = 1, u(b) = 0.9, u(c) = 0$ then the mechanism selects acb, but if $u(b) = 0.1$, then the mechanism selects the coin flip between cba and abc. Note that these two reports imply the same ordinal preferences.
+
+#Example: Truthful + PE + non-ordinal
+
+This gets harder to construct. Here are some thoughts.
+
+If 1 reports $b > c > a$ and 2 reports $a > c > b$, then regardless of the report of 3, there are (at most) 3 possible Pareto efficient allocations: bca, cab, and bac.
+
+In this case, I want to offer agent 3 a choice between the following:
+
+* bac with probability 1
+* cab with probability 1
+* bca with probability 0.5 and bac with probability 0.5
+
+Note that in some cases (some preferences of Agent 3), some of these options are not Pareto efficient, but in these cases, the non-PE allocations are never chosen. (For example, if Agent 3 ranks c first, then only bac is Pareto efficient, but this is the option chosen by Agent 3).
+
+It is clear that this mechanism is not ordinal: if agent 3 ranks objects $a > b > c$, then their choice between the second and third option depends on the exact utility value $u_3(b)$.
+
+However, it's not obvious how to extend this idea into a Truthful + PE mechanism. In particular, we can't simply say "in other cases, give agents their endowment" (like we could in the preceding example) because this might not be PE.
+
+
+# Tasks
+
+1. Construct a non-ordinal mechanism that is PE + Truthful (but need not be IR).
+
+2. Construct a non-ordinal mechanism that is PE + Truthful + IR.
+
+
+# Related (but not directly)
+
+Get a clean characterization of RSD in a setting without endowments. Say that a mechanism is ex post truthful if it randomizes over truthful deterministic mechanisms. Ex post truthful obviously implies other notions of truthfulness, but is not implied by them (see earlier blog post using example from Unver and Pycia).
+
+Is any mechanism that is ex post PE, ex post IR and ex post truthful equivalent to RSD?

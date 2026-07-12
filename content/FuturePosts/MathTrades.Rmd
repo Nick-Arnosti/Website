@@ -1,0 +1,58 @@
+---
+title: 'Organizing Board Game Swaps'
+date: "2021-12-4"
+author: Nick Arnosti
+draft: true
+---
+
+#Motivation
+
+People familiar with matching theory often study the "Top Trading Cycles" algorithm. Usually, the motivation is that a bunch of people own a home, and want to swap homes. But how often have you heard of homes being swapped without cash also trading hands? 
+
+A variant of Top Trading Cycles was also used to assign students to public schools in New Orleans for a single year, before it was abandoned in favor of Deferred Acceptance.
+
+This post will discuss a setting where TTC could truly be used (not to mention one close to my heart): swapping board games.
+
+Background on Math Trades (including how name came about?). Be sure to mention that it's 1:1 swaps (not 2:1, or 1+cash:1)
+
+
+# Simplified Math Trade
+
+Assume each agent brings only one game to trade (we'll discuss the more realistic case later).  Agents indicate which games they would be willing to swap for. (Maybe mention here that they list individual listings, not games, so may end up listing multiple copies of the same game.)
+
+Current algorithm maximizes trades. Go through example from slides: will choose one of the three person trades. But which one? TradeMaximizer allows people to actually submit rankings, and breaks ties in favor of minimizing total sum of ranks.
+
+Note that this may not be IC, not in core. 
+
+Given that they are already collecting information for TTC, could just run it! Unique allocation that is in the core.
+
+
+
+# Additional Complexity
+
+People actually bring multiple games. Even if we maintain that you must give up the same number of games that you receive, this moves from ranking individual games to ranking sets of games -- much harder to report preferences!
+
+They deal with this by essentially treating each game as though offered by a new player. This avoids complications, but may still seem "too" flexible: why have people input rankings for each game, rather than just once? This global ranking could include all of their own games. Plausible that people want this flexibility (i.e. my collection should include one strategy game and one party game, so only want to trade like for  like). Again, empirical question of how simple lists submitted for different games from same owner are.
+
+However, there is one interaction effect that they can't ignore: clearly, you might not want to get multiple copies of the same game. This might happen, given treating them as independent. Describe clever way that they avoid duplicates.
+
+# Discussion: Should they use TTC?
+
+Even with all these complexities, they are collecting the right information to use TTC. (And it's consistent with how things work -- would hardly be noticeable.)
+
+Should they do this? I don't know. Current system seems to work okay, and nobody is too worried about IC (academics worry more than they need to). Would be interesting to get access to data, and compare number of  trades undenr both systems (holding reports fixed).
+However, hard to truly evaluate: whole premise is that data may not be valid! What if lack of IC causes people to leave off lower ranked games, in order to have higher chance of getting their most-preferred? 
+
+
+# Notes From My Experience
+
+Initially: really overwhelming to go through huge list of 3000 items! I just ended up searching for games over 8.0, because I knew how to do that. 
+
+Interface: check box of games you're willing to trade for this.
+
+Ability to put in values as a means of generating rankings. Nice, but took me a bit to figure out. Seems to hardcode identical rankings for different games of yours, though maybe there is a way to adjust. At the very least, can list only a subset.
+
+Duplicates: interface is somewhat confusing. Would be especially confusing if I didn't have a clear understanding of how it's supposed to work. I think I figured it out/did it right, but not 100%. Also, should be less manual/more automatic.
+
+Pre-trades: I like this idea. Can tell me if I am aiming too high (or could cut some things from my list).
+

@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Surprising Effectiveness of Linear Approximation | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>The Surprising Effectiveness of Linear Approximation</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2025/09/18</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>A key idea from calculus – used frequently in optimization – is that we can use linear functions to locally approximate complicated non-linear functions. This post will illustrate the effectiveness of this approach for a very specific function, the square root (maintaining some continuity with my <a href="https://nickarnosti.com/blog/approximatingsquareroots/">previous post</a>).</p>
+<div id="estimating-square-roots-to-the-nearest-integer" class="section level1">
+<h1>Estimating Square Roots to the Nearest Integer</h1>
+<p>Let’s start with the following goal: find the integer closest to <span class="math inline">\(\sqrt{28}\)</span>. This is the type of problem that my wife gives to her middle school students. The answer is clearly either 5 or 6, since <span class="math inline">\(5^2 = 25 &lt; 28 &lt; 36 = 6^2\)</span>. But is <span class="math inline">\(\sqrt{28}\)</span> closer to <span class="math inline">\(5\)</span> or to <span class="math inline">\(6\)</span>?</p>
+<p>We are asking whether <span class="math inline">\(\sqrt{28}\)</span> is bigger or less than <span class="math inline">\(5.5\)</span>, or equivalently, whether <span class="math inline">\(28\)</span> is bigger or less than <span class="math inline">\(5.5^2\)</span>. We can solve this by calculating <span class="math inline">\(5.5^2 = 121/4 = 30.25 &gt; 28\)</span>, so therefore <span class="math inline">\(5.5 &gt; \sqrt{28}\)</span>, and thus <span class="math inline">\(\sqrt{28}\)</span> is closer to <span class="math inline">\(5\)</span> than to <span class="math inline">\(6\)</span>. This method works, but requires squaring a fraction (which middle schoolers hate).</p>
+<p>When my wife teaches methods for estimating square roots, she gives her students the following shortcut: Since <span class="math inline">\(28\)</span> is closer to <span class="math inline">\(5^2 = 25\)</span> than <span class="math inline">\(6^2 =36\)</span>, conclude that <span class="math inline">\(\sqrt{28}\)</span> is closer to <span class="math inline">\(5\)</span> than to <span class="math inline">\(6\)</span>.</p>
+<p>The shortcut gets the right answer in this case, but when I heard about it, I was suspicious. Asking whether <span class="math inline">\(\sqrt{n}\)</span> is closer to <span class="math inline">\(5\)</span> than <span class="math inline">\(6\)</span> is <em>not</em> the same as asking whether <span class="math inline">\(n\)</span> is closer to <span class="math inline">\(5^2\)</span> than <span class="math inline">\(6^2\)</span>. Or is it?</p>
+<p>It turns out that for any integer <span class="math inline">\(n\)</span>, the shortcut will get the right answer! We can see this algebraically. Let’s say that <span class="math inline">\(n\)</span> is in between <span class="math inline">\(k^2\)</span> and <span class="math inline">\((k+1)^2\)</span>. The shortcut says to compare <span class="math inline">\(n\)</span> to the average of <span class="math inline">\(k^2\)</span> and <span class="math inline">\((k+1)^2\)</span>, which is <span class="math inline">\(k^2 + k + 1/2\)</span>. The correct approach is to compare <span class="math inline">\(n\)</span> to <span class="math inline">\((k+1/2)^2 = k^2 + k + 1/4\)</span>. While these two thresholds are not identical, there are no integers between them, so they yield the same answer for any integer <span class="math inline">\(n\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="estimating-square-roots-by-linear-interpolation" class="section level1">
+<h1>Estimating Square Roots by Linear Interpolation</h1>
+<p>What if we want an even better estimate of <span class="math inline">\(\sqrt{28}\)</span>? Linear interpolation is our friend again! Since <span class="math inline">\(28\)</span> is <span class="math inline">\(3/11\)</span> of the way from <span class="math inline">\(5^2 = 25\)</span> to <span class="math inline">\(6^2 = 36\)</span>, we will estimate <span class="math inline">\(\sqrt{28} \approx 5 + 3/11\)</span>.</p>
+<!--
+approximate something like $S = \sqrt{5} + \sqrt{6} + \sqrt{7} + \sqrt{8}$? We already know (from before) that $\sqrt{5}, \sqrt{6}$ are less than $2.5$ and $\sqrt{7}, \sqrt{8}$ are more. Therefore, we have that
+\[ 9 = 2 + 2 + 2.5 + 2.5 < S < 2.5 + 2.5 + 3 + 3 = 11.\]
+But is the sum $S$ bigger or less than $10$?
+
+
+Here again, linear interpolation is our friend. Since $5$ is one-fifth of the way from $2^2$ to $3^2$, we will approximate $\sqrt{5}$ by $2 + 1/5$. Similarly, we will approximate $\sqrt{6} \approx 2 + 2/5$, $\sqrt{7} \approx 2 + 3/5$, $\sqrt{8} \approx 2 + 4/5$. Therefore, $S \approx 8 + 1/5 + 2/5 + 3/5 + 4/5 = 10$. Furthermore, because $f(x) = \sqrt{x}$ is concave, we know that this linear interpolation gives an *under-estimate* of each term, so $S$ must be bigger than $10$. (In fact, it is approximately 10.16.)
+-->
+<p>More generally, if we know that <span class="math inline">\(n = k^2 +j &lt; (k+1)^2\)</span>, then the linear interpolation estimates that
+<span class="math display">\[\sqrt{n} \approx k + \frac{j}{2k+1}.\]</span>
+In the previous example with <span class="math inline">\(n = 28\)</span>, we have <span class="math inline">\(k = 5\)</span> and <span class="math inline">\(j = 3\)</span>.</p>
+<p>That’s our estimate, but how good is it? First of all, because <span class="math inline">\(f(x) = \sqrt{x}\)</span> is concave, we know that this method always gives an <strong>under-estimate</strong>. To see how much we miss by, we need to do some more algebra. Let <span class="math inline">\(\sqrt{n} = k+\delta\)</span> for some <span class="math inline">\(\delta \in (0,1)\)</span>. Then
+<span class="math display">\[k^2 + j = n = (k+\delta)^2 = k^2 + 2k\delta + \delta^2,\]</span>
+so we have <span class="math inline">\(j = 2k\delta + \delta^2\)</span>. This means that our error is
+<span class="math display">\[\begin{align*}
+\sqrt{n} - (k + \frac{j}{2k+1})  &amp; = (k+\delta) - (k + \frac{j}{2k+1}) \\
+&amp; = \delta - \frac{j}{2k+1} \\
+&amp; = \delta - \frac{2k\delta + \delta^2}{2k+1} \\
+&amp; = \frac{\delta(1-\delta)}{2k+1} \\
+&amp; \le \frac{1}{8k+4},
+\end{align*}\]</span>
+where the final inequality uses the fact that for any <span class="math inline">\(\delta\)</span> we have <span class="math inline">\(\delta(1-\delta) \le 1/4\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>This approximation method can be used on all sorts of problems involving square roots, but it is especially nice for estimating sums of consecutive square roots. Suppose that we want to estimate
+<span class="math display">\[S = \sqrt{100} + \sqrt{101} + ... + \sqrt{121}.\]</span>
+The linear interpolation approach says, “There are 22 terms here. The first is 10, the last is 11, so on average they are about <span class="math inline">\(10.5\)</span>. Multiply <span class="math inline">\(22 \times 10.5\)</span> to get <span class="math inline">\(S \approx 231\)</span>.”</p>
+<p>This logic (and the associated calculation) are extremely simple, yet also very accurate! The analysis we just did tells us that (i) this is an under-estimate, and (ii) the error in estimating each term is at most <span class="math inline">\(1/(8k+4)\)</span> (in this example, <span class="math inline">\(k = 10\)</span>). We have only <span class="math inline">\(2k\)</span> terms with any error (we get the first and last terms exactly). Therefore, the <em>total</em> error in our estimate is at most <span class="math inline">\(2k/(8k+4) &lt; 1/4\)</span>. In other words, we know that <span class="math inline">\(S\)</span> must be between <span class="math inline">\(231\)</span> and <span class="math inline">\(231.25\)</span>. Woah! That’s a very tight range.
+<!--(For those too lazy to get their calculator, $S = 231.166...$)--></p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>This trick sadly does not work for cube roots: <span class="math inline">\(4\)</span> is closer to <span class="math inline">\(1^3 = 1\)</span> than to <span class="math inline">\(2^3 = 8\)</span>, but <span class="math inline">\(\sqrt[3]{4} \approx 1.59\)</span> is closer to <span class="math inline">\(2\)</span> than to <span class="math inline">\(1\)</span>. Many other counter-examples exist as well.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Credit to ChatGPT for helping to come up with this clean argument.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

@@ -1,0 +1,16 @@
+---
+title: 'The Virtues of Random Priority'
+date: '2022-01-29'
+author: Nick Arnosti
+---
+
+I've decided to try a video blog! My first video is on an amazing and fundamental open question, and is intended for a general audience.
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "7bF87e4VcmI")
+```
+
+I'd love to hear any thoughts you have on this new format!
+
+**Note:** Since this video was created, I have learned of a paper by Aytek Erdil which resolves this question for a particular definition of truthfulness. The question remains open if we use a slightly stronger definition. If you're interested, read my posts discussing the [details of Erdil's result](https://nickarnosti.com/blog/rp_resolved/) and the [different definitions of truthfulness](https://nickarnosti.com/blog/exanteexpost/).
+

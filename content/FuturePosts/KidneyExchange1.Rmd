@@ -1,0 +1,410 @@
+---
+title: "Kidney Exchange Pools"
+author: "Nick Arnosti"
+date: "2024-03-31"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+header-includes:
+- \usepackage{tikz}
+- \usetikzlibrary{arrows.meta}
+- \usepackage{array}
+draft: true
+---
+
+
+
+Monthly batching. At the end of each month, you have a directed graph. Maximize total matches. 
+
+
+<!--Let $D$ be the graph representing who can give to who. That is $D[i,j] = 1$ if and only if -->
+
+Let $S$ be the set of patient-donor pairs. 
+
+Let $C \subset S\times S$ be the set of compatible pairs. That is $(i,j) \in C$ means that the donor from pair $i$ can give to the patient from pair $j$. $\color{red}{\text{Represent with compatibility graph?}}$
+
+We want to some up with a transplant plan $T \subset C$. It will be convenient to let this plan be represented by a set of variables $x[i][j] \in {0,1}$, where $x[i,j] = 1$ means that $(i,j) \in T$ (that is, $i$ donates to $j$) and $x[i,j] = 0$ means that $(i,j) \not\in T$.
+
+\begin{align}
+\max \sum_{i,j} x[i,j] & \text{Maximize total transplants} \\
+\hspace{0.5 in}  x[i,j] \le C[i,j]  & \forall i,j \in S  \hspace{.5 in} \text{Transplants can occur only between compatible patients and donors} \\
+\hspace{0.5 in} \sum_{j} x[i,j] \le 1  & \forall i \in S  \hspace{.5 in} \text{Each donor can give to at most one recipient} \\
+\hspace{0.5 in} \sum_{j} x[j,i] \le 1  & \forall i \in S  \hspace{.5 in}  \text{Each patient can receive from at most one donor} \\
+\hspace{0.5 in} \sum_{j} x[i,j] \le \sum_{j} x[j,i] & \forall i \in S \hspace{.5 in} \text{Each donor gives only if their patient receives} \\
+\end{align}
+
+This is an integer programming problem with linear constraints and objectives. $\color{blue}{\text{Natural question: if we relax integrality constraint, is it naturally integral? Intuitively and based on simulations, yes. But total unimodularity is a total mystery to me.}}$
+
+$\color{red}{\text{Construct bipartite graph.}}$
+
+Given the directed graph $G$, construct the following (undirected) bipartite graph $(D,P)$, where $D$ represents the set of donors and $P$ represents the set of patients. 
+
+We have the following neat observation: if $M$ is a perfect matching in the bipartite graph $(D,P)$ (meaning that every vertex in $M$ is matched), then $M$ corresponds to a set of disjoint cycles in $G$. Let's do an example. 
+
+$\color{red}{\text{Solve maximum weight bipartite matching (i.e. with Hungarian algorithm -- can go into that).}}$
+
+
+In practice, it's illegal to write a contract involving the donation of a kidney. Thus, if patient A receives a kidney before donor A gives one, donor A could in theory back out of any planned donation with no ramifications. For this reason, cycles are generally completed using simultaneous surgeries. A two-way exchange requires four surgical teams and operating rooms. A three-way exchange requires six surgical teams. For this reason, most exchanges limit the length of cycle that can be used. 
+
+Let's start with the case of 2-way cycles. We can modify the program above to add the following constraint:
+\begin{equation} x[i,j] = x[j,i] \end{equation}
+This enforces that we can only do 2-cycles by requiring that if $i$ donates to $j$, then $j$ donates to $i$.
+
+Now, the relaxation into a linear program is definitely not integral. Consider the following example, with three pairs. Any donor can donate to both of the other patients. Because there are only three pairs and we are restricted to two-way exchanges, the best we can do is match two of the three pairs. 
+```{r tikz-edges, results='asis', echo=FALSE}
+# Define adjacency matrices M (perfect matching) and G (all edges)
+generate_random_perfect_matching_matrix <- function(n) {
+  repeat {
+    permutation <- sample(n)
+    if (!any(permutation == 1:n)) {
+      M <- matrix(0, nrow = n, ncol = n)
+      M[cbind(1:n, permutation)] <- 1
+      return(M)
+    }
+  }
+}
+
+set_non_diagonal_zeros_to_ones <- function(M, k) {
+  non_diagonal_zeros <- which(M == 0 & row(M) != col(M), arr.ind = TRUE)
+  
+  if (nrow(non_diagonal_zeros) < k) {
+    stop("Not enough non-diagonal zeros to change.")
+  }
+  
+  selected_indices <- sample(nrow(non_diagonal_zeros), k)
+  M[non_diagonal_zeros[selected_indices,]] <- 1
+  
+  return(M)
+}
+
+generate_bipartite_graph_tikz_figure <- function(G, M = 0*G) {
+  n <- nrow(G) # Assuming M and G are square and of the same size
+  cat("\\begin{tikzpicture}[vertex/.style={circle,draw,minimum size=1.5em}, matched/.style={line width=2pt}, unmatched/.style={}]\n")
+  
+  for (i in 1:n) {
+    cat(sprintf("\\node[vertex] (D%d) at (2*%d,3) {D%d};\n", i, i, i))
+    cat(sprintf("\\node[vertex] (P%d) at (2*%d,0) {P%d};\n", i, i, i))
+  }
+  
+  matched_edges <- which(M == 1, arr.ind = TRUE)
+  if (length(matched_edges) > 0) {
+    for (idx in 1:nrow(matched_edges)) {
+      cat(sprintf("\\draw[matched] (D%d) -- (P%d);\n", matched_edges[idx, "row"], matched_edges[idx, "col"]))
+    }
+  }
+  
+  unmatched_edges <- which(G == 1 & M == 0, arr.ind = TRUE)
+  if (length(unmatched_edges) > 0) {
+    for (idx in 1:nrow(unmatched_edges)) {
+      cat(sprintf("\\draw[unmatched] (D%d) -- (P%d);\n", unmatched_edges[idx, "row"], unmatched_edges[idx, "col"]))
+    }
+  }
+  
+  cat("\\end{tikzpicture}\n\n")
+}
+
+
+generate_directed_graph_tikz_figure <- function(G,M=G*0) {
+  n <- nrow(G) # Assuming M and G are square and of the same size
+  radius <- 3  # Radius of the circle on which vertices are placed
+  cat("\\begin{tikzpicture}[vertex/.style={circle,draw,minimum size=1.5em}, matched/.style={-Stealth, line width=2pt}, unmatched/.style={-Stealth}]\n")
+  
+  # Calculate positions and draw vertices
+  for (i in 1:n) {
+    angle <- 90 - 360 * (i - 1) / n
+    x <- radius * cos(angle * pi / 180)
+    y <- radius * sin(angle * pi / 180)
+    cat(sprintf("\\node[vertex] (V%d) at (%f,%f) {V%d};\n", i, x, y, i))
+  }
+  
+  # Draw matched and unmatched edges
+  matched_edges <- which(M == 1, arr.ind = TRUE)
+  if(length(matched_edges)>0){
+    for (idx in 1:nrow(matched_edges)) {
+      cat(sprintf("\\draw[matched] (V%d) -- (V%d);\n", matched_edges[idx, "row"], matched_edges[idx, "col"]))
+    }
+  }
+
+  
+  unmatched_edges <- which(G == 1 & M == 0, arr.ind = TRUE)
+  if(length(unmatched_edges)>0){
+    for (idx in 1:nrow(unmatched_edges)) {
+      cat(sprintf("\\draw[unmatched] (V%d) -- (V%d);\n", unmatched_edges[idx, "row"], unmatched_edges[idx, "col"]))
+    }
+  }
+  
+  cat("\\end{tikzpicture}\n\n")
+}
+
+
+generate_constraint_matrix <- function(G) {
+  n <- nrow(G)  # Number of vertices
+  edges <- which(G == 1, arr.ind = TRUE)
+  num_edges <- nrow(edges)
+  
+  # Initialize the constraint matrix A and RHS vector b
+  # 2n constraints for incoming and outgoing, n constraints for balance
+  A <- matrix(0, nrow = 3 * n, ncol = num_edges)
+  b <- c(rep(1, 2 * n), rep(0, n))  # Outgoing, Incoming constraints <= 1, balance constraints <= 0
+  
+  # Labeling columns (variables x_ij)
+  #col_labels <- paste0("x[", edges[, "row"], ",", edges[, "col"], "]")
+  col_labels <- paste0("x", edges[, "row"], edges[, "col"])
+
+  # Setting up the constraints
+  for (vertex in 1:n) {
+    # Outgoing edge constraints for vertex
+    outgoing <- which(edges[, "row"] == vertex)
+    A[vertex, outgoing] <- 1  # Each vertex can have at most one outgoing edge
+    
+    # Incoming edge constraints for vertex
+    incoming <- which(edges[, "col"] == vertex)
+    A[n + vertex, incoming] <- 1  # Each vertex can have at most one incoming edge
+    
+    # Balance constraints: Outgoing - Incoming <= 0
+    A[2 * n + vertex, outgoing] <- 1   # Add 1 for outgoing edges
+    A[2 * n + vertex, incoming] <- -1  # Subtract 1 for incoming edges
+  }
+  
+  # Generate row labels
+  outgoing_labels <- paste("Donate", 1:n)
+  incoming_labels <- paste("Receive", 1:n)
+  balance_labels <- paste("IR", 1:n)
+  row_labels <- c(outgoing_labels, incoming_labels, balance_labels)
+  
+  list(A = A, b = b, col_labels = col_labels, row_labels = row_labels)
+}
+
+#By default, assumes cycles of unbounded length, and no altruistic donors
+generate_constraint_matrix <- function(G, altruistic = c(), pairwise_only = FALSE) {
+  n <- nrow(G)  # Number of vertices
+  edges <- which(G == 1, arr.ind = TRUE)
+  num_edges <- nrow(edges)
+  
+  # Calculate the total number of constraints
+  total_constraints <- 2 * n + ifelse(pairwise_only, num_edges, n - length(altruistic))
+  
+  # Initialize the constraint matrix A, RHS vector b, and inequalities vector
+  A <- matrix(0, nrow = total_constraints, ncol = num_edges)
+  b <- c(rep(1, 2 * n), rep(0, total_constraints - 2 * n))  # Adjust b based on the number of constraints
+  inequalities <- c(rep("$\\leq$", total_constraints))  # Default inequality
+  
+  # Labeling columns (variables x_ij)
+  col_labels <- paste0("x", edges[, "row"], edges[, "col"])
+
+  # Setting up the constraints
+  # Outgoing and Incoming Edge Constraints
+  for (vertex in 1:n) {
+    # Outgoing edge constraints for vertex
+    outgoing <- which(edges[, "row"] == vertex)
+    A[vertex, outgoing] <- 1
+    
+    # Incoming edge constraints for vertex
+    incoming <- which(edges[, "col"] == vertex)
+    A[n + vertex, incoming] <- 1
+  }
+  
+  # Balance Constraints (excluding altruistic vertices)
+  balance_constraints_start <- 2 * n + 1
+  for (vertex in setdiff(1:n, altruistic)) {
+    outgoing <- which(edges[, "row"] == vertex)
+    incoming <- which(edges[, "col"] == vertex)
+    A[balance_constraints_start, outgoing] <- 1
+    A[balance_constraints_start, incoming] <- -1
+    balance_constraints_start <- balance_constraints_start + 1
+  }
+  
+  # Pairwise Constraints (if applicable)
+  # This could not work well if G[i,j] \neq G[j,i], as we only create variables for edges present in the graph. Thus, expressing the pairwise constraint could be difficult.
+  if (pairwise_only) {
+    pairwise_constraints_start <- balance_constraints_start
+    for (e in 1:num_edges) {
+      A[pairwise_constraints_start, e] <- 1
+      corresponding_edge <- which(edges[, "row"] == edges[e, "col"] & edges[, "col"] == edges[e, "row"])
+      if (length(corresponding_edge) == 1) {
+        A[pairwise_constraints_start, corresponding_edge] <- -1
+        #inequalities[pairwise_constraints_start] <- "="  # Set equality for pairwise constraints
+      }
+      pairwise_constraints_start <- pairwise_constraints_start + 1
+    }
+  }
+  
+  # Generate row labels
+  outgoing_labels <- paste("Donate", 1:n)
+  incoming_labels <- paste("Receive", 1:n)
+  balance_labels <- setdiff(paste("IR", 1:n), paste("IR", altruistic))
+  pairwise_labels <- if (pairwise_only) paste("Pairwise", edges[, "row"], edges[, "col"]) else character()
+  row_labels <- c(outgoing_labels, incoming_labels, balance_labels, pairwise_labels)
+  
+  list(A = A, inequalities = inequalities,b = b, col_labels = col_labels, row_labels = row_labels) 
+}
+
+
+generate_constraint_matrix <- function(G, altruistic = c(), pairwise_only = FALSE) {
+    n <- nrow(G)  # Number of vertices
+    edges <- which(G == 1, arr.ind = TRUE)
+    num_edges <- nrow(edges)
+    
+    # Initial count of constraints includes outgoing, incoming, and balance for each vertex
+    num_constraints <- 2 * n + n - length(altruistic)
+    
+    # Adjust for additional pairwise constraints
+    additional_constraints <- 0
+    if (pairwise_only) {
+        for (e in 1:num_edges) {
+            i <- edges[e, "row"]
+            j <- edges[e, "col"]
+            # Add a constraint for unidirectional edges or for bidirectional edges with i < j to avoid duplication
+            if (G[i,j] == 1 && G[j,i] == 0 || (G[i,j] == 1 && G[j,i] == 1 && i < j)) {
+                additional_constraints <- additional_constraints + 1
+            }
+        }
+    }
+    # Total constraints now also includes the additional pairwise constraints
+    num_constraints <- num_constraints + additional_constraints
+    
+    A <- matrix(0, nrow = num_constraints, ncol = num_edges)
+    b <- c(rep(1, 2 * n), rep(0, n - length(altruistic) + additional_constraints))
+    inequalities <- rep("$\\leq$", num_constraints)
+    col_labels <- paste0("x", edges[, "row"], edges[, "col"])
+    row_labels <- vector("character", num_constraints)
+    
+    # Populate row labels for outgoing, incoming, and balance constraints
+    row_labels[1:n] <- paste("Donate", 1:n)
+    row_labels[(n + 1):(2 * n)] <- paste("Receive", 1:n)
+    balance_start <- 2 * n + 1
+    balance_end <- balance_start + n - length(altruistic) - 1
+    row_labels[balance_start:balance_end] <- paste("IR", setdiff(1:n, altruistic))
+    
+    # Setup matrix A for outgoing and incoming constraints
+    for (vertex in 1:n) {
+        outgoing <- which(edges[, "row"] == vertex)
+        A[vertex, outgoing] <- 1  # Outgoing
+        
+        incoming <- which(edges[, "col"] == vertex)
+        A[n + vertex, incoming] <- 1  # Incoming
+    }
+    
+    # Setup matrix A for balance constraints, excluding altruistic vertices
+    balance_index <- 2 * n + 1
+    for (vertex in setdiff(1:n, altruistic)) {
+        outgoing <- which(edges[, "row"] == vertex)
+        incoming <- which(edges[, "col"] == vertex)
+        A[balance_index, outgoing] <- 1
+        A[balance_index, incoming] <- -1
+        balance_index <- balance_index + 1
+    }
+    
+    # Setup matrix A for pairwise constraints
+    if (pairwise_only) {
+        pairwise_index <- balance_index
+        for (e in 1:num_edges) {
+            i <- edges[e, "row"]
+            j <- edges[e, "col"]
+            if (G[i,j] == 1 && G[j,i] == 0) {
+                A[pairwise_index, e] <- 1
+                b[pairwise_index] <- 0
+                inequalities[pairwise_index] <- "$=$"
+                row_labels[pairwise_index] <- paste("Pairwise", i, j)
+                pairwise_index <- pairwise_index + 1
+            } else if (G[i,j] == 1 && G[j,i] == 1 && i < j) {
+                corresponding_edge_idx <- which(edges[, "row"] == j & edges[, "col"] == i)
+                A[pairwise_index, e] <- 1
+                A[pairwise_index, corresponding_edge_idx] <- -1
+                b[pairwise_index] <- 0
+                inequalities[pairwise_index] <- "$=$"
+                row_labels[pairwise_index] <- paste("Pairwise", i, j)
+                pairwise_index <- pairwise_index + 1
+            }
+        }
+    }
+    
+    list(A = A, b = b, col_labels = col_labels, row_labels = row_labels, inequalities = inequalities)
+}
+
+
+
+print_constraints_with_rhs <- function(A, row_labels, col_labels, inequalities, b) {
+  # Check if the length of inequalities vector matches the number of rows in A
+  if (length(inequalities) != nrow(A)) {
+    stop("The length of the inequalities vector must match the number of rows in A.")
+  }
+  
+  column_width <- "1cm"  # Adjust this based on your content and preference
+  rhs_column_width <- "1cm"  # Adjust as needed
+  
+  # Start the tabular environment with column specifications
+  cat("\\begin{tabular}{r")  # 'r' for the first column (row names) to be right-aligned
+  # Add specifications for other columns (variables)
+  for (i in 1:length(col_labels)) {
+    cat(" >{\\raggedleft\\arraybackslash}p{", column_width, "}")
+  }
+  # Add specifications for inequality and RHS columns, no header needed
+  cat(">{\\raggedleft\\arraybackslash}p{2cm}")  # for the inequality column
+  cat(">{\\raggedleft\\arraybackslash}p{", rhs_column_width, "}")  # for the RHS values
+  cat("}\n")
+  
+  # Print the header row with column names (leave last two headers blank)
+  cat("\\textbf{Constraint} & ", paste("\\textbf{", col_labels, "}", sep="", collapse=" & "), " & & \\\\\\hline\n")
+  
+  # Iterate over each row to print its contents along with inequalities and RHS values
+  for (i in 1:nrow(A)) {
+    # Prepare the content of the row by marking non-zero elements
+    row_content <- sapply(1:ncol(A), function(j) {
+      if (A[i, j] != 0) {
+        return(as.character(A[i, j]))
+      } else {
+        return("")
+      }
+    })
+    # Combine the row label, its content, inequality, and RHS value, then print
+    cat(row_labels[i], " & ", paste(row_content, collapse=" & "), " & ", inequalities[i], " & ", b[i], " \\\\\n")
+  }
+  
+  # End the tabular environment
+  cat("\\end{tabular}\n\n")
+}
+
+
+G = rbind(c(0,0,1,0,1,0),c(1,0,0,0,0,0),c(0,1,0,1,0,0),c(0,0,0,0,1,0),c(0,0,1,0,0,1),c(1,0,0,0,0,0))
+#Generating a drawing of the graph associated with G
+generate_directed_graph_tikz_figure(G)
+
+G = rbind(c(0,1,1),c(1,0,1),c(1,1,0))
+#Generating a drawing of the graph associated with G
+generate_directed_graph_tikz_figure(G)
+
+# Printing the constraint matrix A with row and column names
+result <- generate_constraint_matrix(G,pairwise_only=TRUE)
+print_constraints_with_rhs(result$A, result$row_labels, result$col_labels, result$inequalities, result$b)
+```
+
+
+
+
+Hello World
+
+```{r example, results='asis', echo=FALSE}
+# Generate random graph and matching, then call the function to print the TikZ commands
+set.seed(2024)
+n = 7
+k = 14
+M <- generate_random_perfect_matching_matrix(n)
+G <- set_non_diagonal_zeros_to_ones(M,k)
+generate_directed_graph_tikz_figure(G)
+generate_directed_graph_tikz_figure(G,M)
+generate_bipartite_graph_tikz_figure(G,M)
+```
+
+
+
+Things to consider in optimization class:
+
+* In general undirected graph, say that a set of agents is feasible if there is a matching that matches them all. The family of feasible sets of agents forms a matroid. Therefore (i) every Pareto efficient matching has equal size, (ii) We can use a greedy algorithm to find a max weight matching (still need to go into some details).
+* Could define weight of an edge to be sum of weights of its two vertices, and then use a greedy algorithm to select edges. This will lead to a maximal matching (thus within 1/2 of maximum cardinality matching), and also should lead to within 1/2 of maximum weight matching.
+* Matroids, greedy algorithms, linear programming, LP relaxations, hierarchy, bi-hierarchy, polynomial time, NP hardness and reductions, 
+
+
+
+

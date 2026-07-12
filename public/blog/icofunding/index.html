@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to Raise Money for Your Startup | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>How to Raise Money for Your Startup</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2019/11/18</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p><span class="math inline">\(\newcommand{\fbar}{\overline{F}}\)</span> <span class="math inline">\(\newcommand{\E}{\mathbb{E}}\)</span></p>
+<div id="motivation" class="section level1">
+<h1><span class="header-section-number">1</span> Motivation</h1>
+<p>At INFORMS, I saw a talk by <a href="https://oid.wharton.upenn.edu/profile/ganj/">Jingxing (Rowena) Gan</a>, about her paper <a href="/Gan-Tsoukalas-Netessine.pdf">Inventory, Speculators, and Initial Coin Offerings</a> (joint with <a href="https://oid.wharton.upenn.edu/profile/gtsouk/#">Gerry Tsoukalas</a> and <a href="https://sites.google.com/site/netessine/">Serguei Netessine</a>). I really liked the model, so I thought I'd give my take on it. Although the paper is framed as pertaining to certain classes of ICOs, I think its applicability is much broader, and will describe it accordingly.</p>
+<p>Suppose you've got an idea for a company, but no money on hand. To launch, you need to raise capital. The traditional approach is to sell shares in the company, which entitle investors to a share of future profits. Another possibility is to sell shares in the future <em>revenue</em> of the company. In either case, investors might have several concerns. First, can the product be produced at a cost lower than its value to consumers? Second, if they give you money, what prevents you from scrapping the plan for the company and walking away with the cash? For example, if you sell <span class="math inline">\(100\%\)</span> of future revenue, you clearly have no incentive to produce at all!</p>
+<p>This paper asks several questions related to this moral hazard concern. I focus on two.</p>
+<ol style="list-style-type: decimal">
+<li>If you have no ability to commit to future production, is it possible to convince investors to lend to you?</li>
+<li>If so, how profitable will the resulting company be (compared to the case without capital constraints)?</li>
+</ol>
+<p>They address these questions in a variant of the Newsvendor model, with an additional fundraising round up front.</p>
+<p>In this model, the answer to the first question is, &quot;it depends.&quot; If the profit margin on the product is at least 50%, then it is possible to receive funding from investors. Otherwise, it is not. Assuming funding is feasible, the answer to the second question depends on what type of contract you sign with investors. Standard contracts result in inefficiently low levels of production. In some cases, however, a carefully designed contract restores efficiency.</p>
+</div>
+<div id="model" class="section level1">
+<h1><span class="header-section-number">2</span> Model</h1>
+<p>The model proceeds in three rounds.</p>
+<p><strong>Round 1</strong>: You strike a deal with investors. You receive an up-front payment of <span class="math inline">\(P\)</span>, in return for promises for a future payoff that depends on production and sales outcomes. (Formally, you commit to a function <span class="math inline">\(R\)</span> that determines payment to investors as a function of the company's production cost and sales revenue.)</p>
+<p><strong>Round 2</strong>: You decide on a production quantity <span class="math inline">\(Q\)</span>, incurring total cost <span class="math inline">\(cQ\)</span>. You can't spend more than the money <span class="math inline">\(P\)</span> collected from investors.</p>
+<p><strong>Round 3</strong>: Demand <span class="math inline">\(D\)</span> is realized. Revenue is <span class="math inline">\(p\min(Q,D)\)</span>, and the you pay <span class="math inline">\(R(Q,D)\)</span> to investors.</p>
+<p>All parties are risk neutral, and know the production cost <span class="math inline">\(c\)</span>, sales price <span class="math inline">\(p\)</span> (denoted by <span class="math inline">\(v\)</span> in the paper) and demand distribution <span class="math inline">\(F\)</span> up front. We let <span class="math inline">\(\fbar(q) = 1 - F(q)\)</span>.</p>
+<div id="unconstrained-newsvendor" class="section level2">
+<h2><span class="header-section-number">2.1</span> Unconstrained Newsvendor</h2>
+If you had no capital constraints, then as long as <span class="math inline">\(c &lt; p\)</span>, you can make a profit. The expected profit from producing quantity <span class="math inline">\(Q\)</span> is
+<span class="math display">\[\begin{equation}\pi(Q) = \int_0^{Q} (p\fbar(q) - c)dq,  \label{eq:newsvendor} \end{equation}\]</span>
+and the optimal production quantity <span class="math inline">\(Q^{News}\)</span> solves
+<span class="math display">\[\begin{equation}  p\fbar(Q^{News}) -c =0. \label{eq:news-opt} \end{equation}\]</span>
+</div>
+<div id="constrained" class="section level2">
+<h2><span class="header-section-number">2.2</span> Constrained</h2>
+In this world, given the up front payment <span class="math inline">\(P\)</span>, the maximum possible production is <span class="math inline">\(P/c\)</span>. Given contract <span class="math inline">\(R\)</span>, in round one you will choose
+<span class="math display">\[\begin{align} Q^*(R,P) \in &amp;  \arg \max_{0 \leq q \leq P/c} \E_{D\sim F}[P - c q + p\min(q,D) - R(q,D)] \nonumber \\ 
+&amp; =  \arg \max_{0 \leq q \leq P/c} \pi(q) + P - \E_{D \sim F}[R(q,D)].\label{eq:moralhazard} \end{align}\]</span>
+To capture the lack of commitment, we assume that if you produce nothing (and therefore sells nothing), then you don't need to pay anything back to investors:
+<span class="math display">\[\begin{equation} R(0,D) = 0. \label{eq:nocommitment}\end{equation}\]</span>
+In the first stage, investors will only lend at (weakly) favorable terms. That is,
+<span class="math display">\[\begin{equation}P \leq \E_{D\sim F}[R(Q^*(R,P),D)].\label{eq:investorIC} \end{equation}\]</span>
+</div>
+<div id="special-cases" class="section level2">
+<h2><span class="header-section-number">2.3</span> Special Cases</h2>
+<p>The paper studies two special cases (possible forms for the function <span class="math inline">\(R\)</span>). In one (&quot;utility tokens&quot;), investors are entitled to a share <span class="math inline">\(\alpha\)</span> (in the paper, <span class="math inline">\(n/m\)</span>) of future revenue. That is, <span class="math display">\[R_u^\alpha(Q,D) = \alpha \, p \, \min(Q,D).\]</span> In the other (&quot;equity tokens&quot;), they are entitled to a share <span class="math inline">\(\alpha\)</span> of future profit: <span class="math display">\[R_e^\alpha(Q,D) = \alpha \max ( p \, \min(Q,D) - c Q,0).\]</span> We let <span class="math inline">\(\alpha^u\)</span> and <span class="math inline">\(\alpha^e\)</span> denote the optimal choices of <span class="math inline">\(\alpha\)</span>, and <span class="math inline">\(Q^u\)</span> and <span class="math inline">\(Q^e\)</span> the corresponding production quantities.</p>
+</div>
+</div>
+<div id="analysis" class="section level1">
+<h1><span class="header-section-number">3</span> Analysis</h1>
+<p>We can now address the two questions posed in the introduction.</p>
+<div id="when-can-you-get-a-loan" class="section level2">
+<h2><span class="header-section-number">3.1</span> When can you get a loan?</h2>
+First, when is it possible to convince investors to lend to you? That is, when is there a choice of <span class="math inline">\((P,R)\)</span> with <span class="math inline">\(P &gt; 0\)</span> that satisfies <span class="math inline">\(\eqref{eq:moralhazard}\)</span>, <span class="math inline">\(\eqref{eq:nocommitment}\)</span>, and <span class="math inline">\(\eqref{eq:investorIC}\)</span>? Clearly, a necessary condition is that production level <span class="math inline">\(Q^* &gt; 0\)</span> (else, no investor will give you money). By <span class="math inline">\(\eqref{eq:investorIC}\)</span>, the expected payment to investors must be at least <span class="math inline">\(P\)</span>: <span class="math display">\[ \E[R(Q^*,D)] \geq P.\]</span> Furthermore, your expected profit from producing <span class="math inline">\(Q^*\)</span> must exceed your expected profit from producing nothing and pocketing <span class="math inline">\(P\)</span>. By <span class="math inline">\(\eqref{eq:moralhazard}\)</span> and <span class="math inline">\(\eqref{eq:nocommitment}\)</span>, this implies that <span class="math display">\[\pi(Q^*) \geq \E[R(Q^*,D)] .\]</span> Feasibility of <span class="math inline">\(Q^*\)</span> implies <span class="math inline">\(P \geq c Q^*\)</span> and <span class="math inline">\(\eqref{eq:newsvendor}\)</span> implies <span class="math inline">\(\pi(q) \leq (p - c)Q\)</span>. Putting it all together we have <span class="math display">\[ (p - c)Q^* \geq \pi(Q^*) \geq P \geq c Q^*.\]</span> For <span class="math inline">\(Q^* &gt; 0\)</span>, this holds only if
+<span class="math display">\[\begin{equation} p &gt; 2 c. \label{eq:necessary} \end{equation}\]</span>
+<p>This is a necessary condition to be able to raise money. In fact, under either revenue-sharing or profit-sharing, it is also sufficient: if it is satisfied, there is a choice of <span class="math inline">\(\alpha\)</span> such that investors will give you <span class="math inline">\(P &gt; 0\)</span>.</p>
+<p>To me, this is perhaps the cleanest result in the paper. Due to moral hazard, it is not always possible to get a loan (of any size), even if the product could make profit.</p>
+</div>
+<div id="how-profitable-will-your-company-be" class="section level2">
+<h2><span class="header-section-number">3.2</span> How profitable will your company be?</h2>
+<p>Let's consider the case of revenue sharing. In that case, starting from production quantity <span class="math inline">\(q\)</span>, the cost to you of producing an additional item is <span class="math inline">\(c\)</span>, and the benefit to you is <span class="math inline">\((1-\alpha)p\)</span> times the probability of selling this item, which is <span class="math inline">\(\fbar(q)\)</span>. Thus, you will stop when these are equal: <span class="math display">\[ (1 - \alpha^u) p\fbar(Q^u) = c.\]</span> Comparing this to the solution without capital constraints given by <span class="math inline">\(\eqref{eq:news-opt}\)</span>, we see that you always produce less than in the Newsvendor model: <span class="math inline">\(Q^u &lt; Q^{News}\)</span>. Furthermore, in your optimal contract, investors will break even in expectation, implying that your expected profit is <span class="math inline">\(\pi(Q^{u})\)</span>. Because <span class="math inline">\(\pi\)</span> is increasing on <span class="math inline">\([0,Q^{News})\)</span>, this implies that your profit is also strictly lower. The same idea implies that <span class="math inline">\(Q^e &lt; Q^{News}\)</span>, and in fact the authors show (subject to a technical condition -- I am curious to know whether it is necessary) that <span class="math display">\[Q^u &lt; Q^e &lt; Q^{News},\]</span> implying the same ranking in terms of expected profit.</p>
+<p>Thus, even projects that are funded are less profitable than they would be without capital constraints. However, raising capital reduces the risk associated with these projects. In particular, under either profit sharing or revenue sharing, you cannot lose money (whereas in the standard Newsvendor model, this happens whenever demand is sufficiently low).</p>
+</div>
+<div id="optimal-contract-design" class="section level2">
+<h2><span class="header-section-number">3.3</span> Optimal contract design</h2>
+<p>Now let's take things one step beyond what is in the paper, and ask the natural follow-up question: what is the <strong>best</strong> contract to sign? We start with the following observation.</p>
+<blockquote>
+<p><strong>Observation 1</strong>: In an optimal contract, investors will get zero expected profit, so the founder's expected final wealth will simply be <span class="math inline">\(\pi(Q^*)\)</span>.</p>
+</blockquote>
+<p>The problem with revenue and profit sharing is that they diminish your incentive to produce later units, because some of the profit from these units is distributed to investors. This can be fixed if you agree to give all initial revenue to investors (up to some pre-specified maximum), with all remaining revenue going to you.</p>
+More formally, if we intend to produce quantity <span class="math inline">\(Q\)</span>, then we sign a contract of the following form:
+<span class="math display">\[\begin{equation} R(Q,D) = p \min(Q,D,M), \label{eq:opt} \end{equation}\]</span>
+where <span class="math inline">\(M &lt; Q\)</span> is chosen such that <span class="math inline">\(p\E[\min(D,M)] = c Q\)</span>. This gives investors non-negative expected return. Under this contract, your optimal production quantity is either <span class="math inline">\(0\)</span> or <span class="math inline">\(\min(Q,Q^{News})\)</span>. The investors will only sign the contract with you if selecting <span class="math inline">\(Q\)</span> is optimal, which requires that
+<span class="math display">\[\begin{equation} \Delta(Q) = \pi(Q) - c Q \geq 0. \end{equation}\]</span>
+<p>Let <span class="math inline">\(Q^{Max}\)</span> be the (unique) solution to <span class="math inline">\(\Delta(Q^{Max}) = 0\)</span>.</p>
+<blockquote>
+<p><strong>Proposition</strong>. The contract in <span class="math inline">\(\eqref{eq:opt}\)</span> with <span class="math inline">\(Q = \min(Q^{News},Q^{Max})\)</span> is optimal.</p>
+</blockquote>
+<p>There are two cases to consider.</p>
+<ol style="list-style-type: decimal">
+<li>If <span class="math inline">\(Q^{Max} \geq Q^{News}\)</span>, then it is incentive compatible to raise enough money to produce quantity <span class="math inline">\(Q^{News}\)</span>. This contract recovers the full expected profit of the Newsvendor solution (and furthermore guarantees you non-negative profit)! This clearly maximizes expected profit, as the expected sum of investor and your profit is at most <span class="math inline">\(\pi(Q^{News})\)</span>, and investors must expect non-negative profit.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></li>
+<li>If <span class="math inline">\(Q^{Max} &lt; Q^{News}\)</span>, then our contract earns expected profit <span class="math inline">\(\pi(Q^{Max}) &lt; \pi(Q^{News}).\)</span> To see that it is impossible to do better, note that by Observation 1, any better outcome would require a higher production quantity <span class="math inline">\(Q^* &gt; Q^{Max}\)</span>. This implies that you must receive (at least) <span class="math inline">\(cQ^*\)</span> from investors, which we know is higher than your expected final wealth from production <span class="math inline">\(\pi(Q^*)\)</span>. So the temptation to run would be too great.</li>
+</ol>
+</div>
+</div>
+<div id="closing-comments" class="section level1">
+<h1><span class="header-section-number">4</span> Closing Comments</h1>
+<p>This is a cute model, with clean insights. It says that even profitable ideas may not get funded, due to moral hazard concerns. To get funding, you have to be able to credibly tell investors &quot;The best thing I could do with a windfall of cash is put it into this business.&quot;</p>
+<p>As long as the idea is sufficiently profitable, you should be able to get funding. However, standard contracts will distort your incentive to build your company, preventing it from reaching the heights that it otherwise could. The solution is to use a contract that caps realized investor payout (leaving you as the sole claimant of revenue from later sales).<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> For sufficiently profitable ideas, this restores full efficiency!</p>
+<p><strong>Questions for readers:</strong> Have you seen this type of contract (capped payout for investors) arise in practice? If not, why do you think it isn't more common?</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Of course, if investors demand a positive expected return, you cannot earn <span class="math inline">\(\pi(Q^{News})\)</span>. Even in this case, however, a larger choice of <span class="math inline">\(M\)</span> maintains incentives to produce at the efficient level <span class="math inline">\(Q^{News}\)</span>, while shifting the distribution of profit between you and investors.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>At a technical level, this seems very closely related to principal-agent employment models. Seen in this light, we could imagine the investors as the principal, and you as the agent. If the production quantity is unobservable to investors and the contract conditions only on realized sales, we essentially recover classical model employment models: the only twist is that here, the agent makes a take-it-or-leave it contract offer to the principal, instead of the reverse.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

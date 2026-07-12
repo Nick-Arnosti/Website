@@ -1,0 +1,50 @@
+---
+title: 'Best Paper of EC 2024'
+date: '2024-08-08'
+author: Nick Arnosti
+tags:
+draft: TRUE
+---
+
+The EC 2024 best paper award went to [When Geography Shapes Preferences: Redesigning Teacher Assignment in Italy](), by Mariagrazia Cavallo and Battal Doğan. This paper is up my alley, but I had a hard time understanding it from the talk, so I decided to take a closer look.
+
+
+# The Setting
+
+Like a number of other countries, Italy has a centralized assignment of school teachers to public schools. Like these other countries, the key inputs used in this assignment algorithm are (i) capacities of schools, (ii) each school's priority ranking of teachers, and (iii) teachers' preferences over schools. The key novelty is that each teacher's list is not simply a ranking of schools. Rather, teachers can list schools or *geographic regions*, so for example a list might look like $S1 \succ R1 \succ S2$, where $S1$ and $S2$ are individual schools and $R1$ is a region containing several schools. The interpretation of such a list is that the teacher prefers S1 to any other option, is indifferent among schools in R1 and prefers any of these to any school other than S1, and then prefers S2 to any other school, or to going unassigned.
+
+
+The question is, what should be done with this information? How should "ties" in teacher preference rankings be treated? 
+
+One obvious solution is to simply break these ties arbitrarily, and then run teacher-proposing deferred acceptance. This is essentially what is done in most school districts, when there are ties in school priorities. 
+
+The downside of this approach is that it may lead to inefficient outcomes. For example, suppose that there are two schools $s_1$ and $s_2$, and two teachers $t_1$ and $t_2$. Teacher $t_1$ has the highest priority at both schools, and lists the region $\{s_1, s_2\}$ first, while teacher $t_2$ lists only $s_1$. If ties are broken in the order $s_1 \succ s_2$, then we end up assigning teacher $t_1$ to $s_1$, and leaving $t_2$ unassigned. It would be just as good for $t_1$, and better for $t_2$, to assign $t_2$ to $s_1$, and $t_1$ to $s_2$.
+
+If teachers are telling us that they are indifferent between a set of schools, we would ideally like to take advantage of this indifference to assign them to schools that are less popular with other teachers. The Italian system has the following feature
+
+
+>Whenever several teachers are considered for the same school, any teacher who ranks this school as part of a finer region is given priority over any other teacher who ranks this school as part of a coarser region (overriding the original priority rights), provided that the coarser region has at least one school with an available vacancy at that step of the algorithm.
+
+The motivation for this choice is that people who list a school as part of a region have chances to match at other equivalent schools, and thus it may be less costly to reject them from a single school in the region. The downside of this choice is that it can create justified envy, if a candidate who lost priority due to listing the school as part of a region fails to match to any school in that reason.^[A more nuanced point that is likely of interest only to true DA nerds is the "provided that" clause, which suggests that priority depends not only on candidate lists, but also on the order in which proposals occur (which is known not to matter in standard deferred acceptance). To illustrate, consider a setting with two schools $s_1$ and $s_2$, and three teachers: $t_1$ lists only $s_1$, $t_2$ lists only $s_2$, and $t_3$ lists the region $\{s_1, s_2\}$, with the index of schools causing $t_3$ to apply first to $s_2$. Suppose that baseline priorities rank $t_1 > t_3 > t_2$ at both schools. If the proposal order is $t_1, t_2, t_3$, then when $t_3$ applies to $s_2$, there is no vacancy in the region $\{s_1, s_2\}$, and thus $t_3$ should be chosen over $t_2$ (according to baseline priorities). On the other hand, if the proposal order is $t_3, t_2, t_1$, then when $t_2$ applies to $s_2$, there is a vacancy in $s_1$, so $t_3$ is rejected from $s_2$. Later $t_3$ will be rejected from $s_1$, resulting in the allocation $\{s_1, t_1\}, \{s_2, t_2\}$, and causing justified envy.]
+
+
+
+# High Level Thoughts
+
+Ties in DA-like procedures have already been extensively studied. Usually, the literature has assumed strict student preferences, ties in school priorities, and sought to find a weakly stable matching that optimizes student welfare. It has been shown that finding such a matching is incompatible with strategy-proofness for students (reference?).
+
+
+
+The innovation in this work is that the ties are now on the side (teachers) for whom welfare is being optimized.
+
+My intuition is that
+
+
+
+
+
+
+
+**Different types of teachers, schools need some of each?**
+
+Start from any maximum-cardinality feasible assignment. Anyone with justified envy in this assignment must be unassigned (because by assumption, teachers are indifferent between all schools in the region that they list). Thus, take any case of justified envy, and swap them in for the lowest-priority teacher who was previously assigned to a school. This maintains the number of assigned teachers, and increases school satisfaction (the priority of assigned teachers). Because school satisfaction increases monotonically, this process must eventually terminate. Thus, imposing respecting priorities (no justified envy) does not come at the cost of a maximum matching (when teachers are indifferent between all feasible options).

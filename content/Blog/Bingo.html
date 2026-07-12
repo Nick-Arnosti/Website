@@ -1,0 +1,268 @@
+---
+title: 'The Bingo Paradox'
+date: "2024-08-27"
+author: Nick Arnosti
+---
+
+
+
+<p>Suppose you are playing Bingo. The caller reads a number, and someone in the room shouts out, “BINGO!” Are they more likely to have a complete row, or a complete column? Surprisingly, the answer is a complete row. This is has been referred to as <a href="http://digitaleditions.walsworthprintgroup.com/publication/?m=7493&amp;i=432359&amp;view=articleBrowser&amp;article_id=2856994&amp;ver=html5">The Bingo Paradox</a>, and I will explore it in this post.</p>
+<div id="rules-of-bingo" class="section level1">
+<h1>Rules of Bingo</h1>
+<p>Let’s start with the rules of Bingo. Each Bingo card is a 5x5 square. The goal is to cover a complete row, column, or diagonal. Initially, the center (a “free space”) starts covered. The remaining 24 squares each contain a distinct number from 1-75. For the purpose of this post, the free space and diagonals are an annoying complication, so I will assume throughout that there is no free space, and that a win can only come from covering a row or column (not a diagonal).</p>
+<p>An important fact is that the numbers on each Bingo card are not totally random: the first column (called the ‘B’ column) always contains 5 random numbers from 1-15; the second (‘I’) column contains 5 numbers from 16-30; the third (‘N’) column contains numbers from 31-45, the fourth (‘G’) contains numbers from 46-60, and the fifth (‘O’) contains numbers from 61-75.</p>
+<p>Once every player has their card, the numbers from 1-75 are drawn uniformly at random. When a number is drawn, players cover that number if it appears on their card. When a player has covered a complete row or column, they win and yell “BINGO!”</p>
+</div>
+<div id="method-of-analysis-many-players" class="section level1">
+<h1>Method of analysis: many players</h1>
+<p>The fact that earlier rows have lower numbers is a funny quirk, but why does it matter? In some sense, it doesn’t: if you play bingo alone, the chance that you win by completing a row is exactly the same as the chance that you win by completing a column. But once you have a large number of people playing simultaneously, it turns out that the winner is more likely to complete a row than a column. Why is this?</p>
+<!--
+*Conjecture* When $n = 1$, the chance of a row win and column win are equal: for all $d, s$, we have $P_R(d,s,1) = P_C(d,s,1)$ 
+-->
+<p>To start, let’s define some variables. Let <span class="math inline">\(d\)</span> be the dimension of the Bingo square, and let <span class="math inline">\(s \ge d\)</span> be the size of the set from which values in each column are drawn (so for real Bingo, <span class="math inline">\(d = 5\)</span> and <span class="math inline">\(s = 15\)</span>). Let <span class="math inline">\(n\)</span> be the number of people playing. Let <span class="math inline">\(P_R(d,s,n)\)</span> denote the probability that the winning player completes a row, and <span class="math inline">\(P_C(d,s,n)\)</span> denote the probability that the winning player completes a column. It is possible that the first row and first column are completed simultaneously (by a single player or by different players); let <span class="math inline">\(P_T(d,s,n)\)</span> denote the probability of such a tie.</p>
+<!--
+> *Conjecture* For any $d, s, n$, we have $P_R(d,s,n) \ge P_C(d,s,n)$.
+-->
+<p>The article <a href="http://digitaleditions.walsworthprintgroup.com/publication/?m=7493&amp;i=432359&amp;view=articleBrowser&amp;article_id=2856994&amp;ver=html5">The Bingo Paradox</a> analyzes the case where the number of players <span class="math inline">\(n \rightarrow \infty\)</span>. You might think that this means that we will always have a winner after the first five numbers are drawn, but this is not correct. This is due to the way Bingo cards are constructed: if the first five balls consist of 3 numbers from the ‘B’ column and 1 number from each of columns ‘N’ and ‘G’, then it is not possible for anyone to have won. Thus, when <span class="math inline">\(n = \infty\)</span>, the game is won as soon as either (i) some column has been drawn for the fifth time, or (ii) all columns have been drawn at least once.</p>
+<p>Call a permutation of the numbers 1-75 a ‘column sequence’ if (i) happens before (ii), and a ‘row sequence’ if (ii) happens before (i). (Notice that (i) and (ii) cannot occur simultaneously – that is, as <span class="math inline">\(n\rightarrow \infty\)</span>, there will be no ties.) The authors of the Bingo Paradox article show that when <span class="math inline">\(d = 5\)</span> and <span class="math inline">\(s = 15\)</span>, row sequences are more than three times as likely as column sequences. Although they do a good job of explaining the calculations, they don’t provide much intuition. Why do rows have an advantage, and how does the probability of a row win depend on <span class="math inline">\(d\)</span> and <span class="math inline">\(s\)</span>?</p>
+</div>
+<div id="building-intuition" class="section level1">
+<h1>Building Intuition</h1>
+<p>When trying to develop intuition for this phenomenon, two explanations came immediately to mind. The first was that there are more possible rows than columns. The second was that because there are only <span class="math inline">\(15\)</span> possible numbers from each column, columns that have already appeared are less likely to be drawn in the future. I discuss each fact below.</p>
+<div id="counting-possible-rows-and-columns" class="section level2">
+<h2>Counting possible rows and columns</h2>
+<p>There are <span class="math inline">\({s \choose d}\)</span> possible first columns (up to re-ordering), and thus <span class="math inline">\(d \times {s \choose d}\)</span> possible columns overall. Meanwhile, there are <span class="math inline">\(s^d\)</span> possible rows, which is a much larger number (more than <span class="math inline">\((d-1)!\)</span> times larger). With enough players, all possible rows and columns appear on somebody’s card. This means that there will be more duplicated columns than rows.</p>
+<p>This is easiest to see when <span class="math inline">\(s = d\)</span>, so the first column is always some ordering of the numbers <span class="math inline">\(1\)</span> to <span class="math inline">\(d\)</span>, the second column contains <span class="math inline">\(d+1\)</span> through <span class="math inline">\(2d\)</span>, and so on. With a single Bingo card, a column win is just as likely as a row win. Adding a second card does not help columns win any sooner, because the columns of the second card are <em>identical</em> to the columns on the first card (up to re-ordering). However, the second card will almost certainly add new winning <em>rows</em>, giving rows an advantage. As we add more Bingo cards, we duplicate existing columns, but add more winning rows.</p>
+<p><strong>Claim.</strong> When <span class="math inline">\(s = d\)</span>, the “row advantage” <span class="math inline">\(P_R(d,d,n) - P_C(d,d,n)\)</span> is increasing in <span class="math inline">\(n\)</span>.</p>
+<p><strong>Conjecture.</strong> For any <span class="math inline">\(s \ge d\)</span>, the “row advantage” <span class="math inline">\(P_R(d,s,n) - P_C(d,s,n)\)</span> is increasing in <span class="math inline">\(n\)</span>.</p>
+<p>How big does the advantage get as <span class="math inline">\(n \rightarrow \infty\)</span>? I was tempted to tackle this using counting arguments as outlined above. For <span class="math inline">\(s = d = 3\)</span>, there are <span class="math inline">\(3\)</span> possible columns and 27 possible rows. Does this mean that as <span class="math inline">\(n \rightarrow \infty\)</span>, rows are 9 times more likely than columns to win?</p>
+<p>Unfortunately, it’s not that simple. Explicitly counting winning sequences yields the following win probabilities:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(d = 3, s = 3\)</span></th>
+<th align="center">Row</th>
+<th align="center">Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">P(Win in 3)</td>
+<td align="center">18/56</td>
+<td align="center">2/56</td>
+</tr>
+<tr class="even">
+<td align="left">P(Win in 4)</td>
+<td align="center">18/56</td>
+<td align="center">6/56</td>
+</tr>
+<tr class="odd">
+<td align="left">P(Win in 5)</td>
+<td align="center">9/70</td>
+<td align="center">6/70</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="center">27/35</td>
+<td align="center">8/35</td>
+</tr>
+</tbody>
+</table>
+<p>What the counting argument is missing is that many possible row sets are somewhat redundant: different row sets often win simultaneously.</p>
+<!--
+Even when $s > d$, counting arguments suggest that a row win should be much more likely than a column win. There are ${s \choose d}$ possible first columns (up to re-ordering), and thus $d \times {s \choose d}$ possible columns overall. Meanwhile, there are $s^d$ possible distinct rows, which is more than $(d-1)!$ times the number of possible columns.
+
+When $d = 5$, this means that for *any* $s$, there are more than $24$ times as many possible rows as columns. As $n \rightarrow \infty$, all of these rows and columns appear on someone's card. This gives some intuition as to why row wins are more likely than column wins, but the intuition suggests that the ratio should be 24:1 or higher, rather than the actual ~3:1. 
+
+
+When $s \rightarrow \infty$, the row advantage goes away. FALSE
+The row advantage is at least $(d-1)!$. FALSE
+-->
+</div>
+<div id="sampling-without-replacement" class="section level2">
+<h2>Sampling without replacement</h2>
+<p>Another factor that makes a row win more likely is that once you have drawn several numbers from a single column, there are fewer numbers from that column remaining, so drawing that column again is less likely than drawing a new column.</p>
+<p>This idea is easiest to see with <span class="math inline">\(d = 2\)</span>. In that case, when <span class="math inline">\(n = \infty\)</span>, the game will end after two draws: either we have drawn the same column twice, or we have drawn each column once. The probability of a row win is <span class="math inline">\(s/(2s-1)\)</span>, which is bigger than <span class="math inline">\(1/2\)</span>. However, as we take <span class="math inline">\(s \rightarrow \infty\)</span>, the row advantage disappears.</p>
+<p>Is this true for general <span class="math inline">\(d\)</span>? The answer is ‘no.’ That is, for <span class="math inline">\(d &gt; 2\)</span>, even if <span class="math inline">\(s\)</span> is very large, rows maintain an advantage over columns. To see this, let’s do some explicit calculations for <span class="math inline">\(d = 3\)</span>. As <span class="math inline">\(s \rightarrow \infty\)</span>, the sequence of columns that are selected converges to an iid uniform sequence, resulting in the following probabilities of a row and column win.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><span class="math inline">\(d = 3, s = \infty\)</span></th>
+<th align="center">Row</th>
+<th align="center">Column</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">P(Win in 3)</td>
+<td align="center">2/9</td>
+<td align="center">1/9</td>
+</tr>
+<tr class="even">
+<td align="left">P(Win in 4)</td>
+<td align="center">2/9</td>
+<td align="center">2/9</td>
+</tr>
+<tr class="odd">
+<td align="left">P(Win in 5)</td>
+<td align="center">2/27</td>
+<td align="center">4/27</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="center">14/27</td>
+<td align="center">13/27</td>
+</tr>
+</tbody>
+</table>
+<p>Because we assume <span class="math inline">\(n \rightarrow \infty\)</span>, the game must end in at most <span class="math inline">\(1+(d-1)^2\)</span> draws: by then we will either have one of each column, or a column that has been drawn <span class="math inline">\(d\)</span> times. Note that for <span class="math inline">\(d = 3\)</span>, a row win is <em>slightly</em> more likely than a column win, even when <span class="math inline">\(s \rightarrow \infty\)</span>. This inspires the question, is the same true for larger <span class="math inline">\(d\)</span>?</p>
+</div>
+</div>
+<div id="balls-in-bins-problem" class="section level1">
+<h1>Balls in Bins Problem</h1>
+<p>If we fix <span class="math inline">\(d\)</span> and take <span class="math inline">\(s \rightarrow \infty\)</span>, the columns from which we draw balls become approximately iid uniform, and this becomes a “balls in bins” problem: imagine the columns as representing different “bins”, and each number drawn is a “ball” that goes into one of these bins.</p>
+<p>A row wins as soon as we have at least one ball from each column. This is known as the “coupon collector’s problem”, and it has been well-studied. The expected number of draws required for each of <span class="math inline">\(d\)</span> columns to turn up is <span class="math inline">\(d(1 + 1/2 + 1/3 + \cdots + 1/d) \approx d \log(d)\)</span>. (When <span class="math inline">\(s\)</span> is finite, this provides an <em>upper bound</em> on the expected time until each of the <span class="math inline">\(d\)</span> columns appears, as new columns are always more likely to be drawn than columns that have already appeared.)</p>
+<p>Meanwhile, a column wins as soon as some column has appeared <span class="math inline">\(d\)</span> times. That is, as soon as the bin with the <em>most</em> balls has <span class="math inline">\(d\)</span> balls. How long do we expect this to take? The number of balls in each bin follows a Binomial distribution with parameters <span class="math inline">\(m\)</span> and <span class="math inline">\(1/d\)</span>. Thus, it has mean <span class="math inline">\(m/d\)</span> and variance <span class="math inline">\(m*(d-1)/d^2 &lt; m/d\)</span>. From there, we can apply Chebyshev’s inequality to conclude that if <span class="math inline">\(m = \alpha*d^2\)</span> for some <span class="math inline">\(\alpha &lt; 1\)</span>, then the probability that a particular column has appeared <span class="math inline">\(d\)</span> times after <span class="math inline">\(m\)</span> draws is at most <span class="math inline">\(\frac{1}{d}\frac{\alpha}{(1-\alpha)^2}\)</span>. Applying a union bound across all <span class="math inline">\(d\)</span> columns gives a probability of a column win of at most <span class="math inline">\(\frac{\alpha}{(1-\alpha)^2}\)</span>.</p>
+<p>This bound is fairly loose; tighter bounds are possible with Chernoff bounds, and the distribution of the maximum load after dropping <span class="math inline">\(m\)</span> balls into <span class="math inline">\(n\)</span> bins has been studied by the 1998 paper “Balls into Bins: A Simple and Tight Analysis” by Raab and Steger. Rather than going into the details, I want to focus on the high-level point: we need to draw <span class="math inline">\(\mathcal{O}(d^2)\)</span> numbers before we have a reasonable chance of a column win, and by this time a row win is overwhelmingly likely (as this takes only <span class="math inline">\(d \log(d)\)</span> draws on average). When <span class="math inline">\(d\)</span> is large, this will mean that a row win almost always happens before a column win.</p>
+<p>I claim also that this conclusion should apply for <em>any</em> <span class="math inline">\(s\)</span> (so long as <span class="math inline">\(n = \infty\)</span>) taking <span class="math inline">\(s \rightarrow \infty\)</span> only decreases the chance of a row win.</p>
+<p>The following code simulates and plots the probability of a row win for various <span class="math inline">\(d\)</span> and <span class="math inline">\(s\)</span>. The key things to note are (i) increasing <span class="math inline">\(d\)</span> substantially increases the probability of a row win, and (ii) increasing <span class="math inline">\(s\)</span> decreases the probability of a row win, but has quickly diminishing marginal returns. Even as <span class="math inline">\(s \rightarrow \infty\)</span>, rows are significantly more likely to win. To take one example, if <span class="math inline">\(d = 5\)</span>, rows win approximately <span class="math inline">\(94\%\)</span> of the time when <span class="math inline">\(s = 5\)</span>, <span class="math inline">\(75\%\)</span> of the time when <span class="math inline">\(s = 15\)</span>, and approximately <span class="math inline">\(67\%\)</span> of the time as <span class="math inline">\(s \rightarrow \infty\)</span>.</p>
+<pre class="r"><code>first_possible_row_win = function(column_sequence, d){
+	columns = unique(column_sequence)
+	if(length(columns)&gt;d){ return(NA) } #More columns than there should be
+	if(length(columns)&lt;d){ return(Inf) } #No win yet
+	if(length(columns)==d){ return(max(match(columns,column_sequence))) } #Last time a new column appears
+}
+
+first_possible_column_win = function(column_sequence,d){
+	counts = ave(seq_along(column_sequence), column_sequence, FUN = seq_along) #counts[i] returns how many times sequence[i] has appeared so far
+	i = which(counts&gt;=d)[1]
+	if(is.na(i)){ return(Inf) } #No win yet
+	return(i) #Column win after i draws
+}
+
+
+#Generage bingo cards
+generate_bingo_cards = function(n_cards,n_row = 5,n_column = 5,available_numbers = c(list(1:15),list(16:30),list(31:45),list(46:60),list(61:75)),free_space = FALSE){
+	cards = list()
+	for(t in 1:n_cards){
+		B = matrix(NA,nrow=n_row,ncol=n_column)
+		for(i in 1:n_column){
+			B[,i] = sample(available_numbers[[i]],n_row)
+		}
+		if(free_space){
+			B[(n_row+1)/2,(n_column+1)/2] = 0
+		}
+		cards = append(cards,list(B))
+	}
+	return(cards)
+}
+
+#Combine row sets and column sets from given bingo cards
+generate_winning_sets = function(bingo_cards){
+	row_sets = c()
+	column_sets = c()
+	for(B in bingo_cards){
+		column_sets = cbind(column_sets,B)
+		row_sets = rbind(row_sets,B)
+	}
+	return(list(row_sets,column_sets))
+}
+
+#Given sets of winning rows and columns, as well as an order in which balls are drawn, determine time of first row win and column win
+determine_winner = function(row_sets,column_sets,draw_order){
+  #Code below assumes that draw_order contains numbers from 1:length(draw_order)
+	number_draw_times = match(sort(draw_order),draw_order) 
+  
+  row_draw_times = matrix(number_draw_times[row_sets],nrow=nrow(row_sets))
+	row_win_times = matrix(apply(row_draw_times,1,max))
+	
+	column_draw_times = matrix(number_draw_times[column_sets],nrow=nrow(column_sets))
+	column_win_times = matrix(apply(column_draw_times,2,max))
+
+	#Return time of first row and column winners
+	return(c(min(row_win_times),min(column_win_times)))
+}
+
+#Do the following n_samples times:
+#1. Generate n (d,s)-bingo cards iid 
+#2. Simulate a bingo number sequence, determine time of first row win and column win
+simulate_bingo = function(d,s,n,n_samples){
+	M = matrix(1:(s*d),nrow=s)
+	number_sets = split(M,col(M)) #Create list of possible column values
+	
+	win_times = matrix(NA,nrow=n_samples,ncol=2)
+	for(t in 1:n_samples){
+		draw_order = sample(unique(unlist(number_sets)))
+		column_sequence = 1+floor((draw_order-1)/s) #Assumes number_sets[k] =  ((k-1)*s+1):(k*s)
+		win_times[t,1] = first_possible_row_win(column_sequence,d) 
+		win_times[t,2] = first_possible_column_win(column_sequence,d) 
+		if(n!=Inf) {
+		  #Generate set of bingo cards and determine winning sets
+		  cards = generate_bingo_cards(n,n_row=d,n_column=d,available_numbers = number_sets) 
+		  winning_sets = generate_winning_sets(cards)
+		  #Determine time of first row and column win
+			win_times[t,] = determine_winner(winning_sets[[1]],winning_sets[[2]],draw_order)
+		}
+	}
+	return(win_times)
+}
+
+
+d = 5 #Dimension of bingo board
+s = 15 #Number of possible values in each column
+n = Inf #Number of bingo boards to sample
+n_samples = 10000 #Number of Bingo simulations to run
+
+outcomes = simulate_bingo(d,s,n,n_samples)
+sum(outcomes[,1]&lt;outcomes[,2])/n_samples #Fraction of row wins</code></pre>
+<pre><code>## [1] 0.7562</code></pre>
+<pre class="r"><code>sum(outcomes[,1]&gt;outcomes[,2])/n_samples #Fraction of column wins</code></pre>
+<pre><code>## [1] 0.2438</code></pre>
+<pre class="r"><code>row_win_probability = Vectorize(function(s){
+	outcomes = simulate_bingo(d,s,n,n_samples)
+	return(sum(outcomes[,1]&lt;outcomes[,2])/n_samples)
+})
+
+D = 2:9
+colors = rainbow(length(unique(D)))
+n = Inf
+n_samples = 20000
+s = c(2*(1:5),15,20,30,40,50)
+plot(NA,xlim=c(min(s),max(s)),ylim=c(1/2,1),las=1,ylab=&#39;Row Win Probability&#39;,xlab=&#39;s&#39;)
+for(i in 1:length(D)){
+	d = D[i]
+	lines(s[which(s&gt;=d)],row_win_probability(s[which(s&gt;=d)]),col=colors[i])
+}</code></pre>
+<p><img src="/Blog/Bingo_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>In this graph, each colored line represents a different choice of <span class="math inline">\(d\)</span> from <span class="math inline">\(2\)</span> to <span class="math inline">\(9\)</span> (<span class="math inline">\(d = 2\)</span> is the red curve on the bottom, and <span class="math inline">\(d = 9\)</span> the pink curve at the top). Note that the effect of increasing <span class="math inline">\(s\)</span> is fairly modest, while increasing <span class="math inline">\(d\)</span> dramatically increases the probability of a row win.</p>
+</div>
+<div id="simulations-for-finite-n" class="section level1">
+<h1>Simulations for finite <span class="math inline">\(n\)</span></h1>
+<p>All of the above analysis assumed <span class="math inline">\(n = \infty\)</span>. This is very convenient: it allows us to focus only on the columns of drawn balls, and it ensures that there will never be a tie between rows and columns. However, it also requires <span class="math inline">\(n\)</span> to be very very large! As mentioned above, there are <span class="math inline">\(s^d\)</span> possible rows, and each card contains only <span class="math inline">\(d\)</span> of them. Thus, we need at least <span class="math inline">\(n \ge s^d/d\)</span> players to cover all possibilities (and that is assuming we get to choose the cards). For <span class="math inline">\(d = 5\)</span> and <span class="math inline">\(s = 15\)</span>, this means over <span class="math inline">\(150,000\)</span> bingo players!</p>
+<p>For smaller <span class="math inline">\(n\)</span>, the row advantage is not so pronounced. For example, the Bingo Paradox article simulated a game with <span class="math inline">\(n = 1000\)</span>, and found that row wins were almost twice as likely as column wins (versus more than 3 times as likely when <span class="math inline">\(n = \infty\)</span>). When I tried simulating 10000 draws with <span class="math inline">\(n = 100\)</span>, I got 5556 row wins, 4106 column wins, and 338 ties.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>In fact, if we fix <span class="math inline">\(n\)</span> and take <span class="math inline">\(s \rightarrow \infty\)</span>, then a fair game is restored!</p>
+<p><strong>Claim.</strong> Fixing <span class="math inline">\(d\)</span> and <span class="math inline">\(n\)</span>, <span class="math inline">\(P_R(d,s,n) - P_C(d,s,n)\)</span> is decreasing in <span class="math inline">\(s\)</span>, and tends to zero as <span class="math inline">\(s \rightarrow \infty\)</span>.</p>
+<p>One simple argument to support this claim is that the total number of numbers drawn from each column set is <span class="math inline">\(d*n\)</span>. If <span class="math inline">\(s\)</span> is extremely large, it is likely that there is no overlap in the numbers that appear on each card. If this happens, there is no longer any structure to the problem: rows and columns will be equally likely to win. However, for this argument to apply, we need <span class="math inline">\(s\)</span> to be enormous. This is not practical in real-world scenarios, as games of Bingo would take forever with so many numbers to draw!</p>
+<p>However, this does show the importance of being precise about the order in which limits are taken: although <span class="math inline">\(\lim_{s \rightarrow \infty} P_R(d,s,n) - P_C(d,s,n) = 0\)</span> for all <span class="math inline">\(n\)</span>, we have <span class="math inline">\(\lim_{s \rightarrow \infty} \lim_{n \rightarrow \infty} P_R(d,s,n) - P_C(d,s,n) &gt; 0\)</span>.</p>
+<!--
+*Note:* convergence is not uniform in $n$. That is, just saying $s >> d$ is not enough to ensure that $P_R(d,s,n) - P_C(d,s,n)$ is small. More precisely, $\lim_{s \rightarrow \infty} \lim_{n \rightarrow \infty} P_R(d,s,n) - P_C(d,s,n) \neq 0$ for all $d$.
+
+Present simulation results showing that even for fairly large n, advantage is modest.
+-->
+</div>
+<div id="closing-thoughts" class="section level1">
+<h1>Closing Thoughts</h1>
+<p>The Bingo paradox is just one of many examples where probability can be counter-intuitive, even for people like me with a lot of training. When I started thinking about it, my goal was to come up with a way to estimate the row advantage, as a function of <span class="math inline">\(d, s\)</span>, and <span class="math inline">\(n\)</span>, or at least as a function of <span class="math inline">\(d\)</span> and <span class="math inline">\(s\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>.</p>
+<p>I haven’t achieved this goal, but I do think I understand the problem better. Intuitively, I expect the following (though I have not proved these statements):</p>
+<ul>
+<li>The row advantage <span class="math inline">\(P_R(d,s,n) - P_C(d,s,n)\)</span> is always non-negative.</li>
+<li>The row advantage is increasing in <span class="math inline">\(n\)</span> and <span class="math inline">\(d\)</span>, and decreasing in <span class="math inline">\(s\)</span>.</li>
+</ul>
+<p>I especially like the idea of using balls in bins models to lower bound the advantage for <span class="math inline">\(n = \infty\)</span> and any <span class="math inline">\(s\)</span>. This shows that the unfairness is not primarily caused by <span class="math inline">\(s\)</span> being too small. When <span class="math inline">\(n = \infty\)</span>, the game becomes increasingly unfair as <span class="math inline">\(d\)</span> grows, regardless of <span class="math inline">\(s\)</span>. Getting good approximations for finite <span class="math inline">\(d\)</span>, <span class="math inline">\(s\)</span>, and <span class="math inline">\(n\)</span> remains an interesting problem for future study.</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>There is a slight difference between my simulations and those in the Bingo Paradox article. They generated 1000 cards, and then generated <span class="math inline">\(n_{samples} = 100,000\)</span> Bingo sequences for that particular set of cards. I generate a new set of cards for each Bingo sequence. Both approaches produce an unbiased estimate of the true row win probability, but with different variances. In particular, for fixed <span class="math inline">\(n\)</span>, as <span class="math inline">\(n_{samples}\)</span> increases my approach will converge in probability to the correct answer, while their output will remain random (due to randomness in the Bingo cards themselves).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

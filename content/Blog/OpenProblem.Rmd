@@ -1,0 +1,40 @@
+---
+title: "An Open Problem on Sums of Independent Random Variables"
+author: Nick Arnosti
+date: "2024-07-10"
+---
+
+I'm enjoying EC this week, and had two thoughts. First, interesting math problems are often buried deep in a paper that is nominally on another topic. Second, there are lots of bright people who might know how to solve these math problems, but never see them!
+
+Inspired by these thoughts, I am sharing one open problem from my work [Lotteries for Shared Experiences](https://nickarnosti.com/ResearchPapers/Arnosti-Bonet_SharedExperiences.pdf) with Carlos Bonet, which involves sums of independent random variables. If you like the problem or its motivation, feel free to read the entire paper! And if you think you know how to solve it, please let me know!
+
+# Background Motivation
+
+When you apply for a half dome permit, you can ask for up to six spots (so that you can go with your friends). But your chances of being selected are roughly independent of the number of spots you request. This is arguably unfair. One could consider alternative lottery mechanisms where your chance of success is a decreasing function of the number of spots that you request. For example, the chance of success could be inversely proportional to the number of spots you ask for.
+
+Now suppose that a group of $n$ people are applying together in such a lottery, and want to maximize their chance of getting enough spots for everyone in the group. A focal strategy is for each person to request $n$ spots, so that only one person needs to win in order for the entire group to go. But is this the best approach? 
+
+# Formal Problem
+
+Let $\{X_i\}_{i = 1}^n$ be independent random variables, where $X_i \in \{0,r_i\}$ and each $X_i$ has mean $t$ (so the probability that $X_i = r_i$ is $t/r_i$). Let $S = \sum_{i = 1}^n X_i$.
+
+Suppose you can choose the $r_i$, and your goal is to maximize the probability that $S$ is at least some target $T$. Show that if $E[S] = tn < T$, then the optimal strategy is to set $r_i = T$ for all $i$. 
+
+**CORRECTION** After writing this post, Cinar Ari (currently a master's student in Industrial Engineering at Middle East Technical University, Turkey) notified me that the above conjecture is false. His very simple counter-example is to take $n = T = 2$, and $t = 0.9$. Then if both people set $r_i = T = 2$, they each have a probability of success equal to $0.45$, so the probability that at least one of them succeeds is $1 − (1 − 0.45)^2 = 0.6925$. However, if they both set $r_i = 1$, then the chance that both succeed is $0.9^2 = 0.81$. Thus, setting $r_i = 2$ is not optimal. My colleague Bill Cooper also identified this error, and came with some work suggesting that this conjecture might be true for sufficiently small $t$ (with the definition of "sufficiently small" approaching $T/n$ as $n$ grows larger).
+
+While it is slightly embarrassing to label as a conjecture a statement that is so easily falsifiable, it is flattering to have gotten a careful reading from Cinar and Bill!  
+
+The variant of the problem below (which is the main version I have spent time on, but which I did not lead with because it's not as "natural" in a vacuum) remains open. We have numerically verified it for all integral $r_i$ with $T = n \le 15$.
+
+
+# Our Variant
+
+In our paper, Carlos and I consider a variant of the problem above in which the probability that $X_i = r_i$ is $1 - e^{-t/r_i}$. As before, you want to choose the requests $r_i$ to maximize the probability that $S$ is at least $T$, and we conjecture that you want to set $r_i = T$ so long as $tn < T$.
+
+(In our setting, the target $T$ is equal to the number of variables $n$, and the $r_i$ are constrained to be integral, but I don't think either of these assumptions is important.)
+
+Our version of the problem should be easier than the first version I introduced, because in our version, the expected number of spots won when requesting $r$ spots is $r(1-exp(-t/r))$, which is increasing in $r$. Thus, this gives an increased incentive to request more tickets.
+
+We've made some progress on this problem, but the full result remains elusive. Any thoughts you have are welcome!
+
+

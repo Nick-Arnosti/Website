@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Annotated Reading List: Diversity and Affirmative Action | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Annotated Reading List: Diversity and Affirmative Action</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> <span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>In recent years, there has been an explosion of academic work on matching with diversity and affirmative action considerations. While some of this work has been purely theoretical, much of it has been directly inspired by applications where institutions want to boost outcomes for particular groups of applicants, or ensure adequate representation of members of these groups. This body of literature has seen significant contributions from computer scientists, economists, and operations researchers, making it ideally suited to the EC audience.</p>
+<p>To an outsider, it is challenging to get a comprehensive view of this literature. Many of the papers do not build off of each other, but rather use different terminology, or slightly different definitions. It can be difficult to understand the relationship between papers whose topics seem similar.</p>
+<p>One goal of these reading list is to provide a curated introduction to the topic, using language that – while it does not always align with the language used in the papers themselves – is at least general enough to apply to many different papers. For example, affirmative action policies can be classified into two categories: ‘quotas’, in which an applicant who is, say, a woman and a minority counts separately towards both groups, and ‘reserves’, in which this applicant could take a spot reserved for a woman or a spot reserved for a minority, but not both.</p>
+<p>The first five papers (really, four papers and a blog post) highlighted below are chosen because they illustrate real-world settings in which both quotas and reserves are used. They can be used to teach key concepts such as matroids and greedy algorithms, and cover the most common reserve algorithms, ‘minimum guarantee’ and ‘over and above.’ These are all topics that I cover in my masters-level course on allocating public resources.</p>
+<p>Future iterations of this reading list could go into more depth on theoretical underpinnings. A list of additional relevant papers appears at the end of the document.</p>
+<ol style="list-style-type: decimal">
+<li>Immigration Lottery Design: Engineered and Coincidental Consequences of H-1B Reforms (Pathak, Rees-Jones, Sonmez). NBER 2020.</li>
+</ol>
+<blockquote>
+<p>This paper studies the simplest setting of interest for reserves (a single reserve category), using a real-world application (the allocation of H1B visas). As it documents, although the law itself has not changed since 2005, the law has been implemented using four different selection algorithms (which lead to systematically different outcomes). Two of these (“exemptions first”/“minimum guarantee” and “over and above”) arise in many other applications.</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>Reserve Design: Unintended Consequences and the Demise of Boston’s Walk Zones (Dur, Kominers, Pathak, Sonmez). JPE 2018.</li>
+</ol>
+<blockquote>
+<p>This paper gives a very tangible application where the distinction between minimum guarantee and over and above reserves was important but overlooked. In Boston, a compromise to offer students from within the walk zone priority for 50% of seats at each school was found to produce similar outcomes as ignoring walk zones entirely! This was discovered after the policy had been in place for approximately a decade. After the discovery, the policy was abandoned.</p>
+</blockquote>
+<ol start="3" style="list-style-type: decimal">
+<li>Affirmative Action in India via Vertical, Horizontal, and Overlapping Reservations (Sonmez and Yenmez). Econometrica 2022.</li>
+</ol>
+<blockquote>
+<p>The allocation of Indian Civil Service positions incorporates a longstanding, widespread, and highly formalized affirmative action programs. I include this paper because (i) it is an important application, and (ii) it addresses the simultaneous presence of ‘over and above’ and ‘minimum guarantee’ reserves. Reservations for different groups have different statuses. ‘Vertical’ reservations for Scheduled Tribes, Scheduled Castes, and Other Backwards Classes are intended to operate on an ‘over and above’ basis, while ‘Horizontal’ reservations for people with disabilities and women are intended to operate as ‘minimum guarantees.’ Confusion about how to implement this intent algorithmically has resulted in many lawsuits heard by the Supreme Court of India. This paper shows how to properly implement horizontal and vertical reservations side-by-side. It also provides a novel algorithm for the case of overlapping horizontal reservations.</p>
+</blockquote>
+<ol start="4" style="list-style-type: decimal">
+<li>The Diversity Visa Lottery (Arnosti). Blog Post – TBD.</li>
+</ol>
+<blockquote>
+<p>This is a simple yet important illustration of selection with upper quotas. Each year, 50,000 applicants receive visas through the Diversity Visa lottery. In this lottery, no more than 7% of all visas can go to applicants from a single country, and there are also upper quotas on the number that go to applicants from particular regions. These categories are laminar, implying that a greedy algorithm identifies an optimal feasible selection.</p>
+</blockquote>
+<ol start="5" style="list-style-type: decimal">
+<li>Matching for the Israeli “Mechinot” Gap-Year Programs: Handling Rich Diversity Requirements (Gonczarowski, Kovalio, Nisan, and Romm). EC 2019</li>
+</ol>
+<blockquote>
+<p>This paper gives a clear motivating application in which both lower and upper quotas are used. Although selection with quotas only has a “nice” solution when categories are laminar, that does not apply in this situation. The paper describes the algorithm used in practice, the reasons for its use, and its shortcomings.</p>
+</blockquote>
+<ol start="6" style="list-style-type: decimal">
+<li>Explainable Affirmative Action (Arnosti, Bonet, Sethuraman). Working Paper, 2024.</li>
+</ol>
+<blockquote>
+<p>This paper argues that many algorithms for selection with affirmative action are poorly understood and lead to unintended consequences. It presents axioms for ‘explainable’ selection rules which preclude ‘over and above’ reserves, but permit ‘minimum guarantee’ reserves. It shows that many existing affirmative action policies are equivalent to defining feasibility constraints and then applying a greedy selection rule.</p>
+</blockquote>
+<ol start="7" style="list-style-type: decimal">
+<li>School choice: Impossibilities for affirmative action (Kojima). GEB 2012.</li>
+</ol>
+<blockquote>
+<p>This paper provides negative examples illustrating how policies intended to help one group can easily backfire – especially in environments with multiple institutions.</p>
+</blockquote>
+<p><strong>Other Applications</strong></p>
+<ul>
+<li><em>Fair algorithms for selecting citizens’ assemblies</em> (Flanigan, Golz, Gupta, Hennig, Procaccia). Nature 2021.</li>
+<li>Electoral gender quotas. <em>Gender Quotas Database</em> <a href="https://www.idea.int/data-tools/data/gender-quotas-database">https://www.idea.int/data-tools/data/gender-quotas-database</a></li>
+<li>Affordable Housing Allocation. <em>Do “Community Preference” Policies Violate the Fair Housing Act? (Part 3)</em> (Arnosti). Blog Post, 2022</li>
+<li>Fringe Festival Selection. <em>The Minnesota Fringe Festival</em> (Arnosti). Blog Post, 2021.</li>
+<li>Vaccine Scheduling. <em>A Better Way to Schedule Vaccinations</em> (Arnosti). Blog Post, 2021.</li>
+<li><em>College Admission with Multidimensional Privileges: The Brazilian Affirmative Action Case</em> (Aygun and Bo). AEJ: Micro 2021.</li>
+<li>Chilean Constitutional Assembly. <em>Apportionment with Parity Constraints</em> (Mathieu and Verdugo). Mathematical Programming 2022.</li>
+</ul>
+<p><strong>Theory of Matching with Lower Quotas</strong></p>
+<ul>
+<li><em>Classified Stable Matching</em> (Huang). SODA 2010.</li>
+<li><em>A Matroid Approach to Stable Matchings with Lower Quotas</em> (Fleiner and Kamiyama) MOR 2016.</li>
+<li><em>A Generalized Polymatroid Approach to Stable Matchings with Lower Quotas</em> (Yokoi). MOR 2017.</li>
+</ul>
+<p><strong>Multi-Priority Systems</strong></p>
+<ul>
+<li><em>Fair Allocation of Vaccines, Ventilators and Antiviral Treatments: Leaving No Ethical Value Behind in Health Care Rationing</em> (Pathak, Sonmez, Unver, Yenmez). Management Science, Forthcoming.</li>
+<li><em>School Choice in Chile</em> (Correa, Epstein, Epstein, Escobar, Rios, Aramayo, Bahamondes, Bonet, Castillo, Cristi, Epstein, Subiabre). OR 2021.</li>
+<li><em>Matching with slot-specific priorities: Theory</em> (Kominers and Sonmez). TE 2016.</li>
+<li><em>Processing Reserves Simultaneously</em> (Delacretaz). EC 2021.</li>
+</ul>
+<p><strong>Other Papers (Not Comprehensive)</strong></p>
+<ul>
+<li><em>Effective affirmative action in school choice</em> (Hafalir, Yenmez, Yildirim). TE 2013.</li>
+<li><em>Design on Matroids</em> (Hafalir, Kojima, Yenmez, Yokote). Working Paper.</li>
+<li><em>Adaptive Priority Mechanisms</em> (Celebi and Flynn). Working Paper.</li>
+<li><em>How to De-Reserve Reserves: Admissions to Technical Colleges in India</em> (Aygun and Turhan). Management Science 2022.</li>
+<li><em>Reversing Reserves</em> (Pathak, Rees-Jones, Sonmez). Management Science 2023.</li>
+<li><em>Market Design for Distributional Objectives in Allocation Problems: An Axiomatic Approach</em> (Abdulkadiroglu and Grigoryan). Working Paper.</li>
+<li><em>Choice with Affirmative Action</em> (Dogan and Yildiz). Management Science 2022.</li>
+<li><em>Centralized Admissions for Engineering Colleges in India</em> (Baswana, Chakrabarti, Chandran, Kanoria, Patange). Informs Applied Analytics 2019.</li>
+</ul>
+<!--
+* Other Fleiner papers?
+* Lots by Kojima and Co-Authors
+-->
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a> 2023
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

@@ -1,0 +1,81 @@
+---
+title: 'Why "Margin of Error" is a Misleading Statistic'
+date: '2020-11-02'
+author: Nick Arnosti
+tags:
+  Elections
+categories:
+  Statistics
+---
+
+
+Many people have had their eyes on election polls recently. These polls typically report percentages supporting each candidate, alongside a "margin of error."
+
+What does this number mean? If you read the fine print, you'll sometimes see that this margin of error is a "95% confidence interval." Although this makes it sound like the election result should fall between these bounds 95% of the time, this interpretation is wrong.^[There is a subtle statistical reason that this is wrong, which is not the focus of this post. Even under ideal circumstances, the claim that the confidence interval contains the true outcome 95% of the time holds _ex ante_, and not for each _realization_ of the confidence interval. In practice the more important point (discussed in this post) is that we are far from ideal circumstances, and there is no reason to believe that confidence intervals will contain the true outcome 95% of the time.] 
+
+#Multiple Sources of Error
+
+Polls may be off for several reasons:
+
+1. People may lie, or change their minds.
+2. Systematic errors due to a biased sample.
+3. Random errors due to a small sample.
+
+The reported margin of error addresses only the third concern. It tells you how much the findings might change if you re-ran the poll using the same methodology. It does **not** tell you whether your poll is capturing a representative sample of voters.
+
+In practice, survey respondents are never perfectly representative of the voting population: they tend to be older, whiter, and more educated. Pollsters tweak their survey methodology to try to minimize this bias, but will never eliminate it. For this reason, every reputable pollster reports a **weighted** average of responses. If you know that African Americans will make up 10% of the electorate but are only 6% of your poll respondents, then you can think of each African American respondent as speaking for 10/6 = 1.66 voters, and overweight their answers accordingly.
+
+Although the idea is simple, calculating appropriate weights is difficult in practice. One reason is that nobody knows what turnout will be among different demographics: pollsters are forced to make assumptions. A second more subtle point is that it's not even obvious what demographics to consider.^[For example, most pollsters in 2016 corrected for race, age, and gender, but did not account for level of education. College educated voters were more likely to vote for Clinton and more likely to respond to polls, causing some polls to overstate support for Clinton. Although most polls now take level of education into account, there are an endless number of other possible factors to consider.] Finally, there are questions about how to deal with overlapping categories: how much weight should be given to a 23 year old white male, versus a 64 year old black female?
+
+Getting into the details of different methodologies is beyond the scope of this post (much to my chagrin). The main point to remember is that even **after** raw polling data has been collected, pollsters use difficulty-to-assess **assumptions** about turnout to convert this data into a final number. To highlight this point, in 2016 the New York Times gave different polling analysists access to the same raw data, and noted that [the resulting predictions varied by 5%](https://www.nytimes.com/interactive/2016/09/20/upshot/the-error-the-polling-world-rarely-talks-about.html).^[Sadly, the most accurate prediction in hindsight was one made by a team that included my classmate [Sam Corbett-Davies](https://samcorbettdavies.com/), which showed Trump with a 1 point lead.] This variation is not captured by the reported margin of error, despite the fact that it (i) is often larger in magnitude and (ii) does not go away as more polls are conducted. It is also the reason why certain pollsters consistently produce results that are more favorable to one candidate or the other.
+
+#Take-Home Message
+
+Polls differ not only in who they survey, but also in their assumptions about who will vote. As we get more polling data, we learn how each group will vote, but we don't do any better at predicting how **many** people from each group will vote. The reported margin of error keeps shrinking, but the error in our assumptions remains. This error is unreported, making the margin of error a misleading statistic.
+
+To better predict election outcomes, what we really need is not more polls, but better models for who is going to vote. This seems hard in normal years, and especially so given that (i) we are in the middle of a global pandemic in which record numbers of people are voting early or by mail, and (ii) one of our major political parties is openly working to [make](https://www.businessinsider.com/texas-ballots-harris-county-drive-thru-voting-election-2020-11) [sure](https://apnews.com/article/donald-trump-des-moines-iowa-city-elections-courts-b921d9d6416cde647e6e7fcb5be23c28) [their](https://www.cnn.com/2020/11/02/politics/nevada-las-vegas-signature-lawsuit/index.html) [votes](https://www.startribune.com/court-orders-minnesota-s-post-election-day-ballots-in-minn-be-separated/572917391/) [don't](https://www.wsj.com/articles/supreme-court-won-t-hear-pennsylvania-ballot-case-before-election-11603920921) [count](https://www.nytimes.com/2020/09/11/us/florida-felon-voting-rights.html).
+
+In the short term, we may not be able to eliminate polling errors, but we should at least try to communicate them more accurately. One step would be for pollsters to be more transparent about the assumptions that they use. Another approach (which might be easier for people to understand) would be to conduct analyses under different assumptions about turnout, and report results for each scenario. If you have other ideas for how to reduce polling error or communicate it more effectively, please post below!
+
+
+
+```{r, echo=FALSE}
+#A poll with a large sample size (i.e. an online poll) will report a small margin of error. This means that the random error (variance) is small: if the poll were conducted again using the exact same methodology, we should expect a similar result. However, the poll could still have systematic errors, causing it to misreport the outcome.
+
+#Suppose you are conducting a survey. You probably start by thinking about two things: how you are going to contact people, and what questions to ask. Unsurprisingly, different pollsters come up with different answers to these questions. What is perhaps less understood is that **after** data has been collected, there is a third step: weighting.
+
+
+#Aside: Theory of "shy" Trump voters -- not much evidence that people lie, but they may just not respond. In this post, we'll assume no lying.
+
+
+#See "United States of America 2019" excel spreadsheet for demographic breakdown by age.
+
+#Related to [this paper](https://statistics.fas.harvard.edu/files/statistics-2/files/statistical_paradises_and_paradoxes.pdf)
+
+
+
+#Motivation
+
+#1. Anecdote of Trump election (used to illustrate broader point). So many polls showed 3-point Hillary lead (similar for Brexit -- could use this instead).
+
+#2. What does margin of error mean? Dig deeper and you're told it's a 95% confidence interval. Does that mean 95% of the time, true result will lie in between reported numbers? No. Read on to see why not.^[Several reasons why this is wrong. Could also have footnote about how classical statistics views poll/conf interval as random, but outcome as non-random. Doesn't make sense to ask "what is chance that vote share lies between 40% and 50%?" This is a very subtle point (occupied hours on hikes with Stanford PhDs in technical fields), and not the focus.]
+
+#Two challenges facing pollsters:
+#1. Not sure who will vote.
+#2. Not sure how they will vote.
+
+#As we will see, the margin of error reflects the uncertainty in the latter, but not the uncertainty in the former. 
+
+#A Simple Example
+
+#To make this clear, let's assume away the first: we're in a society where voting is mandatory.
+
+#One approach is to survey everyone. Assuming nobody lies or changes their mind, this will work great, but be very expensive. Another approach is to sample a small random sample, and project from there. If we can truly get a random sample, this works great. The bigger the sample, the better our prediction, but even moderate samples can do pretty well. Margin of error quantifies this uncertainty.
+
+#What if we can't get random sample? Known that Afican Americans are hard to get ahold of. Say that each non-African American has 2% chance of being in sample, each AA has 1% chance. If we do straight average, we err. We can correct this by doubling influence of each AA that is actually in sample.^[This decreases bias, but increases variance. Details of how this is done are too technical for this post, but included in another -- in that post work through exactly how to debias based on estimated probability of voting and of responding to poll. Presumably weight is ratio of the two?] In essence, idea is to use poll information to estimate how each group votes, and then use population data to forecast the outcome.^[Of course, there's a challenge in how to define a "group", or to estimate probability of responding. We'll ignore that.]
+
+# Back to reality. 
+
+#We have population data, but don't know who will vote. So we use same methodology, but target it to our assumptions about who will vote. Different assumptions lead to different conclusions (mention NYTimes article, cite Sharad and Sam and others). As we get more and more polling data, we get a better sense of how each group will vote, but we don't do any better at predicting how many from each group will vote. The reported margin of error keeps shrinking, but the error of our assumptions remains (and is unreported).^[Give numerical example -- poll gets closer and closer to one number, but true outcome is another.]
+```
+

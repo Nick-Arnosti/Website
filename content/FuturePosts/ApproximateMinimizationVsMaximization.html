@@ -1,0 +1,36 @@
+---
+title: "Kash Patel"
+author: "Nick Arnosti"
+date: '2026-04-23'
+output: html
+draft: true
+---
+
+
+
+<p>Recently, FBI director Kash Patel was asked about an Atlantic article. The clip of his response is <a href="https://www.youtube.com/watch?v=UiKDGGgFZqE">here</a>, but what I want to focus on is this quote</p>
+<blockquote>
+<p>This FBI director has been on the job twice as many days as every director before me. What that means is, I’ve taken half as many days off as those before me.</p>
+</blockquote>
+<p>In fact, these are not equivalent! Suppose that the previous director worked 230 days and took 30 days off (approximating the year as having 5 = 260 work days). Taking “half as many days off” means a total of 15 vacation days (implying 245 work days). Meanwhile, being on the job “twice as many days” would require working 460 days in the year, which is clearly impossible.</p>
+<p>Now, this is an obvious point mathematically, but actually has important implications.</p>
+<div id="connection-to-literature" class="section level1">
+<h1>Connection to Literature</h1>
+<p>Suppose you are matching patients to kidneys. Assume that every transplant is successful.</p>
+<p>Maximizing the number of transplants performed is equivalent to minimizing the number of patients who fail to get transplants (could call this deaths).</p>
+<p>However, <em>approximately</em> maximizing the number of transplants is not equivalent to <em>approximately</em> minimizing the number of patients who die. Compare the following claims:</p>
+<p><em>Under plan A, the number of transplants is at least half the number under plan X.
+</em>Under plan A, the number of patient deaths is at most twice the number under plan X.</p>
+<p>These are the types of guarantees researchers prove:
+<em>It’s impossible to double the number of transplants performed under plan A.
+</em>It’s impossible to halve the number of deaths that occur under plan A.</p>
+<ul>
+<li>Unpaired Kidney Exchange</li>
+<li>Akbarpour et al</li>
+<li>Aouad Saritac</li>
+<li>Angela Kohlenberg (Northwestern)</li>
+<li>Felipe</li>
+</ul>
+<p>Greedy matching policy automatically gets at least half as many transplants. However, it doesn’t guarantee that at most twice as many people die.</p>
+<p>In some cases, one guarantee is easy. For example, if under plan X, more than half of patients die, then the second guarantee holds for any policy, whereas it still might not be easy to get within a factor of two.</p>
+</div>

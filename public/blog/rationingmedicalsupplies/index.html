@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rationing Medical Supplies | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Rationing Medical Supplies</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2020/06/05</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The Coronavirus pandemic has resulted in a need to ration scarce medical supplies. Most people agree that test kits, ventilators, antiviral medication, and vaccines should not necessarily go to those willing to pay the most for them. States have been revising their allocation guidelines to reflect various ethical considerations.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>One question that emerges is whether to give priority to certain categories of people, such as emergency personnel. A recent <a href="https://www.nber.org/papers/w26951">working paper</a> by <a href="https://economics.mit.edu/faculty/ppathak">Parag Pathak</a>, <a href="https://www.tayfunsonmez.net/">Tayfun Sonmez</a>, <a href="https://sites.bc.edu/utku-unver/">Utku Unver</a>, <a href="https://sites.google.com/bc.edu/bumin-yenmez/">Bumin Yenmez</a> examines existing guidelines, and notes that some states prioritize emergency personnel, whereas others (including my home states of New York and Minnesota) do not.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Their conclusion is that most people wish to give some advantage to emergency personnel, but are afraid that doing so might result in <em>all</em> units going to these personnel, at the exclusion of other groups.</p>
+<p>My interpretation of this conclusion is the following. Suppose we look at the success rate of emergency personnel (among emergency personnel who needed the resource, how many got it?), and the success rate of the rest of the population. Call the ratio of these success rates the <strong>advantage</strong> granted to emergency personnel. That is, if 10% of emergency personnel get the resource, and only 2% of people who are not emergency personnel do, then emergency personnel have an advantage of 5. It seems (and I would welcome comments on this assertion, as I am not an ethicist) that most people would like emergency personnel to have some advantage <span class="math inline">\(&gt; 1\)</span>, but for this advantage to not be <em>too</em> large.</p>
+<p>How can we ensure this? The aforementioned paper proposes a system that reserves certain units for emergency personnel, while making other units available to anybody.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> In this post, I observe that under a reserve policy, it is hard to control or predict the advantage offered to medical personnel.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> I then consider an alternative: policymakers could directly specify their desired advantage.</p>
+</div>
+<div id="a-simple-model" class="section level2">
+<h2>A Simple Model</h2>
+<p>There is a finite set of privileged categories <span class="math inline">\(C\)</span>, and a ranked list of <span class="math inline">\(n\)</span> applicants. (I will be agnostic about where this ranking comes from: an applicant’s position could be determined by their medical condition, by lottery, or other considerations.) Each applicant to at most one category. Let <span class="math inline">\(C_0\)</span> denote the set of categories, along with the empty set (indicating someone who does not belong to any of the categories in <span class="math inline">\(C\)</span>). A priority list of length <span class="math inline">\(n\)</span> is simply an element <span class="math inline">\(L \in C_0^n\)</span>. For each <span class="math inline">\(c \in C_0\)</span>, let <span class="math inline">\(n_c\)</span> denote the number of applicants belonging to category <span class="math inline">\(c\)</span>.</p>
+<p>There are <span class="math inline">\(m\)</span> identical units to be allocated. An allocation function takes as input the priority list <span class="math inline">\(L\)</span> and produces as output the number <span class="math inline">\(m_c\)</span> of units allocated to each category <span class="math inline">\(c\)</span>. Within each category, units are always awarded to the highest-priority applicants. The <strong>success rate</strong> of category <span class="math inline">\(c\)</span> is the fraction of applicants who receive units, given by <span class="math inline">\(s_c = m_c/n_c\)</span>. The <strong>advantage</strong> of category <span class="math inline">\(c\)</span> is the ratio <span class="math inline">\(s_c/s_0\)</span>.</p>
+<p>To keep things simple, much of the post will assume that there is only one privileged category (emergency personnel).</p>
+</div>
+<div id="reserve-policies" class="section level2">
+<h2>Reserve Policies</h2>
+<p>Suppose that there are <span class="math inline">\(m = 20\)</span> units, and we decide to reserve <span class="math inline">\(r = 6\)</span> of them for emergency personnel. There are many ways to implement this reserve. We will focus on two approaches described by Pathak, Sonmez, Unver, and Yenmez:<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<ul>
+<li><p><strong>Minimum Guarantee</strong>: Give units to the first six emergency personnel on the list. Give the fourteen remaining units to the highest-priority people remaining on the list (regardless of whether they are emergency personnel).</p></li>
+<li><p><strong>Over and Above</strong>: Give units to the first fourteen people on the list (regardless of whether they are emergency personnel). Give the final six units to the highest-priority emergency personnel remaining on the list.</p></li>
+</ul>
+<p>If the priority list is determined by lottery, these implementations correspond to policies discussed in my <a href="/Blog/H1BVisas">blog post on H1B visa lotteries</a>: Minimum Guarantee corresponds to what I called “Single Lottery,” and Over and Above corresponds to “General Lottery First.” The following result is easily seen.</p>
+
+<div class="proposition">
+<span id="prp:unnamed-chunk-2" class="proposition"><strong>Proposition 1  </strong></span>For any fixed reserve <span class="math inline">\(r\)</span>, the “Over and Above” policy gives at least as many units to emergency personnel as the “Minimum Guarantee” policy. Under both policies, the number of units assigned to emergency personnel is weakly increasing in the reserve <span class="math inline">\(r\)</span>.
+</div>
+
+<p>The monotonicity condition implies that in some sense, the effect of imposing a reserve is straightforward: it benefits emergency personnel, with greater benefit the larger the reserve. However, the <em>magnitude</em> of this benefit is not clear at the time the reserve is set.</p>
+<ul>
+<li><p>In some cases, the reserve may not advantage emergency personnel at all! For example, if at least six of the top twenty applicants are emergency personnel, then the Minimum Guarantee has no effect.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p></li>
+<li><p>In other cases, the advantage may be massive. For example, if there are only six emergency personnel, then all six will receive a unit, regardless of how many people are listed ahead of them.</p></li>
+</ul>
+<p>We can see this uncertainty in the following figure, which shows that the advantage implied by a given reserve can vary greatly depending on the proportion of emergency personnel in the applicant pool.</p>
+<pre class="r"><code>#Based on fluid model with priorities determined by lottery.
+#Normalize mass of agents to one
+#Parameters are q (mass of units), p (percentage of population that are doctors)
+#Mechanisms given by r (reserve percentage) and alpha (advantage) &gt; 1
+
+quantity_to_doctors_minimum_guarantee = Vectorize(function(p,q,r){
+    return(min(p,q*max(p,r)))
+})
+
+quantity_to_doctors_over_above = Vectorize(function(p,q,r){
+    return(min(p*q*(1-r)+r*q,p))
+})
+
+quantity_to_doctors_advantage = function(p,q,alpha){
+    regular_win_prob = uniroot(function(x){return((1-p)*min(x,1)+p*min(alpha*x,1) - q)},interval=c(0,1))$root 
+    return(p*min(regular_win_prob*alpha,1))
+}
+
+advantage = Vectorize(function(p,q,quantity_to_doctors){
+    return(quantity_to_doctors/p*(1-p)/(q-quantity_to_doctors))
+})
+
+
+
+#Plotting advantage under each reserve system, as function of p
+q = .2
+r = .5
+par(mar = c(5,5,1,2))
+plot(Vectorize(function(p){return(advantage(p,q,quantity_to_doctors_minimum_guarantee(p,q,r)))}),las=1,xlab=&#39;Fraction Who Are Emergency Personnel&#39;,ylab=&#39;Advantage&#39;,ylim=c(0,10),cex.lab=2,cex.axis=2)
+plot(Vectorize(function(p){return(advantage(p,q,quantity_to_doctors_over_above(p,q,r)))}),lty=&#39;dashed&#39;,add=TRUE)
+legend(.3,9,legend = c(&quot;Minimum Guarantee&quot;,&quot;Over and Above&quot;), lty=c(&#39;solid&#39;,&#39;dashed&#39;),cex=1.5)</code></pre>
+<div class="figure"><span id="fig:unnamed-chunk-3"></span>
+<img src="/Blog/RationingMedicalSupplies_files/figure-html/unnamed-chunk-3-1.png" alt="Reserving 50% of units for emergency personnel results in an unpredictable advantage." width="672" />
+<p class="caption">
+Figure 1: Reserving 50% of units for emergency personnel results in an unpredictable advantage.
+</p>
+</div>
+</div>
+<div id="the-specified-advantage-policy" class="section level2">
+<h2>The “Specified Advantage” Policy</h2>
+<p>Here’s a mechanism that addresses this concern. It is parameterized by desired advantages <span class="math inline">\(\alpha_c \geq 1\)</span> for each category <span class="math inline">\(c \in C_0\)</span> with <span class="math inline">\(\alpha_0 = 1\)</span>. Solve for the success rate <span class="math inline">\(s_0\)</span> using the following equation:</p>
+<p><span class="math display">\[ \sum_{c \in C_0} n_c \min(s_0 \alpha_c,1) = m. \]</span> Then allocate <span class="math inline">\(m_c = n_c \min(s_0 \alpha_c,1)\)</span> units to applicants from category <span class="math inline">\(c\)</span> (for simplicity, I am ignoring rounding errors). The quantity <span class="math inline">\(s_0\)</span> gives the success rate among the general population. For categories with <span class="math inline">\(\alpha_c &gt; 1/s\)</span>, all applicants from that category receive a unit. For all other categories, the success rate is exactly <span class="math inline">\(\alpha_c\)</span> times <span class="math inline">\(s_0\)</span>.</p>
+<p>If the composition of the list is known in advance, then one can get exactly the same outcomes using this policy as using a reserve policy.</p>
+
+<div class="proposition">
+<p><span id="prp:unnamed-chunk-4" class="proposition"><strong>Proposition 2  (Equivalence)  </strong></span>Fix the priority list <span class="math inline">\(L\)</span> and the number of units <span class="math inline">\(m\)</span>. Let <span class="math inline">\(|C| = 1\)</span>. For any reserve <span class="math inline">\(r &lt; m\)</span>,</p>
+<ul>
+<li><p>There exists an advantage <span class="math inline">\(\alpha\)</span> such that the specified advantage policy produces the same outcome as a Minimum Quota of <span class="math inline">\(r\)</span>.</p></li>
+<li>There exists an advantage <span class="math inline">\(\alpha\)</span> such that the specified advantage policy produces the same outcome as an Over and Above Quota of <span class="math inline">\(r\)</span>.
+</div>
+</li>
+</ul>
+<p>However, if the composition of the priority list is unknown, this mechanism ensures a specified advantage for emergency personnel.</p>
+</div>
+<div id="closing-thoughts" class="section level2">
+<h2>Closing Thoughts</h2>
+<p>This post considers two ways to advantage a target group such as emergency personnel.</p>
+<ul>
+<li><p>A reserve system offers a guarantee about the <strong>number of units</strong> allocated to the target group. It does not control the relative success rates of the target group and the general population.</p></li>
+<li><p>A specified advantage system offer a guarantee on the <strong>relative success rate</strong> of the target group. If there are few members of the target group, then the absolute number of units going to this group could be small.</p></li>
+</ul>
+<p>I can imagine scenarios where either form of guarantee is more desirable than the other. To me, comparing success rates seems natural. If priorities are determined by lottery, the specified advantage mechanism is a form of weighted lottery in which policymakers directly specify lottery weights. If the priority list is not generated by lottery, the specified advantage policy has several potentially undesirable features, and I would hesitate to use it.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> However, I am not concinced that a reserve system – which offers a large advantage if the priority list contains few essential personnel, and little to no advantage if it contains many essential personnel – will be easy for policymakers to use appropriately.</p>
+<p>I’d love to hear from you about i) whether the concept of “advantage” defined here seems like a reasonable measure, and ii) alternative allocations procedures that you think should be considered!</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>My friend <a href="https://med.nyu.edu/faculty/brendan-parent">Brendan Parent</a> has helped to craft the <a href="/NY-COVID-GUIDELINES.pdf">guidelines for New York State</a>.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>This <a href="https://freakonomics.com/podcast/covid-19-ventilators/">Freakonomics Podcast</a> provides an accessible discussion of their work and other ideas related to medical rationing.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Excitingly, they are also <a href="https://ccm.pitt.edu/sites/default/files/2020-05-18%20Exec%20Summary-%20Allocating%20scarce%20anti-viral%20meds.pdf">collaborating with the University of Pittsburgh</a> to bring these ideas to practice. Reserve systems are already used in many contexts, including the allocation of <a href="http://www.tayfunsonmez.net/wp-content/uploads/2017/03/busing_jpe_final.pdf">public school seats</a>, <a href="https://www.tayfunsonmez.net/wp-content/uploads/2020/02/H1B-February2020.pdf">H1B Visas</a>, and <a href="https://www.tayfunsonmez.net/wp-content/uploads/2019/10/SonmezYenmez-IndianAA-v2-October2019.pdf">government jobs in India</a>.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Perhaps for this reason, reserve policies have often produced surprising and unintended consequences. For example, in Boston, a system that reserved half of the seats at each school for neighborhood children was found to be nearly equivalent to a system that gave no advantage to these children. In India, affirmative action policies have been implemented in a manner that sometimes hurts the intended beneficiaries!<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>Both of these approaches use a “soft” reserve, meaning that if there are fewer than six emergency personnel, excess reserved units are given to members of the general public. Furthermore, under both approaches, emergency personnel remain eligible for unit that are available to the general public, ensuring that an applicant is never hurt by their emergency status.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>The Over and Above policy can also have no effect, although this is much less likely: in our example, there is no benefit only if emergency personnel occupy positions 15-20 on the priority list.<a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p>For example, an individual might be harmed by revealing that they are medical personnel. In addition, it fails to satisfy an “irrelevance of rejected applicants” condition: the presence of low-priority emergency personnel (who will never win a unit) can shift units from the general population to other emergency personnel.<a href="#fnref7">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

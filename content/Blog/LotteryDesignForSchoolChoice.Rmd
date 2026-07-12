@@ -1,0 +1,77 @@
+---
+title: 'Lottery Design for School Choice'
+date: 
+author: Nick Arnosti
+draft: true
+---
+
+
+My paper "Lottery Design for School Choice" recently appeared in Management Science. I first started working on this paper back in 2014, and an early version appeared in EC 2015 under the title "Short Lists in Centralized Clearinghouses." Its publication was delayed by a combination of challenging proofs and my reticence to submit it until it was perfect: I did not submit it to *any* journal until November 2019! Sadly, I see many graduating PhD students fall into this trap with their job market papers. 
+
+Despite the long delay, I think this is a really nice paper that more people should know about!^[While I was still in graduate school, I remember telling my advisors that if I didn't publish the paper in a "top 5" econ journal, it would be a personal failure. In the end, I never submitted the paper to an econ journal, but I still believe that its quality merits my earlier confidence. (I've never been much of one for false modesty.) ]
+
+
+
+
+The paper contributes to a growing literature on stable matching in random matching markets. This literature is often motivated by school choice. In this post, I will (i) summarize how one can use heuristic arguments to approximate outcomes in random markets, (ii) summarize the contributions of the paper, and (iii) explain why I think my work is much more comprehensive than previous related papers.
+
+^[A lot of people have gotten hung up on the question of whether lists are "short" or "long" in practice. What I know is that in practice, lists are always *finite*. ]
+
+
+Many papers on two-sided matching model preferences and/or priorities as random. This models uncertainty about individual preferences, and makes it possible to study what outcomes arise "on average." 
+
+In some cases, priorities are quite literally random. For example, school priority is often determined at least in part by lotteries. One well-studied question is whether schools should each use a separate lottery draw, or a single district-wide lottery.
+
+It's natural to wonder how the outcomes 
+
+Here's a very stylized model in which we could try to answer that question. There are $m$ students, and $n$ schools. Each student lists $l<n$ random schools (in a uniformly random order), and each school has a single seat.^[Admittedly, this doesn't sound like any school district I know. We'll generalize later, but this is a good starting point.] Schools generate priority lists either using independent uniform lotteries, or using a single lottery, and then the Deferred Acceptance algorithm is applied to the resulting market. Which lottery matches more students to some school on their list?
+
+The answer is not obvious. If we use the generalized Top Trading Cycles algorithm (rather than Deferred Acceptance), then it turns out that that the two lottery procedures produce an identical distribution of outcomes. However, this is not true of Deferred Acceptance. What we can do is simulate these markets, for particular values of $m, n, l$. 
+
+
+How could we analyze this model?
+
+# Heuristic Reasoning 
+
+## Analyzing Independent Lotteries
+
+By symmetry, each student should have an identical probability (call it $p$) of being admitted to each school on her list. Furthermore, since the student receives independent lottery numbers at each school, learning her outcome for one school should not be very informative of the outcome at a different school.^[In principle, learning that I was rejected from school $A$ gives me some information about the number of applicants to $A$, which could also inform my beliefs about the number of applicants to another school $B$. But in this model, this effect turns out to be very weak.] In other words, the probability that the student is rejected from all $l$ schools to which she applied should be approximately $(1-p)^l$. The question remains, what value should we expect for $p$?
+
+To determine this, we can examine the market from two perspectives: that of students, and that of schools. From students' perspective, if each school admits them with probability $p$, then some algebra shows that the expected number of schools to which they must "propose" before either being accepted or reaching the end of their list is 
+$$\mu(p) = \frac{1 - (1-p)^l}{p}.$$
+We now turn to schools' perspective. What is the chance that a given school fails to fill its seat? This occurs only if it receives no proposals. Because schools are selected uniformly at random, the probability that a particular student proposes to a particular school should be $\mu(p)/n$. Thus, the probability that *no* student proposes to a particular school should be 
+$$(1 - \mu(p)/n)^m \approx e^{-\mu(p)m/n},$$
+with the approximation holding so long as $m$ and $n$ are reasonably large. Thus, the expected number of schools that fill their seat (receive at least one proposal) is $n(1 - e^{-\mu(p)m/n})$. Since the number of filled seats equals the number of assigned students, we can set this equal the expected number of students who are accepted to some school, which is $m(1 - (1-p)^l)$. Substituting the expression for $\mu(p)$ from abive yields the following consistency condition for $p$:
+$$m(1 - (1-p)^l) = n(1 - e^{-\frac{1-(1-p)^l}{p}\frac{m}{n}}).$$
+It can be shown that for any $m, n, l$, this equation has a unique solution $p \in (0,1)$, and that this value of $p$ depends on $m$ and $n$ only through the ratio $\rho = m/n$. From $p$, we predict that the fraction of students who match is $F_I = 1 - (1-p)^l$.
+
+## Single Lottery
+
+With a single lottery, the Deferred Acceptance algorithm reduces to a serial dictatorship: the student with the best lottery number gets her first choice, the student with the next best lottery number gets her first choice from the remaining schools, and so on. We can analyze this process as follows. 
+
+When it is my turn to choose, I will match so long as not all of the schools on my list are filled. If $k$ schools are filled, then the probability that all $l$ of the schools are on my list is ${k \choose l}/{n \choose l} \approx (k/n)^l$ for large $n$. Thus, if $k_t$ is the number of matches after $t$ students have selected, we have 
+$$\mathbb{E}[k_{t+1}-k_t \vert k_t] \approx 1 - (k_t/n)^l.$$
+This motivates the following deterministic approximation of $k$. Let $\bar{k}_0 = 0$, and define $\bar{k}_{t+1} = \bar{k}_t + (1-(\bar{k}_t/n)^l)$. Then $\bar{k}_m$ is our approximation of the final number of students who are assigned. As $m, n$ grow, we can use the following differential equation to produce a continuous approximation of $k$:
+$$x(0) = 0, \,\,\,\, x'(s) = 1-x(s)^l.$$
+The quantity $x(s)$ approximates $k_{sn}/n$, so our prediction for the fraction of students who are assigned when using a single lottery is $F_S = x(m/n)\times n/m$.
+
+
+# Selling the Work
+
+I've shown how to use heuristic reasoning to generate predictions $F_I$ and $F_S$ for the fraction of students who match under independent and single lotteries, respectively.
+
+Does this heuristic reasoning provide a good approximation? Are these expressions clean enough to compare? Can they be generalized to more realistic settings? The answer to all three questions is 'yes.'
+
+In the paper,
+1. I prove that these expressions are asymptotically valid as the number of students $m$ and schools $n$ grow, with $m/n$ converging to a constant.
+2. I provide an analytical comparison between these two quantities, and show that independent lotteries produce more matches for any $l$ and any ratio $m/n$.
+3. I generalize the model to allow schools to have different numbers of seats and different probabilities of appearing on student lists.
+4. I generalize the model to allow students to list different numbers of schools.
+5. In this more general model, I analyze not only the number of matches, but also the exact asymptotic fraction of students getting their first choice, second choice, third choice, and so on.
+
+Compared to prior work, this gives a much more complete picture, in a much more general model.
+
+Insights about comparison of matched agents: depends on list length distribution. 
+
+Main limitation is that there are still restrictive assumptions on preferences and priorities: addressed in continuum model. 
+

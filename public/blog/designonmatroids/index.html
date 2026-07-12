@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reflections on &#34;Design on Matroids&#34; | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Reflections on &ldquo;Design on Matroids&rdquo;</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2023/01/07</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>I recently read the working paper “Design on Matroids” by Isa Hafalir, Fuhito Kojima, Bumin Yenmez, and Koji Yokote. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look.</p>
+<p><strong>Disclaimer.</strong> This is part of a series of posts in which I discuss others’ work. My goal with these posts is to organize my thoughts, and share these thoughts with the authors (and anyone else who may be interested). However, I want to make several things clear.</p>
+<ol style="list-style-type: decimal">
+<li>To prevent the task from being overwhelming, I am not trying to be “comprehensive” (as I would if I officially reviewed the paper). Instead, I will focus on the aspects of the paper that catch my attention.</li>
+<li>While my comments may come across as critical, my goal is to understand and discuss ideas. I would not be writing these posts if I did not find the ideas in the papers interesting or worthwhile.</li>
+<li>These posts are not intended for a general audience. Read only if you are interested in the topic.</li>
+</ol>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>The setting is as follows. There a set of students, a set of schools, and a set of possible contracts <span class="math inline">\(\mathcal{X}\)</span>. Each contract specifies a student, a school, and possibly additional terms. These contracts are strictly ranked according to the order <span class="math inline">\(\succ\)</span>.</p>
+<p>However, in addition to the order <span class="math inline">\(\succ\)</span>, there is a “diversity index” which scores how good an assignment is. In particular, each student has a known type. Any assignment induces a “distribution”, which is simply a matrix whose <span class="math inline">\((t,c)\)</span> entry is the number of type-<span class="math inline">\(t\)</span> students assigned to school <span class="math inline">\(c\)</span>. The diversity index is a function <span class="math inline">\(f\)</span> that assigns a real-numbered score to each distribution.</p>
+<p>Now suppose that not all contracts are feasible. Instead, we can only select among a subset of contracts <span class="math inline">\(X \subseteq \mathcal{X}\)</span>. Which contracts in <span class="math inline">\(X\)</span> should be selected? The authors propose using the “Diversity Choice Rule.” This rule first asks, “what is the highest possible diversity index that can be achieved, given <span class="math inline">\(X\)</span>?” Then, among assignments that achieve this diversity index, it chooses by greedily accepting the highest-ranked contract (according to <span class="math inline">\(\succ\)</span>) that is compatible with (i) maximizing the diversity index, and (ii) accepting the higher-ranked contracts that we have already committed to.</p>
+<p>This Diversity Choice Rule is always well-defined, and always chooses a set of contracts with the highest-possible diversity index. The authors’ goal is to determine when the Diversity Choice Rule has the following nice properties:</p>
+<ol style="list-style-type: lower-roman">
+<li>Selects a set of contracts that unambiguously has “higher merit” than any other set with the same diversity index score.</li>
+<li>Is computable in polynomial time.</li>
+<li>Is “path independent” (which implies substitutability).</li>
+<li>Satisfyies the law of aggregate demand.</li>
+</ol>
+<p>These properties are not satisfied for every diversity index <span class="math inline">\(f\)</span>, but if <span class="math inline">\(f\)</span> is “ordinally concave”, then (i), (ii), (iii) hold (see Theorems 1 and 2). If in addition <span class="math inline">\(f\)</span> is “monotone” then (iv) holds (see Proposition 2).</p>
+<p>In some cases, we may not wish to fully maximize the diversity index, but only to ensure that it exceeds some threshold. In this case, the natural approach is to truncate the original diversity index at the desired level, and then apply the Diversity Choice Rule with this new index. The authors go into some detail about conditions under which this approach “works” (satisfies conditions (i)-(iv)).</p>
+</div>
+<div id="reflections" class="section level1">
+<h1>Reflections</h1>
+<p><strong>What I Like.</strong> I think that the Diversity Choice Rule (which uses greedy merit-based selection to select among assignments that maximize diversity) is a reasonable approach. When <span class="math inline">\(f\)</span> is ordinally concave, it is basically the only reasonable approach.</p>
+<p>Even when <span class="math inline">\(f\)</span> is not ordinally concave, the Diversity Choice Rule may be a reasonable solution. In fact, Carlos Bonet, Jay Sethuraman and I have a working paper which considers a special case of this model where</p>
+<ol style="list-style-type: lower-roman">
+<li>each student is their own type,</li>
+<li>there is only one contract involving each student, and</li>
+<li>the diversity index is binary.</li>
+</ol>
+<p>Carlos, Jay, and I argue that the Diversity Choice Rule is the only “explainable” policy (I won’t go into how we formalize this claim).</p>
+<p>This paper could potentially help us answer questions that we have grappled with, like “What should the designer do if the contracts <span class="math inline">\(X\)</span> make it impossible to satisfy their original diversity objective?” For example, suppose the designer may wish to accept a certain number of students of each gender. If not enough women apply, it seems natural that the designer should accept as many women as possible. This can be assured by using a non-binary diversity index.</p>
+<p><strong>What I Found Unsatisfying.</strong> My first reaction when reading this paper was “this is basically taking what we already know – that greedy selection works well when you have a matroid – and restating it using fancy and opaque terminology.” While I have softened a bit from this uncharitable reaction, it’s hard for me to tell how much of the math in this paper is new or innovative, and how much is just restating known results about matroids. (For what it’s worth, the same critique applies to some of the results in my work with Carlos and Jay.)</p>
+<p>I do think that there is value to offering different ways to describe choice functions – especially if these descriptions align with how policymakers think about these issues. Using a “diversity index” may be natural in certain applications. However, if we truly want to take these ideas to practice, a key question that we must confront is, “what are reasonable choices for the diversity index?” There are essentially unlimited possibilities, and this question is almost completely ignored by the present paper.</p>
+<p>The authors give several examples (Examples 2-4) of ordinally concave diversity indices, but these are presented very abstractly (devoid of any application). I would like to see a more thorough discussion of possible of diversity indices, including examples that <em>are not</em> ordinally concave, in addition to examples that are.</p>
+<p>My suspicion is that many natural rules are not ordinally concave. For example, suppose that we are choosing two candidates to serve as representatives, and get one “diversity point” for each of the following that is true (i) at least one woman, (ii) at least one man, (iii) at least one person under 40, (iv) at least one person over 40. The Diversity Choice Rule with this <span class="math inline">\(f\)</span> may choose a young woman and an old man ranked #1 and #10, respectively, when candidates #2 and #3 are an older woman and a young man and would also get a maximum score of <span class="math inline">\(4\)</span>.</p>
+<p>If the designer’s preferred <span class="math inline">\(f\)</span> is not ordinally concave, do the authors still recommend the Diversity Choice Rule? Something else? Or do they recommend changing <span class="math inline">\(f\)</span> to make it ordinally concave?</p>
+<p><strong>What I Found Confusing.</strong> In this paper, the authors define what it means for a diversity index <span class="math inline">\(f\)</span> to be</p>
+<ul>
+<li>ordinally concave (Definition 6),</li>
+<li><span class="math inline">\(M\)</span>-concave (Definition 10),</li>
+<li><span class="math inline">\(M^\natural\)</span>-concave (Definition 11),</li>
+<li>pseudo <span class="math inline">\(M^\natural\)</span>-concave (Definition 8),</li>
+<li>pseudo <span class="math inline">\(M^\natural\)</span>-concave<span class="math inline">\(^+\)</span> (Definition 9),</li>
+<li>semi-strictly pseudo <span class="math inline">\(M^\natural\)</span>-concave (Definition 12).</li>
+</ul>
+<p>While they use a helpful running example (Example 1) to illustrate distinctions between some of these concepts, the sheer number of definitions, along with their similar and not-very-informative names, make these distinctions quite difficult to internalize. Figure <a href="#fig:concavity1">1</a> shows my attempts to map the relationship between these properties. Ordinal concavity is weaker than all of the other notions except pseudo-<span class="math inline">\(M^\natural\)</span> concavity.</p>
+<div class="figure"><span style="display:block;" id="fig:concavity1"></span>
+<img src="../../../../../../_index_files/ConcavityDefinitions_3.jpg" alt="Relationships between concavity notions mentioned in the paper."  />
+<p class="caption">
+Figure 1: Relationships between concavity notions mentioned in the paper.
+</p>
+</div>
+<p>This reminds me of the literature on matching with contracts, where substitutability plays a key role in ensuring that deferred-acceptance-like algorithms have good properties. It turns out that slightly weaker notions suffice to ensure some or all of these properties, leading to papers introducing unilateral substitutability, bilateral substitutability, and substitutable completability.</p>
+<p>To me, the presence of so many related but distinct conditions is a sign that our current understanding is incomplete. I hope that as our understanding evolves, we can simplify the web of concavity conditions above (none of which has been shown to be <em>necessary</em> to ensure nice properties) to a shorter and easier-to-digest list.</p>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

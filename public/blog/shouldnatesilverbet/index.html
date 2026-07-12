@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Should Nate Silver Bet on his own Predictions? | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Should Nate Silver Bet on his own Predictions?</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2020/05/17</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<div id="the-proposal" class="section level1">
+<h1>The Proposal</h1>
+<p>My friend <a href="https://www.shengwu.li/">Shengwu Li</a> pointed me to the following (eight year old) <a href="https://marginalrevolution.com/marginalrevolution/2012/11/a-bet-is-a-tax-on-bullshit.html">Marginal Revolution blog post</a> titled “A Bet is a Tax on Bullshit.” In it, Alex Tabarrok argues that pundits should stake part of their salary on their predictions:</p>
+<blockquote>
+<p>The NYTimes should require that Silver, and other pundits, bet their beliefs. Furthermore, to remove any possibility of manipulation, the NYTimes should escrow a portion of Silver’s salary in a blind trust bet. In other words, the NYTimes should bet a portion of Silver’s salary, at the odds implied by Silver’s model, randomly choosing which side of the bet to take, only revealing to Silver the bet and its outcome after the election is over. A blind trust bet creates incentives for Silver to be disinterested in the outcome but <em>very</em> interested in the accuracy of the forecast.</p>
+</blockquote>
+<p>There are many reactions you might have to the idea of forecasters betting on their own predictions. In this post, we will focus on Alex’s final claim: does this create an incentive for Silver to produce accurate forecasts?</p>
+</div>
+<div id="analysis-betting-a-fixed-amount" class="section level1">
+<h1>Analysis: Betting a Fixed Amount</h1>
+<p>Suppose that Silver is asked to report an estimated probability <span class="math inline">\(p\)</span> of Trump winning reelection. Then, a coin is flipped to decide whether he takes the Trump or Biden side of the bet. He bets a fixed amount of his salary (normalized to 1) at “fair” odds, according to his estimate <span class="math inline">\(p\)</span>. Formally, the payoff matrix looks as follows.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Biden Wins</th>
+<th align="left">Trump Wins</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bet Biden</td>
+<td align="left">p/(1-p)</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td>Bet Trump</td>
+<td align="left">-1</td>
+<td align="left">(1-p)/p</td>
+</tr>
+</tbody>
+</table>
+<p>Note that if the probability of Trump winning is in fact <span class="math inline">\(p\)</span>, then either bet has an expected value of zero. Does it follow that if Silver believes that the probability of a Trump victory is <span class="math inline">\(q\)</span>, he wants to report <span class="math inline">\(p = q\)</span>? The answer is a resounding ‘no!’ To take one extreme, <strong>if Silver is sure that Biden will win (<span class="math inline">\(q = 0\)</span>) his optimal strategy is actually to report certainty that Trump will win</strong>! By doing so, he gives himself a great bet: a coin flip between losing $1 and winning an arbitrarily large amount. Conversely, if he is certain that Trump will win (<span class="math inline">\(q=1\)</span>), he wants to report <span class="math inline">\(p = 0\)</span>. When he holds intermediate beliefs (<span class="math inline">\(q \in (0,1)\)</span>), his optimal bet depends on his utility function, but these extreme examples illustrate how poorly aligned his incentives are.</p>
+</div>
+<div id="an-alternative-payoff-matrix" class="section level1">
+<h1>An Alternative Payoff Matrix</h1>
+<p>The previous payoff matrix allowed Silver to set up a bet with limited downside and unlimited upside. An alternative implementation that avoids this concern is the following.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">Biden Wins</th>
+<th align="left">Trump Wins</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bet Biden</td>
+<td align="left">p/(1-p)</td>
+<td align="left">-1</td>
+</tr>
+<tr class="even">
+<td>Bet Trump</td>
+<td align="left">-p/(1-p)</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+<p>As before, if the true probability of a Trump victory is <span class="math inline">\(p\)</span>, either bet is fair. Also as before, Silver has no incentive to report his true belief <span class="math inline">\(q\)</span>. If we assume that he is risk averse, then his optimal report is actually <span class="math inline">\(p = 0\)</span>, regardless of his beliefs! In fact, the for <strong>any</strong> utility function that he has, the set of optimal reports <strong>does not depend on his beliefs</strong>! This is because his report only matters when Biden wins: thus, his beliefs about how likely this is are irrelevant.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>To me, this is a good illustration of the value of mathematical modeling. The claim “A blind trust bet creates incentives for Silver to be… very interested in the accuracy of the forecast” sounds reasonable (even to me!) on its face. However, as soon as you try to formalize this claim, it becomes immediately obvious that it is incorrect. To play off of the title of Alex’s post, a mathematical model is a bullshit detector: it enforces precision that catches incorrect arguments that might slide by if stated only in English.</p>
+<p>I admit, the idea of requiring pundits to put their money where their mouth is has a certain appeal. This post says that a random blind trust bet is a terrible idea, but doesn’t actually answer the question of whether pundits’ salaries should be based on their predictions.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> What say you?</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Even if Silver can perfectly predict the election, he cannot give himself a sweetheart deal: any report <span class="math inline">\(p\)</span> that gives him the possibility of a big gain also carries an equal probability of a big loss.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>For a discussion of alternative reward schemes that might better elicit truthful reports, see <a href="https://healy.econ.ohio-state.edu/papers/Healy-ExplainingBDM_Note.pdf">this paper</a>. Thanks again to <a href="https://www.shengwu.li/">Shengwu</a> for the pointer.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

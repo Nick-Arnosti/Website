@@ -1,0 +1,37 @@
+---
+title: 'Predicting Outcomes in Random Matching Markets'
+date: '2024-11-08'
+author: Nick Arnosti
+tags:
+  School Choice
+draft: true
+---
+
+
+
+<p>Suppose you have <span class="math inline">\(N_{students}\)</span> students and <span class="math inline">\(N_{schools}\)</span> schools.</p>
+<p>Each school has capacity <span class="math inline">\(C\)</span>, and each student lists <span class="math inline">\(\ell\)</span> schools in a uniformly random order.</p>
+<p>This model was first studied by Pittel, in the case where <span class="math inline">\(N_{students} = N_{schools} = \ell\)</span>. In that case, there is a large core. Then Roth and Peranson proposed <span class="math inline">\(N_{students} = N_{schools} &gt; \ell\)</span>. More recently, Ashlagi Kanoria and Leshno analyze the case <span class="math inline">\(m \ne n = \ell\)</span>, and found something surprising.</p>
+<p>This post is on a surprisingly simple and accurate approximation to these outcomes. This comes from my paper “Lottery Design for School Choice.”</p>
+<p><span class="math display">\[\begin{equation} N_{students}(1-(1-P(\lambda))^\ell) = N_{schools} \mathcal{E}(\lambda).\label(balance) \end{equation}\]</span>
+where
+<span class="math display">\[\begin{align}
+\mathcal{E}(\lambda) &amp; = 1 - e^{-\lambda}\\
+\mathcal{P}(\lambda) &amp; = \mathcal{E}(\lambda)/\lambda
+\end{align}\]</span></p>
+<p>Then the fraction of students who get their <span class="math inline">\(k^{th}\)</span> choice is
+<span class="math display">\[\begin{equation}F_k = P(\lambda) (1-P(\lambda))^{k-1}.  \end{equation}\]</span></p>
+<p>What insights do we get out of this? Can I make it simple?</p>
+<p>Now, suppose students list different numbers of schools: student list lengths are drawn iid from some distribution <span class="math inline">\(\mathcal{D}\)</span>. Then @(eq:balance) becomes</p>
+<p><span class="math display">\[\begin{equation} N_{students} \color{red}{\mathbb{E}_{\ell \sim \mathcal{D}}[}1-(1-P(\lambda))^\ell\color{red}{]} = N_{schools} \mathcal{E}(\lambda).\end{equation}\]</span></p>
+<p>Meanwhile the fraction of students who list at least <span class="math inline">\(k\)</span> schools and get their <span class="math inline">\(k^{th}\)</span> choice is
+<span class="math display">\[\begin{equation}F_k = \color{red}{\mathbb{P}_{\ell \sim \mathcal{D}}(\ell \ge k)} P(\lambda) (1-P(\lambda))^{k-1}.  \end{equation}\]</span></p>
+<p>Now suppose we want schools to have more than one seat. Say, they each have <span class="math inline">\(C_h\)</span> seats. Then we simply re-define the enrollment function</p>
+<p><span class="math display">\[\begin{equation} \mathcal{E}(\lambda) = \color{red}{\mathbb{E}[\min(Pois(\lambda),C)]} \end{equation}\]</span></p>
+<p>Now suppose we want schools to have different capacities. Potentially, they are not all equally popular, either: suppose that each school <span class="math inline">\(h\)</span> has a “weight” <span class="math inline">\(w_h\)</span> which represents its popularity relative to the average school, so <span class="math inline">\(\sum_h w_h = N_{schools}\)</span>. (This popularity model was used by Immorlica Mahdian, Kojima Pathak, some Ashlagi papers and more).</p>
+<p><span class="math display">\[\begin{equation}
+\mathcal{E}(\lambda) = \mathbb{E}[\frac{1}{N_{schools}}\sum_{h} \color{red}{w_h}\min(Pois(\color{red}{w_h}\lambda),C_\color{red}{h})]
+\end{equation}\]</span></p>
+<p>The uniform case corresponds to taking <span class="math inline">\(w_h = 1\)</span> for all <span class="math inline">\(h\)</span>.</p>
+<p>In my paper, I show that these approximations are actually valid in the limit as <span class="math inline">\(\mathcal{D}\)</span> is fixed and <span class="math inline">\(N_{students}\)</span> and <span class="math inline">\(N_{schools}\)</span> grow in a fixed ratio.</p>
+<p>I also give analogous expressions for the case where school priorities are identical (rather than uniformly random). I use these expressions to show various insights (give examples – reproduce Ashlagi Kanoria Leshno, or Marx Schummer?). Check it out!</p>

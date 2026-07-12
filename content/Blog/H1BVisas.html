@@ -1,0 +1,79 @@
+---
+title: 'The Devilish Details of H1B Visa Lotteries'
+date: "2019-11-22"
+author: Nick Arnosti
+tags:
+  Immigration
+categories:
+  Market Design
+---
+
+
+
+<p>Today I'm writing about a process that many of my friends from graduate school have faced: the lottery for H1B visas. Earlier this year, the government <a href="https://www.uscis.gov/news/news-releases/dhs-announces-final-rule-a-more-effective-and-efficient-h-1b-visa-program">announced a seemingly small change</a> to the process. This post explains the change, which will have the effect of granting more visas to applicants with advanced degrees from US institutions (and fewer to applicants without such degrees).</p>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>Each year, US Citizenship and Immigration Services (USCIS) offers a total of <a href="https://www.uscis.gov/working-united-states/temporary-workers/h-1b-specialty-occupations-and-fashion-models/h-1b-fiscal-year-fy-2019-cap-season">85,000 H1B visas</a>: 65,000 are available to anybody, and the remaining 20,000 are only available to applicants with an advanced degree from a US institution. If more people apply than there are visas available, visas are given out by lottery. In 2018, there were approximately 96,000 applicants with advanced degrees from US institutions (&quot;A applicants&quot;) and 94,000 applicants who did not hold such degrees (&quot;B applicants&quot;).</p>
+</div>
+<div id="implementation" class="section level2">
+<h2>Implementation</h2>
+<p>While this sounds straightforward, in fact there are many ways to implement these quotas. Let's consider several:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Separate Lotteries</strong>. Allocate 20,000 visas to A applicants and 65,000 visas to B applicants.</p>
+<p>If the USCIS had used this system in 2018, A applicants would have had a <em>lower</em> chance of receiving a visa than B applicants. This runs counter to the intended goal of favoring A applicants. Under this system, A applicants might decide not to declare their advanced degree in order to compete in the B pool.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p></li>
+<li><p><strong>Advanced Degree Lottery First</strong>. Hold a lottery for 20,000 visas among A applicants. Enter all applicants who have yet to win a visa into a second lottery for the remaining 65,000 visas.</p>
+<p>Until this year, the USCIS used this system, which guarantees that A applicants are never at a disadvantage relative to B applicants. The success rates in 2018 were approximately 51% for A applicants (49,000 recipients) and 38% for B applicants (36,000 recipients).</p></li>
+<li><p><strong>General Lottery First</strong>. Hold a lottery for 65,000 visas among all applicants. Enter all A applicants who have yet to win a visa into a second lottery for an additional 20,000 visas.</p>
+<p>This is the new system. It also guarantees that A applicants are never at a disadvantage relative to B applicants. In fact, this will always give A applicants a <em>bigger</em> advantage than they had under the previous system. Had the 2018 lottery been conducted in this way the success rates would be approximately 55% for A applicants (53,000 recipients) and 34% for B applicants (32,000 recipients).</p></li>
+<li><p><strong>Single Lottery</strong>. Process applicants in a random order, giving visas when possible. B applicants are only eligible for a &quot;standard&quot; visa. A applicants are eligible for either visa, and take a &quot;set-aside&quot; visa if both are available.</p>
+<p>Had the USCIS set out to improve the lot of B applicants, it could have changed to this system. Although this system guarantees that A applicants are never worse off than B applicants, it is worse for A applicants than either of the two preceding approaches. In fact, if this system had been used in 2018, then the success rates for A and B applicants would have been identical at approximately 45%. In other words, in 2018 this would have been equivalent to issuing 85,000 visas without any set-asides for advanced degree holders.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p></li>
+</ol>
+<p>Figure <a href="#fig:h1b">1</a> shows the number of successful A applicants under the latter three systems, as a function of the number of set-aside visas (using application data from 2018, and holding the total number of visas at 85,000).<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<pre class="r"><code>V = 85000 #total number of visas
+A = 96000 #number of A applicants
+B = 94000 #number of B applicants
+AV = 20000 #number of visas reserved for A applicants
+
+
+#One lottery, give reserved visa if possible
+single_lottery = Vectorize(function(AV){return(min(max(AV,V*A/(A+B)),A))})
+
+#Process general first
+general_first = Vectorize(function(AV){min(A,(V-AV)*A/(A+B) + AV)}) 
+
+#Two lotteries, process A applicants first
+advanced_first = Vectorize(function(AV){return(min(A,AV+(A-AV)*(V-AV)/(A+B-AV)))})
+
+par(mar=c(5, 8, 2, 0))
+#Each counts number of A applicants to receive a visa
+plot(advanced_first,xlim=c(0,V),las=1,xlab=&#39;Visas Reserved for A Applicants&#39;,ylim=c(40000,85000),ylab=&#39;&#39;,cex.lab=1.5,cex.axis=1.5)
+plot(general_first,xlim=c(0,V),add=TRUE,lty=&#39;dashed&#39;)
+plot(single_lottery,xlim=c(0,V),add=TRUE,lty=&#39;dotted&#39;)
+title(2,ylab=&#39;Visas Granted to A Applicants     &#39;,line=5,cex.lab=1.5)
+
+
+legend(x=0,y=85000,legend=c(&#39;Advanced First&#39;,&#39;General First&#39;,&#39;Single Lottery&#39;),lty=c(&#39;solid&#39;,&#39;dashed&#39;,&#39;dotted&#39;),cex=1.5)</code></pre>
+<div class="figure"><span id="fig:h1b"></span>
+<img src="/Blog/H1BVisas_files/figure-html/h1b-1.png" alt="Comparison of lottery systems, varying the quota for A applicants. Changing between systems has the same effect as a significant shift in the quota. For example, running the general lottery first with a quota of 35,000 is approximately equivalent to using a single lottery with a quota of 60,000." width="672" />
+<p class="caption">
+Figure 1: Comparison of lottery systems, varying the quota for A applicants. Changing between systems has the same effect as a significant shift in the quota. For example, running the general lottery first with a quota of 35,000 is approximately equivalent to using a single lottery with a quota of 60,000.
+</p>
+</div>
+</div>
+<div id="take-home-message" class="section level2">
+<h2>Take Home Message</h2>
+<p>Policymakers and the public often focus on the top line numbers (in this case, 20,000 set-aside visas and 65,000 general ones). While these matter, the implementation details matter just as much and are often easier to change. Whereas a change to the caps might draw a lot of attention, a change to the lottery order is more likely to slide under the radar. The change made this year will shift several thousand visas annually to applicants with advanced degrees.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+</div>
+<div id="parallels-to-school-choice" class="section level2">
+<h2>Parallels to School Choice</h2>
+<p>A similar situation arose in the Boston Public School system. In that context, the scarce resource was admission to popular public schools (instead of visas). 'A' applicants were those living within walking distance of the school, and 'B' applicants were those living farther away. A contentious debate over whether to give priority to students in the walk zone was settled with a compromise: half of seats would be reserved for such students, and half of seats would be open to anybody. This compromise was implemented using the Single Lottery approach, which resulted in little -- if any -- advantage for students living in the walk zone. After many years, administrators realized that the nominal set-asides for walk-zone students were having little effect. Rather than changing to another implementation of the 50-50 compromise, the city abolished walk zone priority altogether. More details are availble in <a href="/Dur-Kominers-Pathak-Sonmez_2018.pdf">Reserve Design: Unintended Consequences and the Demise of Boston’s Walk Zones</a>, by <a href="https://poole.ncsu.edu/people/udur/">Umut Dur</a>, <a href="http://www.scottkom.com/">Scott Kominers</a>, <a href="https://economics.mit.edu/faculty/ppathak">Parag Pathak</a>, and <a href="https://www.tayfunsonmez.net/">Tayfun Sonmez</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>You might think that this sounds crazy -- certainly, we wouldn't set up a system that disadvantaged those who were more qualified! In fact, this is what has happened with employment-based applications for green cards. As of <a href="https://travel.state.gov/content/travel/en/legal/visa-law0/visa-bulletin/2020/visa-bulletin-for-november-2019.html">November 2019</a>, for applicants who are not from India or China, those who applied for an EB2 or EB3 visa have all been processed. Meanwhile applicants for the EB1 category, which has more stringent eligibility criteria, have only been processed if they applied before June 1 2018. They would have been better off not declaring all of their qualifications! Thanks to <a href="http://faculty.marshall.usc.edu/Peng-Shi/">Peng Shi</a> for the pointer.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>One could also imagine holding a single lottery but giving A applicants a standard visa whenever possible, and only allocating the set-aside visas after the standard ones are exhausted. This is in fact equivalent to the newly implemented General Lottery First policy.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Someone who wins the lottery is permitted to apply for an H1B visa. Historically, approval rates are very high, but they have <a href="https://economictimes.indiatimes.com/nri/visa-and-immigration/10-per-cent-drop-in-h1b-visa-approvals-in-2018-us-authorities/articleshow/69659107.cms?from=mdr">fallen significantly</a> under the Trump Administration. This blog post focuses on the first stage, so we call an applicant &quot;successful&quot; if their application is processed.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>One interesting technical note is that the change has the biggest impact when excess demand is moderate. In 2018, about 190,000 people applied for 85,000 visas. If demand rose significantly (maintaining the fraction with advanced degrees), then the Advanced First and General First approaches would lead to similar outcomes, and both would be significantly better for A applicants than using a Single Lottery.<a href="#fnref4">↩</a></p></li>
+</ol>
+</div>

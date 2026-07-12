@@ -1,0 +1,402 @@
+---
+title: "The Western States Ultramarathon Lottery"
+output: html_document
+date: "2025-12-04"
+---
+
+
+# Running Marathons and Ultramarathons
+
+This year, I ran my first marathon! The Twin Cities Marathon passes 2 blocks from my house (we are at mile 22). I enjoyed the training and race day, and ended the race feeling surprisingly good.
+
+It turns out, some people enjoy running further than a marathon! The most famous ultramarathon in the United States is the Western States Endurance Run, which covers 100.2 miles of trail in California. In order to run this event, you must run a qualifying ultramarathon in the previous year, and pay the entry fee of $525. Despite these barriers, demand far outstrips supply! This year, over 11,000 people applied, and due to National Forest Service regulations, only 369 spots are available.
+
+Some of these spots go to "automatic" qualifiers. [This page](https://www.wser.org/automatics/) goes into detail about the different ways you can qualify automatically, but the main ways are
+
+(i) Be really fast (top 10 finish in last year's race, or top 2-3 finish in one of 6 other ultramarathons).
+(ii) Be a consistent volunteer for one of the running clubs that organize the aid stations.
+(iii) Be chosen by one of the race sponsors.
+
+There are several other ways to be an automatic qualifier, which are less common. For the 2026 race, there were 112 automatic qualifiers, leaving 257 spots to be awarded by lottery.^[Three of the lottery spots are given out (uniformly at random) to people who attend the lottery in person and were not selected in the main lottery. Thus, of the 257 lottery spots, only 254 are awarded by the main lottery. I will ignore this fact below.]
+
+# A Weighted Lottery
+
+
+According to [this page](https://www.wser.org/lottery2026.html), 11,328 people applied in the lottery for 2026.^[You can get [data from past years](https://www.wser.org/lottery/) in a single spreadsheet, or by replacing the '2026' in the previous url with the desired year.] However, not all applicants are equally likely to be selected! The reason is that applicants who have been unsuccessful in the past are given more tickets.
+
+Specifically, if this is your $n^{th}$ time applying since your last time running the race, you get $2^{n-1}$ tickets. This means that first-time applicants get one ticket, second-time applicants (who were not selected on their first time) get two tickets, third time applicants get four, fourth time applicants get eight, and so on. The tickets are mixed and drawn at random.^[There used to be physical tickets selected by a Bingo machine, but in recent years the drawing has been virtual.] Each person can only win one spot, even if more than one of their tickets is drawn. The drawing continues until the right number of people have been selected. This means that to fill, say, 257 spots, you will likely need to draw more than 257 tickets.^[This same procedure is actually used to select some of the automatic qualifiers through two "raffles" that are held each year (before the main lottery). Each raffle awards spots in the race to 5 applicants. The only difference between the raffle and the main lottery is that in the lottery, tickets are determined by years spent waiting, while in the raffle, applicants can purchase as many \$5 tickets as they wish (the money is then given to charity).]
+
+For the main 2026 lottery, there are a total of 93,003 tickets. Five applicants are on their 10th year of applying, and get a whopping 512 tickets! A natural question is, what is their chance of being selected? 
+
+It turns out, answering this question is surprisingly tricky! One way to estimate it is to repeatedly simulate the lottery draw, and report the results. The lottery organizers do this each year. Their 2026 analysis is [here](https://www.wser.org/2025/12/03/2026-lottery-statistics/), and includes a table summarizing their simulation results.
+
+They find that the applicants on their 10th year have approximately an 80\% chance of being selected. This is pretty good, but still means that it's quite likely that at least one of them will not be chosen! That is, it is likely that there will be someone who has run an ultramarathon for 10 years in a row to earn 512 tickets and is *still* not selected. Tough.
+
+However, I am a mathematician at heart. I am less focused on the human interest side of the story, and more focused on the question of whether there are other ways to calculate or approximate these success probabilities. If you're interested in that as well, read on.
+
+# Exact Calculation of Success Probabilities
+
+For the rest of this post, let's introduce some notation. There are $n$ applicants for $m < n$ available spots. Applicant $i$ has $t_i$ tickets. Let $T = \sum_i t_i$ be the total number of tickets, and let $\pi_i$ be the probability that applicant $i$ is successful (that is, they claim one of the $m$ spots).
+
+The question in this section is, can we calculate the $\pi_i$ exactly, rather than simulating them? The following code does this by enumerating all possible sequences of applicants and  calculating the probability of each sequence. 
+
+```{r}
+library(combinat)
+exact_perm = function(Entrants,Tickets,m){
+  tickets = rep(Tickets,Entrants)
+  permutations = do.call(rbind, permn(1:length(tickets)))
+  denom = function(perm){prod(cumsum(rev(tickets[perm])))}
+  probs = prod(tickets)/apply(permutations,1,denom)
+  
+  ind = match(Tickets,tickets)
+  successful = Vectorize(function(i){return(sum(probs*(rowSums(permutations[, 1:m] == i))))})
+  #rbind(Tickets,successful(ind))
+  successful(ind)
+}
+
+Tickets = c(8,4,2,1)
+Entrants = c(1,2,3,4)
+m = 3
+
+scale = 1
+#start_time = Sys.time()
+exact_perm(Entrants*scale,Tickets,m*scale)
+#Sys.time()-start_time
+```
+Unfortunately, there are $n!$ possible sequences, which is generally enormous. With 10 applicants, this code took 60 seconds to run. With 11 applicants, it took 25 minutes. Running it with even 20 applicants is totally infeasible, let alone 11,000!
+
+We could try to speed this up using two observations:
+
+* We only care about the first $m$ positions in these sequences.^[In practice, this is not actually true. Every year, some of the applicants who are selected withdraw from the race. Anticipating this, as part of the lottery, race organizers draw an ordered waitlist of 75 people. Many of these people eventually receive an offer to run the race, although sometimes this offer come only shortly before the race itself.]
+* Applicants with the same number of tickets have the same probability of success.
+
+The first observation leaves us with ${n \choose m} m!$ sequences of length $m$, which is approximately $n^m$: still far too many. The second observation implies that we can stop tracking individual applicants, and only track the *number of tickets* held by the first applicant to be drawn, the second, and so on. Since applicants can only have one of 10 ticket counts, this gives us something on the order of $10^m$ possibilities (slightly fewer, since certain ticket counts have fewer than $m$ applicants). But $10^257$ is still a completely impractical number. We need a new approach.
+
+<!--If we draw exactly $m$ tickets from the hat, this is straightforward: applicant $i$'s chance of success is $1 - {T-t_i \choose m}/{T \choose m}$. (The denominator is the number of ways to choose $m$ successful tickets from $T$ total tickets, and the numerator is the number of ways that don't include any of applicant $i$'s tickets, so the fraction gives the chance that applicant $i$ is not drawn.) The challenge comes from the fact that we will actually draw more than $m$ tickets, and the number of tickets we draw depends on how many duplicates we get.
+-->
+
+One challenge is that the probability of drawing a given individual evolves as tickets are pulled from the bin. Furthermore, this probability depends on exactly *who* has been drawn so far. To get around this, I introduce a simple yet helpful observation, which will provide a more efficient method for calculating $\pi$ exactly, as well as inspiring a method for approximating it.
+
+**Key Observation.** We could choose to *return* tickets to the hat after they are selected. This might make the lottery last a bit longer (since we can now draw an individual ticket more than once), but will have no effect on the success probabilities $\pi$, since whenever a duplicate ticket is drawn we ignore it.
+
+The advantage of this perspective is that now the drawings themselves are iid. This observation inspired the following approach for calculating $\pi$, which I think is somewhat clever (if I do say so myself).
+
+Fix an applicant $a$. Suppose that instead of drawing until $m$ unique names have been chosen, I draw tickets until the first time one of applicant $a$'s tickets is chosen. I then look to see, at this point, have $m$ other applicants been chosen? If so, then $a$ is unsuccessful. If not, then $a$ has been selected.
+
+Define $p_a = t_a/T$ to be the probability of drawing a ticket from applicant $a$ on a single draw. The total number of draws required to draw one of $a$'s tickets follows a geometric distribution: the probability that $d \ge 0$ *other* tickets are drawn before the first ticket from applicant $a$ is exactly $p_a (1-p_a)^d$.
+
+Given $d$, we want to know, what is the chance that $d$ draws from the applicants other than $a$ select at least $m$ unique applicants? Let $P[j,d]$ denote the probability that $d$ draws from the tickets of applicants other than $a$ result in exactly $j$ unique individuals. Then we can express $\pi_a$ as follows:
+
+$$ \pi_a = \sum_{d = 0}^\infty \sum_{j = 0}^{m-1} p_a(1-p_a)^d P[j,d].$$
+
+The question becomes, how do we calculate $P[j,d]$? We will tackle this through dynamic programming. Specifically, order all applicants other than $a$ arbitrarily (make applicant $a$ come last).
+
+Define $Q[j,k,d]$ to be the probability that we get exactly $j$ unique applicants when sampling $d$ times iid *from the first $k$ applicants*, with probabilities proportional to $p_i$. Then we clearly have $P[j,d] = Q[j,n-1,d]$, so we can write 
+
+$$ 
+\pi_a = \sum_{d = 0}^\infty \sum_{j = 0}^{m-1} p_a(1-p_a)^d Q[j,n-1,d]. 
+(\#eq:pi) 
+$$
+
+Define $s_k = \sum_{i = 1}^k p_i$. It is clear that $Q[1,1,d] = 1$ for all $d \ge 1$, and $Q[0,1,0] = 1$. I claim that we can use the following equations to fill the remaining entries of $Q$:
+
+$$Q[j,k,d] = (1-p_k/s_k)^d Q[j,k-1,d] + \sum_{l = 1}^d{d \choose l} (p_k/s_k)^l (1-p_k/s_k)^{d-l}Q[j-1,k-1,d-l]$$
+
+In words, this says that in order to get $j$ unique individuals in $d$ samples from the first $k$, you must either not draw individual $k$ and get $j$ individuals from the remaining $k-1$, or draw individual $k$ $l \ge 1$ time and get $j-1$ individuals from the remaining $k-1$.
+
+
+<!-- Now, how to use this to calculate the probability that applicant $i$ is drawn? It is tempting to just look at the distribution of the number of draws $D$, and then calculate $1 - \mathbb{E}[(1-p_i)^D]$. But the problem is, the number of draws required is not independent of whether $i$ is drawn.
+
+Instead, calculate $Q$ on the set of applicants excluding applicant $i$ (renormalizing the $p$'s appropriately). From $Q$, calculate $F(d)$ to be the probability that with $d$ draws from the other applicants, we get at least $m$ unique applicants.
+
+Now, the chance that we will have $d$ draws of other applicants before the first draw of $i$ is simply $p_i(1-p_i)^d$. Thus, the probability of failure for $i$ should be $\sum_{d = 0}^{\infty} p_i(1-p_i)^d F(d)$.
+-->
+
+Below, I implement this recursion in R code (with some help from ChatGPT). Some error is introduced by only including finitely many terms from the sum in \@ref(eq:pi). However, this error can easily be bounded: if we only sum up to $d_{max}$, then for $d > d_{max}$ we have $$\sum_{j = 0}^{m-1}Q[j,n-1,d] \leq \sum_{j = 0}^{m-1}Q[j,n-1,d_{max}]$$ (that is, increasing $d$ decreases the probability of selecting fewer than $m$ applicants). Furthermore, $$\sum_{d > d_{max}} p_a(1-p_a)^d = (1-p_a)^{d_{max}}$$. From these two equations, it follows that if we truncate \@ref(eq:pi) at $d_{max}$, we under-estimate the true success probability, with error at most $(1-p_a)^{d_{max}} \sum_{j = 0}^{m-1}Q[j,n-1,d_{max}]$.
+
+This method is much faster than enumerating over sequences. The array $Q$ is of size $n \times n \times d_max$. Filling an individual cell in $Q$ might require summing up to $d_{max}$ terms, so the time complexity of this function is $\mathcal{O}(n^2 d_{max}^2)$. This method calculates the probability of success for a single applicant; to do this for all applicants, we must call calculate_P once for each unique value in Tickets (potentially up to $n$ times if all applicants have different numbers of tickets).
+
+We can improve this in various ways. For example, the code below remembers only $Q[,k-1,]$ and $Q[,k,]$, reducing the space complexity from $n^2 d_{max}$ to $2 n d_{max}$. We could potentially only track $j$ up to $m$, reducing space complexity of calculate_P to $2 m d_{max}$ and time complexity to $\mathcal{O}(nmd_{max}^2)$. However, the main point is that we have moved from an exponential regime -- something like $\mathcal{O}(10^m)$ -- to a polynomial one.
+
+Without any optimization, the code below handled a case with $n = 100$ applicants and $m = 30$ spots (achieved by setting scale = 10) in 14 seconds. Recall the enumerative approach could only handle problems with $n = 10$ or so. But even my DP-based approach becomes totally prohibitive with $n = 11,000$ and $m = 257$.
+
+```{r}
+# t      : number of tickets for each applicant
+# d_max  : maximum number of draws
+#
+# Returns: matrix P, where P[j, d] represents the probability that d draws select j unique applicants.
+
+#Ideally, this could determine an appropriate d_max automatically
+calculate_P <- function(t, d_max) {
+  n <- length(t)
+  p <- t / sum(t)
+  s <- cumsum(p)  # so p_k = p[k] / s[k]
+  Q_prev <- matrix(0, d_max + 1, d_max + 1)
+  Q_prev[1, ] <- 1  # k=0: always 0 uniques
+  for (k in seq_len(n)) {
+    p_k <- p[k] / s[k]
+    Q_curr <- matrix(0, d_max + 1, d_max + 1)
+    Q_curr[1, 1] <- 1
+    for (d in 1:d_max) {
+      bp <- dbinom(0:d, d, p_k) #Calculating binomial probabilities
+      j_max <- min(k, d)
+      Q_curr[1, d + 1] <- bp[1] * Q_prev[1, d + 1]    # j = 0
+      if (j_max >= 1) {
+        block <- Q_prev[1:j_max, d:1, drop = FALSE]   # j_max x d
+        conv <- as.vector(block %*% bp[-1])           # length j_max
+        Q_curr[2:(j_max + 1), d + 1] <-
+          bp[1] * Q_prev[2:(j_max + 1), d + 1] + conv
+      }
+    }
+    Q_prev <- Q_curr
+  }
+  Q_prev[-1, -1] # Drop j=0 row and d=0 column
+}
+
+
+#Todo -- replace hacky setting of d_max, could also calculate bound on error
+exact_dp = function(Entrants,Tickets,m){
+  #pi[i,j] = probability that i is j^th individual selected
+  pi = matrix(0,nrow=length(Tickets),ncol=m) 
+  for(i in 1:length(Tickets)){
+    if(Entrants[i]>0){
+      other_apps = Entrants
+      other_apps[i] = other_apps[i]-1
+  	  all_other_tickets <- rep(Tickets, other_apps)
+  	  d_max = m*10 #Hacky way to set d_max -- replace
+  	  P = calculate_P(all_other_tickets,d_max)
+  	  p_i = Tickets[i]/(Tickets[i]+sum(all_other_tickets))
+      pd = p_i*(1-p_i)^(1:d_max)
+      pi[i,] = c(p_i,(P[1:m,]%*%pd)[-m])
+      }
+    }
+  apply(pi,1,sum) #return probability of selection for each individual
+}
+
+
+scale = 10
+exact_dp(Entrants*scale,Tickets,m*scale)
+```
+
+<!--
+#Original slower version
+calculate_P <- function(t, d_max) {
+  n <- length(t)
+  p <- t / sum(t) 
+  # Q_prev[j+1, d+1] = Q[j, k-0, d] initially (k=0: no applicants)
+  # With no applicants, j must be 0; P(j=0) = 1 for any d.
+  Q_prev <- matrix(0, nrow = d_max + 1, ncol = d_max + 1)
+  Q_prev[1, ] <- 1  # row j=0 → index 1
+  # We'll build up k = 1..n
+  for (k in seq_len(n)) {
+    s_k  <- sum(p[1:k])
+    p_k  <- p[k] / s_k   #Renormalized prob of applicant k among first k
+    Q_curr <- matrix(0, nrow = d_max + 1, ncol = d_max + 1)
+    for (d in 0:d_max) {
+      j_max <- min(k, d)
+      # Precompute binomial probabilities Bin(d, ell, p_k) for this d
+      if (d > 0) {
+        ell_vals <- 0:d
+        binom_probs <- dbinom(ell_vals, size = d, prob = p_k)
+      }
+      for (j in 0:j_max) {
+        if (d == 0) {
+          Q_curr[j + 1, d + 1] <- if (j == 0) 1 else 0
+        } else {
+          term0 <- binom_probs[1] * Q_prev[j + 1, d + 1]  # Case 1: applicant k appears 0 times
+          term_sum <- 0 # Case 2: applicant k appears ell >= 1 times
+          if (j > 0) { 
+            for (ell in 1:d) {
+              term_sum <- term_sum +
+                binom_probs[ell + 1] * Q_prev[(j - 1) + 1, (d - ell) + 1]
+            }
+          }
+          Q_curr[j + 1, d + 1] <- term0 + term_sum
+        }
+      }
+    }
+    Q_prev <- Q_curr
+  }
+  P = Q_prev[-1,-1]
+  P #P[j,d] is probability of j distinct applicants from d draws
+}
+
+
+calculate_P_fast <- function(t, d_max) {
+  n <- length(t)
+  p <- t / sum(t)
+  s <- cumsum(p)
+
+  Q_prev <- matrix(0, d_max + 1, d_max + 1)
+  Q_prev[1, ] <- 1
+
+  for (k in seq_len(n)) {
+    p_k <- p[k] / s[k]
+    Q_curr <- matrix(0, d_max + 1, d_max + 1)
+    Q_curr[1, 1] <- 1
+
+    for (d in 1:d_max) {
+      bp <- dbinom(0:d, d, p_k)
+      bp0 <- bp[1]
+      bp_pos_rev <- rev(bp[-1])     # reverse ell=1..d weights
+
+      j_max <- min(k, d)
+
+      # j = 0
+      Q_curr[1, d + 1] <- bp0 * Q_prev[1, d + 1]
+
+      if (j_max >= 1) {
+        # contiguous slice (fast)
+        block <- Q_prev[1:j_max, 1:d, drop = FALSE]  # columns 1..d increasing
+        conv  <- as.vector(block %*% bp_pos_rev)
+
+        Q_curr[2:(j_max + 1), d + 1] <-
+          bp0 * Q_prev[2:(j_max + 1), d + 1] + conv
+      }
+    }
+
+    Q_prev <- Q_curr
+  }
+
+  Q_prev[-1, -1]
+}
+-->
+
+# Approximating Success Probabilities
+
+Given the limitations of the exact methods, it is natural to wonder whether we can come up with a good approximation for $\pi$ using an algorithm that runs much more quickly. Both of the methods below are very fast -- much faster than using simulation. But the real appeal (to me) is that they provide explicit epressions that offer much more insight than any of the exact methods.
+
+**Method 1**
+
+1. Let $d$ be the unique solution to 
+$$ \sum_i 1 - (1-t_i/T)^d = m.$$
+2. Approximate $\hat{\pi}_i = 1 - (1-t_i/T)^d$.
+
+The idea underlying this approximation is that on each draw, the chance that one of applicant $i$'s tickets is chosen is $t_i/T$. If we decided in advance to draw exactly $d$ times, then the success probability for applicant $i$ would be exactly $1-(1-t_i/T)^d$. The first step of the approximation is to find the value of $d$ such that the *expected* number of unique successful applicants is equal to the number of available spots. The second step assumes that we always draw exactly $d$ times (instead of sometimes drawing more or fewer, depending on how many duplicates we see).
+
+
+**Method 2**
+
+1. Let $p \in (0,1)$ be the unique solution to 
+$$ \sum_i 1 - (1-p)^{t_i} = m.$$
+2. Approximate $\tilde{\pi}_i = 1 - (1-p)^t_i$.
+
+
+This approximation rests on two ideas, neither of which is exactly correct. First, all tickets should have the same chance of being drawn. Second, knowing that one particular ticket was drawn should not give much information about whether another ticket is drawn. 
+
+Suppose that we decide to choose each ticket independently with probability $p$. That is, for each ticket we flip a coin, and if it lands heads, that ticket is chosen. Step 1 in the method sets the bias of the coin $p$ so that on average, we get $m$ successful applicants. Step 2 then calculates each applicant's selection probability, given this $p$.
+
+
+**Connection to Sampling Literature**
+
+Unsurprisingly, Chat GPT informs me that there is a large literature on "Sampling Problems." I don't know this literature well, and do not want to turn this post into a literature review, but my Method \#2 is equivalent to a Poisson trick that has already been proposed by that literature. That approach is described as follows:
+
+1. Let $\lambda \ge 0$ be the unique solution to 
+$$ \sum_i 1 - e^{-\lambda t_i} = m.$$
+2. Approximate $\tilde{\pi}_i = 1 - e^{-\lambda t_i}$.
+
+This is equivalent to my second method, with $\lambda = -\log(1-p)$.
+
+
+The following code implements each of these approximations (as well as a monte carlo simulation). As you can see, both approximations produce answers that are very close to the simulated results. I spent some time trying to formally bound the error from these methods, but that is more of a research-level problem that will take more time than I have at the moment.
+
+```{r}
+approx_1 = function(applicants,tickets,places_available){
+	p = tickets/sum(tickets*applicants)
+	excess_demand = function(d){return(sum(applicants*(1-(1-p)^d))-places_available)}
+	d_max = sum(applicants)
+	while(excess_demand(d_max)<0){ d_max = 2*d_max}
+	d = uniroot(excess_demand,lower=places_available,upper=d_max)$root
+	1-(1-p)^d
+}
+
+
+approx_2 = function(applicants,tickets,places_available){
+	excess_demand = function(p){return(sum(applicants*(1-(1-p)^tickets))-places_available)}
+	p = uniroot(excess_demand,lower=0,upper=1)$root
+	1 - (1-p)^tickets
+}
+
+simulate_success_probs = function(applicants,tickets,spots_available, ntrials = 10000, seed = NA){
+	all_tickets <- rep(tickets, applicants)
+	counts = table(factor(c(),levels=tickets))
+	if(!is.na(seed)) set.seed(seed)
+	
+	for(t in 1:ntrials){
+		lottery_numbers = rexp(length(all_tickets))/all_tickets
+		df = as.data.frame(cbind(all_tickets,lottery_numbers))
+		df = df[order(df$lottery_numbers), ]
+		counts = counts + table(factor(df$all_tickets[1:m],levels=tickets))
+	}
+	counts/applicants/ntrials
+}
+
+generate_df = function(Entrants,Tickets,m,n_trials = 10000,seed=123){
+  pi_df = as.data.frame(cbind(
+	  approx_1(Entrants,Tickets,m),
+	  approx_2(Entrants,Tickets,m),
+	  simulate_success_probs(Entrants,Tickets,m,n_trials,seed)
+  ))
+  names(pi_df) = c("Approx 1","Approx 2", "Simulation")
+  pi_df
+}
+
+
+# Data from 2026 WSER
+Tickets = 2^(9:0)
+Entrants = c(5,44,128,239,354,672,1102,1752,2563,4469)
+m = 257
+
+pi_df = generate_df(Entrants,Tickets,m)
+round(100*pi_df,2)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+<!--
+# Mathematical Appendix
+
+Define
+$$f(d,p) = (1 - (1-p)^d)/(dp)$$
+$$g(x) = (1-exp(-x))/x,$$
+
+**Lemma.** For all $p \in (0,1)$ and all $d > 1$, $g(dp)≤f(d,p)≤g((d−1)p)$.
+
+A consequence of this (after a little rearrangement) is that
+
+$$1-e^{-dp_i} \le 1-(1-p_i)^d \le \frac{d}{d-1}(1-e^{-(d-1)p_i}).$$
+
+The first inequality is very well-known, while the second is not as familiar. However, I had not previously appreciated just how tight these bounds are! The following Lemma formalizes this.
+
+**Lemma.** $sup_{p \in [0,1]} g((n−1)p)−g(np) \le 1/(ne)$.
+
+In our setting, this means that the gap between our lower bound $1-e^{-dp_i}$ and our upper bound $\frac{d}{d-1}(1-e^{-(d-1)p_i})$ is at most $p_i/e$, regardless of the values of $p_i$ and $d$!
+
+**Corollary.** For any set of applicants and any $m$, $\tilde{pi}_i(m-1/e) \le \hat{\pi}_i(m) \le \frac{m}{m-1}\tilde{\pi}(m+1/e)$ for all $i$.
+
+Informally, this says that the difference between the estimates generated by these two methods is less than the effect of adding or subtracting half a spot.
+
+
+
+$$m = \sum 1- (1-p_i)^d \ge \sum 1 - e^{-p_i d} \ge m-\sum p_i/e = m - 1/e$$
+
+But this means that $1 - e^{-p_i d} = \tilde{\pi}(x)$ for some $x \in (m-1/e,m)$. Since $\tilde{\pi}$ is increasing in $x$, the result follows.
+
+Similarly, we have 
+
+$$m = \sum \hat{\pi}_i(m) = \sum 1- (1-p_i)^d \le \frac{d}{d-1}(1-e^{-(d-1)p_i}) \le m+1/e$$
+Rearranging, we get that $ \hat{\pi}_i(m) \le \frac{d}{d-1}\tilde{\pi}(\frac{d-1}{d}(m+1/e))$. Since $d \ge m$, we can replace $\frac{d}{d-1}$ with $\frac{m}{m-1}$ and replace $\frac{d-1}{d}$ with $1$ to get the claimed upper bound.
+-->
+
+
+
+

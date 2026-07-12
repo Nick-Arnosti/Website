@@ -1,0 +1,134 @@
+---
+title: 'How to Raise Money for Your Startup'
+date: "2019-11-18"
+author: Nick Arnosti
+output:
+  blogdown::html_page:
+    toc: false
+    number_sections: true
+tags:
+  Inventory Management
+categories:
+  Operations
+---
+
+$\newcommand{\fbar}{\overline{F}}$
+$\newcommand{\E}{\mathbb{E}}$
+
+
+#Motivation
+
+At INFORMS, I saw a talk by [Jingxing (Rowena) Gan](https://oid.wharton.upenn.edu/profile/ganj/), about her paper [Inventory, Speculators, and Initial Coin Offerings](/Gan-Tsoukalas-Netessine.pdf) (joint with [Gerry Tsoukalas](https://oid.wharton.upenn.edu/profile/gtsouk/#) and [Serguei Netessine](https://sites.google.com/site/netessine/)). I really liked the model, so I thought I'd give my take on it. Although the paper is framed as pertaining to certain classes of ICOs, I think its applicability is much broader, and will describe it accordingly. 
+
+Suppose you've got an idea for a company, but no money on hand. To launch, you need to raise capital. The traditional approach is to sell shares in the company, which entitle investors to a share of future profits. Another possibility is to sell shares in the future  _revenue_ of the company. In either case, investors might have several concerns. First, can the product be produced at a cost lower than its value to consumers? Second, if they give you money, what prevents you from scrapping the plan for the company and walking away with the cash? For example, if you sell $100\%$ of future revenue, you clearly have no incentive to produce at all!  
+
+This paper asks several questions related to this moral hazard concern. I focus on two.
+
+1. If you have no ability to commit to future production, is it possible to convince investors to lend to you? 
+2. If so, how profitable will the resulting company be (compared to the case without capital constraints)?
+
+They address these questions in a variant of the Newsvendor model,  with an additional fundraising round up front. 
+
+In this model, the answer to the first question is, "it depends." If the profit margin on the product is at least 50%, then it is possible to receive funding from investors. Otherwise, it is not. Assuming funding is feasible, the answer to the second question depends on what type of contract you sign with investors. Standard contracts result in inefficiently low levels of production. In some cases, however, a carefully designed contract restores efficiency.
+
+# Model
+
+The model proceeds in three rounds.
+
+
+**Round 1**: You strike a deal with investors. You receive an up-front payment of $P$, in return for promises for a future payoff that depends on production and sales outcomes. (Formally, you commit to a function $R$ that determines payment to investors as a function of the company's production cost and sales revenue.)
+
+**Round 2**: You decide on a production quantity $Q$, incurring total cost $cQ$. You can't spend more than the money $P$ collected from investors. 
+
+**Round 3**: Demand $D$ is realized. Revenue is $p\min(Q,D)$, and the you pay $R(Q,D)$ to investors.
+
+All parties are risk neutral, and know the production cost $c$, sales price $p$ (denoted by $v$ in the paper) and demand distribution $F$ up front. We let $\fbar(q) = 1 - F(q)$.
+
+## Unconstrained Newsvendor
+If you had no capital constraints, then as long as $c < p$, you can make a profit. The expected profit from producing quantity $Q$ is
+\begin{equation}\pi(Q) = \int_0^{Q} (p\fbar(q) - c)dq,  \label{eq:newsvendor} \end{equation}
+and the optimal production quantity $Q^{News}$ solves 
+\begin{equation}  p\fbar(Q^{News}) -c =0. \label{eq:news-opt} \end{equation}
+
+
+## Constrained
+In this world, given the up front payment $P$, the maximum possible production is $P/c$. Given contract $R$, in round one you will choose 
+\begin{align} Q^*(R,P) \in &  \arg \max_{0 \leq q \leq P/c} \E_{D\sim F}[P - c q + p\min(q,D) - R(q,D)] \nonumber \\ 
+& =  \arg \max_{0 \leq q \leq P/c} \pi(q) + P - \E_{D \sim F}[R(q,D)].\label{eq:moralhazard} \end{align}
+ To capture the lack of commitment, we assume that if you produce nothing (and therefore sells nothing), then you don't need to pay anything back to investors: 
+\begin{equation} R(0,D) = 0. \label{eq:nocommitment}\end{equation}
+In the first stage, investors will only lend at (weakly) favorable terms. That is,\footnote{The paper considers an extension where investors demand positive expected returns, but I won't focus on that here.}
+\begin{equation}P \leq \E_{D\sim F}[R(Q^*(R,P),D)].\label{eq:investorIC} \end{equation}
+
+
+## Special Cases
+
+The paper studies two special cases (possible forms for the function $R$). In one ("utility tokens"), investors are entitled to a share $\alpha$ (in the paper, $n/m$) of future revenue. That is, 
+\[R_u^\alpha(Q,D) = \alpha \, p \, \min(Q,D).\]
+In the other ("equity tokens"), they are entitled to a share $\alpha$ of future profit: 
+\[R_e^\alpha(Q,D) = \alpha \max ( p \, \min(Q,D) - c Q,0).\]
+We let $\alpha^u$ and $\alpha^e$ denote the optimal choices of $\alpha$, and $Q^u$ and $Q^e$ the corresponding production quantities.
+
+# Analysis
+
+We can now address the two questions posed in the introduction. 
+
+## When can you get a loan?
+First, when is it possible to convince investors to lend to you? That is, when is there a choice of $(P,R)$ with $P > 0$ that satisfies $\eqref{eq:moralhazard}$, $\eqref{eq:nocommitment}$, and $\eqref{eq:investorIC}$?
+Clearly, a necessary condition is that production level $Q^* > 0$ (else, no investor will give you money). By $\eqref{eq:investorIC}$, the expected payment to investors must be at least $P$:
+\[ \E[R(Q^*,D)] \geq P.\]
+Furthermore, your expected profit from producing $Q^*$ must exceed your expected profit from producing nothing and pocketing $P$. By $\eqref{eq:moralhazard}$ and $\eqref{eq:nocommitment}$, this implies that
+\[\pi(Q^*) \geq \E[R(Q^*,D)] .\]
+Feasibility of $Q^*$ implies $P \geq c Q^*$ and  $\eqref{eq:newsvendor}$ implies $\pi(q) \leq (p - c)Q$. Putting it all together we have
+\[ (p - c)Q^* \geq \pi(Q^*) \geq P \geq c Q^*.\]
+For $Q^* > 0$, this holds only if 
+\begin{equation} p > 2 c. \label{eq:necessary} \end{equation}
+This is a necessary condition to be able to raise money. In fact, under either revenue-sharing or profit-sharing, it is also sufficient: if it is satisfied, there is a choice of $\alpha$ such that investors will give you $P > 0$.
+
+To me, this is perhaps the cleanest result in the paper. Due to moral hazard, it is not always possible to get a loan (of any size), even if the product could make profit.
+
+## How profitable will your company be?
+
+Let's consider the case of revenue sharing. In that case, starting from production quantity $q$, the cost to you of producing an additional item is $c$, and the benefit to you is $(1-\alpha)p$ times the probability of selling this item, which is $\fbar(q)$. Thus, you will stop when these are equal:
+\[ (1 - \alpha^u) p\fbar(Q^u) = c.\]
+Comparing this to the solution without capital constraints given by $\eqref{eq:news-opt}$, we see that you always produce less than in the Newsvendor model: $Q^u < Q^{News}$. Furthermore, in your optimal contract, investors will break even in expectation, implying that your expected profit is $\pi(Q^{u})$. Because $\pi$ is increasing on $[0,Q^{News})$, this implies that your profit is also strictly lower. The same idea implies that $Q^e < Q^{News}$, and in fact the authors show (subject to a technical condition -- I am curious to know whether it is necessary) that 
+\[Q^u < Q^e < Q^{News},\]
+implying the same ranking in terms of expected profit.
+
+Thus, even projects that are funded are less profitable than they would be without capital constraints. However, raising capital reduces the risk associated with these projects. In particular, under either profit sharing or revenue sharing, you cannot lose money (whereas in the standard Newsvendor model, this happens whenever demand is sufficiently low).
+
+## Optimal contract design
+
+Now let's take things one step beyond what is in the paper, and ask the natural follow-up question: what is the **best** contract to sign? We start with the following observation.
+
+>**Observation 1**: In an optimal contract, investors will get zero expected profit, so the founder's expected final wealth will simply be $\pi(Q^*)$. 
+
+
+The problem with revenue and profit sharing is that they diminish your incentive to produce later units, because some of the profit from these units is distributed to investors. This can be fixed if you agree to give all initial revenue to investors (up to some pre-specified maximum), with all remaining revenue going to you. 
+
+More formally, if we intend to produce quantity $Q$, then we sign a contract of the following form:
+\begin{equation} R(Q,D) = p \min(Q,D,M), \label{eq:opt} \end{equation}
+where $M < Q$ is chosen such that $p\E[\min(D,M)] = c Q$. This gives investors non-negative expected return. Under this contract, your optimal production quantity is either $0$ or $\min(Q,Q^{News})$. The investors will only sign the contract with you if selecting $Q$ is optimal, which requires that
+\begin{equation} \Delta(Q) = \pi(Q) - c Q \geq 0. \end{equation}
+Let $Q^{Max}$ be the (unique) solution to $\Delta(Q^{Max}) = 0$. 
+
+>**Proposition**. The contract in $\eqref{eq:opt}$ with $Q = \min(Q^{News},Q^{Max})$ is optimal. 
+
+There are two cases to consider.
+
+1. If $Q^{Max} \geq Q^{News}$, then it is incentive compatible to raise enough money to produce quantity $Q^{News}$. This contract recovers the full expected profit of the Newsvendor solution (and furthermore guarantees you non-negative profit)! This clearly maximizes expected profit, as the expected sum of investor and your profit is at most $\pi(Q^{News})$, and investors must expect non-negative profit.^[Of course, if investors demand a positive expected return, you cannot earn $\pi(Q^{News})$. Even in this case, however, a larger choice of $M$ maintains incentives to produce at the efficient level $Q^{News}$, while shifting the distribution of profit between you and investors.]
+2. If $Q^{Max} < Q^{News}$, then our contract earns expected profit $\pi(Q^{Max}) < \pi(Q^{News}).$ To see that it is impossible to do better, note that by Observation 1, any better outcome would require a higher production quantity $Q^* > Q^{Max}$. This implies that you must receive (at least) $cQ^*$ from investors, which we know is higher than your expected final wealth from production $\pi(Q^*)$. So the temptation to run would be too great.
+
+
+# Closing Comments
+
+This is a cute model, with clean insights. It says that even profitable ideas may not get funded, due to moral hazard concerns. To get funding, you have to be able to credibly tell investors "The best thing I could do with a windfall of cash is put it into this business."
+
+As long as the idea is sufficiently profitable, you should be able to get funding. However, standard contracts will distort your incentive to build your company, preventing it from reaching the heights that it otherwise could. The solution is to use a contract that caps realized investor payout (leaving you as the sole claimant of revenue from later sales).^[At a technical level, this seems very closely related to principal-agent employment models. Seen in this light, we could imagine the investors as the principal, and you as the agent. If the production quantity is unobservable to investors and the contract conditions only on realized sales, we essentially recover classical model employment models: the only twist is that here, the agent makes a take-it-or-leave it contract offer to the principal, instead of the reverse.] For sufficiently profitable ideas, this restores full efficiency!
+
+**Questions for readers:** Have you seen this type of contract (capped payout for investors) arise in practice? If not, why do you think it isn't more common?
+
+
+
+
+

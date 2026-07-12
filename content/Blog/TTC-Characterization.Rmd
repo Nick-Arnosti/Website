@@ -1,0 +1,127 @@
+---
+title: 'Short Proofs for Characterizations of Top Trading Cycles'
+date: "2023-10-31"
+author: Nick Arnosti
+---
+
+One of the most elegant matching algorthms out there is the Top Trading Cycles algorithm, introduced by Shapley and Scarf in their 1974 paper "On cores and indivisibility", and attributed to David Gale. This algorithm finds the unique core allocation, and its outcome is therefore individually rational and pareto efficient. In addition, this algorithm makes truth-telling a dominant strategy for all individuals. 
+
+In fact, a striking 1994 paper by Ma ("Strategy-Proofness and the Strict Core in a Market with Indivisibilities") shows that Top Trading Cycles is the **only** mechanism that is individually rational, pareto efficient, and truthful. More recently, Ozgun Ekici showed in "Pair-efficient Reallocation of Indivisible Objects" (EC 22) that this uniqueness result remains true if pareto efficiency is weakened to pair efficiency.
+
+This post presents short proofs of these results. These proofs are not mine: they are largely copied from work of Jay Sethuraman ("An alternative proof of a characterization of the TTC mechanism",  Operations Research Letters 2016), and were re-organized and written by Felipe Simon, a PhD student at the University of Minnesota. My goal with this post is not to claim credit, but rather to share a clean proof of a fundamental result.
+
+
+
+# Model and Result
+
+There is a set of agents $\mathcal{N}$. Each agent $i\in \mathcal{N}$ is initially endowed with an object $o_i$; let $\mathcal{O} = \{o_i\}$ be the set of all objects. Each agent $i$ has a (complete and transitive) ranking of objects $\succ_i$: $o \succ_i o'$ means that agent $i$ strictly prefers object $o$ to object $o'$, and $o \succeq_i o'$ means that either $o \succ_i o'$ or $o = o'$. 
+
+We use $P = \{\succ_i \}_{i \in \mathcal{N}}$ to denote a preference profile for all agents, and use $\succeq_i^P$ to refer to the preference order of agent $i$ on profile $P$. An allocation $\mu$ is bijection between agents and objects. We let $\mu_i \in \mathcal{O}$ denote the object allocated to agent $i$ by $\mu$. 
+
+::: {.definition}
+Object $o_j$ is *acceptable* to agent $i$ if $o_j \succeq_i o_i$. Allocation $\mu$ is *individually rational* if each agent receives an acceptable object ($\mu_i \succeq_i o_i$ for all $i \in N$).
+:::   
+
+::: {.definition}
+An allocation $\mu$ is *pareto efficient* if there is no allocation $\mu'$ such that $\mu_i' \succeq_i \mu_i$ for all $i \in N$, with at least one inequality holding strictly. 
+:::   
+
+::: {.definition}
+An allocation $\mu$ is *pair efficient* if there exists no $i,j \in N$ such that $\mu_j \succ_i \mu_i$ and $\mu_i \succ_j \mu_j$.
+:::
+
+A mechanism is a function that maps each preference profile to an allocation. We say that a mechanism is individually rational (pareto efficient, pair efficient) if on any preference profile, it finds an allocation that is individually rational (pareto efficient, pair efficient).
+
+
+\na{
+::: {.definition}
+An allocation $\mu$ contains an improving cycle $c = \{i_1, i_2,..., i_m\} \subseteq N$ if $\mu_{i_2} \succ_{i_1} \mu_{i_1}$, $\mu_{i_3} \succ_{i_2} \mu_{i_2}$, ..., $\mu_{i_1} \succ_{i_m} \mu_{i_m}$.
+:::   
+
+
+::: {.lemma}
+An an allocation $\mu$ is Pareto Efficient if and only if it does not contain an Improving Cycles.
+::: 
+
+::: {.proof}
+Suppose an allocation $\mu$ contains at least one Improving Cycle. Then the allocation $\mu'$ that gives everyone in the cycle the object they strictly prefer strictly dominates $\mu$. This means that $\mu$ is not Pareto Efficient.
+    
+Suppose that $\mu$ is Pareto Efficient then there is no  $\mu'$ such that $\mu_i' \succ_i \mu_i$ without making another agent $j$ strictly worst-off. An Improving Cycle makes everyone in the cycle better-off and everyone outside the cycle indiferent. Thus, $\mu$ cannot contain an Improving Cycle. 
+:::
+}
+
+
+::: {.definition}
+A mechanism is *truthful* if for each agent $i$, reporting $\succ_i$ is a weakly dominant strategy for each agent.
+:::
+
+::: {.theorem #ma}
+There exists at most one mechanism that is truthful, individually rational and pareto efficient.
+:::
+
+::: {.theorem #ekici}
+There exists at most one mechanism that is truthful, individually rational and pair efficient.
+:::
+
+Gale's top trading cycles mechanism (TTC) is known to satisfy all of these properties, so these results imply that TTC is the *unique* mechanism satisfying these properties.
+
+
+# Proof
+
+Let $\Pi$ and $\Psi$ represent two mechanisms. For any preference profile $P$, let $\Pi_i^P, \Psi_i^P \in \mathcal{O}$ denote the objects given to agent $i$ by $\Pi$ and $\Psi$ (respectively). Define $A_\Psi, A_\Pi$ and $A$ as follows:
+\begin{align}
+    A_\Pi &= \{i \in N | \Pi_i^P \succ_i \Psi_i^P\} (\#eq:Api)\\
+    A_\Psi &= \{i \in N | \Psi_i^P \succ_i \Pi_i^P\} (\#eq:Apsi)\\
+    A &= A_\Pi \cup A_\Psi (\#eq:A).
+\end{align}
+That is, $A_\Pi$ is the set of agents that prefer the allocation from $\Pi$ over the one from $\Psi$, $A_\Psi$ is defined analogously, and $A$ is the set of all agents whose allocations differ.
+
+::: {.definition}
+A preference profile $P$ is a *discordant preference profile* of mechanisms $\Pi$ and $\Psi$ if $\Pi(P) \ne \Psi(P)$. (That is, $A$ is non-empty.)
+:::   
+
+::: {.definition}
+The *size* $s$ of preference profile $P$ is the total number of objects that agents find acceptable in $P$: 
+\[s(P) = \sum_{i \in \mathcal{N}} |\{o_j \in \mathcal{O} | o_j \succeq_i o_i\}|.\] A discordant profile $P$ of $\Pi$ and $\Psi$ is said to be of *minimal size* if there is no preference profile of smaller size.
+:::
+
+
+
+::: {.lemma #key}
+Let $\Pi$ and $\Psi$ be truthful mechanisms. Let $P$ be a discordant preference profile of minimal size, and define $A$ as in \@ref(eq:A). Then each agent in $A$ has exactly two acceptable objects.
+:::   
+
+::: {.proof}
+Proof by contradiction. Suppose that there is an agent $i \in A$ with more than two acceptable objects and suppose $\Pi^P_i \succ_i \Psi_i^P$. Modify the preference ordering of agent $i$ by removing all objects except for $\Pi_i^P$ and $o_i$; all other agents hold the same preferences. Call this new preference profile $Q$. From the truthfulness of $\Pi$ it follows that $\Pi_i^Q = \Pi_i^P$, because if under $Q$, $i$ was allocated a worst object than $\Pi_i^P$, then $i$ could simply use the preference in $P$ and improve its outcome, violating truthfulness. From the truthfulness of $\Psi$ we know that $\Pi_i^P \succ_i \Psi_i^Q$ since $\Psi_i^Q \succeq_i^P \Pi_i^P$ would mean that $i$ could improve its allocation under $P$ by misreporting his preferences. In particular, $Q$ is a profile in which the two mechanisms disagree, and $s(Q) < s(P)$, contradicting our choice of $P$. 
+:::
+
+The definition of size and Lemma \@ref{lem:key} are the crucial steps in the proof: they allow us to only reason about "simple" profiles in which agents have only two acceptable objects. 
+
+::: {.lemma #internal-trades}
+Let $\Pi$ and $\Psi$ be two distinct individually rational mechanisms. Let $P$ be a discordant preference profile and let $A_\Pi, A_\Psi$ and $A$ be defined as in \@ref(eq:Api), \@ref(eq:Apsi), \@ref(eq:A). Furthermore, assume that every agent $i \in A$ has exactly two acceptable objects. Then for every agent $i \in A_\Pi$ his favorite object is the endowment of some other agent $i'\in A_\Pi$. Similarly, for every agent $j \in A_\Psi$ his favorite object is the endowment of some other agent $j'\in A_\Psi$. 
+:::   
+
+::: {.proof}
+Because $\Pi$ is individually rational we know that every agent $j \in A_\Psi$  retains their initial endowment under $\Pi$ (that is, $\Pi_j^P = o_j$) since this is the worse of the two acceptable objects. Also, every agent $i \in A_\Pi$ is allocated their first option $\Pi_i^P \succ_i^P o_i$. Analogously, because $\Psi$ is individually rational it assigns every agent $i \in A_\Pi$ to their initial endowment $\Psi_i^P = o_i$ and every agent $j \in A_\Psi$ to their first option $\Psi_j^P \succ_j^P o_j$. It follows that neither $\Pi$ nor $\Psi$ can give the endowment of an agent $i \in A$ to an agent $k \notin A$, since these agents receive the same object in both $\Pi$ and $\Psi$.
+
+Therefore, agents in $A$ only trade objects with other agents in $A$. Furthermore, under $\Pi$ an agent $i \in A_\Pi$ will not be allocated the endowment from an agent in $j \in A_\Psi$, since these agents all retain their endowment. Thus, agents in $A_\Pi$ only trade with other agents in $A_\Pi$. Similarly, agents in $A_\Psi$ only trade with other agents in $A_\Psi$.
+:::
+
+::: {.lemma #pe}
+Let $\Pi$ and $\Psi$ be two individually rational mechanisms. Let $P$ be a discordant preference profile in which every agent $i \in A$ has exactly two acceptable objects. Then at least one of $\Pi^P$ or $\Psi^P$  is not pareto efficient. 
+:::   
+
+::: {.proof}
+Note that $A_\Pi \cup A_\Psi = A$ and by assumption $A$ is nonempty so at least one of these sets is also nonempty. Suppose $A_\Pi$ is nonempty. By assumption we know that agents in $A_\Pi$ strictly prefer their allocation given by $\Pi$. In fact, because $\Psi$ is individually rational and agents only have two acceptable object we know that under mechanism $\Pi$ each agent in $A_\Pi$ is allocated their first option. From Lemma \@ref(lem:internal-trades) we know that agents in $A_\Pi$ only trade with other agents in $A_\Pi$. Because $\Psi$ is individually rational we know that agents in $A_\Pi$ retain their endowment under $\Psi$. Therefore, the allocation $\Psi^P$ is not pareto efficient because we could improve the outcome of every agent in $A_\Pi$ by allocating them their first option, without changing the outcome of other agents. Thus, $\Psi^P$ is not pareto efficient.
+:::
+
+
+
+*Proof of Theorem 1.*
+Suppose $\Pi$ and $\Psi$ are two distinct truthful, individually rational mechanisms and let $P$ be a discordant preference profile of minimal size. By Lemma \@ref(lem:key) we know that every agent whose allocation differs in $\Pi$ and $\Psi$ has exactly two acceptable objects. By Lemma \@ref(lem:pe) at least one of these mechanisms is not pareto efficent.
+
+
+
+*Proof of Theorem 2.*
+Suppose $\Pi$ and $\Psi$ are truthful and individually rational. We will show that at least one of them is not pair efficient. Let $P$ be a discordant preference profile of minimal size and et $A_\Pi, A_\Psi$ and $A$ be defined as in equations \@ref(eq:Api),\@ref(eq:Apsi),\@ref(eq:A).  From Lemma \@ref(lem:key) we know that every agent in $A$ has exactly two acceptable objects. Suppose $A_\Pi$ is not empty. Because $\Psi$ is individually rational we know that every agent in $i \in A_\Pi$ retains their endowment under mechanism $\Psi$. Furthermore, by Lemma \@ref(lem:pe), we know that mechanism $\Psi$ is not pareto efficient. That is, there is at least one set of agents $\{i_1, i_2,...,i_m\} \subseteq A_\Pi$ such that $\Psi^P_{i_2} \succ_{i_1} \Psi^P_{i_1}, \Psi^P_{i_3} \succ_{i_2} \Psi^P_{i_2},...,\Psi^P_{i_1} \succ_{i_m} \Psi^P_{i_m}$. (Note that $\Psi^P_{i} = o_i$ for each $i$ in this cycle). Now create a new preference profile $Q$ where agent $i_1$ reports the following preferences: $o_{i_2} \succ_{i_1} o_{i_3} \succ_{i_1} o_{i_4}\succ_{i_1} ...\succ_{i_1} o_{i_{m-1}} \succ_{i_1} o_{i_m} \succ_{i_1} o_{i_1}$ (Note that the original preference was:  $o_{i_2} \succ_{i_1} o_{i_1}$ so all we are doing is adding the objects from the cycle in a specific order). All other agents hold the same preferences. Because $\Psi$ is strategy-proof, it cannot give object $o_{i_2}$ to agent $i_1$ on profile $Q$. Because $\Psi$ is individually rational, it must instead give $i_1$ an object $o \in \{o_{i_1}, o_{i_3}, o_{i_4}, \ldots o_{i_m}\}$. But we claim that none of these outcomes can be pair efficient: the agent in the cycle whose favorite object is $o$ must receive their endowment by individual rationality of $\Psi$, and by construction of profile $Q$, this agent and $i_1$ would both prefer to swap items (according to $Q$). Therefore $\Psi$ is not pair efficient.
+

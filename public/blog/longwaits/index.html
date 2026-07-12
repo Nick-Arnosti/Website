@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why Are Waits So Long At High Utilization? | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Why Are Waits So Long At High Utilization?</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2021/02/14</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>One of the units in my operations management course is on variability and waiting time. I really enjoy this unit, for several reasons. First, we all have experience waiting in lines, so the topic feels personally relevant. Second, despite our experience waiting in lines, we don't have experience thinking about them systematically, and our intuition is actually quite poor.</p>
+<p>One of the most important insights from queueuing theory is that as utilization rises, average waiting time &quot;blows up.&quot; When I first taught the course, I found myself struggling to explain <strong>why</strong> this occurs without resorting to a lot of calculations. Over time, I have found a way of thinking about the problem that offers &quot;quantitative intuition&quot; (i.e. a simple rule of thumb that enables back-of-the-envelope calculations), without resorting to analysis of Markov chains. This post outlines how I introduce the topic to my MBA class.</p>
+<div id="setting-up-the-puzzle" class="section level2">
+<h2>Setting Up The Puzzle</h2>
+<p>Consider the following scenario. You run a food truck, and have worked diligently on streamlining your service process, so that it now takes an average of only one minute to take a customer's order, collect payment, and hand them their food. Your truck is fairly popular, with an average of 50 customers showing up per hour. As a result, there is often a line, and on average five people are waiting by your truck at any one time (this includes those waiting to place their order as well as anyone you are currently helping). Say that the &quot;flow time&quot; for a customer is the time from joining the line to receiving food. I present students with three questions:<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<ol style="list-style-type: decimal">
+<li><p>Currently, what is the average flow time?</p></li>
+<li><p>If demand increased by 10%, what would be your new average flow time?</p></li>
+<li><p>If demand doubled and you hired a second employee who was just as fast as you, what would be your new average flow time?</p></li>
+</ol>
+<p>The first question can be answered using Little's Law. Our flow rate <span class="math inline">\(R = 50\)</span> customers/hour, while our average number in system <span class="math inline">\(N = 5\)</span> customers. Therefore, the average flow time is <span class="math inline">\(T = N/R = 1/10\)</span> hour, or 6 minutes.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Unfortunately, we can't use Little's Law to answer the second and third questions. While we can predict our new flow rate, we don't know how these changes will affect the average number of customers waiting in line. Therefore, I ask students to take a guess at what they think the answers might be.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> If you haven't seen this topic before, I encourage you to do the same now!</p>
+</div>
+<div id="a-queueing-formula" class="section level2">
+<h2>A Queueing Formula</h2>
+<p>To actually answer these questions, we need a tool that will allow us to make predictions about the future (rather than just using data retroactively). Queueing theory is one such tool. If we assume that customer inter-arrival times and service times both follow an exponential distribution<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> and customers never pre-emptively abandon the line, then the number of customers in system follows a continuous time Markov chain. Anyone familiar with Markov chains can write out balance equations and use them to solve for the steady-state distribution. Formulas for the average flow time are given by <a href="https://en.wikipedia.org/wiki/M/M/c_queue">this wikipedia page</a>. While they look complicated, they simplify significantly in the case of one or two employees (servers). If we define our utilization to be the percentage of time that we must work to meet demand, then with a single employee we get <span class="math display">\[Average\, Flow\, Time = \frac{Average\, Service\, Time}{1 - utilization}.\]</span> Recall that our average service time is one minute. Because our demand is 50 customers/hour but our capacity is 60 customers/hour, our utilization is <span class="math inline">\(5/6\)</span>. Therefore, this formula predicts an average flow time of 6 minutes, in agreement with our previous calculation. If demand increases by 10%, then our utilization also increases by 10%, to <span class="math inline">\(11/12\)</span>, and our flow time <em>doubles</em> to 12 minutes!</p>
+<p>Meanwhile, with two emplyees our formula for average flow time is<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> <span class="math display">\[Average\, Flow\, Time = \frac{Average\, Service\, Time}{1 - utilization^2}.\]</span> When demand is 100 customers/hour and we have two employees, our utilization remains <span class="math inline">\(5/6\)</span>, but this formula predicts a dramatically reduced flow time of <span class="math inline">\(36/11 \approx 3.27\)</span> minutes!</p>
+<p>These answers should seem surprising. I have a lot of data (from student guesses) suggesting that they are surprising. If you are not surprised, then either (i) you have already learned about this topic, or (ii) you are not thinking about it very carefully.</p>
+</div>
+<div id="building-intuition-through-a-simple-example" class="section level2">
+<h2>Building Intuition Through A Simple Example</h2>
+<p>What do we take from these calculations? One possible conclusion is that randomness is confusing, our intuition is bad, and we need to use the formulas above to predict the effect of a change. A more helpful approach is to use the formulas to develop insights. For example, both formulas clearly show that as utilization approaches <span class="math inline">\(1\)</span>, average flow time increases dramatically. They also show that fixing the service time and utilization, a &quot;large scale&quot; system (with higher demand and higher capacity) results in lower average waits. These are two key messages from class.</p>
+<p>However, I wanted to go further. Why did flow time double in the first case? To answer this question, let's consider a simple setting with no randomness. Suppose thata group of five customers show up all at once. From there on, everything is perfectly predictable, and in line with historical averages: one new customer arrives every 1.2 minutes (equivalent to a rate of 50 customers/hour), and we serve a customer every minute. How long until we &quot;catch up&quot; and empty the line?</p>
+<p>You might initially be tempted to say 5 minutes, as this is how long it takes to serve our initial 5 customers. However, in that time, four new customers have showed up! Thinking through things more carefully, we see that the answer is 30 minutes: in that time, we can serve 30 customers (the original 5 plus 25 new arrivals).</p>
+<p>Now suppose that demand is instead 55 customers per hour. How long will it take us to empty the line after that group of five shows up? In this case, the answer is 60 minutes: in this time, we can serve 60 customers (the original 5 plus 55 new arrivals). Thus, we see that this 10% increase in demand doubled the time that it takes us to catch up! Furthermore, Little's Law establishes that this time is proportional to customers' average wait.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
+</div>
+<div id="a-rule-of-thumb" class="section level2">
+<h2>A Rule of Thumb</h2>
+<p>In the original scenario, our capacity is 60 customers/hour, while our demand is 50 customers/hour. This means that we have an &quot;excess capacity&quot; of 10 customers/hour. In other words, it takes an hour to clear a backlog of 10 customers, or 30 minutes to clear a backlog of 5 customers. A 10% increase in demand reduces our excess capacity to 5 customers/hour, <strong>half</strong> of what it was before. Thus, our average wait time approximately <strong>doubles.</strong></p>
+<p>This example illustrates that the waiting time experienced by our customers is primarily determined by the rate at which we can catch up when we fall behind. Because we can't work on a customer's order before they arrive, we will inevitably fall behind sometimes (i.e. whenever a group of customers arrive in quick succession). If we are at high utilization, then new customers show up at nearly the same rate that we can help them, and it will take a <strong>long time</strong> to empty the queue again.</p>
+<p>This motivates the following rule of thumb. Instead of thinking about percentage changes in demand, ask yourself &quot;how does this change affect my excess capacity?&quot; If you excess capacity is cut in half, wait times should roughly double. If it is cut by a factor of three, wait times should roughly triple. Conversely, if excess capacity doubles, wait times should be approximately cut in half.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></p>
+<p>This rule of thumb also helps to explain the lower wait times when demand and capacity both doubled. Notice that this doubles our excess capacity, to 20 customers/hour. Thus, we should expect it to roughly halve wait times.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
+</div>
+<div id="disclaimers" class="section level2">
+<h2>Disclaimers</h2>
+<p>In an effort to keep things simple, I have ignored many factors in the analysis above. Most notably, I have taken the size of the backlog (5 customers) as fixed across scenarios. The frequency with which we fall behind (and the amount by which we fall behind) depend on both demand and the amount of variability present in the system. This is one reason that my rule of thumb is not perfect.<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a> However, neither is the model that we started with! In particular, the assumptions that arrivals are steady over a long period and do not depend on the current queue length are frequently violated in practice.</p>
+<p>The reality is, most of the formulas we teach in class are worth far less than the insights that they reveal. I find the rule of thumb based on excess capacity to be a helpful way to translate a classroom model into simple intuition which could plausibly be deployed in practice. If you have taught this material before, I'd love to hear your thoughts! How do you explain these concepts to MBAs? And what are your biggest concerns with my rule of thumb?</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>In class, I don't use the phrase &quot;flow time,&quot; as one of the key challenges to applying concepts from class is recognizing them when they arise.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>This answer is counter-intuitive to many students. After all, if the line has an average of five customers and it takes one minute to serve each, then even the last customer in line should get their food within the next five minutes! How can the average time be 6 minutes? The key to understanding the flaw in this logic is recognizing that there are two different perspectives: the <em>customer's</em> perspective, and the <em>employee's</em> perspective. The average of five customers gives the employee's perspective, and does <em>not</em> imply that the average customer sees a line of length five. This is easiest to see by taking an extreme: if the truck is very unpopular, the average number of people in line could be below one, yet customers always observe at least one person in line (themselves). Put another way, when the line is empty, nobody is there to observe it! This is known as the inspection paradox. Wikipedia's offerings on the topic are sadly technical and unenlightening, but Allen Downey has an <a href="https://towardsdatascience.com/the-inspection-paradox-is-everywhere-2ef1c2e9d709">excellent blog post</a> illustrating many contexts in which it arises.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>The most common guesses are that the 10% increase in demand will cause flow time to increase by approximately 10%, and that simultaneously doubling demand and the number of employees should keep flow time roughly constant.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>For customer arrivals, this is plausible: it holds if customers make independent arrival decisions. Of course, this may not be the case: for example, many students go get lunch right after class lets out. The assumption of exponential service times is even less plausible, but is mathematically convenient, captures the key insights highlighted in this post, and can readily be relaxed.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>In class, we tell students to use a multi-server approximation derived by <a href="https://www.ism.ac.jp/editsec/aism/pdf/029_1_0067.pdf">Sakasegawa in 1977</a>. As far as I can tell, this approximation has (for no particular reason) become gospel in operations management classes across the country. Students always ask me about where the crazy square root term in the exponent comes from. For this post, it seems simpler to use the exact expression for an M/M/2 queue.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>One version of Little's Law states that total customer waiting time is equal to the area under the inventory curve. Until the backlog is drained, the inventory curve looks roughly like a triangle with height five and base equal to the time it takes to empty the queue. Thus, doubling the time taken to empty the queue roughly doubles total customer waiting time.<a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p>These calcluations parallel those for calculating the profitability of a business. Suppose that our total revenue is $60, and our total cost is $50. If costs rise by 10%, does profit decrease by 10%? No! Our initial profit (or &quot;excess revenue&quot;) is $10. A 10% rise in cost cuts profit in half! Thus, for a business with low profit margins, even small changes in cost or revenue can have a dramatic effect on profit. Analogously, in a queue with high utilization, even small changes in the arrival or service rate can dramatically affect wait times.<a href="#fnref7">↩</a></p></li>
+<li id="fn8"><p>This conclusion in part depends on how work is structured. Are employees working in parallel, or are they arranged sequentially, with each assigned to one step in the process? This will be the topic of another post.<a href="#fnref8">↩</a></p></li>
+<li id="fn9"><p>It is possible to use simple heuristics to explain the variability term of <span class="math inline">\((CV_s^2 + CV_a^2)/2\)</span> that appears for more general service time and inter-arrival time distributions, but that is a topic for another post.<a href="#fnref9">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

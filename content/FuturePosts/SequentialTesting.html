@@ -1,0 +1,20 @@
+---
+title: 'Sequential Testing'
+date: "2021-03-01"
+author: Nick Arnosti
+draft: true
+---
+
+
+
+<p>Suppose that we wish to learn a state <span class="math inline">\(Z \in \mathcal{Z} = {0,1}^n\)</span>. At each time step <span class="math inline">\(t\)</span>, we can choose <span class="math inline">\(X^t \in \mathcal{X} = \{0,1\}^n\)</span>, and observe
+<span class="math display">\[\begin{equation} Y^t = {\bf 1}(X^t \cdot Z &gt; 0) \label{eq:feedback} \end{equation}\]</span>
+<a href="#eq:feedback">(<strong>??</strong>)</a></p>
+<p>A history is a sequence of <span class="math inline">\((X^t, Y^t)\)</span> pairs. A policy <span class="math inline">\(\pi\)</span> is a map from histories to <span class="math inline">\(\mathcal{X}\)</span>. Given history <span class="math inline">\(H\)</span>, let <span class="math inline">\(\mathcal{F}(H)\)</span> be the set of <span class="math inline">\(Z\)</span> that are consistent with <span class="math inline">\(H\)</span>. Define <span class="math inline">\(T(\pi,Z)\)</span> to be the number of tests run under policy <span class="math inline">\(\pi\)</span> when the state is <span class="math inline">\(Z\)</span>.</p>
+<p>##Extensions</p>
+<ul>
+<li>Feedback – for example, could be <span class="math inline">\(X^t \cdot Z\)</span> itself.</li>
+<li>Decision space – for example, could choose weights to apply.</li>
+<li>Error tolerance – cost of incorrect label.</li>
+<li>Noise – could incorporate false positives or negatives.</li>
+</ul>

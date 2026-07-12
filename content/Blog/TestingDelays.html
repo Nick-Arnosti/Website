@@ -1,0 +1,69 @@
+---
+title: 'Reducing Turnaround Times for COVID Tests'
+date: "2021-02-27"
+author: Nick Arnosti
+tags:
+  COVID-19
+categories:
+  Operations
+---
+
+
+
+<p>COVID testing is a key tool for fighting the virus. If readily available with quick results, it can be used to identify and isolate positive cases, preventing further spread. Although there are several types of COVID test, I will focus on the PCR test, which is the most common (and most accurate) option. If you want to learn a bit more about the testing process, I recommend <a href="https://www.youtube.com/watch?v=WLTV2groOxY">this video</a>, which I assigned as &quot;reading&quot; for my Operations Management class.</p>
+<p>Unfortunately, for much of last year, Americans found themselves unable to schedule tests, and/or waiting many days for their results. These delays have significant costs: some people will quarantine unnecessarily, while others will assume they are negative, and engage in activities that may spread the virus.</p>
+<p>In this post, I will describe several strategies to shorten leadtimes for COVID tests. First, I briefly mention efforts to eliminate or shorten individual steps in the process. Second, I tackle the routing of samples to labs. Finally, I discuss which samples to prioritize when backlogs occur. An additional strategy that you may have heard of is &quot;pooling&quot; samples, which I analyze in detail in <a href="/PoolingTests/">this post</a>.</p>
+<div id="eliminating-unnecessary-steps" class="section level1">
+<h1>Eliminating Unnecessary Steps</h1>
+<div class="figure"><span id="fig:covid-testing"></span>
+<img src="/COVID-Testing.jpg" alt="Steps in the Testing Process (copied from [this paper](https://www.medrxiv.org/content/10.1101/2020.04.17.20067348v2.full))."  />
+<p class="caption">
+Figure 1: Steps in the Testing Process (copied from <a href="https://www.medrxiv.org/content/10.1101/2020.04.17.20067348v2.full">this paper</a>).
+</p>
+</div>
+<p>Are all of the steps shown in Figure <a href="#fig:covid-testing">1</a> necessary? I obviously have no idea, but it seems that scientists also don't really know. Policies have evolved over time, and many variants of the process have been tested.</p>
+<p>Let's start with step a), collection of samples. Samples are supposed to be stored in &quot;Viral Transport Medium&quot; (VTM), which permits safe transportation while preserving the virus. However, shortages of VTM have caused testing delays. In response, the FDA has <a href="https://www.medtechdive.com/news/fda-eases-rules-on-viral-transport-media-to-boost-availability-for-covid-19/581972/">eased restriction on VTM producers</a>. It has also permitted samples to be transported in (more readily available) <a href="https://www.wyofile.com/wyoming-doc-works-around-covid-19-testing-bottleneck/">saline solutions</a>.</p>
+<p>We move on to step b), heat inactivation. My understanding is that this helps protect lab technicians, but may reduce sensitivity of the test. There seems to not be agreement about whether this step is necessary, and how much heat to apply -- see for example <a href="https://www.researchgate.net/publication/342746386_Heat_Inactivation_of_Different_Types_of_SARS-CoV-2_Samples_What_Protocols_for_Biosafety_Molecular_Detection_and_Serological_Diagnostics">this article</a>. I have also read that heat inactivation may be especially important if the sample was not transported in VTM (so taking shortcuts on step a) may cost us in step b)).</p>
+<p>On to step c), the extraction of RNA (don't ask me what this actually means). Although large labs have ways to do this quickly, in smaller labs it is time-consuming and requires specialized chemicals ('reagents'). Many labs have had difficulty getting enough reagents, resulting in testing delays. Some labs have started to experiment with <a href="https://www.genomeweb.com/pcr/addressing-coronavirus-testing-bottleneck-scientists-turn-rna-extraction-free-pcr#.YDcveZNKgxE">eliminating the RNA extraction step</a> -- see also <a href="https://www.medrxiv.org/content/10.1101/2020.04.17.20067348v2.full">this paper</a>, from which I pulled the image in Figure <a href="#fig:covid-testing">1</a>. Eliminating this step not only reduces total activity time, it also could increase the lab's capacity if extraction is the bottleneck.</p>
+<!--Academic paper about [eliminating RNA extraction](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7349311/).-->
+<!--More extraction free PCR: (https://www.modernhealthcare.com/patients/scientists-seek-solution-coronavirus-testing-bottleneck) -->
+</div>
+<div id="routing-samples-appropriately" class="section level1">
+<h1>Routing Samples Appropriately</h1>
+<p>Even if we keep all of the steps above, appropriate routing of samples could shorten testing turnaround times.</p>
+<p>Many PCR tests are conducted by large testing centers operated by Quest and Labcorp. However, a nifty thing about PCR is that it is a common laboratory procedure, and many small labs across the country are equipped to run PCR tests. This offers an opportunity to reduce transportation time, as samples can be sent to local labs rather than national centers. However, decentralized testing also poses a challenge: one lab may have a large backlog, while another has excess capacity.</p>
+<p>An earlier post taked about the <a href="/Blog/PoolingTests/">power of pooling</a>: as long as new jobs are routed to the labs with the shortest queues, a system of many small labs can operate much like one centralized lab. Unfortunately, this does not seem to be happening in practice. Hospitals usually have <a href="https://www.nytimes.com/2020/05/21/health/coronavirus-testing-lab-capacity.html">relationships with large labs</a>, and send samples to these labs even if they are experiencing significant backlogs. Smaller labs are left <a href="https://www.nature.com/articles/d41586-020-01068-3">begging for more samples</a>. When samples are sent to labs with backlogs, they either wait to be processed, or are <a href="https://www.nytimes.com/2020/08/04/us/virus-testing-delays.html">forwarded to other labs</a>. In either case, the result is unnecessary delay.</p>
+<p>In addition to increasing <em>average</em> turnaround times, this fragmented system is <em>inequitable</em>: people resort to <a href="https://nypost.com/2020/09/09/nyc-has-a-whisper-network-for-finding-fast-covid-19-tests/">word of mouth</a> to find testing centers with fast turnaround times, and some <a href="https://www.nytimes.com/2020/08/31/nyregion/rapid-coronavirus-test.html">pay to have their tests sent to local labs</a>.</p>
+<p>The natural solution is to make waiting time information readily available. This list of <a href="https://www.wadsworth.org/testing-capacity">labs with excess capacity</a> is a step in that direction. Unfortunately, it uses data from a weekly survey, which may lag reality. Publishing waiting time data at infrequent intervals can actually be worse than publishing no data at all, as it concentrates demand among a small number of locations that <em>used to</em> have short waits -- see for example my earlier <a href="/Blog/WaitingToVote/">post on elections in Harris County</a>.</p>
+<p>However, in most cases there is not even an <em>attempt</em> to provide appropriate information. I imagine this failure stems largely from incentives. Labs are generally paid based on the number of tests they complete, giving them little incentive to report long backlogs which might deter business. Meanwhile, hospital staff may be admonished for sending samples to a new lab, but will not be blamed if they send tests to the &quot;usual&quot; labs and these labs happen to be backlogged. Finally, lack of information prevents people from &quot;voting with their feet&quot;: while New York recently unveiled a tool to <a href="https://www.pix11.com/news/coronavirus/nyc-creates-website-to-monitor-lines-at-testing-sites-making-the-system-more-efficient">display waiting times</a>, it is far more difficult to find information about how long it will take for results to be returned.</p>
+</div>
+<div id="moving-away-from-first-come-first-served" class="section level1">
+<h1>Moving Away From First-Come, First-Served</h1>
+<p>While the ultimate goal is to reduce turnaround times for all tests, sometimes hard decisions must be made. A lab with a backlog of untested samples must decide whether to process this backlog (causing delays for all incoming samples), or to process new samples (causing further delays for samples caught in the backlog.) As far as I can tell, virtually all labs take the former approach, which can result in long turnaround times for most or all samples.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<!--New York [turnaround time data](https://www1.nyc.gov/site/doh/covid/covid-19-data-trends.page#tat).-->
+<p>For a test to be useful, results should be available quickly -- ideally within 24 or at most 48 hours. A test with a seven-day turnaround time is nearly useless. After a sample has been waiting for several days, it should be de-prioritized, in favor of new samples. This idea was mentioned on the blog <a href="https://marginalrevolution.com/marginalrevolution/2020/08/stack-push-pop-covid-testing.html">Marginal Revolution</a>, and echoed <a href="https://operationsroom.wordpress.com/2020/08/11/what-service-discipline-is-best-for-testing-queues/">Operations Room</a>, but as far as I can tell, has not been seriously considered.</p>
+<p>This seems crazy to me. Yes, I get that people will be upset if they have to wait a week or more while others who were tested after them receive results. But that is <em>already</em> a reality, due to our fragmented testing system. A move to prioritize recent samples may seem &quot;unfair&quot;, but does not require any additional resources, and would clearly increase the usefulness of tests for combating the spread of the virus. This is one area where I am in favor of market-based reform: lab payments should depend on turnaround time, with no payment for tests that are more than a few days old. With these incentives in place, I conjecture that many labs would suddenly be open to abandoning first-come, first-served.</p>
+<!--Suppose that you run a lab with capacity for 1,000 tests/day. On average, you receive 1,000 samples per day, but last week was especially busy, and you have accumulated a backlog of 6,000 samples. If you process this backlog before any new samples, then newly-arriving samples will have to wait 6 days to be processed. Conversely, you could set the backlog aside, and go straight to processing new samples. In this case, most of your samples will be turned around within a day, with 6,000 unlucky patients facing a very long wait.-->
+</div>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>I am certainly not qualified to asssess the difficulty of increasing supplies of VTM and reagents, nor whether heat inactivation and RNA extraction can be skipped without majorly compromising safety and accuracy. However, it seems that even with existing resources and processes, there are operational and economic levers that can be pulled to get more effective testing.</p>
+<p>First, each testing center should be required to provide information about current turnaround times. Because people will favor faster results, this will provide centers with an incentive to route samples to labs with excess capacity, thereby leveraging the power of pooling. Of course, this will only work if labs accurately report their backlogs.They currently have no incentive to do this, as they are compensated on a per-test basis. Instead, payments should depend on turnaround times, with no payment at all after several days. This gives labs with backlogs an incentives to stop accepting new samples, and could also spur labs to prioritize recent samples. Collectively, these steps could help provide people with actionable information, and ultimately reduce the overall number of cases.</p>
+<!--
+People are forced to accept long waits, because reliable information about turnaround times is hard to come by. 
+
+Poor information about turnaround times makes it difficult for people to find centers offering quick results. This in turn reduces incentives for testing centers to route samples to small local laboratories offering quick results. Bureaucracy often causes  
+
+Hospitals and testing centers 
+
+
+
+Our current system compensates labs on a per-test basis, with little reward for speed. Excessive bureaucracy prevents hospitals from taking advantage of small local laboratories offering quick results. Because reliable information about turnaround times is hard to come by, many people are forced to accept unnecessarily long waits. By changing compensation, we could obtain and publish better information about turnaround times, leading to faster testing and ultimately, fewer cases.
+-->
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Labs do prioritize certain samples, but samples of similar priority operate on a first-come, first-served basis.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>

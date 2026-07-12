@@ -1,0 +1,29 @@
+---
+title: 'Session 2: Incentives and Top Trading Cycles'
+date: "2022-01-24"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Lesson Recap
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "xxx")
+```
+
+# Materials
+
+[Lecture Slides](/IE5080/Session2/Session2.pdf) (pptx version available to instructors upon request).
+
+[Homework](/IE5080/Session2/Session2_Homework.pdf) (solutions available to instructors upon request).
+
+**References**:
+
+Introduction to Top Trading Cycles: [On Cores and Indivisibility](/IE5080/Session2/Shapley-Scarf_1974.pdf)
+
+Proof that there is a unique core allocation: [Weak Versus Strong Domination in a Market with Indivisible Goods](/IE5080/Session2/Postlewaite-Roth_1977.pdf)
+
+Proof that Top Trading Cycles is truthful: [Incentive Compatibility in a Market with Indivisible Goods](/IE5080/Session2/Roth_1982.pdf)
+
+Proof that Top Trading Cycles is the only mechanism that is Pareto efficient, individually rational, and truthful: [Strategy-Proofness and the Strict Core in a Market with Indivisibilities](/IE5080/Session2/Ma_1994.pdf)

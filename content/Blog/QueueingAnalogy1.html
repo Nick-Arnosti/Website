@@ -1,0 +1,55 @@
+---
+title: 'An Analogy Between Matching and Queueing, Part I: Modeling Approaches'
+date: "2020-08-23"
+author: Nick Arnosti
+tags:
+  Stable Matching
+categories:
+  Market Design
+---
+
+
+
+<p>I often find myself explaining stable matching to researchers who have little background in matching, but are familiar with queueing theory. Through these conversations, I have come to realize that there are a lot of parallels between queueing and matching!</p>
+<p>This is the first of several blog posts that will present an extended analogy between these fields. It describes the advantages and disadvantages of several several classes of models (deterministic, stochastic, and fluid limit) that have been used for both queueing and matching. The final section alludes to a new type of matching model, which I believe has many advantages over traditional approaches.</p>
+<p>My meta-goals for these posts are to (i) help queueing theorists understand the current state of the matching literature, and (ii) suggest to matching theorists that there may be a lot to learn from queueing theory (which I view as the more developed field).</p>
+<div id="deterministic-finite-models" class="section level1">
+<h1>Deterministic Finite Models</h1>
+<p>For decades, most matching research studied deterministic models (<a href="https://www.amazon.com/Two-Sided-Matching-Econometric-Society-Monographs/dp/0521437881">this book</a> offers a fairly comprehensive survey of early work).</p>
+<p>The advantage of this approach is that it doesn’t require <em>any</em> assumptions on student preferences or school priorities. This makes it possible to prove very general results. For example, adding a student to a matching market always weakly hurts every other student.</p>
+<p>One drawback of this approach is that with weaker assumptions come weaker conclusions. If we ask “How much does the addition of a new student hurt others?”, there is no good answer. In some cases, adding a student might not displace anyone else; in others, it has a dramatic effect (as I discuss in more detail <a href="/blog/da-predictability/">in this blog post</a>). For any given preference profile we can answer this question, but specifying a full preference profile is cumbersome: the input is too high dimensional for clean insights.</p>
+<p>In queueing, the analogous approach would be to specify each individual arrival time and service time. Again, we could derive a few general results (i.e. adding a new customer weakly hurts all others), but we would quickly run out of interesting things to say. Tellingly, few queueing papers work with deterministic models.</p>
+</div>
+<div id="stochastic-models-asymptotics." class="section level1">
+<h1>Stochastic Models + Asymptotics.</h1>
+<p>Instead, queueing is traditionally studied using stochastic models, in which arrival and service processes are described by a few parameters. Additionally, most analysis focuses on steady-state outcomes (that is, the average experience of a large number of customers). Jointly, these modeling choices enable insightful analysis of each parameter’s effect on metrics such as the average waiting time. One of the most celebrated insights is that wait time “blows up” as utilization approaches one: small changes in arrival rate can have a dramatic effect on average waiting times.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>The analogous approach in matching theory is to study markets where preferences and priorities are drawn randomly, and to study outcomes as the number of students and seats grow. This approach was pioneered by Don Knuth in <a href="https://www-cs-faculty.stanford.edu/~knuth/ms.html">this monograph</a>, but was slow to catch on. Recently, however, it has become ubiquitous in the matching literature.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>Although stochastic models offer the advantage of clean insights, they often require strong assumptions in order to maintain tractability. In queueing, it’s common to assume Poisson arrivals and exponential service times. Over decades, these assumptions have gradually been relaxed, but analysis of “realistic” queueing systems (i.e. nonstationary arrivals, or queueing networks) remains beyond reach. Analyses of random matching markets frequently assume that preferences and priorities are uniformly random, or identical.</p>
+</div>
+<div id="fluid-models" class="section level1">
+<h1>Fluid Models</h1>
+<p>Queueing theory moved beyond restrictive assumptions by using fluid limits. In essence, these models ignore stochasticity, replacing arrival and service times with their expected values. This is much more tractable than stochastic analysis, and can be shown to provide a good approximation in certain cases (i.e. in systems with a high arrival rate and many servers). Fluid models of queueing are extremely widely used.</p>
+<p>By comparison, fluid matching models are in their infancy. <a href="https://eduardomazevedo.github.io/">Eduardo Azevedo</a> and <a href="https://jleshno.weebly.com/">Jacob Leshno</a> wrote a <a href="https://eduardomazevedo.github.io/papers/Azevedo-Leshno-Supply-and-Demand-Matching.pdf">beautiful paper</a> which uses a fluid model to predict school <em>cutoff scores</em> (that is, the lowest priority student accepted to each school). This model remains tractable with complex preferences and priorities. Just as fluid models of queueing accurately approximate stochastic models with high arrival and service rates, their fluid matching model provides a good approximation of outcomes in random matching markets where many students match to each school.</p>
+<p>In general, however, the approximation is far from perfect. Because fluid models ignore stochasticity, they tend to make predictions that are much more optimistic than those from the corresponding stochastic models. For example, fluid models of queueing predict no waits if the service rate exceeds the arrival rate, and the fluid matching model predicts that every student will get their first choice if student preferences are uniformly distributed and the number of seats exceeds the number of students.</p>
+<p>Furthermore, their model cannot quantify the uncertainty facing students in the stochastic model. This is shown in the left panel of Figure <a href="#fig:azevedo-leshno">1</a>, which displays their model’s predicted cutoff score alongside the empirical distribution of realized cutoff scores. Unless school capacities are very large, cutoff scores vary significantly, and cannot be described by a single number. Hence, students with priority scores just above their predicted cutoff have a significant chance of being rejected.</p>
+</div>
+<div id="a-new-modeling-approach" class="section level1">
+<h1>A New Modeling Approach</h1>
+<p>I’ve recently been working on a new model of stable matching, which incorporates stochasticity, but retains much of the tractability of Azevedo and Leshno’s fluid model.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> Whereas their model predicts a deterministic cutoff score, mine predicts the full <em>distribution</em> of cutoff scores, shown in Figure <a href="#fig:azevedo-leshno">1</a>.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> However, now isn’t the time to go into details about this new model – I’ll save that for a future post.</p>
+<div class="figure"><span id="fig:azevedo-leshno"></span>
+<img src="/AL-Fig4.pdf" alt="The distribution of cutoff scores required for admission in the setting considered by Azevedo and Leshno. On the left, simulation results from Azevedo and Leshno (2016). The blue line shows the empirical average cutoff score, with the red lines representing the $5^{th}$ and $95^{th}$ percentile of the empirical distribution. Their model predicts a deterministic cutoff score, shown by the black dotted line. This does not capture the uncertainty in cutoffs, which is significant unless capacities are large. My proposed model of stable matching predicts the _distribution_ of cutoff scores: the right panel shows the average, $5^{th}$ percentile and $95^{th}$ percentile of the predicted distribution."  />
+<p class="caption">
+Figure 1: The distribution of cutoff scores required for admission in the setting considered by Azevedo and Leshno. On the left, simulation results from Azevedo and Leshno (2016). The blue line shows the empirical average cutoff score, with the red lines representing the <span class="math inline">\(5^{th}\)</span> and <span class="math inline">\(95^{th}\)</span> percentile of the empirical distribution. Their model predicts a deterministic cutoff score, shown by the black dotted line. This does not capture the uncertainty in cutoffs, which is significant unless capacities are large. My proposed model of stable matching predicts the <em>distribution</em> of cutoff scores: the right panel shows the average, <span class="math inline">\(5^{th}\)</span> percentile and <span class="math inline">\(95^{th}\)</span> percentile of the predicted distribution.
+</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>This idea is the focus of the “Managing Waiting Times” unit of my MBA Operations Management class.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The <a href="/blog/queueinganalogy3/">third post in this series</a> explores an analogous finding for matching markets.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>In queueing, stochastic analysis is so common that it was helpful to develop a shorthand (known as <a href="https://en.wikipedia.org/wiki/Kendall%27s_notation">Kendall’s Notation</a>) for specifying assumptions. I believe that the matching literature may have reached this point: the <a href="/blog/queueinganalogy2/">second post in this series</a> proposes analogous notation for matching markets.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Independently, <a href="http://www.columbia.edu/~ad3217/">Ton Dieker</a> has been developing a somewhat analogous model for queueing. His QPlex software uses this model to estimate transient outcomes in queueing networks. I hope that he manages to write up and share a document sharing more details soon!<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>Results are for the following setting. <span class="math inline">\(20 C\)</span> students compete for spots at 10 colleges, each with capacity <span class="math inline">\(C \in \{1, 5, 10, 25, 50, 100, 200\}\)</span>. Students have uniformly random preferences over colleges. Each student’s priority score at each college is the average of the student’s quality (drawn U[0,1]) and an idiosyncratic match value (drawn U[0,1] across student-college pairs). The quality terms introduce (imperfect) correlation in colleges’ assessment of students. Each realization of preferences and priorities induces a minimum “cutoff score” required for admission to each college. Figure <a href="#fig:azevedo-leshno">1</a> shows the distribution of these cutoff scores.<a href="#fnref5">↩</a></p></li>
+</ol>
+</div>

@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rolling Averages | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Rolling Averages</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/12/28</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>I found this puzzle on Twitter, <a href="https://x.com/MaxResnick1/status/1872711867728265452">suggested by Max Resnick</a>:</p>
+<blockquote>
+<p>You are given a 6 sided die. You may roll it as many times as you want. After any roll you can choose to stop and receive a payoff equal to the average of all your die rolls up to that point. What is the optimal stopping rule?</p>
+</blockquote>
+<p>I fed this prompt into ChatGPT o1. It produced a bunch of “analysis” which I will spare you, followed by this conclusion:</p>
+<p><em>From the above analysis, the optimal policy is:</em></p>
+<p><em>Continue rolling as long as your current average <span class="math inline">\(\bar{X}_n\)</span> is below 3.5. Stop as soon as your average <span class="math inline">\(\bar{X}_n\)</span> is at least 3.5.
+Under this policy, your final expected payoff turns out to be
+3.5.</em></p>
+<p>The last sentence is clearly wrong. If I only stop when my value is at least 3.5, then clearly, my average ending value is above 3.5! Furthermore, stopping as soon as my value reaches 3.5 is not optimal: while I should certainly never stop if my value is below 3.5 (I can always get to 3.5 by just continuing to roll), I sometimes want to continue even if my value is above 3.5 (as we will explore later).</p>
+<p>One of the responses to Max’s post suggested being greedier:</p>
+<p><em>With infinite rolls you will very likely have an average &gt; 5 at some point. Don’t know when to stop but wouldn’t take less than 5 as a heuristic.</em></p>
+<p>I see the appeal to this: If I only stop when the average value is above <span class="math inline">\(5\)</span>, then surely my reward will be above <span class="math inline">\(5\)</span>! Unfortunately, the conclusion “you will very likely have an average &gt; 5 at some point” is not correct: the average will settle down close to 3.5, and has a positive probability of never reaching 5. We can (sort of) see this in the following plot.</p>
+<pre class="r"><code>set.seed(281224)
+max_rolls = 50
+n_trials = 4
+rolls = matrix(sample(1:6,n_trials*max_rolls,replace=TRUE),nrow=max_rolls)
+averages = apply(rolls,2,cumsum)/(1:max_rolls)
+plot(NA,xlim=c(1,max_rolls),ylim=c(1,6),xlab=&#39;Number of Rolls&#39;,ylab=&#39;Sample Avg&#39;,las=1)
+for(i in 1:n_trials){lines(averages[,i],col=rainbow(n_trials)[i],lwd=2) }</code></pre>
+<p><img src="/Blog/RollingAverage_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>This plots the result of four trials (each capped at 50 rolls to make the plot readable). In each case, the sample average reaches its maximum fairly early on before settling down.</p>
+<div id="comparing-stop-over-3.5-to-omniscient" class="section level1">
+<h1>Comparing “Stop over 3.5” to Omniscient</h1>
+<p>What we can easily do is run a lot of trials, and compare the reward of the strategy suggested by GPT (which again, is not optimal) to the strategy of an “omniscient” player who can see the future (alternatively, someone who can roll forever and then go back and choose when to stop).</p>
+<pre class="r"><code>max_rolls = 500
+n_trials = 100000
+rolls = matrix(sample(1:6,n_trials*max_rolls,replace=TRUE),nrow=max_rolls)
+averages = apply(rolls,2,cumsum)/(1:max_rolls)
+max_avg = apply(averages,2,max)
+stop_gpt = apply(averages,2,function(seq){if(all(seq&lt;=3.5)) return(seq[length(seq)]); return(seq[which(seq&gt;3.5)][1])})
+mean(stop_gpt) #Reward from GPT strategy </code></pre>
+<pre><code>## [1] 4.370825</code></pre>
+<pre class="r"><code>mean(apply(averages,2,max)) #Reward to omniscient player</code></pre>
+<pre><code>## [1] 4.563184</code></pre>
+<p>This shows that the “stop over 3.5” strategy gets an average reward of approximately 4.37, while the omniscient player gets an average reward of approximately 4.56.</p>
+</div>
+<div id="solving-for-the-optimal-strategy" class="section level1">
+<h1>Solving for the Optimal Strategy</h1>
+<p>What about the optimal strategy? We can tackle this using dynamic programming.
+We will modify the game to assume that you must stop after at most <span class="math inline">\(N_{MAX}\)</span> rolls. When <span class="math inline">\(N_{MAX}\)</span> is sufficiently large, this additional constraint will have little effect on the game’s value.</p>
+<p>Let <span class="math inline">\(V(S,n)\)</span> be the value, under optimal play, of having rolled a total sum of <span class="math inline">\(S\)</span> after <span class="math inline">\(n\)</span> rolls. Then if <span class="math inline">\(n = N_{MAX}\)</span>, <span class="math inline">\(V(S,n) = S/n\)</span>. Otherwise, we have the recursion
+<span class="math display">\[V(S,n) = \max(\frac{S}{n}, \frac{1}{6}\sum_{r=1}^6 V(S+r,n+1)).\]</span></p>
+<p>I asked GPT o1 to write code to solve this value function, and it produced the following memoized function in python.</p>
+<pre class="python"><code>from functools import lru_cache
+import matplotlib.pyplot as plt
+
+from functools import lru_cache
+import matplotlib.pyplot as plt
+
+# ---------------------------
+# 1. Parameters
+# ---------------------------
+N_MAX = 400  # artificial cap on the number of rolls
+
+# ---------------------------
+# 2. Value function with memoization
+# ---------------------------
+@lru_cache(None)
+def V(S, n):
+    &quot;&quot;&quot;
+    Maximum expected value if you have:
+       - Sum of rolls = S
+       - Number of rolls so far = n
+    and you now choose optimally between stopping vs. rolling again.
+    &quot;&quot;&quot;
+    # If we&#39;ve reached or exceeded our artificial max, must stop
+    if n &gt;= N_MAX:
+        return S / n if n &gt; 0 else 0.0
+    
+    # If n == 0, there&#39;s no average yet; define &quot;stop payoff&quot; suitably
+    stop_value = 0.0 if n == 0 else (S / n)
+    
+    # Compute the expected value if we roll again
+    roll_value = 0.0
+    for x in range(1, 7):
+        roll_value += V(S + x, n + 1)
+    roll_value /= 6.0
+    
+    return max(stop_value, roll_value)
+
+def recommend_action(S, n):
+    &quot;&quot;&quot;
+    Decide &#39;stop&#39; or &#39;roll&#39; at state (S, n),
+    by comparing stop_value to the expected roll_value.
+    &quot;&quot;&quot;
+    # If no rolls so far, typically you&#39;d roll
+    if n == 0:
+        return &quot;roll&quot;
+    
+    stop_value = S / n
+    roll_value = sum(V(S + x, n + 1) for x in range(1,7)) / 6.0
+    
+    return &quot;stop&quot; if stop_value &gt;= roll_value else &quot;roll&quot;
+
+def main():
+    # First, let&#39;s just compute the &quot;game value&quot; if you start from scratch
+    # by rolling once. (You could also define V(0,0) in some manner.)
+    ev_start = sum(V(x, 1) for x in range(1, 7)) / 6.0
+    print(f&quot;Estimated game value if starting fresh (roll #1) = {ev_start:.4f}&quot;)
+    
+    # Prepare lists to store (n, average) for plotting
+    n_list = []
+    avg_list = []
+    
+    # ---------------------------
+    # Find the smallest S that triggers &#39;stop&#39; for each n
+    # ---------------------------
+    for n in range(1, N_MAX):
+        min_S_for_stop = None
+        # Minimum sum for n rolls is n, maximum is 6n
+        for S_val in range(n, 6*n + 1):
+            if recommend_action(S_val, n) == &quot;stop&quot;:
+                min_S_for_stop = S_val
+                break
+        
+        if min_S_for_stop is not None:
+            avg = min_S_for_stop / n
+            n_list.append(n)
+            avg_list.append(avg)
+            if n &lt; 11:
+                print(f&quot;n={n:2d}: smallest S that triggers &#39;stop&#39; is {min_S_for_stop} (avg={avg:.3f})&quot;)
+    
+    # ---------------------------
+    # Plot the results
+    # ---------------------------
+    plt.figure(figsize=(8, 6))
+    plt.plot(n_list, avg_list, &#39;o-&#39;, label=&quot;Smallest Average Triggering Stop&quot;)
+    plt.xlabel(&quot;n (number of rolls)&quot;)
+    plt.ylabel(&quot;S / n (smallest average that triggers stop)&quot;)
+    plt.title(&quot;Threshold Averages Triggering &#39;Stop&#39; by Number of Rolls&quot;)
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre>
+<pre><code>## Estimated game value if starting fresh (roll #1) = 4.4366
+## n= 1: smallest S that triggers &#39;stop&#39; is 5 (avg=5.000)
+## n= 2: smallest S that triggers &#39;stop&#39; is 9 (avg=4.500)
+## n= 3: smallest S that triggers &#39;stop&#39; is 13 (avg=4.333)
+## n= 4: smallest S that triggers &#39;stop&#39; is 16 (avg=4.000)
+## n= 5: smallest S that triggers &#39;stop&#39; is 20 (avg=4.000)
+## n= 6: smallest S that triggers &#39;stop&#39; is 24 (avg=4.000)
+## n= 7: smallest S that triggers &#39;stop&#39; is 28 (avg=4.000)
+## n= 8: smallest S that triggers &#39;stop&#39; is 32 (avg=4.000)
+## n= 9: smallest S that triggers &#39;stop&#39; is 35 (avg=3.889)
+## n=10: smallest S that triggers &#39;stop&#39; is 39 (avg=3.900)</code></pre>
+<p><img src="/Blog/RollingAverage_files/figure-html/unnamed-chunk-3-1.png" width="768" />
+This says that (i) the estimated value of the game is approximately <span class="math inline">\(4.44\)</span>, and (ii) the lowest average required for “stop” to be the right decision decreases from 5 on the first roll, to <span class="math inline">\(4.5\)</span> on the second, to <span class="math inline">\(3.9\)</span> on the tenth, to 3.5 as the number of rolls approaches <span class="math inline">\(N_{MAX}\)</span>.</p>
+</div>
+<div id="take-home-messages" class="section level1">
+<h1>Take Home Messages</h1>
+<ol style="list-style-type: decimal">
+<li>Although tools like ChatGPT o1 are amazing in many ways, they still produce very wrong answers on simple logic and probability puzzles.</li>
+<li>These tools are quite useful for writing code (above, the code appears to be correct, even though the logical conclusions reached by GPT were not).</li>
+<li>Dynamic programming is cool.</li>
+<li>Although the “stop over 3.5” strategy is not optimal, it is not too far off (average reward of 4.37 instead of 4.44 for optimal).</li>
+<li>Even an omniscient player who sees the future can only get approximately 4.56</li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

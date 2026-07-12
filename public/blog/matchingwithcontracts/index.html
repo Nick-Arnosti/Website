@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>When Do Stable Matchings Exist? | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>When Do Stable Matchings Exist?</b></span></h1>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2026/07/05</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>I just attended MATCHUP 2026 in Paris. There, I learned of the paper “<a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7077278">Matching with Attributes</a>” by Aytek Erdil and Battal Dogan (also accepted to EC 2026). This paper gives a creative and satisfying resolution to a longstanding research question: in many-to-one matching with contracts (for concreteness of language, imagine matching doctors to hospitals), what are minimal conditions on hospital choice functions that ensure the existence of a stable matching?</p>
+<p><strong>Warning.</strong> This is a fairly technical topic. I have not written papers in this area, but I am a fairly informed consumer of this line of research. I will try to keep this post somewhat light, but if you don’t already know the matching with contracts model of <span class="citation">Hatfield and Milgrom (<a href="#ref-hatfield-milgrom_2005">2005</a>)</span>, this is probably not a post for you.</p>
+<div id="background-and-prior-work" class="section level1">
+<h1>Background and Prior Work</h1>
+<p>Let’s revisit the definition of substitutability.</p>
+<ul>
+<li>A choice function is <strong>substitutable</strong> if, whenever a contract <span class="math inline">\(c\)</span> is chosen from a set of contracts <span class="math inline">\(C\)</span>, it is also chosen from any subset <span class="math inline">\(C&#39; \subseteq C\)</span> that contains <span class="math inline">\(c\)</span>.</li>
+</ul>
+<p>One way to think about this (which I use when explaining the concept to my students) is that this formalizes the idea that “more competition is bad news for existing contracts (doctors)”: adding new contracts (doctors) to the set of options never causes a previously-rejected contract (doctor) to be chosen.</p>
+<p>In a model without contracts (meaning that the terms are fully determined by the (doctor,hospital) pair), substitutability is sufficient<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> and also necessary<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> to ensure existence of a stable matching.</p>
+<p>When you introduce contracts – meaning multiple different terms that a given doctor and hospital could agree to – <span class="citation">Hatfield and Milgrom (<a href="#ref-hatfield-milgrom_2005">2005</a>)</span> show that substitutability remains sufficient. They also claim incorrectly that this condition is necessary. <span class="citation">Hatfield and Kojima (<a href="#ref-hatfield-kojima_2008">2008</a>)</span> point out the error, and identify a weaker condition (which they call “weak substitutes”) which is in fact necessary.</p>
+<ul>
+<li>A choice function is <strong>weakly substitutable</strong> if it is substitutable when restricted to contract sets <span class="math inline">\(C\)</span> that include at most one contract for each doctor.</li>
+</ul>
+<p>Follow-up work has identified settings where substitutability is not satisfied and yet a stable matching is guaranteed to exist, and has worked to close the gap between the sufficient condition (subtitutability) and the necessary one (weak substitutability).</p>
+<ul>
+<li><em>Unilateral substitutability</em> and <em>bilateral substitutability</em> <span class="citation">(<a href="#ref-hatfield-kojima_2010">Hatfield and Kojima 2010</a>)</span></li>
+<li><em>Hidden substitutability/substitutable completability</em> <span class="citation">(<a href="#ref-hatfield-kominers_2019">Hatfield and Kominers 2019</a>)</span></li>
+<li><em>Observable substitutability</em> <span class="citation">(<a href="#ref-hatfield-kominers-westkamp_2021">Hatfield, Kominers, and Westkamp 2021</a>)</span></li>
+</ul>
+<p>I won’t define these, but the point is that the literature was fairly messy, with many similar but subtly different (and increasingly technical) definitions. The first several of these conditions were sufficient but not necessary for existence. Observable substitutability is necessary for the existence of a stable <em>and strategy-proof</em> mechanism, but only sufficient in the presence of another complex condition which the authors called “non-manipulable via contractual terms.”</p>
+</div>
+<div id="the-simple-message-from-this-paper" class="section level1">
+<h1>The Simple Message From This Paper</h1>
+<p>The message from <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> is “All these definitions are not really useful. In practice, the simpler and weaker condition of weak substitutability is sufficient.” What a breath of fresh air! They spared us from having to dive into the details of these other conditions.</p>
+<p>But wait, isn’t this too good to be true? After all, <span class="citation">Hatfield and Kojima (<a href="#ref-hatfield-kojima_2008">2008</a>)</span> provide an example showing that weak substitutes is <em>not</em> sufficient for existence of a stable matching. <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> make one key innovation/modeling choice in order to circumvent this type of bad example. Hospital preferences must be defined, not only on the applicants who happened to exist this year, but also on for a wide range of hypothetical applicants who <em>could</em> have been present in the market.</p>
+<p>Going into more detail on this point, past work assumed a finite set of doctors <span class="math inline">\(D\)</span>, and hospital choice functions defined on subsets of <span class="math inline">\(D\)</span>. <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> observe that in practice, choice functions must be specified before the exact set of available doctors is known, and must be able to be applied to a range of possible markets. To model this, they assume an infinite space of potential doctor types <span class="math inline">\(\Theta\)</span>, and that choice functions are defined on finite subsets <span class="math inline">\(D \subseteq \Theta\)</span>. Weak substitutability for <em>all potential markets</em> imposes more structure on preferences than weak substitutability for <em>only a single market</em>.</p>
+<p>On its own, this isn’t enough: we could simply take the bad example from <span class="citation">Hatfield and Kojima (<a href="#ref-hatfield-kojima_2008">2008</a>)</span>, and add an infinite set of unnacceptable (irrelevant) doctors to make <span class="math inline">\(\Theta\)</span>. So they also require that each hospital’s choice function satisfy a “density” condition, which means that for each set of doctors <span class="math inline">\(D\)</span> and each doctor <span class="math inline">\(d \in D\)</span>, there exists a doctor <span class="math inline">\(d&#39; \in \Theta \backslash D\)</span> that the hospital considers “equivalent” to <span class="math inline">\(d\)</span> in the context of <span class="math inline">\(D\)</span>. This means that if we start with any two sets of contracts <span class="math inline">\(Y\)</span>, <span class="math inline">\(Z\)</span> involving doctors from <span class="math inline">\(D\)</span> that include at most one contract per doctor, and replace a specific contract involving <span class="math inline">\(d\)</span> with the corresponding contact involving <span class="math inline">\(d&#39;\)</span>, then we haven’t changed how the hospital ranks the sets.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Density is immediately implied if doctors can be represented in continuous type space, with hospital utilities continuous in each doctor’s type.</p>
+<p>The main result of <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> is that if each hospital has dense and weakly substitutable preferences, then a stable matching exists! In other words, dense substitutable preferences impose enough structure to eliminate the counter-examples observed in finite markets by prior work. As the authors write,<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<blockquote>
+<p>Denseness imposes coherence of preferences across market realizations, which in turn disciplines the preference rankings that can arise in any given realization. As a result, ad hoc constructions tailored to a single realization may be incompatible with attribute-based preferences. As such, our result provides a formal sense in which these constructions are not economically meaningful when firms’ preferences are understood as being driven by workers’ attributes.</p>
+</blockquote>
+<p>We’ve probably all seen (in various domains) counter-examples that feel “unnatural” or “contrived.” <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> have found a really nice way to formalize this idea and conclude “these examples cannot arise if preferences are required to behave well across a wide range of potential applicant pools.”</p>
+<p>Their paper also provides an analogous result if we want to ensure the existence of a stable and <em>strategy-proof</em> mechanism. Conventionally, this is ensured by assuming that in addition to substitutability, hospital choice functions satisfy a <strong>size monotonocity</strong> property (called the <strong>law of aggregate demand</strong> by <span class="citation">Hatfield and Milgrom (<a href="#ref-hatfield-milgrom_2005">2005</a>)</span>), which says that when new contracts become available, the set of selected contracts never shrinks. <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> show that when hospital preferences are dense, a weaker version of this (which holds only on sets of contracts that include at most one contract for each doctor) is sufficient (alongside weak substitutability) to ensure existence of a stable and strategy-proof mechanism.</p>
+</div>
+<div id="what-i-like-about-this-paper" class="section level1">
+<h1>What I Like About This Paper</h1>
+<ol style="list-style-type: decimal">
+<li><strong>The topic is foundational.</strong> Matching with contracts is arises in many applications, and there have been a long line of papers proposing subtle variations on substitutability, which seek (among other things) to explain why stable outcomes exist in specific applications.</li>
+<li><strong>The approach is creative</strong>, and convincing (to me). It takes some imagination to go beyond the standard approach of defining choice functions on a single finite set of doctors. At the same time, it is clear that in practice, procedures are defined in advance of knowing the exact set of applicants, and must function for any realization. Furthermore, there are many potential “nearly interchangeable” applicants. The authors’ definition of dense preferences seems like a good way to capture these observations.</li>
+<li><strong>The message is simple.</strong> It cleans up a very complex and technical line of research by arguing that much simpler conditions (weak substitutability and weak size monotonicity) are sufficient in any practical scenario.</li>
+</ol>
+<!--
+
+Some background: 
+
+* A choice function satisfies *size monotonicity* (or the law of aggregate demand) if expanding the set of available options weakly increases the number of accepted contracts: $C' \subseteq C \Rightarrow |Ch(C')| \le |Ch(C)|$.
+
+* A choice function satisfies *weak size monotonicity* if the size monotonicity condition on contract sets $C$ that include at most one contract for each doctor.
+
+* We say that property $X$ is sufficient for existence of a stable mechanism if, whenever all choice functions satisfy property $X$, then a stable matching is guaranteed to exists. 
+
+* We say that property $X$ is necessary for existence of a stable mechanism if, for any choice function that does not satisfy $X$, there exist choice functions for the remaining hospitals that do satisfy $X$, and preferences for the doctors, such that the resulting market has no stable matching.
+
+
+The key innovation is that they require the choice functions to be defined not only on the set of doctors $D$ that actually exist in the market, but also on *any* finite subset of an infinite set of *possible doctor types* $\mathcal{D}$.
+
+
+
+> The literature has made gradual progress toward narrowing the gap between substitutes, which is a sufficient condition (Hatfield and Milgrom, 2005), and weak substitutes, which is a necessary condition (Hatfield and Kojima, 2008), for guaranteeing the existence of a stable allocation. Yet a characterization has remained elusive.
+
+-->
+<style>
+#refs .csl-entry {
+  margin-bottom: 1.25em;
+}
+</style>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-aygun-sonmez_2013" class="csl-entry">
+Aygün, Orhan, and Tayfun Sönmez. 2013. <span>“Matching with Contracts: Comment.”</span> <em>American Economic Review</em> 103 (5): 2050–51. <a href="https://doi.org/10.1257/aer.103.5.2050">https://doi.org/10.1257/aer.103.5.2050</a>.
+</div>
+<div id="ref-erdil-dogan_2026" class="csl-entry">
+Erdil, Aytek, and Battal Doğan. 2026. <span>“Matching with Attributes.”</span> <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7077278">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7077278</a>.
+</div>
+<div id="ref-hatfield-kojima_2008" class="csl-entry">
+Hatfield, John William, and Fuhito Kojima. 2008. <span>“Matching with Contracts: Comment.”</span> <em>American Economic Review</em> 98 (3): 1189–94. <a href="https://doi.org/10.1257/aer.98.3.1189">https://doi.org/10.1257/aer.98.3.1189</a>.
+</div>
+<div id="ref-hatfield-kojima_2010" class="csl-entry">
+———. 2010. <span>“Substitutes and Stability for Matching with Contracts.”</span> <em>Journal of Economic Theory</em> 145 (5): 1704–23. <a href="https://doi.org/10.1016/j.jet.2010.01.007">https://doi.org/10.1016/j.jet.2010.01.007</a>.
+</div>
+<div id="ref-hatfield-kominers_2019" class="csl-entry">
+Hatfield, John William, and Scott Duke Kominers. 2019. <span>“Hidden Substitutes.”</span> <a href="https://www.jwhatfield.com/s/Hidden-Substitutes.pdf">https://www.jwhatfield.com/s/Hidden-Substitutes.pdf</a>.
+</div>
+<div id="ref-hatfield-kominers-westkamp_2021" class="csl-entry">
+Hatfield, John William, Scott Duke Kominers, and Alexander Westkamp. 2021. <span>“Stability, Strategy-Proofness, and Cumulative Offer Mechanisms.”</span> <em>The Review of Economic Studies</em> 88 (3): 1457–1502. <a href="https://doi.org/10.1093/restud/rdaa052">https://doi.org/10.1093/restud/rdaa052</a>.
+</div>
+<div id="ref-hatfield-milgrom_2005" class="csl-entry">
+Hatfield, John William, and Paul R. Milgrom. 2005. <span>“Matching with Contracts.”</span> <em>American Economic Review</em> 95 (4): 913–35. <a href="https://doi.org/10.1257/0002828054825466">https://doi.org/10.1257/0002828054825466</a>.
+</div>
+</div>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>The meaning of “sufficient” is that if all hospital preferences are substitutable, then a stable matching exists. In the literature, there is some inconsistency about whether the primitives are specified as choice functions or as a ranking of sets of contracts. In the former case, a property known as <em>consistency</em> or <em>irrelevance of rejected contracts</em> is also needed – see <span class="citation">Aygün and Sönmez (<a href="#ref-aygun-sonmez_2013">2013</a>)</span>. In the latter case, this property is automatically satisfied. <span class="citation">Erdil and Doğan (<a href="#ref-erdil-dogan_2026">2026</a>)</span> assume the latter convention, and I will do the same in this post to avoid having to repeatedly mention consistency.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>The meaning of “necessary” is slightly subtle as even when some hospitals have non-substitutable choice functions, a stable matching could exist. In this post, I use it to mean that for any hospital preference that is not substitutable, there exist substitutable preferences for everyone else such that no stable matching exists. This is sometimes referred to as a “maximal domain” result and has become the standard notion of necessity in the literature.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>The choice of <span class="math inline">\(d&#39;\)</span> can depend on <span class="math inline">\(D\)</span> and on the individual hospital, so that two doctors viewed as similar by one hospital need not be viewed as similar by another.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>The quote is actually from an earlier working paper version and does not appear in the latest version, but I think it offers a nice perspective.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

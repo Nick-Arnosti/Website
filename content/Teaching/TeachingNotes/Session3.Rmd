@@ -1,0 +1,42 @@
+---
+title: 'Session 3: Fairness'
+date: "2022-01-26"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Lesson Recap
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "xxx")
+```
+
+# Materials
+
+[Lecture Slides](/IE5080/Session3/Session3.pdf) (pptx version available to instructors upon request).
+
+
+[Homework](/IE5080/Session3/Session3_Homework.pdf) (solutions available to instructors upon request).
+
+
+**References**:
+
+[An Exact Analysis of Stable Allocation](/IE5080/Session3/Knuth_1995.pdf)
+
+[Random Serial Dictatorship and the Core from Random Endowments in House Allocation Problems](/IE5080/Session3/Abdulkadiroglu-Sonmez_1998.pdf)
+
+[A New Solution to the Random Assignment Problem](/IE5080/Session3/Bogolmanaia-Moulin_2001.pdf)
+
+[House Allocation with Existing Tenants: An Equivalence](/IE5080/Session3/Sonmez-Unver_2005.pdf)
+
+[Fair and Efficient Discrete Resource Allocation: A Market Approach](/IE5080/Session3/Ekici_2011.pdf)
+
+[Equivalence Results in the Allocation of Indivisible Objects: a Unified View](/IE5080/Session3/Lee-Sethuraman_2011.pdf)
+
+[A General Equivalence Theorem for Allocation of Indivisible Objects](/IE5080/Session3/Carroll_2013.pdf)
+
+[Random Serial Dictatorship: The One and Only](/IE5080/Session3/Bade_2019)
+
+[A Theory of Simplicity in Games and Mechanism Design](/IE5080/Session3/Pycia-Troyan_2021)
+

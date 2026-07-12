@@ -1,0 +1,73 @@
+---
+author: Nick Arnosti
+title: Optimizing for Students
+tags:
+  Stable Matching
+categories:
+  Market Design
+date: "2020-08-26"
+output:
+  blogdown::html_page
+---
+
+Increasingly, priorities viewed as design lever. Only two problems: not clear what objective is, and not clear how to achieve it.
+
+This post will go through a very stylized set of results.
+
+#Designing DA Priorities
+
+Consider a market with $n$ students and $n$ schools, each with a single seat. We are going to assign students using the student-proposing deferred acceptance algorithm. The student preference profile $P$ is drawn from known distribution $D$. We get to design the priorities $L$ before observing $P$. Our goal is to choose $L$ to minimize (or maximize) the expected sum of students' ranks for their assignment, which we denote $R(P,L)$.
+
+\begin{equation} \overline{R}(L) = \mathbb{E}_{P \sim D} [R(P,L)] \end{equation}
+
+\begin{equation} \min_{L}\,\,\overline{R}(L) = \min_{L} \mathbb{E}_{P \sim D} [R(P,L)].\end{equation}
+
+
+Some possibilities: 
+
+* All schools share a common ranking of students.
+* Schools hold independent lotteries.
+* Each school has a different first choice, and school rankings are all cyclic permutations of each other. (One school ranks $A > B > C ... > Z$, another ranks $B > C > ... > Z > A$, a third ranks $C > ... > Z > A > B$, and so on).
+* Half of schools share a ranking of students, and half reverse this ranking.
+
+
+
+
+
+We know student preferences are uniformly random. We want to design complete priorities to help students. 
+
+
+With $n$ students and $n$ schools, Knuth (1976,1997) shows that for **any** priorities, students average at most $H_n - 1 \leq \log(n)$ rejections. He conjectures that average rank is minimized by having identical rankings across all schools. In this case, students still average more than $H_n - 2$ rejections. If identical priorities are optimal with fewer students than seats, then they are also optimal with more -- can always choose so that additional students don't hurt the existing ones. (Wait, I might be able to prove this by induction!)
+
+Knoblauch (2009) partially proves this -- in particular, for any 
+
+In other words, carefully choosing priorities can change students' average rank by at most $1$ (priorities don't matter much).
+
+#Moving to Other Mechanisms
+
+Equivalence between TTC and RSD. Holds for any symmetric preference profile. Suggests (oddly) that TTC weakly worse than DA, but also that RSD is optimal (in line with Knuth's conjecture).
+
+#Peeking at Preferences
+
+Mention Nikzad result, conjecture. Identify open question: can this be done in IC way?
+
+e
+#Varying Number of Students
+
+The preceding analysis assumed an equal number of students and schools (with one seat per school). Extending it to the case where schools exceed students is straightforward: we get that with $m < n$ students with uniform random preferences, for any priority rule, the average rank is at most 
+\[\frac{1}{m}\sum_{i =0}^{m-1} \frac{n}{n-i} = \frac{n}{m}( H_n-H_{n-m}) \approx \frac{n}{m} \log\left(\frac{n}{n-m}\,\,\right).\]
+
+Meanwhile, for RSD, the total number of proposals is 
+\[\frac{1}{m}\sum_{i =0}^{m-1} \frac{n+1}{n-i+1} = \frac{n+1}{m}( H_{n+1}-H_{n-m+1}).\]
+This looks like Bulow-Klemperer! Adding one school is better than optimizing priorities. Also implies difference is at most one.as
+
+
+
+
+
+
+ 
+ 
+More students (once we define) -- get some striking result!
+
+Then we can force our desired matching. This results in those who are matched getting (n+1)/2 rank on average: (n-1)/2 rejections, where n = number of schools.

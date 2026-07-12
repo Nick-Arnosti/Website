@@ -1,0 +1,142 @@
+---
+title: 'Lung Allocation'
+date: '2025-10-02'
+author: Nick Arnosti
+
+draft: true
+nurmarkdownumber_sections: true
+---
+
+\usepackage{amsthm}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+
+```{r}
+library(data.table)
+initial_patients = c()
+arriving_patients = c(1,2,3)
+donor_data = data.table(match_id = c(7,8,9,10))
+patient_data = data.table(px_id=arriving_patients,n_accept=c(1,0,1),match_runs=c(4,0,2))
+```
+
+Let's look at what happened. 
+
+In this time horizon, we had 
+```{r} 
+length(arriving_patients)
+``` 
+arriving patients and 
+```{r} 
+length(donor_data$match_id)
+```
+arriving donors.
+
+Of our arriving patients, 
+```{r} 
+sum(patient_data$n_accept > 0) 
+```
+accepted at least one offer. 
+
+
+# Unmatchable Agents
+
+There are
+```{r} 
+unmatchable_patients = patient_data[match_runs==0,px_id] 
+length(unmatchable_patients)
+```
+patients in the data set who never receive a sequence number. That is, these patients are screened out of every match_run that occurs while they are present. 
+
+Of these, 
+```{r} 
+sum(unmatchable_patients %in% initial_patients)
+```
+are patients who were waiting at the beginning of the window.
+
+
+# Measuring Organ Availability and Prioritizing Hard to Match Patients
+
+It is generally acknowledged that some patients are harder to match, due to concerns such as blood type, tissue antibodies, and height. As a result, organ policies often give "priority" to certain groups to try to "level the playing field" and compensate for their disadvantage. For example, for lungs, patients with type $O$ blood are given 5 priority points, and for kidneys, patients with high CPRA are prioritized (how?).
+
+The goal of this note is to examine whether these policies help to make the allocation more "fair." To answer this question, we must propose a definition of fairness. In addition, we propose a measure of organ availability.
+
+We first consider a static model with a fixed population of patients $P$ and donors $D$. There is an edge from $p$ to $d$ if that match is feasible (this edge could consider both medical compatibility and temporal overlap). We denote the set of edges by $E$.
+
+One natural measure of how many organs are available to a patient $p$ is the number of outgoing edges. (In a dynamic model, this would correspond to the rate at which compatible organs arrive to the market.) To see why this is a flawed metric, consider the following example.
+
+**Example 1**. *There are $75$ patients with blood type $A$ and $25$ with blood type $B$. There are $65$ donors with blood type $A$ and $35$ with blood type $B$.*
+
+In this example, the type $A$ patients are compatible with more organs than the type $B$ patients are, but the type $B$ patients should have no trouble receiving a transplant (there is a surplus of type $B$ donors) whereas some type $A$ patients will go without. In other words, organs will be more "available" to a type $B$ patient.
+
+The problem with only looking at number of outgoing edges is that it does not consider the competition from other patients (i.e. how many patients are seeking the same organs). 
+
+I propose the following measure of organ availability.
+
+\begin{align}
+\max \sum_{p \in P} m_p \log(q_p) \\
+\sum_{d \in D} x_{pd} & = q_p \nonumber \\
+\sum_{p \in P}m_p x_{pd} & \le n_d \nonumber \\
+x_{pd} & \le {\bf 1}((p,d) \in E) \nonumber \\
+q_p & \le 1 \nonumber
+\end{align}
+*Baseline, $m_p = n_d = 1$. But this also works if $p$ and $d$ represent types of patients and donors, and $m_p$ and $n_d$ represent the number of patients or donors of these types.*
+
+::: {.theorem #label_name name="Theorem Name"}
+Let $x^*$ be an optimal solution. Then there exist costs $c_d$ that support $x^*$ as a competitive equilibrium from equal incomes.
+:::
+
+There may be some patients with no compatible donors, for whom $q_p$ is necessarily zero. We can remove these patients from the objective function above before solving the optimization problem.
+
+The quantity $q_p$ will be our measure of "availability" for patient $p$. In particular, for Example 1 with $m_A = 75$, $m_B = 25$, $n_A = 65$ and $n_B = 35$, we would have $q_A = 65/75$ and $q_B = 1$. More generally, $q_A < q_B$ will imply $m_A/n_A < m_B/n_B$.
+
+Let's consider a different example.
+
+**Example 1**. *There are $60$ patients with blood type $O$ and $40$ with blood type $A$. There are $60$ donors with blood type $O$ and $30$ with blood type $A$.*
+
+In this example, note that if we naively compute the ratios $m_O/n_O$ and $m_A/n_A$, we see that the former is larger. So we might expect that organs are more available to $O$ patients. But of course this ignores that $O$ organs can also be given to $A$ patients. Since the set of organs available to $A$ patients is a superset of those available to $O$ patients, we might argue that organs are more available to $A$ patients. But if we solve the optimization problem above, we get $q_O = q_A = 0.9$, in an allocation where 6 $O$ organs are given to $A$ patients. More generally, if we change the numbers in Example 2, we will see that so long as $m_O/n_O \ge m_A/n_A$, $q_O$ will be equal to $q_A$. If $m_O/n_O < m_A/n_A$ and $m_O/n_O < 1$, then we will have $q_O < q_A$.
+
+
+The following gives our definition of what it means for an allocation to be fairer than another.
+::: {.definition #label_name name="Definition Name"}
+Given $q \in [0,1]^P$, let $q_{(k)}$ denote the $k^{th}$ smallest value of $q$. We say that $q$ **Lorentz Dominates** $q'$ if for all $k \in \{1, \ldots, |P|\}$, we have $\sum_{j = 1}^k q_{(j)} \ge \sum_{j = 1}^k q'_{(j)}$.
+:::
+
+
+
+Note that this intuitively captures both fairness and efficiency: if $q$ Lorentz dominates $q'$, then $q$ must allocate at least as much in aggregate as $q'$. In particular, any Pareto improvement upon $q'$ will Lorentz dominate $q'$. In this context, I think this is appropriate: nobody is suggesting that we waste certain organs that could go to more advantaged patients in order to make the allocation more "fair". 
+
+::: {.theorem #label_name name="Theorem Name"}
+Let $x$ be feasible for \eqref{eq:}, and let $x^*$ be optimal for \eqref{eq:}. Then $q(x^*)$ Lorentz dominates $q(x)$.
+:::
+(Note that $x^*$ may not be unique, but $q(x^*)$ is unique.)
+
+**Example 3** (Non-uniqueness). There are 60 $O$, 30 $A$, 10 $AB$ patients, and 60 $O$, 27 $A$ and 3 $AB$ donors. Then one optimal solution gives 6 $O$ organs to AB patients. However, any solution of the form $X_{O-O} = 54$, $X_{AB-AB} = 3$, $X_{AB-O} = k$, $X_{AB-O} = k$, $X_{AB-A} = 6-k$, $X_{A-O} = 6-k$, $X_{A-A} = 21+k$ is optimal. (90% of each group is matched.)
+
+
+We can now do a calibrated exercise where we choose the arrival rates of patients and organs based on the data. If we include all arrivals, we simply get $q_T = 1$ for all blood types $T$. Therefore, we will include only arrivals that were ultimately accepted by some patient. In this case, we see very few $AB$ donors, but nevertheless, all agents have the same $q$. 
+
+
+**Future Work** Incorporate agent preferences for being matched sooner? Look at outcomes in some sort of serial dictatorship (in organ arrival order) or DA?
+
+Could we look at acceptance patterns (correlation between height of donor and height of patient)? Use to come up with a model of which height ranges can accept each other (based on horseshoe shape).
+
+
+# Dynamic Matching: the surprising effectiveness of First Come First Served
+ 
+Consider a dynamic model where paients of type $p$ arrive according to a Poisson process at rate $\lambda_p$ and abandon after a sojourn time that is drawn from distribution $F$. Donors of type $d$ arrive according to a Poisson process at rate $\lambda_d$, and must be matched immediately or discarded. There is a set of edges $E$ which indicates which donor types can be allocated to each patient type.
+
+A first come first served processing rule always gives an organ to the patient who has waited longest, among those who are compatible with it.
+
+For $p\in P$ and $d \in D$, define $A_p(t)$ to be the number of patients of type $p$ who arrive in the interval $[0,t]$ and define $N_{pd}(t)$ to be the number of transplants between a patient of type $p$ and a donor of type $d$ on this interval.  Define $x^{FCFS}_{pd}(t) = N_{pd}(t)/A_p(t)$.
+
+::: {.lemma #label_name name="Lemma Name"}
+For any arrival rates $\lambda$, edges $E$, and sojourn time distribution $F$, $x^{FCFS}_{pd}(t)$ converges almost surely to $\overline{x}^{FCFS}_{pd}$. *Of course, $\overline{x}$ depends on $\lambda$ and $E$, but I suspect that it does not depend on $F$.*
+:::
+
+
+::: {.theorem #label_name name="Theorem Name"}
+Fix $E$. As $n \rightarrow \infty$, $\overline{x}^{FCFS}_{pd}(n \lambda)$ converges to an optimal solution to \eqref{eq:}.
+:::
+
+Note that this holds for any $\lambda$ and any $E$ and any $F$.
+

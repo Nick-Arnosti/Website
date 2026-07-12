@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Airlines on b</title>
+    <link>/tags/airlines/</link>
+    <description>Recent content in Airlines on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 14 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/airlines/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Are Cramped Quarters on Planes a Safety Hazard?</title>
+      <link>/blog/seatpitch/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/seatpitch/</guid>
+      <description>Continuing on a theme from yesterday’s post, let’s stick with the airline industry.
+Many people are familiar with the fact that legroom in airplane seats has been declining over the years. Some people are upset about this fact. A few even sued the Federal Aviation Administration, arguing that the cramped quarters increase the risk during an emergency evacuation. Setting aside that I generally believe that emergency safety measures on planes are not cost-effective (emergencies are rare, and emergencies in which life vests, safety slides, etc are actually helpful appear to be almost non-existent), the argument sounds logical – doesn’t it take longer to get in and out of a cramped seat than a spacious one?</description>
+    </item>
+    
+    <item>
+      <title>Biometric Scans at Airports: Where is the Bottleneck?</title>
+      <link>/blog/biometricscans/</link>
+      <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/biometricscans/</guid>
+      <description>In the past year, Delta has rolled out biometric boarding for international flights from Atlanta, Salt Lake City, and my home airport of Minneapolis/Saint Paul. The idea is that rather than having to repeatedly scan your boarding pass and passport, facial recognition software will identify you.1 Delta claims that this can reduce the time to scan each passenger by several seconds, shaving up to 9 minutes from the boarding process.</description>
+    </item>
+    
+  </channel>
+</rss>

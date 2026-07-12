@@ -1,0 +1,52 @@
+---
+title: 'Quotas and Reserves'
+date: ''
+author: Nick Arnosti
+draft: true
+tags:
+  
+categories:
+  Math and Statistics
+---
+
+
+**Conjecture 1** Given a reserve graph G, there exist a set of upper quotas $Q$ such that the feasible sets associated with $Q$ are exactly $F^{hard}(G)$.
+
+*Proof Sketch.* For each set of applicants $S \subseteq A$, define a quota category to be $S$, and define the associated upper quota to be $|N(S)|$. 
+
+Suppose we have a feasible selection $S$. This means that there is a matching of $G$ that matches everyone in $S$. But any matching in $G$ must satisfy the constraints above.
+
+Conversely, suppose we have a selection $S$ that complies with all quotas. We must show that there is a matching of $G$ that matches all of $S$.
+
+
+Something interesting about this is that hard reserves always induce a matroid, so this quota structure must also induce a matroid (even though categories are not nested).
+
+The following example shows that we can't do the reverse: reserves are less expressive than quotas.
+
+**Example 1** There are three disjoint traits, and an upper quota of 1 on each, as well as a global upper quota of 2 on all applicants. There are two applicants with each of the disjoint traits. Then we can take any of the $6$ choose $2$ = 15 pairs of applicants, *except* the three pairs where the applicants share a trait. This cannot be replicated with two reserved positions. 
+
+To see this, suppose that 1, 2 share a trait, as do 3 and 4, and 5 and 6. Because the selection \{1, 2\} is infeasible, these agents must both be eligible for a single (shared) position. Same for \{3, 4\} and \{5, 6\}. But then however we choose this shared position, we will rule out some allowed selections. For example, if $1-4$ are all eligible for first position and $5$ and $6$ for second position, then we have made \{1, 3\} infeasible.
+
+**Example 2.** There is a lower quota of 1 on traits $A$ and $B$, and a gloabl upper quota of 2. Applicant 0 has neither trait, applicant 1 has trait $A$, applicant 2 has trait $B$, and applicant 3 has traits $A$ and $B$. Then the feasible selections are $\{0,3\}, \{1,2\}, \{1,3\}, \{2,3\}$. This cannot be replicated with two reserved positions: because $\{1,2\}$ is feasible, we must have that 1 is eligible for $p_1$ and 2 is eligible for $p_2$. Because $\{0,3\}$ is feasible, we must have that $0$ is eligible for some trait. Thus, either $\{0,1\}$ or $\{0,2\}$ must be feasible.
+
+**Conjecture 2** Suppose that (i) quota categories form a hierarchy, and (ii) the only upper quota is a global quota. Then there exists a reserve graph G such that the feasible sets under quotas are exactly the same as the  $F^{hard}(G)$. 
+
+This is **FALSE**. $F^{hard}(G)$ includes the empty set, which may not be feasible. I think I mean that the maximal elements of the feasible sets are equal (or equivalently, the downward closure of the feasible sets).
+
+This is still not true, as the feasible sets under quotas may be empty, while for reserves it will not be. Perhaps I want to assume that there is a feasible selection?
+
+*Proof Sketch.* For each category $c$, let $SUB_c$ be the set of categories contained in $c$. For each category $c$, create a number of positions equal to $\max(l_c - \sum_{c' \in SUB_c} l_{c'},0)$, and make applicants in $c$ eligible for these positions.
+
+Suppose we have a selection that satisfies all lower quotas. Then we should be able to match them to positions appropriately by starting with the most specific categories.
+
+Suppose we have a selection that is maximal in the resulting reserve graph...
+
+
+
+**Other Thoughts.**
+
+What guarantees do reserves give you? For a set of applicants $A$, if you have reserved $R_A$ positions for this set, your final selection $S$ will satisfy $|S \cap A| \ge \min(R_A,|A|)$.
+
+Precedence order effects:
+* With minimum quotas, want algorithm to take you early
+* With reserves, want algorithm to take you late

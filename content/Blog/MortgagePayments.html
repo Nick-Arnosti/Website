@@ -1,0 +1,137 @@
+---
+title: "A Simple Formula for Mortgage Payments"
+output: html_document
+date: "2024-04-30"
+---
+
+
+
+<p>Mortgages are confusing! Suppose you wish to borrow money, and pay it back in monthly intallments using a fixed rate mortgage.</p>
+<ul>
+<li>How much will your monthly payment be?</li>
+<li>How much will you pay in interest over the lifetime of the loan?</li>
+<li>If you refinance or move partway through the mortgage, how large will your remaining balance be?</li>
+</ul>
+<p>Even very mathematically inclined people like me often struggle to have any intuition for how the answer to these questions depends on the interest rate and the length of the mortgage.</p>
+<p>This post will introduce a simple yet surprisingly effective and insightful approximation. If you’re good with numbers, this will allow you to start calculating monthly payments as a party trick!</p>
+<div id="the-procedure" class="section level1">
+<h1>The Procedure</h1>
+<p>Here is the procedure: let <span class="math inline">\(B\)</span> be the amount you are borrowing, <span class="math inline">\(R\)</span> be your annual interest rate, and <span class="math inline">\(T\)</span> the number of years that the loan will last.</p>
+<p>The first step is to calculate your monthly payment <em>without</em> interest. This is easy: take the principal <span class="math inline">\(B\)</span>, and divide it by the total number of payments <span class="math inline">\(N = 12T\)</span>. So if you’re borrowing <span class="math inline">\(\$360,000\)</span> over 30 years = 360 months, the monthly payment at a 0% interest rate would be <span class="math inline">\(\$1,000\)</span>.</p>
+<p>So far, so good. But of course, your monthly payment will actually be much higher! We need to account for the interest that you will pay. To do this, we will multiply your interest-free monthly payment by some multiplier <span class="math inline">\(P &gt; 1\)</span>, which is the amount you pay back for every <span class="math inline">\(\$1\)</span> that you borrow.</p>
+<p>We will estimate this quantity as follows:
+<span class="math display">\[\hat{P} =  1 + \frac{RT}{2} + \frac{(RT)^2}{12}.\]</span>
+For example, suppose that your <span class="math inline">\(T = 30\)</span> year mortgage has an <span class="math inline">\(R = 5\%\)</span> interest rate. Then <span class="math inline">\(RT = .05 \times 30 = 1.5\)</span>, and <span class="math inline">\(\hat{P} = 31/15 = 1.9375\)</span>. This says that for each dollar you borrow, you will eventually pay back approximately $1.94.</p>
+<p>From this, we can calculate your monthly payment by simply multiplying <span class="math inline">\(\hat{P}\)</span> by your interest-free payment. In other words,
+<span class="math display">\[\hat{M} = \frac{B\hat{P}}{N} = \frac{B}{12T}\left(1+\frac{RT}{2} + \frac{(RT)^2}{12}\right).\]</span>
+For our running example with a 30-year loan with 5% interest and principal of $360,000, this formula says that my monthly payment will be approximately $1,937.50. An online mortgage calculator gives us the exact answer of <span class="math inline">\(\$1,932.56\)</span>. Not bad!</p>
+<p>Let’s say mortgage rates rise, to 7.5%. Now <span class="math inline">\(RT = 2.25\)</span>, so <span class="math inline">\(\hat{P} = 2.547\)</span>, meaning that you will now have to pay $2.547 for every dollar that you borrowed. Multiply this by <span class="math inline">\(B/N = 1000\)</span>, and we see that our monthly mortgage payment rises to $2,547. This is not far from the exact answer from an online calculator: $2,517.</p>
+<p>We can also use <span class="math inline">\(\hat{P}\)</span> for other purposes. For example, <span class="math inline">\(\hat{P}\)</span> represents $1 of principal, and the remainder is interest. That means that your total interest payment is simply
+<span class="math display">\[ \hat{I} = B(\hat{P}-1) = B\left(\frac{RT}{2} + \frac{(RT)^2}{12}\right).\]</span></p>
+<p>We can also use <span class="math inline">\(\hat{P}\)</span> to produce estimated amortization tables, which tell us how much principal remains after a given number of payments. I show how to do this later in the post.</p>
+</div>
+<div id="where-does-this-approximation-come-from-and-why-does-this-work" class="section level1">
+<h1>Where Does This Approximation Come From and Why Does This Work?</h1>
+<!--One variable has a simple effect: if you double the size of your loan (the "principal" $P$), you also double your monthly payment, your total interest payments, and your remaining balance at any given time.
+
+The effect of the interest rate and loan duration are much less intuitive. -->
+<p>The expression that most mortgage calculator websites use for your monthly payment <span class="math inline">\(M\)</span> is the following:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><span class="math display">\[M = B  \left(\frac{r(1 + r)^N}{(1 + r)^{N}-1}\right) = \frac{B}{N}  \left(\frac{rN}{1-(1 + r)^{-N}}\right) \]</span>
+Here, <span class="math inline">\(r\)</span> is the <em>monthly</em> interest rate (equal to <span class="math inline">\(R/12\)</span>), and <span class="math inline">\(N\)</span> is the total number of payments over the lifetime of the loan (equal to <span class="math inline">\(12 T\)</span>). Note that <span class="math inline">\(rN = RT\)</span>; I will use these quantities interchangeably below.</p>
+<p>The middle expression is what you will see on most websites; the second expression has been rearranged in a way that I think is more helpful for explaining what is going on. For now, I will take this expression for <span class="math inline">\(M\)</span> as given, though eventually I hope to write a follow-up post explaining where it comes from.</p>
+<p>The key quantity to focus on is
+<span class="math display">\[P(r,N) = \frac{rN}{1-(1 + r)^{-N}}.\]</span>
+This gives the exact ratio of your total payments <span class="math inline">\(MN\)</span> to your original loan <span class="math inline">\(B\)</span>. We will apply two approximations to <span class="math inline">\(P\)</span>.</p>
+<p><strong>Approximation 1</strong> <span class="math inline">\(1 - (1+r)^{-N} \approx 1 - e^{-rN}\)</span>, and thus <span class="math inline">\(P(r,N) \approx \tilde{P}(r,N)\)</span>, where
+<span class="math display">\[\tilde{P}(r,N) = \frac{rN}{1-e^{-rN}}\]</span></p>
+<p>This comes from the well-known approximation <span class="math inline">\(1 + r \approx e^{r}\)</span>. Conceptually, if you start a month with a $1 loan, <span class="math inline">\(1 + r\)</span> gives your balance at the end of the month when interest is compounded monthly, and <span class="math inline">\(e^{r}\)</span> gives your balance if interest were compounded continuously.</p>
+<p>Interestingly, Approximation 1 actually works well for <em>any</em> <span class="math inline">\(r\)</span> (not just when <span class="math inline">\(r\)</span> is small). In particular, the relative error <span class="math inline">\(1-\tilde{P}/P\)</span> is at most <span class="math inline">\(1/(3N)\)</span>, <em>uniformly in <span class="math inline">\(r\)</span></em>. (For those interested in a deep dive into this point, see the end of the post.) This means that for a 30 year mortgage, the error in your estimated monthly payments from using <span class="math inline">\(\tilde{P}\)</span> instead of <span class="math inline">\(P\)</span> will be less than <span class="math inline">\(0.1\%\)</span>. Even for a <span class="math inline">\(6\)</span> year mortgage, the error from this approximation is at most <span class="math inline">\(0.5\%\)</span>.</p>
+<p><strong>Important Insight.</strong> While <span class="math inline">\(\tilde{P}\)</span> may not be much easier to calculate than <span class="math inline">\(P\)</span>, it does provide an important insight! Note that <span class="math inline">\(\tilde{P}\)</span> is a function of the <em>single</em> variable <span class="math inline">\(rN = RT\)</span>. This means that if you have two loans with different <span class="math inline">\(r\)</span> and <span class="math inline">\(N\)</span> but the same <span class="math inline">\(rN\)</span>, the total payments over the life of the loan will be almost identical. For example, a 30-year loan at 5%, 20-year loan at 7.5%, and a 15-year loan at 10% will all lead to the same total payment. From this, it follows that the monthly payment for a 15-year loan at 10% will be double the payment for a 30-year loan at 5% (since you’re paying back the same total amount in half the time).</p>
+<p>If <span class="math inline">\(RT \approx 1.59\)</span>, then <span class="math inline">\(\tilde{P} \approx 2\)</span>, so your monthly payment will be roughly double the interest-free rate. This occurs if, for example, you have a 20-year mortgage at an 8% interest rate.</p>
+<p>Now it’s time to further approximate <span class="math inline">\(\tilde{P}\)</span> to come up with the approximation <span class="math inline">\(\hat{P}\)</span> given above.</p>
+<p><strong>Approximation 2</strong> <span class="math inline">\(\frac{rN}{1 - e^{-rN}} \approx 1 + \frac{rN}{2} + \frac{(rN)^2}{12}\)</span>.</p>
+<p>This comes from a standard Taylor expansion around <span class="math inline">\(rN = 0\)</span>. What is especially nice is that the coefficient of the cubic term of the Taylor expansion is zero, so this gives a surprisingly good approximation for most “reasonable” values of <span class="math inline">\(rN = RT\)</span>, as the following plot shows (<span class="math inline">\(\tilde{P}\)</span> shown in bold, <span class="math inline">\(\hat{P}\)</span> as a dashed line).</p>
+<pre class="r"><code>plot(function(x){return(x/(1-exp(-x)))},xlim=c(0,5),xlab=&#39;RT&#39;,ylab=&#39;Total Payments/Principal&#39;,las=1,lwd=2) #\tilde{P}
+plot(function(x){return(x/(1-(1+x/360)^(-360)))},xlim=c(0,5),add=TRUE) #Exact P
+plot(function(x){return(1+x/2+x^2/12)},xlim=c(0,5),add=TRUE,lty=&#39;dashed&#39;) #\hat{P}</code></pre>
+<p><img src="/Blog/MortgagePayments_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Note that our approximation <span class="math inline">\(\hat{P}\)</span> is always an <em>overestimate</em> of <span class="math inline">\(\tilde{P}\)</span>. When <span class="math inline">\(RT\)</span> is small (interest rates are low or the duration of the mortgage is short), the approximation is excellent. Our approximation is within 2% so long as <span class="math inline">\(RT \le 2.6\)</span>. For larger <span class="math inline">\(RT\)</span>, we can use a different approximation: <span class="math inline">\(RT/(1-e^{-RT}) \approx RT\)</span>. This is an <em>underestimate</em> of <span class="math inline">\(\tilde{P}\)</span>. If we use the estimate
+<span class="math display">\[\hat{P}(r,N) = \left \{ \begin{array}{l l} 1 + \frac{rN}{2} + \frac{(rN)^2}{12} &amp; rN &lt; 3.3 \\ rN &amp; rN \ge 3.3 \end{array}\right.\]</span>
+then we will be within 3.7% of <span class="math inline">\(\tilde{P}\)</span>, no matter what the value of <span class="math inline">\(rN\)</span> is, and much closer than that if <span class="math inline">\(rN\)</span> is not too close to <span class="math inline">\(3.3\)</span> (for most loans, <span class="math inline">\(rN &lt; 3.3\)</span>).</p>
+<!--From this, you can calculate how much interest you will pay over the lifetime of the loan. Since you make $N$ payments of $M$ dollars, and all but $P$ of these dollars are interest payments, your total interest paid is 
+$$I = MN - P = P\left( \frac{rN}{1 - (1+r)^{-N}} - 1\right)$$
+
+These expressions are easy enough to put into a calculator, but hard to do in your head or get much intuition from. 
+
+Here are much simpler expressions that are very close approximations to the above:
+$$\hat{I} = P\left(\frac{rN}{2} + \frac{(rN)^2}{12}\right)$$
+Given $\hat{I}$, calculating your monthly payment is easy! Just add your principal and estimated interest, and divide by the total number of payments:
+$$\hat{M} = (P + \hat{I})/N = \frac{P}{N}\left(1 + \frac{rN}{2} + \frac{(rN)^2}{12}\right)$$
+
+The expressions for $\hat{I}$ and $\hat{M}$ depend on your *monthly* interest rate $r$ and your total number of payments $N$, but when people talk about mortgages, they reference the *annual* interest rate $R = 12r$ and the number of *years* on the mortgage $T = N/12$. Note that $rN = RT$.
+
+Let's try these expressions out! Suppose we borrow $P = \$360,000$ at $R = 5\%$ interest over $T = 30$ years. Then $R \times T = 0.05 \times 30 = 1.5$, so $\frac{RT}{2} + \frac{(RT)^2}{12} = 15/16 = 0.9375$. This is the amount of interest that you will pay for every dollar you borrow. Multiply this by $P$ to get that you will pay $\$337,500$ in interest over the lifetime of the loan. Add in your principal, and you will pay a total of $\$697,500$, spread across $N = 360$ payments, so each payment is $\$1,937.50$ Compare this to the exact amount that an online mortgage calculator would produce: $\$1,932.56$. We're within \$5!-->
+<!--In addition to allowing you to estimate your mortgage payments, these formulas provide an interesting insight. Our estimate for your total interest paid depends only the principal $P$ and the product $RT$. In other words, a 30-year loan at 5\%, a 20-year loan at 7.5%, and a 15-year loan at 10% will lead to the same total interest payments, since in all cases $RT = 1.5$. From this, it immediately follows that the monthly payment for a 15-year loan at 10% will be double the payment for a 30-year loan at 5% (since you're paying back the same total amount in half the time).-->
+<!--If $RT >= 1.6$, more than half of your payments are going to interest!-->
+<!--The factor $RT/(1-e^{-RT}) \approx 1 + \frac{RT}{2} + \frac{(RT)^2}{12}$ represents the amount you will pay back for each dollar you borrow (including both principal and interest). $P/N$ gives the amount of each payment if there were no interest, and $PR/12$ is the amount you would pay each month to "tread water" (pay only interest, no principal) -- in other words, your monthly payment for a loan duration of $T = \infty$.-->
+</div>
+<div id="intuition-for-final-formula" class="section level1">
+<h1>Intuition for Final Formula</h1>
+<p>I have provided an algebraic derivation for this approximation but can we find corresponding intuition?</p>
+<p>The leading <span class="math inline">\(1\)</span> in <span class="math inline">\(\hat{P}\)</span> represents the principal: for every dollar you borrow, you will have to pay it back. The remaining <span class="math inline">\(\frac{rN}{2}+\frac{(rN)^2}{12}\)</span> represents interest on that dollar.</p>
+<p>According to this <a href="https://www.tandfonline.com/doi/pdf/10.1080/0025570X.1996.11996479">Mathematics Magazine article by Peyman Milanfar</a>, Persians merchants used the simpler approximation that interest is principal times <span class="math inline">\(rN/2\)</span>. My “interpretation” of this term is as follows.</p>
+<p>If you have a balance <span class="math inline">\(B\)</span>, then the amount of interest owed at the end of the month is <span class="math inline">\(Br\)</span>. If you paid this amount of interest in each of <span class="math inline">\(N\)</span> payments, you would pay <span class="math inline">\(BrN\)</span> in total. But over the life of the loan, your balance is changing! It starts at <span class="math inline">\(B\)</span> and ends at <span class="math inline">\(0\)</span>, so one might expect that “on average” your balance is <span class="math inline">\(B/2\)</span>, leading to estimated interest payments of <span class="math inline">\(BrN/2\)</span>. As we will explore more completely in the next section, your average balance is in fact greater than <span class="math inline">\(B/2\)</span>, so this is an underestimate of interest paid. But it works fairly well if <span class="math inline">\(rN\)</span> is small (within <span class="math inline">\(2\%\)</span> if <span class="math inline">\(rN &lt; 0.5\)</span>). This is probably the case for many merchant loans: I doubt payments are collected over 30 years!</p>
+<p>For values of <span class="math inline">\(rN\)</span> that arise in home loans, the error is sizeable, so we need to include the <span class="math inline">\((RT)^2/12\)</span> term. Interestingly, the 12 here has nothing to do with the fact that there are 12 months in a year – it just happens to be the coefficient of the corresponding Taylor expansion. I haven’t come up with a good heuristic for why this is the “right” second-order correction.</p>
+<!--Let $P_k$ be the principal after your $k^{th}$ payment. Then your total interest is $\sum_{k = 0}^{N-1} rP_k = rN \left( \frac{1}{N} \sum_{k = 0}^{N-1}P_k \right) = RT\left( \frac{1}{N} \sum_{k = 0}^{N-1}P_k \right)$. In other words, total interest payments are equal to $RT$ times your average balance over the life of the loan. Since your balance starts at $P$ and ends at $0$, it is reasonable to estimate that on average, it is $P/2$. -->
+</div>
+<div id="amortization-tables" class="section level1">
+<h1>Amortization Tables</h1>
+<p>We now return to the question, “what will my principal be, as a function of the time remaining on the mortgage?” This is relevant for people who might terminate the loan early, either due to moving and selling the home, or due to refinancing.</p>
+<p>There are many online resources explaining how to calculate your next balance, as a function of your current balance, interest rate, and monthly payment: multiply your balance by the (monthly) interest rate. This is how much of your monthly payment goes to interest; the rest goes to reducing the principal.</p>
+<p>However, few resources explicitly give a formula for your remaining balance afer <span class="math inline">\(k\)</span> payments. Let this be <span class="math inline">\(B_k\)</span>. We know <span class="math inline">\(B_0 = B\)</span>, and <span class="math inline">\(B_N = 0\)</span>, but what about in between? We can determine this as follows.</p>
+<p>Recall that your monthly payment is
+<span class="math display">\[M = \frac{B \times P(r,N)}{N},\]</span>
+where <span class="math inline">\(P(r,N)\)</span> has the complicated form given above, and represents the rate of dollars paid to dollars borrowed.</p>
+<p>After <span class="math inline">\(k\)</span> payments, I don’t know <span class="math inline">\(B_k\)</span>. But I do know that the number of remaining payments is <span class="math inline">\(N-k\)</span>, and the interest rate <span class="math inline">\(r\)</span> has not changed. I also know that my monthly payment does not change. Therefore, I can solve
+<span class="math display">\[M = \frac{B \times P(r,N)}{N} = \frac{B_k \times P(r,N-k)}{N-k}\]</span>
+to get
+<span class="math display">\[\frac{B_k}{B} = \left(1-\frac{k}{N}\right) \frac{P(r,N)}{P(r,N-k)}.\]</span>
+The left side is the percentage of your balance that remains. <span class="math inline">\(1 - k/N\)</span> is the percentage of the total time that remains. The factor <span class="math inline">\(P(r,N)/(P(r,N-k))\)</span> is always bigger than <span class="math inline">\(1\)</span> (fixing the interest rate, you pay more in total for a loan of longer duration), so this says that when <span class="math inline">\(80\%\)</span> of the loan term remains, your principal is (sadly) more than <span class="math inline">\(80\%\)</span> of the initial balance.</p>
+<p>This formula is exact: it should match amortization tables that you can find online. But if we want to approximate it, we can simply plug in our estimates <span class="math inline">\(\tilde{P}\)</span> or <span class="math inline">\(\hat{P}\)</span> instead of the real <span class="math inline">\(P\)</span>.</p>
+<p>If we plug in <span class="math inline">\(\tilde{P}\)</span> for <span class="math inline">\(P\)</span> and do some algebra, we get that your balance is approximately
+<span class="math display">\[ \tilde{B}_k = B \frac{1-e^{-r(N-k)}}{1 - e^{-rN}}.\]</span>
+Note that when <span class="math inline">\(k = 0\)</span>, this is the full amount, and when <span class="math inline">\(k = N\)</span>, your principal has dropped to zero.</p>
+<p>For those of you who don’t like exponential functions, you substitute <span class="math inline">\(\hat{P}\)</span> instead. To keep the algebra cleaner, let <span class="math inline">\(t = 1-k/N\)</span> be the fraction of time <em>remaining</em> on the mortgage (so <span class="math inline">\(t = 1\)</span> at the beginning). Then we have the approximation
+<span class="math display">\[ \hat{B}(t) = B t \left(\frac{1 + \frac{rN}{2}+\frac{(rN)^2}{12}}{1 + \frac{trN}{2} + \frac{(trN)^2}{12} }\right).\]</span>
+These approximations are shown in the following figure (the solid line <span class="math inline">\(\tilde{B}\)</span>, and bold dashes are <span class="math inline">\(\hat{B}\)</span>).</p>
+<pre class="r"><code>R = .05
+T = 30
+plot(function(x){return((1-exp(-R*T*(1-x)))/(1-exp(-R*T)))},xlim=c(0,1),xlab=&#39;Fraction of Payments Completed&#39;,ylab=&#39;Fraction of Principal Remaining&#39;,las=1)
+plot(function(x){return((1-x)*(1+R*T/2+(R*T)^2/12)/(1+(1-x)*(R*T)/2+(1-x)^2*(R*T)^2/12))},xlim=c(0,1),add=TRUE,lty=&#39;dashed&#39;,lwd=2)</code></pre>
+<p><img src="/Blog/MortgagePayments_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>This plot shows that 2 years into a 30 year mortgage (x = 2/30), you still owe approximately 97% of the original principal. 6 years in, you are 20% of the way through, but have only paid down 10% of the balance. This illustrates that if you move houses frequently and always get a 30 year mortgage, you really won’t be building much equity (unless your home happens to appreciate significantly).</p>
+</div>
+<div id="unfinished-business-back-to-approximation-1" class="section level1">
+<h1>Unfinished Business: Back to Approximation 1</h1>
+<p>Why is the ratio <span class="math inline">\(\frac{1 - (1+r)^{-N}}{1-e^{-rN}}\)</span> always so close to one? To explore this, I will do a change of variables <span class="math inline">\(x = rN\)</span>, and look at the quantity</p>
+<p><span class="math display">\[1 - \frac{1 - (1+r)^{-N}}{1-e^{-rN}} = \frac{(1+r)^{-N} - e^{-rN}}{1-e^{-rN}} = \frac{(1+ x/N)^{-N} - e^{-x}}{1 - e^{-x}} = Error(x,N)\]</span>
+It is easy to see that if we fix <span class="math inline">\(x\)</span> and take <span class="math inline">\(N\)</span> to infinity, this error vanishes. But what if we fix <span class="math inline">\(N\)</span> and try to determine the <span class="math inline">\(x\)</span> for which this error is largest?</p>
+<p>It turns out that it is most helpful to plot <span class="math inline">\(N \times Error(x,N)\)</span>:</p>
+<pre class="r"><code>NxERROR = function(N){return(function(x){return(N*((1+x/N)^(-N)-exp(-x))/(1-exp(-x)))})}
+plot(NA,xlab=&#39;rN&#39;,ylab=&#39;N x Error&#39;,las=1,xlim=c(0,5),ylim=c(0,.44))
+N = c(1:4,6,12,24,48)
+colors = rainbow(length(N))
+for(i in 1:length(N)){
+  plot(NxERROR(N[i]),add=TRUE,col=colors[i],xlim=c(0,5))
+}
+legend(4.3,.45,legend=N,col=colors,lwd=2)</code></pre>
+<p><img src="/Blog/MortgagePayments_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>There are two things to notice. First, as <span class="math inline">\(N\)</span> grows, the global maximum <span class="math inline">\(\max \limits_{x}N \times Error(x,N)\)</span> increases. Second, the function <span class="math inline">\(N \times Error(x,N)\)</span> actually converges pointwise as <span class="math inline">\(N \rightarrow \infty\)</span> to the function <span class="math inline">\(e(x) = \frac{x^2 e^{-x}}{2(1-e^{-x})}\)</span>. Wolfram Alpha gives an exact maximizer of <span class="math inline">\(e\)</span> that uses the “product log” function, but numerically, this function attains a maximum value of <span class="math inline">\(0.324\)</span> at <span class="math inline">\(x \approx 1.59\)</span>. This implies that the relative error of replacing <span class="math inline">\(P\)</span> with <span class="math inline">\(\tilde{P}\)</span> is at most <span class="math inline">\(0.33/N\)</span>. Since <span class="math inline">\(N\)</span> is the total number of payments, the error is already quite good (within 1%) even for a 3 year mortgage.</p>
+<p>Interestingly, the value of <span class="math inline">\(x = rN\)</span> that maximizes the error is exactly the value at which your estimated interest payments are equal to the principal (i.e. the amount you pay back is exactly double the amount you borrowed). I don’t have a good explanation for why this should be the case, but if you do, I’d love to hear it!</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>In practice, most people’s monthly payment includes additional expenses such as insurance, property tax, HOA fees, etc. Some online mortgage calculators include estimates of these quantities by default, while others do not. In this post, I ignore these payments – which are not fixed over the lifetime of the loan – and look only at loan payments.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

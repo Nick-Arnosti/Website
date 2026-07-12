@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Market Design, Matching on b</title>
+    <link>/categories/market-design-matching/</link>
+    <description>Recent content in Market Design, Matching on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/market-design-matching/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reflections on &#34;Design on Matroids&#34;</title>
+      <link>/blog/designonmatroids/</link>
+      <pubDate>Sat, 07 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/designonmatroids/</guid>
+      <description>I recently read the working paper “Design on Matroids” by Isa Hafalir, Fuhito Kojima, Bumin Yenmez, and Koji Yokote. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look.
+Disclaimer. This is part of a series of posts in which I discuss others’ work. My goal with these posts is to organize my thoughts, and share these thoughts with the authors (and anyone else who may be interested).</description>
+    </item>
+    
+    <item>
+      <title>Reflections on &#34;Efficient Market Design&#34;</title>
+      <link>/blog/efficientmarketdesign/</link>
+      <pubDate>Fri, 06 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/efficientmarketdesign/</guid>
+      <description>I recently read the working paper “Efficient Market Design” by Isa Hafalir, Fuhito Kojima, and Bumin Yenmez. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look. In this post, I briefly summarize the paper, and then offer some thoughts on the applicability of the model.
+Disclaimer. This is part of a series of posts in which I discuss others’ work.</description>
+    </item>
+    
+  </channel>
+</rss>

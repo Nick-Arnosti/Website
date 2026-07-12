@@ -1,0 +1,11 @@
+---
+title: 'The Devilish Details of Neighborhood School Priority'
+date: '2019-11-18'
+author: Nick Arnosti
+draft: yes
+tags:
+  School Choice
+categories:
+  Market Design
+---
+

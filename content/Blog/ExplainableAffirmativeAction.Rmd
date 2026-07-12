@@ -1,0 +1,68 @@
+---
+title: 'Explainable Affirmative Action'
+date: '2022-10-10'
+author: Nick Arnosti
+draft: true
+---
+
+\newcommand{\SR}{\varphi}
+\newcommand{\PO}{\succ}
+\newcommand{\sApp}{\mathcal{I}}
+\newcommand{\sFS}{\mathcal{F}}
+\newcommand{\RP}{OB}
+
+
+# Examples of Selection Rules
+
+
+* **Diversity Visa Lottery**: Starting at the top of the priority list, accept applicants unless doing so violates a country quota, regional quota, or the global quota.
+* **NYC Affordable Housing Developer Screening**
+    - Consider applicants eligible for disability preference in log order until 7% of units have been allocated.
+    - Consider applicants eligible for community preference in log order until 50% of units filled with people from community district.
+    - Consider applicants eligible for municipal employee preference in log order until 5% of units filled with municipal employees.
+    - Consider remaining applicants in log order until all units filled.
+
+
+* Accept the top applicant, then accept the top remaining female applicant.
+* Accept the top female applicant, then accept the top remaining applicant.
+
+
+
+# Axioms of Explainability
+
+A selection rule is
+
+* **Monotonic** if increasing priority of $i$ (fixing others’ priority) weakly helps $i$.
+* **Lower Invariant** if $i$’s outcome does not depend on the ranking of individuals with lower priority than $i$.
+* **Non-Bossy** if any change to $i$'s priority that does not affect $i$’s outcome also does not affect others' outcomes.
+
+
+
+::: {.definition}
+A selection rule $\SR$ is **monotonic** if for any \(i \in \sApp\), and any priority orders \(\PO, \PO'\) such that (i) \(\PO_{-i}~=~\PO'_{-i}\) and (ii) the priority of \(i\) is higher in \(\PO'\) than in \(\PO\), then
+\[i \in \SR(\PO) \Rightarrow i \in \SR(\PO').\]
+:::
+
+<span style="color:red"> Has also been called "respecting unambiguous improvements." </span>
+
+::: {.definition}
+A selection rule \(\SR\) is **lower invariant** if for any applicant \(i \in \sApp\), and any priority orders \(\PO, \PO'\) such that \(\PO_{-\{j:i\PO j\}}~=~\PO'_{-\{j:i\PO' j\}}\), we have
+\[\{i\} \cap \SR(\PO) = \{i\} \cap \SR(\PO'). \]
+:::
+
+::: {.definition}
+A selection rule $\SR$ is **non-bossy** if for any applicant \(i \in \sApp\), and any priority orders \(\PO, \PO'\) such that \(\PO_{-i}~=~\PO'_{-i}\),
+\[\{i\} \cap \SR(\PO) = \{i\} \cap \SR(\PO') \Rightarrow \SR(\PO) = \SR(\PO').\]
+:::
+
+
+# Outcome-Based Selection Rules
+
+
+::: {.theorem #characterization}
+*For any collection \(\sFS \subseteq 2^{\sApp}\), the selection rule \(\RP_{\sFS}\) is monotone, non-bossy and lower invariant.* 
+
+*If \(\SR\) is a selection rule that is monotone, non-bossy and lower invariant, then there exists \(\sFS \subseteq 2^{\sApp}\) such that $\SR(\succ) = \RP_{\sFS}(\succ)$ for every priority order $\PO$.*
+:::
+
+\@ref{thm:characterization}

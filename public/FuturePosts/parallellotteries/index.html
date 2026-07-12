@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Parallel Lotteries: Reflections and Open Questions | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Parallel Lotteries: Reflections and Open Questions</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2021/10/23</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>This post tells the story behind “Parallel Lotteries: Insights from Alaskan Hunting Permit Allocation”. This joint work with Tim Randolph (a Computer Science PhD student at Columbia) appeared in EC ’21 and is forthcoming in Management Science.</p>
+<div id="origins-of-the-idea" class="section level1">
+<h1>Origins of the Idea</h1>
+<p>In April of 2018, I was invited by Valentin Verdier to join a session on “Theory and Empirics of Dynamic Matching” at the AEA Meetings. Although three of the four session participants (myself included) spoke about housing, Valentin’s work was on the allocation of hunting licenses. He presented an analysis of data from Michigan, which has recently been accepted at the Review of Economic Studies!</p>
+<p>I found this to be an interesting and novel application of matching, and spent some time over the next months reading about how this is done in different states. It turns out that many different procedures are used! In some states, lotteries are independent (or nearly so) across years. Others give an advantage to people who have repeatedly applied and been unsuccessful. In these “bonus point” systems, the number of lottery tickets you get typically grows linearly in the number of years that you have waited. In some states, it grows quadratically. Recently, <a href="https://gfp.sd.gov/preference-points/">South Dakota decided to cube its bonus points</a>, giving long-time applicants a significant advantage over newcomers. The logical conclusion of this policy is a waitlist of sorts, which always selects an applicant with more points over one with fewer. This is called a “preference point” system by hunters, and is used in my home state of Minnesota, among others. You can read more about bonus point and preference point systems (and where each is used) <a href="https://www.themeateater.com/hunt/big-game/big-game-tags-understanding-license-draws">here</a> and <a href="https://www.letsgohunting.org/articles/the-point-game-bonus-and-preference-points-for-western-hunting-opportunities/">here</a>. But I digress.</p>
+<p>The state of Alaska has one of the more interesting allocation systems. In short, it operates like a raffle in which each participant is given six tickets, with an additional twist to prevent anyone from winning multiple permits. In a little more detail there are multiple types of permits for each species. These specify the dates and location where hunting can occur, as well as other parameters. Each applicant can submit up to six “applications,” and may apply for a given type of permit multiple times to increase their odds of winning (for example, one might apply five times for a popular permit, and once for a second, less popular permit). Each applicant also ranks permits for which they have applied. After the application deadline, applications are drawn randomly for each permit. Applicants who win multiple permits keep only their favorite among these, and new names are drawn for the remainder. This process continues until each permit type has either been fully allocated or offered to all applicants.</p>
+<p>In Fall of 2018, I offered a class titled “Rationing of Social Goods.” In the final lecture, I described a variety of real-world settings to students, and asked them to apply reasoning from examples we’d seen in class to these settings. One of the applications was the Alaskan Hunting License Lottery, for which I asked the following questions:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Suppose the system was changed so that hunters were still given six tickets, but could not use multiple tickets on the same permit. What are the potential advantages or disadvantages of this change? Would you support it?</li>
+<li>Suppose the system was kept the same, but the number 6 was increased or decreased. What might the effects of this change be?</li>
+</ol>
+<p>Tim was enrolled in the course as a first-year student in Computer Science (one of my favorite things about that course was that it attracted students from Economics, Engineering, Computer Science, and the Business School). He’d been introduced to me by faculty at Williams College, where we’d both been undergrads (7 years apart). I was immediately impressed. He demonstrated a strong understanding of course material, and came prepared with good questions. The day after the last class, we started working together on this project.</p>
+</div>
+<div id="getting-to-work" class="section level1">
+<h1>Getting to Work</h1>
+<ul>
+<li>First step: defining model. What is action space, equilibrium definition, etc. We wanted to work in continuum model.</li>
+<li>He got up to speed (measure theory, continuum models, equilibrium definitions).</li>
+<li>I got to learn new tools: fixed point theorems.</li>
+<li>We adapted ILMW definition, but now new type of inefficiency. Came up with decomposition. Good moment: Tim coming up with definition and result. Mathemtatically easy to prove, but having “right” definition is tricky!</li>
+</ul>
+</div>
+<div id="the-publication-process" class="section level1">
+<h1>The Publication Process</h1>
+<div id="rejection-in-2019" class="section level2">
+<h2>Rejection in 2019</h2>
+<p>Tim and I planned to submit our work to EC ’19. On the day of the deadline, I got a message from Matt Weinberg asking how the submission process went. I responded that we were still polishing our paper, and would submit in the next few hours. Submitting right before a deadline is a fairly standard operating procedure, and I didn’t think anthing of it… until Matt responded saying that the deadline had just passed!</p>
+<p>I looked at the submission page, and sure enough, the deadline was 3 pm EST. Every prior EC I had submitted to (and indeed, every conference that I could remember submitting to) had a deadline of midnight. Furthermore, many of these conferences kept the submission link active until some arbitrary and unannounced time after the deadline, in part to prevent the organizers from getting bombarded by e-mails from would-be submitters had technical difficulties when trying to submit to overloaded servers at the last minute.</p>
+<p>It was not yet 4 pm, so I figured we could explain and correct the situation. The chairs of EC ’19 were Ramesh Johari and Nicole Immorlica. I knew both well, and Ramesh was my advisor at Stanford, so I gave him a call. Unfortunately for us, they believed in running things by the books, and declared that no late papers could be accepted. At the time, I found this very frustrating. With some more distance, I definitely understand their decision. I still maintain that the 3 pm deadline was a bad choice (it persisted for one more year before returning to midnight in 2021), but ultimately the mistake was ours. I felt really bad for Tim, who had worked so hard to get the paper ready.</p>
+<p>Several months later, we submitted to WINE, a sort of sister conference to EC (although typically viewed as less prestigious). The paper was rejected, with one reviewer writing “This is an economics paper. Some algorithms are outlined… but no trace can be found of computer science topics (such as computational efficiency analysis or optimality bounds).”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="rejection-in-2020" class="section level2">
+<h2>Rejection in 2020</h2>
+<p>By February of 2020, the paper was much more polished. We had come up with our decomposition into trade and waste efficiency in fall of 2019, and in the process derived approximate efficiency results, which Computer Scientists seem to love. We submitted to the “Applied Modeling” track of EC ’20 (triple-checking the deadline!), and I felt confident that the paper was polished, and a good fit for the conference.</p>
+<p>My confidence led to disappointment, as the paper was rejected. The longest review was primarily dedicated to explaining that “the motivation of hunting is, frankly, quite repulsive,” and suggested that the authors “consider whether they indeed wish to give such prominence to this controversial issue.” They went on to draw an analogy to “optimizing slave trading,” although they conceded that this was more problematic than hunting. At least we agreed on something!<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+</div>
+<div id="success" class="section level2">
+<h2>Success!</h2>
+<p>We first submitted to Management Science in November 2019 (we were allowed to submit simultaneously to EC, so long as we published only the abstract). Thankfully, the initial reviews were quite positive: the editor wrote “The paper is clearly written, presents elegant results in an interesting setting, and provides a crisp analysis.” We were given two tasks for the revision: new results improving our bounds on trade efficiency, new discussion expanding the “applied market design aspect” by generalizing beyond Alaskan hunting license lotteries and providing guidance on how many tickets to use. There was no mention of the repulsiveness of hunting, but we were told that it is “arguably a small market.” It was obvious to us that that nothing about the mechanism (or our analysis of it) was specific to hunting licenses, but it was equally obvious (in light of comments received from both EC and Management Science) that we had a messaging issue to fix: the set of hunters and the set of reviewers have little overlap.</p>
+<p>Tim and I spent a lot of time writing and re-writing our concluding sections, and proving new results about trade efficiency. I discuss our efforts in more detail below. We resubmitted in January 2021, more than 10 months after receiving the reviews. Thankfully, the review team liked our revision, and several months later the paper was accepted!</p>
+<p>We had simultaneously submitted to EC ’21. The initial reviews left me somewhat pessimistic: while no reviewer attacked the paper, it didn’t sound like we would have a “champion” who would strongly advocate for us. Thankfully, the EC reviewing process surprised me yet again: our work was accepted, and Tim got to present it!</p>
+</div>
+</div>
+<div id="the-revision-process" class="section level1">
+<h1>The Revision Process</h1>
+<div id="spring-frustration" class="section level2">
+<h2>Spring Frustration</h2>
+<p>We started by trying to improve our bounds on trade efficiency, as my sense was that if we could do this, the revision was likely to be accepted. In essence, we wanted to answer the question, “If you start with a Parrallel Lottery equilibrium, and then get to arbitrarily reallocate probability shares, what is the maximum amount by which you could increase each participant’s expected welfare?” There are two ways to approach this: come up with examples where everyone’s welfare can be improved by a certain ratio (establishing a “lower bound”), or prove that there are no examples where everyone’s welfare can be improved by a certain ratio (establishing an “upper bound”).</p>
+<p>We started by working on our lower bounds, using numerical searches to find “bad” examples. These searches led us to conjecture that with <span class="math inline">\(k = 2\)</span> tickets, in the worst case each participant’s welfare could be increased to <span class="math inline">\((1 + \sqrt{2})/2 \approx 1.2\)</span> times its original value. Furthermore, with <span class="math inline">\(k &gt; 2\)</span> tickets, this ratio only seemed to decrease. Our effort to prove these conjectures (that is, come up with matching upper bounds) started by analyzing the special case with only two types of item. We’d hoped that this would be an easy warm-up, but that turned out not to be the case. Despite many emails over months (and many diagrams scribbled into the margin of my notes), we ended the spring without a proof, and feeling discouraged.</p>
+</div>
+<div id="fall-grinding-progress" class="section level2">
+<h2>Fall: Grinding Progress</h2>
+<p>After a summer away from the project, we returned in the fall determined to resubmit. Due to our difficulties in the spring, we considered submitting a revision that eschewed new theorems and instead offered expanded numerical results and discussion. We sought to give guidance on when to use Parallel Lotteries, and how many tickets to give each participant. We spent a LOT of time trying to make a concise and coherent story, and experimenting with new ways to display results. The end result was the longest discussion I have ever included at the end of a paper. I imagine that some readers will find it useful, and others unnecessary. I’m still trying to decide which camp I fall into.</p>
+<p>We finished writing our discussion towards the end of October. I still felt dissatisfied, and wanted to turn back to our proof. I felt confident that we could at least brute force a proof in the special case of two tickets and two types of items. Eventually, we outlined a proof involving 11 or 12 lemmas. It was long, inelegant, and difficult to keep in one’s head, but Tim dilligently worked through the lemmas, crossing them off one by one. By early December, our proof was nearing completion. I kept feeling like there had to be a better approach.</p>
+</div>
+<div id="winter-breakthrough" class="section level2">
+<h2>Winter Breakthrough</h2>
+<p>In an effort to generalize beyond two types of items, I began to think about the problem differently. I went back to our original submission, hoping to tighten the arguments that we had adapted from ILMW. At one point, I pulled an all-nighter putting together a nearly complete proof of two results: an upper bound of <span class="math inline">\((1 + \sqrt{2})/2\)</span> with two tickets, and an upper bound of <span class="math inline">\(4/3\)</span> with any number of tickets. Neither proof made assumptions about the number of items. I excitedly sent my notes to Tim.</p>
+<p>Sadly, he identified a flaw in my work. I had skipped a step, and left a note saying that it should be easy to fill the gap. Unfortunately, I was wrong, and the claim I had made was false.</p>
+<p>My argument applied to items on which the agent had spent at least one ticket, but did not address other items which might be available. Back to the drawing board!</p>
+<p>A few weeks later, I finally got it. The final proof uses linear programming duality. This is the first time that this core concept (taught to OR grad students across the country) has appeared in any of my papers. It feels like an important milestone: I am finally qualified as a “true” OR researcher!</p>
+<ul>
+<li><p>Rushing to finish before starting class. Lots of late nights, but excitement. Once we had the right approach, new results started coming fairly quickly.</p></li>
+<li><p>One way that pandemic affected things: inability to get in a room together an work at a white board.</p></li>
+<li><p>Open questions: results could be adapted, improved.</p></li>
+</ul>
+<p>Compare to reading tea leaves? So many different ways to look at it, different cases to consider, how to build into a single coherent story that we actually believed in?</p>
+<ul>
+<li>Accepted our premise that these were interesting questions, and asked us to make this the best version of the paper that it could be. (Other reviewers seemed to be asking us to make it a )</li>
+</ul>
+<p>Add narrative or consistent style: something like “status: X, Y”</p>
+<p>Comments on results:
+-Our guarantee gets worse as number of tickets grows, approaching e/(e-1) in ILMW for k = infty. This is elegant, but not the “right” answer. We think that the guarantee should actually get BETTER as k grows!
+-Use simple cost function to prove 4/3?
+-Use some cost function (our special one?) to prove that all are better than <span class="math inline">\((1+\sqrt{2})/2\)</span>?
+-Use other cost functions to get tight results?</p>
+</div>
+</div>
+<div id="reflections-and-open-questions" class="section level1">
+<h1>Reflections and Open Questions</h1>
+<p>Double-check deadlines! Submit early if possible.</p>
+<p>Don’t get too discouraged by rejections. While we did make some improvements, there’s also a fair amount of randomness (EC 2020 -&gt; EC 2021)</p>
+<p>The final outcome of this project was great. Tim and I got to work together, and we both learned some new math! Furthermore, our work was accepted in both EC and Management Science. However, our revision process was drawn out and time-consuming. As one measure, while preparing our revision we sent a total of 298 e-mails back and forth! Many of these e-mails addressed work (such as our “brute force” proof approach) that never made it into the final paper.</p>
+<p>In part, this is the nature of research. You try lots of ideas, and most of them don’t work. Once you see things the right way, they seem obvious. You wonder what took you so long, and worry that a reviewer will claim the result is trivial.</p>
+<p>On the flip side, I do think that there were flaws in our process. One mistake I made was trying to juggle too many responsibilities. In 2020, I worked on 7 different papers, applied for my current job at the University of Minnesota, and wrote my first-ever grant application. Throughout the spring, I dedicated about half a day each week to this project. This just wasn’t enough: I wasted time re-building my understanding from the week before, and had difficulty coming up with creative approaches. In the future, I hope to complete revisions in shorter sprints of more dedicated effort.</p>
+<p>A second mistake was in getting drawn down a long but (relatively) certain path, rather than looking for better ones. In a desire to show progress, we spent lots of time on an approach (the “brute force” proof) that I never felt great about. When we eventually tried to prove a more ambitious result, we saw the problem in a new light, and came up with a much shorter and clearer proof. While tedious arguments are sometimes necessary, they often indicate that we don’t understand the problem well. Sometimes, our understanding can be improved by first considering a special case, but in others, <strong>generalizing</strong> the model can actually be helpful.</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>This was largely accurate. Although a version of our current Theorem 1 appeared in that paper, there are no hints of what would eventually become Theorems 2, 3, 4, and 5.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>To be clear, I am not a hunter. My boy scout troop once spent an hour shooting at clay pigeons, and miraculously failed to hit a single one. However, hunting is a way of life for many people in this country, and arguably the most humane way to eat meat. As my dad remarked, “I hope that reviewer is vegetarian.”<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

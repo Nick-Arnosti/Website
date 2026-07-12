@@ -1,0 +1,42 @@
+---
+title: 'Building on Akbarpour Li Gharan'
+date: "2024-05-29"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Introduction
+
+Arrivals at rate $m$
+
+Departures at rate $1$
+
+Probability of compatibility $p = d/m$. 
+
+If we fix $d$, loss doesn't really depend on $m$.
+
+Suppose $m = d$, so $p = 1$. Then loss of greedy is $1/(2d+1)$. (And presumably greedy is optimal, since loss is exactly expected pool size divided by $m$.)
+
+Let $S$ be the pool size (in steady state), divided by $m$. Then by PASTA, the probability of matching upon arrival is $1 - (1 - d/m)^{mS}$. Since every match formed by greedy involves one new arrival and one waiting agent, the total fraction of agents that match is $2\mathbb{E}[1 - (1 - d/m)^{mS}]$. But because we have exponential departures, the fraction of agents that depart must be equal to $\mathbb{E}[S]$. Thus, the steady-state distribution of $S$ under greedy must satisfy 
+\[2\mathbb{E}[1 - (1 - d/m)^{mS}] + \mathbb{E}[S] = 1\]
+$2\mathbb{E}[1 - e^{-m \cdot log(1-d/m)S}] + \mathbb{E}[S] = 1$
+
+By concavity, we have 
+$2(1 - e^{-m \cdot log(1-d/m)\mathbb{E}[S]}) + \mathbb{E}[S] \ge 1.$
+Thus, $\mathbb{E}[S]$ is at leas the solution $x$ to $2(1-e^{-m \cdot log(1-d/m)x})+x=1$. This lower bound is increasing in $m$.
+
+So this doesn't quite get us that loss is increasing in $m$ (though simulations suggest that is correct). But we can analyze $m = d$ and $m \rightarrow \infty$.
+
+*Claim* Suppose lifetimes are exponential with mean 1, and fix $d > 0$. When $m = d$, loss of greedy is $1/(2d+1)$. As $m \rightarrow \infty$, loss of greedy converges to solution $x$ to $2(1 - e^{-dx}) + x = 1$.
+
+Natural thing to do is to compare these two bounds to each other.
+
+Now, let's bound loss of any online algorithm. Again, let $S$ be the steady state normalized pool size.
+
+On the one hand, loss is at least $\mathbb{E}[S]$. On the other, loss is at least $\mathbb{E}[(1-d/m)^{mS}]/(d+1)$, as this is the probability that a new arrival (i) doesn't have anyone compatible in the pool upon arrival, and (ii) doesn't have anyone compatible show up before they depart. Noting that $\mathbb{E}[(1-d/m)^{mS}] \ge (1-d/m)^{m\mathbb{E}[S]}$, we conclude that if $\mathbb{E}[S] = x$, loss is at least $\max(x,(1-d/m)^{mx})$. A-L-G do some work to show that the solution $x$ is always at least $1/(2d+1)$. **This should show that greedy is in fact optimal when $p = 1$.**
+
+
+
+
+# Beyond Exponential Maximum Sojourn Times

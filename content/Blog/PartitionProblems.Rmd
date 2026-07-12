@@ -1,0 +1,508 @@
+---
+title: 'Partitioning the US into contiguous regions with approximately equal GDPs using MILPs'
+date: '2025-01-03'
+author: Nick Arnosti
+---
+
+This post is inspired by my friend Ben Orlin, who mentioned the following problem on [his blog](https://mathwithbaddrawings.com/2024/12/19/2024-in-math-puzzles/):
+
+> Fact: the U.S. has the world’s largest economy (as measured by GDP). But let’s break the U.S. into smaller economies, and see how much of the world’s Top 10 it can thereby dominate.  
+**Warm-up:** Treating the U.S. as 51 separate economies, one for each state (plus DC), how many rank among the world’s ten largest?  
+**Challenge:** Now, consider all the ways to decompose the U.S. into new, smaller economies, each consisting of one or more contiguous states. Let’s do this to maximize the number of economies that rank in the world’s ten largest. What’s the best you can do?
+
+Ben provides the data to get started. Outside of the US (~$28 trillion), the largest economy by far is China (~$18 trillion). Germany is in third place (~$4.7 trillion), followed by Japan (~$4.1 trillion) and India (~$3.9 trillion).
+
+If we treat each US state as a separate country, California and Texas would be in the top 10 countries, while New York would just miss out in 11th place (behind Italy and ahead of Canada). Thus, the answer to the warm-up question is that 2 states would rank in the top 10 of global GDP.
+
+To answer Ben's "challenge" question, it is clear that we cannot get 8 of the top 10 countries: this would require knocking Japan out of the top 10, and the US GDP is not 8 times that of Japan. However, we could hope to get 7 of the top 10 countries: this requires only 7 regions, each with GDP larger than that of India.
+
+In fact, this is possible! Here is the solution that I came up with by hand, and the python code that I used to create the figure from an excel file (thank you GPT for writing this code, as I did not know how to use built in python functions to create a US map).
+
+```{r echo=FALSE}
+library(reticulate)
+use_condaenv("myenv", required = TRUE)
+options(reticulate.reticulate.display = TRUE)
+```
+
+```{python}
+import pandas as pd
+import plotly.express as px
+import pulp
+
+def create_map(input_file, data_column):
+    # Read the input file
+    df = pd.read_excel(input_file)
+
+    # Ensure the data column exists
+    if data_column not in df.columns:
+        raise ValueError(f"Column '{data_column}' not found in the input file.")
+
+    # Convert region to string for discrete coloring and legend order
+    df['region'] = df['region'].astype(str)
+
+    # Sort the regions alphabetically
+    df = df.sort_values(by='region')
+
+    # Calculate totals for the specified data column
+    data_totals = df.groupby('region')[data_column].sum()
+
+    # Update legend labels to include total data
+    legend_labels = {region: f"Region {region} ({data_column}: {data_totals[region]:,.0f})"
+                     for region in sorted(df['region'].unique())}
+
+    # Dynamically assign colors based on the number of regions
+    color_palette = px.colors.qualitative.Set3
+    custom_colors = {region: color_palette[i % len(color_palette)] for i, region in enumerate(sorted(legend_labels.keys()))}
+
+    # Create the map
+    fig = px.choropleth(
+        df,
+        locations="state",  # Use state abbreviations
+        locationmode="USA-states",
+        color="region",
+        scope="usa",
+        title=f"US Partitioned by {data_column}",
+        color_discrete_map=custom_colors  # Apply dynamic colors
+    )
+
+    # Update legend labels
+    fig.for_each_trace(lambda trace: trace.update(name=legend_labels[trace.name]) if trace.name in legend_labels else None)
+
+    # Show the figure
+    return fig
+
+# Generate the map
+create_map("PartitionProblemData/nick_regions.xlsx", "GDP")
+```
+
+Other maps are possible. But one interesting observation (which I am surprised I had not realized earlier in life) is that the state of New York cuts off New England from the rest of the country. Thus, any valid solution must combine New York with all of New England and one of New Jersey or Pennsylvania.
+
+Now, this is probably where I should have stopped. But I had more questions! For example, 
+
+1. Suppose we want to partition the US into $k$ contiguous regions. How can we do this to maximize the GDP of the smallest region?
+2. Say that the "capital" state of a region is the state with the largest GDP. Is it possible to partition the US into 7 regions, each with GDP exceeding that of India, such that my home state of Minnesota is the capital of one of these regions? 
+
+Instead of tackling these problems by hand, I decided to try to use optimization software to find appropriate partitions. This led me down a rabbit hole. If you are interested in the details of formulating this problem as a mixed integer linear program (MILP), read on!
+
+# MILP Formulation
+
+Let $S$ be the set of states, with representative element $s$, and let $w_s$ denote the weight (in this case, GDP) of state $s$. Let $R$ be the set of regions, with representative element $r$. Throughout this example, I will let $S$ be the set of 48 contiguous states, as well as Washington DC, and I will let $R = \{1, 2, ... , 7\}$.
+
+Consider decision variables $x_{s,r} \in \{0,1\}$, indicating whether state $s$ is in region $r$. Given $k$, we wish to choose $x$ (that is, the regions) to maximize the GDP of the smallest region. This can be formulated as follows:
+
+\begin{align}
+\max &  \,\,\,  g \\
+s.t. & \sum_{r} x_{s,r} = 1 \hspace{.48 in} \forall s \in S  \\
+& \,\,\, g \le \sum_{s} w_s \cdot x_{s,r} \,\, \forall r \in R  \\
+& x_{s,r} \in \{0,1\} \hspace{.4 in} \forall s \in S, r \in R
+\end{align}
+
+The first constraint says that each state is in one region, while the second says that our objective must be smaller than the "weight" (GDP) of each region. The following is python code to identify optimal regions (within some small tolerance), print the resulting plan to an excel file, clean up the state names to 2-letter abbreviations, and create the corresponding map.
+
+
+```{python}
+def optimize_regions(input_file, output_file, k, tolerance, data_column):
+    """
+    Optimize state regions based on a specified data column (e.g., GDP, population).
+
+    Parameters:
+    input_file (str): Path to the input Excel file containing data.
+    output_file (str): Path to the output Excel file.
+    k (int): Number of regions.
+    tolerance (float): Relative tolerance for the solver (e.g., 0.05 for 5%).
+    data_column (str): Name of the column to use for optimization (e.g., GDP, population).
+    """
+    # Read data from the input Excel file
+    df = pd.read_excel(input_file)
+    if 'state' not in df.columns or data_column not in df.columns:
+        raise ValueError(f"Input file must contain 'state' and '{data_column}' columns.")
+
+    # Optimization setup
+    problem = pulp.LpProblem("Maximize_Minimum_Value", pulp.LpMaximize)
+
+    # Decision variables
+    x = {(state, region): pulp.LpVariable(f"x_{state}_{region}", cat="Binary")
+         for state in df['state'] for region in range(k)}
+    min_value = pulp.LpVariable("min_value", lowBound=0, cat="Continuous")
+
+    # Objective
+    problem += min_value
+
+    # Constraints
+
+    # Each state is assigned to exactly one region
+    for state in df['state']:
+        problem += pulp.lpSum(x[state, region] for region in range(k)) == 1
+
+    # Minimum value (e.g., GDP, population) for each region
+    for region in range(k):
+        problem += pulp.lpSum(x[state, region] * df.loc[df['state'] == state, data_column].values[0]
+                              for state in df['state']) >= min_value
+
+    # Solve the problem with specified tolerance
+    status = problem.solve(pulp.PULP_CBC_CMD(msg=True, gapRel=tolerance))
+
+    # Output results
+    if pulp.LpStatus[status] == "Optimal" or pulp.LpStatus[status] == "Not Solved":
+        print(f"Solution found within {tolerance * 100}% of optimal.")
+        results = []
+        for state in df['state']:
+            for region in range(k):
+                if pulp.value(x[state, region]) == 1:
+                    region_assignment = region + 1
+                    results.append({'state': state, 'region': region_assignment,
+                                    data_column: df.loc[df['state'] == state, data_column].values[0]})
+        result_df = pd.DataFrame(results)
+        result_df.to_excel(output_file, index=False)
+        print(f"Results written to {output_file}")
+    else:
+        print("No solution found within the specified tolerance.")
+
+input_file = "PartitionProblemData/state_gdp_data.xlsx"
+output_file = "PartitionProblemData/auto_regions.xlsx"
+
+#Line below commented out because I have already run this line and saved the output to output_file
+#optimize_regions(input_file,output_file, 7, 0.05, "GDP")
+
+# Generate the map
+create_map(output_file, "GDP")
+```
+
+As you can see from the map, nothing in the formulation so far requires that the regions be geographically coherent! I want regions to be contiguous, meaning that I should be able to walk between any two states in a region without leaving that region.
+
+# Enforcing Contiguity
+
+How do we actually encode this constraint? ChatGPT told me about the following idea. Suppose that we have an adjacency matrix $A$, with $A_{s,s'}= 1$ if states $s$ and $s'$ are adjacent, and $A_{s,s'} = 0$ otherwise. For now, I will also suppose we have been given "capital states" of each region. This is just a single state that must be in each region.
+
+Create auxiliary variables $f_{s,s',r}$, which are non-negative real numbers. The value $f_{s,s',r}$ represents the "flow" from $s$ to $s'$. We will add the following constraints:
+
+$$\begin{align}
+f_{s,s',r}  & \le x_{s,r} \\
+f_{s,s',r} & \le x_{s',r} \\
+f_{s,s',r} & \le |S| A[s,s']\\
+\sum_{s'} f_{s,s',r} - f_{s',s,r} & = x_{s,r} \hspace{0.9 in} \text{ if s is not the capital of region } r (\#eq:nc-flow)\\
+\sum_{s'} f_{s,s',r} - f_{s',s,r} & = -\sum_{s' \ne s} x_{s',r} \hspace{.5 in} \text{if s is the capital of region } r (\#eq:c-flow)
+\end{align}$$
+
+The first two constraints ensure that $f_{s,s',r}$ can be positive only if $s$ and $s'$ are both in region $r$. The next constraint says that flow can only be pushed between adjacent states. The fourth constraint says that each non-capital state in the region nets one unit of *outflow*. The final constraint says that each capital region receives a net *inflow* equal to the number of other states in the region. 
+
+Suppose we fix the regions (meaning that we fix the values of $x$), such that each capital is in the appropriate region.  I claim that the constraints on $f$ above are feasible if and only if each region is contiguous. 
+
+* Suppose the region is not contiguous. This means that there is some state in the region which cannot "reach" the capital without exiting the region. By the first three constraints above, this implies that flow from this orphaned state can never reach the capital, and thus the final constraints (that non-capitals have one unit of outflow and capitals have inflow equal to the number of other states in their region) cannot hold simultaneously. 
+* Suppose the region is contiguous. For each $s$ in region $r$, trace a path in the graph from $s$ to the capital of $r$. Push one unit of flow along each of these edges. Add up flows on a given edge. I claim that the resulting flows should be feasible. 
+
+This formulation seems promising, but one problem is that we don't know in advance which states to make the capitals! We can fix this by introducing variables $c_{s,r} \in \{0,1\}$ which are one if state $s$ is the capital of region $r$.
+\begin{align}
+\sum_s c_{s,r} = 1 \,\, \forall r \in R\\
+c_{s,r} \le x_{s,r} \,\, \forall s \in S, r \in R \\
+\end{align}
+The first constraint says that each region has exactly one capital state. The second says that in order to be the capital of a region, a state must belong to that region. Easy enough, right? 
+
+Not so fast! If we go back to flow constraints \@ref(eq:nc-flow) and \@ref(eq:c-flow) we see that if $c$ is treated variable, then they are non-linear! In particular, we can express these constraints as follows:
+
+\begin{align}\sum_{s'} (f_{s,s',r} - f_{s',s,r})-x_{s,r} & = -c_{s,r} \sum_{s'} x_{s',r}
+(\#eq:non-linear)\end{align}
+
+This correctly captures our constraint, but is not linear (we have a product of $c$ and $x$). This is problematic, as many built-in solvers assume linear constraints (even for discrete variables). 
+
+ChatGPT introduced me to another trick which converts this product form into a MILP. To keep notation more concise, define 
+\begin{equation} \tt{regionsize}_r = \sum_{s}x_{s,r}, \end{equation}
+and define new variables $y_{s,r}$ which are intended to be equal to $c_{s,r}\cdot \tt{regionsize}_r$. Then we can write \@ref(eq:non-linear) as 
+\[\sum_{s'} (f_{s,s',r} - f_{s',s,r})-x_{s,r} = -y_{s,r}\]
+
+Let $M$ be a large constant, and consider the following system.
+\begin{align}
+y_{s,r} & \le \tt{regionsize}_r  \hspace{1.4 in} \forall s \in S, r \in R\\
+y_{s,r} & \ge \tt{regionsize}_r  - M \cdot (1-c_{s,r})   \hspace{.5 in} \forall s \in S, r \in R\\
+y_{s,r} & \le M\cdot  c_{s,r} \\
+y_{s,r} & \ge 0
+\end{align}
+So long as $M$ is larger than the number of states in any region, the first two of these constraints ensure that if $c_{s,r} = 1$, $y_{s,r} = \tt{regionsize}_r$, while the next two constraints ensure that if $c_{s,r} = 0$, $y_{s,r} = 0$.
+
+So far, it doesn't matter which state is the capital of the region. However, it is natural to make the state with the largest GDP in the region the capital. We can do this by adding the following constraint:
+\begin{equation} w_{s} x_{s,r} \le \sum_{s' \in S} w_{s'} c_{s',r} \hspace{.5 in} \forall s \in S, r \in R.\end{equation}
+
+Putting all of this together (and repeatedly prompting ChatGPT until it produced something workable, which turned out to take more time than expected), we get the code below.
+
+
+```{python}
+# Hard-coded adjacency dictionary
+state_adjacency = {
+    'AL': ['MS', 'TN', 'GA', 'FL'],
+    'AK': [],
+    'AZ': ['CA', 'NV', 'UT', 'CO', 'NM'],
+    'AR': ['MO', 'OK', 'TX', 'LA', 'MS', 'TN'],
+    'CA': ['OR', 'NV', 'AZ'],
+    'CO': ['WY', 'NE', 'KS', 'OK', 'NM', 'UT'],
+    'CT': ['NY', 'MA', 'RI'],
+    'DC': ['MD', 'VA'],
+    'DE': ['MD', 'PA', 'NJ'],
+    'FL': ['AL', 'GA'],
+    'GA': ['FL', 'AL', 'TN', 'NC', 'SC'],
+    'HI': [],
+    'ID': ['WA', 'OR', 'NV', 'UT', 'WY', 'MT'],
+    'IL': ['WI', 'IA', 'MO', 'KY', 'IN'],
+    'IN': ['MI', 'OH', 'KY', 'IL'],
+    'IA': ['MN', 'SD', 'NE', 'MO', 'WI', 'IL'],
+    'KS': ['NE', 'MO', 'OK', 'CO'],
+    'KY': ['IN', 'OH', 'WV', 'VA', 'TN', 'MO', 'IL'],
+    'LA': ['TX', 'AR', 'MS'],
+    'ME': ['NH'],
+    'MD': ['VA', 'WV', 'PA', 'DE','DC'],
+    'MA': ['RI', 'CT', 'NY', 'VT', 'NH'],
+    'MI': ['OH', 'IN', 'WI'],
+    'MN': ['WI', 'IA', 'SD', 'ND'],
+    'MS': ['LA', 'AR', 'TN', 'AL'],
+    'MO': ['IA', 'NE', 'KS', 'OK', 'AR', 'TN', 'KY', 'IL'],
+    'MT': ['ND', 'SD', 'WY', 'ID'],
+    'NE': ['SD', 'WY', 'CO', 'KS', 'MO', 'IA'],
+    'NV': ['ID', 'UT', 'AZ', 'CA', 'OR'],
+    'NH': ['VT', 'ME', 'MA'],
+    'NJ': ['NY', 'PA', 'DE'],
+    'NM': ['CO', 'OK', 'TX', 'AZ'],
+    'NY': ['PA', 'NJ', 'CT', 'MA', 'VT'],
+    'NC': ['VA', 'SC', 'GA', 'TN'],
+    'ND': ['MN', 'SD', 'MT'],
+    'OH': ['PA', 'WV', 'KY', 'IN', 'MI'],
+    'OK': ['KS', 'MO', 'AR', 'TX', 'NM', 'CO'],
+    'OR': ['WA', 'ID', 'NV', 'CA'],
+    'PA': ['NY', 'NJ', 'DE', 'MD', 'WV', 'OH'],
+    'RI': ['MA', 'CT'],
+    'SC': ['NC', 'GA'],
+    'SD': ['ND', 'MN', 'IA', 'NE', 'WY', 'MT'],
+    'TN': ['KY', 'VA', 'NC', 'GA', 'AL', 'MS', 'AR', 'MO'],
+    'TX': ['NM', 'OK', 'AR', 'LA'],
+    'UT': ['ID', 'WY', 'CO', 'AZ', 'NV'],
+    'VT': ['NY', 'NH', 'MA'],
+    'VA': ['NC', 'TN', 'KY', 'WV', 'MD','DC'],
+    'WA': ['ID', 'OR'],
+    'WV': ['OH', 'PA', 'MD', 'VA', 'KY'],
+    'WI': ['MN', 'IA', 'IL', 'MI'],
+    'WY': ['MT', 'SD', 'NE', 'CO', 'UT', 'ID']
+}
+
+def optimize_contiguous_regions(input_file, 
+                     output_file, 
+                     k, 
+                     tolerance, 
+                     data_column,
+                     M=50):
+    """
+    Optimize state regions based on a specified data column (e.g., GDP, population),
+    imposing contiguity constraints via a flow-based approach with designated 'capitals'.
+
+    Parameters
+    ----------
+    input_file : str
+        Path to the input Excel file containing data.
+        Must contain columns: 'state' and data_column (e.g., GDP).
+    output_file : str
+        Path to the output Excel file where solution is saved.
+    k : int
+        Number of regions.
+    tolerance : float
+        Relative tolerance for the solver (e.g., 0.05 for 5%).
+    data_column : str
+        Name of the column to use for optimization (e.g., 'GDP').
+    """
+
+    # -------------------------------------------------
+    # 1. Read data
+    # -------------------------------------------------
+    df = pd.read_excel(input_file)
+    if 'state' not in df.columns or data_column not in df.columns:
+        raise ValueError(f"Input file must contain 'state' and '{data_column}' columns.")
+
+    states = df['state'].tolist()
+    n_states = len(states)
+    
+    filtered_adjacency = {
+      state: [neighbor for neighbor in neighbors if neighbor in states]
+      for state, neighbors in state_adjacency.items()
+      if state in states
+    }
+
+    # Convert data_column into a dict for easy lookup
+    data_dict = dict(zip(df['state'], df[data_column]))
+
+    # -------------------------------------------------
+    # 2. Define the Problem
+    # -------------------------------------------------
+    problem = pulp.LpProblem("Maximize_Minimum_Value", pulp.LpMaximize)
+
+    # -------------------------------------------------
+    # 3. Decision Variables
+    # -------------------------------------------------
+    # x[s, r] = 1 if state s is assigned to region r
+    x = {
+        (s, r): pulp.LpVariable(f"x_{s}_{r}", cat="Binary")
+        for s in states for r in range(k)
+    }
+
+    # min_value: we want to maximize the minimum data_column value across all k regions
+    min_value = pulp.LpVariable("min_value", lowBound=0, cat="Continuous")
+
+    # capital[r, s] = 1 if state s is the capital of region r
+    capital = {
+        (r, s): pulp.LpVariable(f"capital_{r}_{s}", cat="Binary")
+        for r in range(k) for s in states
+    }
+
+    # flow[i, j, r] = flow from i to j in region r
+    # We only define flow for adjacent states.
+    flow = {}
+    for r in range(k):
+        for i in states:
+            for j in filtered_adjacency[i]:
+                flow[(i, j, r)] = pulp.LpVariable(
+                    f"flow_{i}_{j}_{r}", lowBound=0, cat="Continuous"
+                )
+
+    region_size = {
+      r: pulp.LpVariable(f"region_size_{r}", lowBound=0, upBound=n_states, cat="Integer")
+      for r in range(k)
+    }
+    
+    #y[r,s] represents region_size[r]*capital[r,s]
+    y = {}
+    for r in range(k):
+      for s in states:
+        y[(r, s)] = pulp.LpVariable(
+            f"y_{r}_{s}",
+            lowBound=0,
+            upBound=M,
+            cat="Continuous"
+        )
+
+    # -------------------------------------------------
+    # 4. Objective
+    # -------------------------------------------------
+    # Maximize the minimum data_column (e.g., GDP) across all regions
+    problem += min_value
+
+    # -------------------------------------------------
+    # 5. Constraints
+    # -------------------------------------------------
+
+
+    # 5.0 region_size[r] = number of states in region r
+    for r in range(k):
+      # region_size[r] == sum of x[s, r]
+      problem += region_size[r] == pulp.lpSum(x[s, r] for s in states)
+      
+    # 5.1 Each state is assigned to exactly one region
+    for s in states:
+        problem += pulp.lpSum(x[s, r] for r in range(k)) == 1
+
+    # 5.2 Region total must be at least min_value
+    for r in range(k):
+        problem += (
+            pulp.lpSum(x[s, r] * data_dict[s] for s in states) 
+            >= min_value
+        )
+
+    # 5.3 Exactly one capital per region
+    for r in range(k):
+        problem += pulp.lpSum(capital[r, s] for s in states) == 1
+
+    # 5.4 If s is the capital of region r, then s must be in region r
+    for r in range(k):
+        for s in states:
+            problem += capital[r, s] <= x[s, r]
+
+    # 5.5 Flow constraints to enforce contiguity
+    # inflow(s, r) = sum of flow[i->s,r] over i in adjacency
+    # outflow(s, r) = sum of flow[s->j,r] over j in adjacency
+    # We want: inflow(s, r) - outflow(s, r) = x[s,r] - capital[r,s]
+    #
+    # Explanation:
+    #   - If s is in region r but not the capital: x[s,r] = 1, capital[r,s] = 0
+    #       => inflow - outflow = 1
+    #   - If s is the capital: x[s,r] = 1, capital[r,s] = 1
+    #       => inflow - outflow = 1-region_size[r]
+    #   - If s is not in region r: x[s,r] = 0, capital[r,s] = 0
+    #       => inflow = outflow = 0
+    #
+    for r in range(k):
+        for s in states:
+            inflow_s_r = pulp.lpSum(
+                flow[(i, s, r)] for i in filtered_adjacency[s] if (i, s, r) in flow
+            )
+            outflow_s_r = pulp.lpSum(
+                flow[(s, j, r)] for j in filtered_adjacency[s] if (s, j, r) in flow
+            )
+            problem += (inflow_s_r - outflow_s_r) == (x[s, r] - y[r, s])
+
+    # 5.6 Capacity constraints: flow from i->j for region r only possible if i and j are in r
+    for r in range(k):
+        for i in states:
+            for j in filtered_adjacency[i]:
+                problem += flow[(i, j, r)] <= M*x[i, r]
+                problem += flow[(i, j, r)] <= M*x[j, r]
+                
+    # Ensure that y[r,s] = region_size[r]*capital[r,s]
+    for r in range(k):
+        for s in states:
+            # 1) y[r,s] <= region_size[r]
+            problem += y[(r, s)] <= region_size[r]
+
+            # 2) y[r,s] <= M * capital[r,s]
+            problem += y[(r, s)] <= M * capital[r, s]
+
+            # 3) y[r,s] >= region_size[r] - M*(1 - capital[r,s])
+            problem += y[(r, s)] >= region_size[r] - M * (1 - capital[r, s])
+
+            # 4) y[r,s] >= 0  (already in the var's bound, but can be repeated)
+            # problem += y[(r, s)] >= 0  # redundant if lowBound=0
+
+    #Minnesota is the capital of region 1 -- commented out for now
+    #problem += capital[(0, 'MN')] == 1
+    
+    # -------------------------------------------------
+    # 6. Solve
+    # -------------------------------------------------
+    status = problem.solve(pulp.PULP_CBC_CMD(msg=True, gapRel=tolerance))
+
+    # -------------------------------------------------
+    # 7. Output
+    # -------------------------------------------------
+    if pulp.LpStatus[status] in ["Optimal", "Not Solved", "Optimal_Infeasible"]:
+        print(f"Solution found within {tolerance * 100}% of optimal.")
+        results = []
+        for s in states:
+            for r in range(k):
+                if pulp.value(x[s, r]) == 1:
+                    # region numbering from 1..k for readability
+                    capital_of_region = any(pulp.value(capital[r, s2]) == 1 and s2 == s for s2 in states)
+                    results.append({
+                        'state': s,
+                        'region': r + 1,
+                        'is_capital': capital_of_region,
+                        data_column: data_dict[s]
+                    })
+        result_df = pd.DataFrame(results)
+        result_df.to_excel(output_file, index=False)
+        print(f"Results written to {output_file}")
+    else:
+        print("No solution found within the specified tolerance.")
+
+```
+
+There's a lot I don't love about this code -- parts of it are redundant with the previous code, it uses index order $x[s,r]$ but $c[r,s]$ and $y[r,s]$, it reverses outflow and inflow relative to my description above (so that flow now travels from the capital to the states in the region), and I haven't carefully checked the hard-coded adjacency constraints (which initially had several errors such as saying that Minnesota was adjacent to Michigan). It's also quite slow when run on the full problem. BUT it seems to more or less work, and I need to wrap this post up rather than letting it consume even more of my time.
+
+Let's actually use this code to come up with a contiguous partition of the US into 7 regions that is provably within 1\% of optimal (in terms of minimum GDP of any region). To make the code run faster, I used an input file that excludes California, as well as New York, New Jersey, and New England (as these will make up two of our seven regions in an optimal solution). This is what the program came up with.
+
+```{python}
+input_file = "PartitionProblemData/state_gdp_data_medium.xlsx"
+output_file = "PartitionProblemData/auto_contiguous_regions.xlsx"
+
+#Commented out because a previous run already wrote to the output_file
+#optimize_contiguous_regions(input_file, output_file, 5, 0.01, "GDP")
+
+# Generate the map
+create_map(output_file, "GDP")
+```
+
+The minimum GDP of any region in this solution is \$3.976 trillion. Can you do better? 
+
+Also, my code is slow enough that I don't have the patience to use it to explore many different questions -- if you have ideas for making it faster, leave them in a comment below!

@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Partitioning the US into contiguous regions using MILPs | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Partitioning the US into contiguous regions using MILPs</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/12/25</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+
+<p>This post inspired by my friend Ben Orlin, who mentioned the following problem on <a href="https://mathwithbaddrawings.com/2024/12/19/2024-in-math-puzzles/">his blog</a>:</p>
+<blockquote>
+<p>Fact: the U.S. has the world’s largest economy (as measured by GDP). But let’s break the U.S. into smaller economies, and see how much of the world’s Top 10 it can thereby dominate.<br />
+<strong>Warm-up:</strong> Treating the U.S. as 51 separate economies, one for each state (plus DC), how many rank among the world’s ten largest?<br />
+<strong>Challenge:</strong> Now, consider all the ways to decompose the U.S. into new, smaller economies, each consisting of one or more contiguous states. Let’s do this to maximize the number of economies that rank in the world’s ten largest. What’s the best you can do?</p>
+</blockquote>
+<p>Ben provides the data to get started. Outside of the US (~$28 trillion), the largest economy by far is China (~$18 trillion). Germany is in third place (~$4.7 trillion), followed by Japan (~$4.1 trillion) and India (~$3.9 trillion).</p>
+<p>If we treat each US state as a separate country, California would just edge out Japan, putting it in third place. Texas (~$2.7 trillion) would fall behind the aforementioned countries as well as the UK and France. New York would be behind Italy and just ahead of Canada.</p>
+<div id="milp-formulation" class="section level1">
+<h1>MILP Formulation</h1>
+<p>Let <span class="math inline">\(S\)</span> be the set of states, with representative element <span class="math inline">\(s\)</span>, and let <span class="math inline">\(w_s\)</span> denote the weight (in this case, GDP) of state <span class="math inline">\(s\)</span>. Let <span class="math inline">\(R\)</span> be the set of regions, with representative element <span class="math inline">\(r\)</span>.</p>
+<p>Consider decision variables <span class="math inline">\(x_{s,r} \in \{0,1\}\)</span>, indicating whether state <span class="math inline">\(s\)</span> is in country <span class="math inline">\(r\)</span>. Given <span class="math inline">\(k\)</span>, we wish to choose <span class="math inline">\(x\)</span> (that is, the regions) to maximize the GDP of the smallest region. This can be formulated as follows:</p>
+<p><span class="math display">\[\begin{align*}
+\max &amp;  \,\,\,  g \\
+s.t. &amp; \,\,\, g \le \sum_{s} w_s \cdot x_{s,r} \,\, \forall r \in R \text{  # g is smaller than the GDP of each region} \\
+&amp; \sum_{r} x_{s,r} = 1 \hspace{.48 in} \forall s \in S \text{  # each state is in one region}  \\
+&amp; x_{s,r} \in \{0,1\} \hspace{.6 in} \forall s \in S, r \in R
+\end{align*}\]</span></p>
+<p>So far so good. Unfortunately, this doesn’t require that the regions be geographically coherent! Specifically, I want them to be contiguous, meaning that from any state in a region, I should be able to walk to any other state in the region without leaving the region. To avoid annoying definitions, I will let the set of states be the lower 48 (that is, I exclude Alaska and Hawaii).</p>
+<p>How do we actually encode this constraint? Suppose that we have an adjacency matrix <span class="math inline">\(A\)</span>, with <span class="math inline">\(A[s,s&#39;] = 1\)</span> if states <span class="math inline">\(s\)</span> and <span class="math inline">\(s&#39;\)</span> are adjacent, and <span class="math inline">\(A[s,s&#39;] = 0\)</span> otherwise.</p>
+<p>For now, I will suppose we have been given “capital states” of each region.</p>
+<p>Create auxiliary variables <span class="math inline">\(f_{s,s&#39;,r}\)</span>, which are non-negative real numbers. The value <span class="math inline">\(f_{s,s&#39;,r}\)</span> represents the “flow” from <span class="math inline">\(s\)</span> to <span class="math inline">\(s&#39;\)</span></p>
+<p><span class="math display">\[\begin{align*}
+
+f_{s,s&#39;,r} \le x_{s,r} \\
+f_{s,s&#39;,r} \le x_{s&#39;,r} \\
+f_{s,s&#39;,r} \le |S| A[s,s&#39;]\\
+\sum_{s&#39;} f_{s,s&#39;,r} - f_{s&#39;,s,r} = x_{s,r} \text{ if $s$ is not the capital of $r$}\\
+\sum_{s&#39;} f_{s&#39;,s,r} = \sum_{s&#39; \ne s} x_{s&#39;,r} \text{if $s$ is the capital of $r$} \\
+\end{align*}\]</span>
+The first two constraints ensure that <span class="math inline">\(f_{s,s&#39;,r}\)</span> can be positive only if <span class="math inline">\(s\)</span> and <span class="math inline">\(s&#39;\)</span> are both in region <span class="math inline">\(r\)</span>. The next constraint says that flow can only be pushed between adjacent states. The fourth constraint says that each non-capital state in the region nets one unit of outflow. The final constraint says that each</p>
+<p>Suppose we fix the regions (meaning that we fix the values of <span class="math inline">\(x\)</span>), such that each capital is in the appropriate region. I claim that the constraints on <span class="math inline">\(f\)</span> above are feasible if and only if each region is contiguous. First, suppose the region is not contiguous. This means that there is some state or contiguous set of states that is isolated from the capital of its region. Then the first three constraints imply that net flow for this state or set of states is zero. <strong>This should lead to a contradiction – go through it more carefully.</strong></p>
+<p>Conversely, suppose the region is contiguous. For each <span class="math inline">\(s\)</span> in region <span class="math inline">\(r\)</span>, trace a path in the graph from <span class="math inline">\(s\)</span> to the capital of <span class="math inline">\(r\)</span>. Push one unit of flow along each of these edges. Add up flows on a given edge. Claim that the resulting flows should be feasible. <strong>Check to make more precise and ensure correctness.</strong></p>
+<p><strong>I think we can eliminate separate weights, and have states push their flow to the capital. Worth looking into?</strong></p>
+<p>However, there is a problem with this formulation: we don’t know which states to make the “capitals” in advance! We can fix this by introducing variables <span class="math inline">\(c_{s,r} \in \{0,1\}\)</span> which are one if state <span class="math inline">\(s\)</span> is the capital of region <span class="math inline">\(r\)</span>.
+<span class="math display">\[\begin{align*}
+\sum_s c_{s,r} = 1 \,\, \forall r \in R\\
+c_{s,r} \le x_{s,r} \,\, \forall s \in S, r \in R \\
+\end{align*}\]</span>
+The first constraint says that each region has exactly one capital state. The second says that in order to be the capital of a region, a state must belong to that region. Easy enough, right? Not so fast! If we go back to our constraints on <span class="math inline">\(f\)</span> that assumed capital cities were known, we see that if <span class="math inline">\(c\)</span> is a variable, then they are non-linear! In particular, we can write them as follows:</p>
+<p><span class="math display">\[\begin{align*}
+(x_{s,r}-\sum_{s&#39;} (f_{s,s&#39;,r} - f_{s&#39;,s,r})) (1-c_{s,r}) \ge 0 \\
+(\sum_{s&#39; \ne s} x_{s&#39;,r} - \sum_{s&#39;} f_{s&#39;,s,r}) c_{s,r} \ge 0 \\
+\end{align*}\]</span>
+<strong>Should second constraint be net flow to <span class="math inline">\(s\)</span>, rather than just inflow?</strong></p>
+<p>Take a look! This correctly captures constraints, but is not linear (we have a product of <span class="math inline">\(c\)</span> and <span class="math inline">\(x\)</span>, a product of <span class="math inline">\(c\)</span> and <span class="math inline">\(f\)</span>…)</p>
+<p>Point out that we have a trick for converting this product form into an LP through use of a ``large constant” <span class="math inline">\(M\)</span>.</p>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

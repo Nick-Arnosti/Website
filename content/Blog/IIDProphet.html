@@ -1,0 +1,94 @@
+---
+title: 'IID Prophet Inequalities'
+date: '2020-10-02'
+author: Nick Arnosti
+tags:
+  Prophet Inequalities
+categories:
+  Pseudo-Research
+output:
+  blogdown::html_page:
+    number_sections: true
+---
+
+
+
+<p>Last week I had the pleasure of seeing <a href="https://www.nikhildevanur.com/">Nikhil Devanur</a> present <a href="https://arxiv.org/pdf/2007.07990.pdf">Static pricing for multi-unit prophet inequalities</a>, which is joint with <a href="https://teddlyk.github.io/">Thodoris Lykouris</a> and <a href="http://pages.cs.wisc.edu/~shuchi/">Shuchi Chawla</a>. I greatly enjoyed the paper, and discussed it in a <a href="/blog/staticpricing">blog post</a> last week. Today, I will go beyond what is in their paper to tackle a question asked by my colleague <a href="http://www.columbia.edu/~wm2428/">Will Ma</a>.</p>
+<div id="setting-the-stage" class="section level1">
+<h1><span class="header-section-number">1</span> Setting the Stage</h1>
+<p>The original paper considers a setting where we are presented with a sequence of values. Each value <span class="math inline">\(V_i\)</span> is drawn from a known distribution <span class="math inline">\(F_i\)</span>. We are allowed to &quot;keep&quot; at most <span class="math inline">\(k\)</span> values, and wish to maximize the sum of kept values. We will use a simple static threshold algorithm, which keeps the first <span class="math inline">\(k\)</span> values above some fixed threshold <span class="math inline">\(t\)</span>. We wish to benchmark the performance of this algorithm against that of an omniscient benchmark that always keeps the <span class="math inline">\(k\)</span> highest values. The original paper provides an algorithm for choosing <span class="math inline">\(t\)</span>, and a tight analysis of its performance. The following code computes its competitive ratio, as a function of <span class="math inline">\(k\)</span> (see my <a href="/blog/staticpricing">preceding post</a> for more explanation):</p>
+<pre class="r"><code>delta_pois = function(lambda,k){return(ppois(k-1,lambda))}
+mu_pois = function(lambda,k){
+  prob = dpois(0:(k-1),lambda)
+  prob = c(prob,1-sum(prob))
+  return(sum(prob*c(0:k))/k)
+}
+guarantee_at_lambda = function(k){
+  return(Vectorize(function(lambda){
+    return(min(delta_pois(lambda,k),mu_pois(lambda,k)))
+  }))
+}
+guarantee_pois = Vectorize(function(k){
+  return(optimize(guarantee_at_lambda(k),interval=c(0,k),maximum=TRUE)$objective)
+})
+round(guarantee_pois(c(1:10)),3)</code></pre>
+<pre><code>##  [1] 0.500 0.586 0.631 0.660 0.682 0.699 0.713 0.724 0.734 0.742</code></pre>
+<p>This post will consider a simpler setting where the <span class="math inline">\(F_i\)</span> are iid. This should be an easier problem, so we might hope to get a better guarantee. However, the guarantee of their algorithm does not improve! Their algorithm sets a threshold such that the expected number of items kept divided by <span class="math inline">\(k\)</span> is equal to the guarantee computed above. Therefore, if all values are &quot;nearly deterministic&quot; (i.e. <span class="math inline">\(U[1-\epsilon,1+\epsiloin]\)</span>), its performance will be approximately equal to their guarantee.</p>
+<p>In this post, I show the following:</p>
+<ol style="list-style-type: decimal">
+<li>We can get a better guarantee by using a threshold such that the expected &quot;demand&quot; (number of values exceeding the threshold) is equal to <span class="math inline">\(k\)</span>.</li>
+<li>This algorithm provides the best guarantee among the natural class of &quot;expected demand&quot; policies.</li>
+</ol>
+</div>
+<div id="the-lp-approximation-policy" class="section level1">
+<h1><span class="header-section-number">2</span> The LP Approximation Policy</h1>
+<p>Their policy's performance is hurt by the fact that it sets too high of a threshold (keeps too few items). To get a better guarantee, we must set a lower threshold, but how much lower?</p>
+<p>In the previous post we defined the &quot;demand&quot; at <span class="math inline">\(t\)</span> to be the number of values exceeding <span class="math inline">\(t\)</span>: <span class="math display">\[D_t(V) = \sum_{i = 1}^n {\bf 1}(V_i &gt; t).\]</span> We'll start by considering a natural policy: use the threshold <span class="math inline">\(t^{LP}\)</span> such that the expected demand is equal to <span class="math inline">\(k\)</span>. We can analyze its performance as follows.</p>
+<p>For any threshold <span class="math inline">\(t\)</span>, we have <span class="math inline">\(D_t \sim Binom(n,1-F(t)).\)</span> We keep <span class="math inline">\(\min(D_t(V),k)\)</span> values, each with expected value <span class="math inline">\(\mathbb{E}_{V \sim F}[V \vert V &gt; t]\)</span>. Meanwhile, the LP relaxation discussed in my previous post gives an upper bound of <span class="math inline">\(k \cdot \mathbb{E}_{V \sim F}[V \vert V &gt; t^{LP}]\)</span>. Combining these, we get the following performance guarantee: <span class="math display">\[\frac{ST_k^{t^{LP}}(F)}{LP_k(F)} = \frac{\mathbb{E}[\min(D_{t^{LP}}(V),k)] \cdot\mathbb{E}_{V \sim F}[V \vert V &gt; t^{LP}]}{k\cdot \mathbb{E}_{V \sim F}[V \vert V &gt; t^{LP}]}\hspace{.3 in} = \frac{\mathbb{E}[\min(Binom(n,k/n),k)]}{k}. \]</span></p>
+<p>For any <span class="math inline">\(k\)</span>, this expression falls as <span class="math inline">\(n\)</span> grows. In the limit as <span class="math inline">\(n \rightarrow \infty\)</span>, the Binomial becomes a Poisson, yielding the following bounds.</p>
+<pre class="r"><code>mu_binom = function(n,k,p){
+  prob = dbinom(0:(k-1),n,p)
+  prob = c(prob,1-sum(prob))
+  return(sum(prob*c(0:k))/k)
+}
+iid_guarantee = Vectorize(function(n,k){return(mu_binom(n,k,k/n))}) #For finite k, n
+iid_guarantee_pois = Vectorize(function(k){return(mu_pois(k,k))}) #Limit as n -&gt; \infty
+round(iid_guarantee_pois(c(1:10)),3)</code></pre>
+<pre><code>##  [1] 0.632 0.729 0.776 0.805 0.825 0.839 0.851 0.860 0.868 0.875</code></pre>
+<p>Let's compare these to the bounds obtained for the general case. For <span class="math inline">\(k = 1\)</span>, the bound improves from <span class="math inline">\(1/2\)</span> to <span class="math inline">\(1 - 1/e\)</span>. Even for very large <span class="math inline">\(k\)</span>, there remains a sizeable gap. For example, with <span class="math inline">\(k = 100\)</span>, the general bound is <span class="math inline">\(0.88\)</span>, and the iid bound is <span class="math inline">\(0.96\)</span>.</p>
+<pre class="r"><code>kVals = c(1:100)
+colors = c(&#39;blue&#39;,&#39;red&#39;)
+plot(NULL,xlim=c(min(kVals),max(kVals)),ylim=c(0.4,1),las=1,xlab=&#39;k&#39;,ylab=&#39;&#39;,main=&#39;Performance Guarantee&#39;,cex.axis=2,cex.lab=2,cex.main=2)
+lines(kVals,iid_guarantee_pois(kVals),col=colors[1],lwd=2)
+lines(kVals,guarantee_pois(kVals),col=colors[2],lwd=2)
+legend(.62*max(kVals),.65,col=colors,lty=c(&#39;solid&#39;,&#39;solid&#39;),lwd=2,legend = c(&#39;IID&#39;,&#39;General&#39;),cex=1.5)</code></pre>
+<p><img src="/Blog/IIDProphet_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="expected-demand-policies" class="section level1">
+<h1><span class="header-section-number">3</span> Expected Demand Policies</h1>
+<p>The preceding analysis establishes a performance guarantee for the threshold <span class="math inline">\(t^{LP}\)</span>. But is this threshold optimal? For most <span class="math inline">\(F\)</span>, it is not. However, in we will show that this selection provides the best worst-case guarantee among the following subset of static threshold policies.</p>
+<p><strong>Expected Demand Policy.</strong> Given <span class="math inline">\(\alpha &gt; 0\)</span>, choose a threshold <span class="math inline">\(t\)</span> such that expected demand <span class="math inline">\(n(1 - F(t))\)</span> is equal to <span class="math inline">\(\alpha \cdot k\)</span>.</p>
+<p>We denote the performance of this policy on distribution <span class="math inline">\(F\)</span> by <span class="math inline">\(ED_k^{\alpha}({\bf F})\)</span>.</p>
+<p>One way to think of expected demand policies is that they specify the threshold as a fixed <em>quantile</em> of the distribution <span class="math inline">\(F\)</span>. If the quantile can depend on <span class="math inline">\(n, k,\)</span> and <span class="math inline">\(F\)</span>, then the set of expected demand policies coincides with the set of static threshold policies. However, we will ask the question, can we choose an <span class="math inline">\(\alpha\)</span> that works well simultaneously for all <span class="math inline">\(n,k,F\)</span>? To start, we fix <span class="math inline">\(n\)</span> and <span class="math inline">\(k\)</span>, and solve the following problem: <span class="math display">\[\sup \limits_\alpha \inf \limits_{F} \frac{ED_k^\alpha(F)}{LP_k(F)}.\]</span></p>
+<p>Our preceding analysis was for <span class="math inline">\(\alpha = 1\)</span>. It turns out that no other choice of <span class="math inline">\(\alpha\)</span> offers a better guarantee.</p>
+<p>The intuition is as follows. If <span class="math inline">\(\alpha &lt; 1\)</span>, the guarantee will be poor if values are nearly deterministic (we will keep too few values). If <span class="math inline">\(\alpha &gt; 1\)</span>, the guarantee will be poor if the distribution puts a tiny amount of weight on an immense value (we will too often reach our quota and miss out on a very high value).</p>
+<p>We can formalize this as follows. Let <span class="math inline">\(B_{n,p}\)</span> denote a binomial with parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>. For any <span class="math inline">\(\alpha &lt; 1\)</span>, let <span class="math inline">\(F\)</span> be uniform on <span class="math inline">\([1-\epsilon,1+\epsilon]\)</span>. As <span class="math inline">\(\epsilon \rightarrow 0\)</span>, our competitive ratio converges to the expected number of values we keep, divided by <span class="math inline">\(k\)</span>: <span class="math display">\[\frac{ED_k^\alpha(F)}{OPT_k(F)} \rightarrow \frac{\mathbb{E}[\min(B_{n,\alpha\cdot k/n},k)]}{k}\]</span></p>
+<p>For any <span class="math inline">\(\alpha &gt; 1\)</span>, let <span class="math inline">\(F\)</span> be such that <span class="math inline">\(v_i\)</span> is <span class="math inline">\(1/\epsilon^2\)</span> with probability <span class="math inline">\(\epsilon\)</span>, and otherwise is uniform on <span class="math inline">\([0,1]\)</span>. If <span class="math inline">\(\epsilon\)</span> is small, all that really matters is how often we keep large values. The optimal policy will save spots for a large value, whereas the <span class="math inline">\(ED_k^\alpha\)</span> policy will sometimes run out of room. In particular, as <span class="math inline">\(\epsilon \rightarrow 0\)</span>, the competitive ratio will converge to <span class="math display">\[\frac{ED_k^\alpha(F)}{OPT_k(F)}= \frac{\mathbb{E}[\min(B_{n,\alpha\cdot k/n},k)]}{\alpha k}.\]</span></p>
+<p>With a little work, we can show that for any <span class="math inline">\(\alpha\)</span>, one of these families of distributions is the worst case, so the competitive ratio for the expected demand policy with parameter <span class="math inline">\(\alpha\)</span> is <span class="math display">\[\frac{\mathbb{E}[\min(B_{n,\alpha \cdot k/n},k)]}{\max(\alpha,1)\cdot k}.\]</span></p>
+<p>As <span class="math inline">\(n\)</span> grows, this bound falls, and the binomial converges to a Poisson. We can therefore plot the worst-case performance of an expected demand policy as a function of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(k\)</span>. For all <span class="math inline">\(k\)</span>, the optimal choice of <span class="math inline">\(\alpha\)</span> is one, and the guarantee offered by this policy improves with <span class="math inline">\(k\)</span>.</p>
+<pre class="r"><code>iid_guarantee_alpha = Vectorize(function(alpha,k){return(mu_pois(alpha*k,k)/max(alpha,1))})
+alphaMax = 3
+plot(NULL,las=1,xlim=c(0,alphaMax),ylim=c(0,1),xlab=expression(alpha),ylab=&#39;&#39;,main=&#39;Performance of Expected Demand Policy&#39;,cex.lab=2,cex.axis=2,cex.main=2)
+k = c(1,2,5,20)
+colors = c(&#39;black&#39;,&#39;red&#39;,&#39;blue&#39;,&#39;green&#39;)
+for(i in 1:length(k)){
+  plot(Vectorize(function(x){return(iid_guarantee_alpha(x,k[i]))}),xlim=c(0,alphaMax),col=colors[i],lwd=2,add=TRUE)
+}
+legend(2.15,1,col=colors,lty=rep(&#39;solid&#39;,length(k)),lwd=2,legend=c(&#39;k=1&#39;,&#39;k=2&#39;,&#39;k=5&#39;,&#39;k=20&#39;),cex=1.5)</code></pre>
+<p><img src="/Blog/IIDProphet_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="closing-remarks" class="section level1">
+<h1><span class="header-section-number">4</span> Closing Remarks</h1>
+<p>This post has showed when values are iid, a very simple policy achieves a significant improvement over the guarantees that are known for the non-iid case. While this policy offers the best guarantee of any &quot;expected demand&quot; policy, I don't know whether the resulting bounds are tight for the class of static threshold policies. It would be interesting to see if there is a distribution <span class="math inline">\(F\)</span> for which <em>no</em> choice of threshold offers a better guarantee.</p>
+<p>Another interesting direction of study is an intermediate case, where the values are drawn from different distributions, but presented in a random (rather than fixed) order. This has been dubbed the &quot;Prophet Secretary&quot; problem by some recent papers (&quot;Prophet&quot; coming from the fact that the distributions are known, and &quot;Secretary&quot; from the well-known secretary problem in which adversarially chosen values are presented in random order). Stay tuned for new results in this case!</p>
+</div>

@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>What do Toilet Paper and License Plates Have in Common? | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>What do Toilet Paper and License Plates Have in Common?</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2020/04/12</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>My research usually starts from the premise that there is a shortage of some item, which triggers the need for an allocation policy. However, sometimes the allocation policy can <em>cause</em> a shortage – especially in the presence of uncertainty. This, in turn, results in an inefficient allocation.</p>
+<p>For one topical example, consider toilet paper. In normal times, people have confidence that they will be able to buy toilet paper whenever they need it. As a result, they wait until they run low to buy more. This behavior helps to ensure that toilet paper is always in stock. However, there is also a bad equilibrium, in which people believe that the store might not have toilet paper when they need it. Because the prospect of going without toilet paper is unappealing, they buy extra when they can. This creates a self-fulfilling prophecy: stores frequently run out, justifying the behavior of hoarding. Some people end up with too much toilet paper, and others with too little.</p>
+<p>Today, I’ll discuss this idea in the context of Beijing’s license plate lotteries.</p>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>Many major cities in China <a href="https://www.wsj.com/articles/more-license-plates-wont-turbocharge-chinas-car-market-11559555116">ration the supply of new license plates</a>. In Shanghai, these are allocated by auction, with <a href="https://www.economist.com/china/2018/04/19/why-a-licence-plate-costs-more-than-a-car-in-shanghai">recent winners paying the equivalent of more than $12,000</a>. In Beijing, applicants must choose between applying for a traditional gas-burning vehicle and a “New Energy Vehicle” (NEV). License plates for traditional vehicle are awarded in semi-monthly lotteries, while the those for NEVs are allocated on a first-come, first-served basis. The lottery for traditional vehicles has become increasingly congested as quotas are reduced<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> and applications soar: recent lotteries have had <a href="https://www.chinadailyhk.com/articles/45/138/47/1530074750586.html">2,000 applicants for every winner selected</a>.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Although NEVs were initially unpopular, demand has surged, and the length of the waiting list is now <a href="https://www.chinadaily.com.cn/a/201908/25/WS5d6234c3a310cf3e35567b91.html">nine times the annual quota</a>.</p>
+<p>When the lottery was first announced, it triggered a <a href="https://www.latimes.com/world/la-xpm-2011-jan-24-la-fg-china-cars-20110124-story.html">rush to buy cars</a> before the policy was enacted. As the odds of winning continue to decline, ever more people decide to apply – even those who do not currently need a car!<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+</div>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<p>Time is discrete. In each period, a unit mass of agents arrives. Each agent lives for two periods. In the first period (college), they have no need for a car. In the second, their value for car ownership varies, with <span class="math inline">\(\bar{F}(v)\)</span> giving the fraction with value above <span class="math inline">\(v\)</span>. Agents only learn their value for a car in the second period. The cost of car ownership is <span class="math inline">\(c\)</span>. Absent any quota, we would expect people to wait until they graduate, and then buy a car if <span class="math inline">\(v &gt; c\)</span>. In this case the number of cars purchased in each period is <span class="math inline">\(\bar{F}(c)\)</span>.</p>
+<p>The government decides to use a lottery to implement a quota <span class="math inline">\(q\)</span> on car sales. In each period, anyone who wishes to buy a car may apply for free. If the number of applicants is below <span class="math inline">\(q\)</span>, all are permitted to buy a car. Otherwise, a quantity <span class="math inline">\(q\)</span> are selected uniformly at random.</p>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p>Let us study how agents respond to this system. Anyone who does not get a car in the first period have a simple strategy in the second: apply if and only if <span class="math inline">\(v &gt; c\)</span>. Thus, the real question is whether to apply for a car in the first period, <em>before</em> knowing whether you will need it.</p>
+<p>If you believe that you will be able to get a car whenever you want one, then it obviously makes sense to wait. However, if you are concerned that a car will not be available in the future, then you might try to buy one now, despite the risk that you might not need it. In general, waiting is the best strategy if the probability of winning the lottery is above some threshold <span class="math inline">\(\bar{p}\)</span>;<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> otherwise, applying early is superior.</p>
+<p>If all agents adopt the “wait” strategy, then the mass of agents entering in each lottery is <span class="math inline">\(\bar{F}(c)\)</span>, and the probability of success is <span class="math display">\[p_W = \min\left( \frac{q}{\bar{F}(c)},1\right).\]</span></p>
+<p>If all agents adopt the “early” strategy, then we wish to solve for the resulting probability of winning each lottery <span class="math inline">\(p_E\)</span>. The mass of lottery entrants in each period is <span class="math inline">\(1 + (1-p_E) \bar{F}(c)\)</span>, so the win probability must solve <span class="math display">\[p_E (1 + (1-p_E) \bar{F}(c)) = q.\]</span></p>
+<p>We now search for an equilibrium. It is easy to show that there is always at least one equilibrium. When the quota <span class="math inline">\(q\)</span> is sufficiently large, the only equilibrium is for all agents to wait; when <span class="math inline">\(q\)</span> is sufficiently small, the only equilibrium is for all agents to apply early. However, for a wide range of quotas, both of these strategies may be equilibria. In fact, this can arise even if <span class="math inline">\(q &gt; \bar{F}(c)\)</span>, meaning that it’s possible to give a car to everyone who will want one!</p>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>When lottery odds are low and people apply before they need a car, there are significant welfare consequences: many people win cars that they never need, while others lose repeatedly and never get a car (despite wanting one). Although the former group would like to sell their license to the latter, transfering a license plate is <a href="https://qz.com/153742/the-genius-ways-beijing-drivers-get-around-the-citys-license-plate-lottery/">not permitted</a>, except to a spouse.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> There are other contexts in which scarcity results in an inefficient allocation: my <a href="/ResearchPapers/Arnosti-Shi_AffordableHousing.pdf">paper with Peng Shi</a> points out that when odds in housing lotteries are low, people will apply everywhere, resulting in an inefficient matching of people to apartnments.</p>
+<p>One interesting caveat to the analysis above is that the entire purpose of this particular quota is to limit externalities from driving. Although awarding license plates to people who don’t need cars seems inefficient, it does have the benefit that these people likely won’t drive as much. For a more complete analysis of this effect, see <a href="http://www.restud.com/wp-content/uploads/2017/11/beijing_lottery_2017_Final.pdf">this paper</a>. Another consideration, is that reducing the number of licensed cars may change the <a href="https://felixmunozgarcia.files.wordpress.com/2017/09/a-less-efficient-fleet-unintended-consequences-of-beijings-vehicle-lottery-system.pdf">fleet composition</a> or driving behavior, thereby <a href="https://www.researchgate.net/publication/264350212_A_review_of_Beijings_vehicle_registration_lottery_Short-term_effects_on_vehicle_growth_and_fuel_consumption">reducing emissions less than intended</a>.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Before the lottery was implemented in 2011, over 700,000 new licenses were issued each year. In the first year of the lottery, 240,000 licenses were awarded, but this year the quota for gas vehicles is 40,000.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>My understanding is that the lottery is not done uniformly at random: applicants who have applied repeatedly are given higher odds than newcomers. This is remniscent of <a href="https://www.themeateater.com/hunt/big-game/big-game-tags-understanding-license-draws">bonus point systems for hunting licenses</a>. I ignore this feature in the analysis that follows. Incorporating it would only increase the incentive for people to begin applying before they need a car.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>A similar phenomenon arises with housing in some European cities, where wait lists can take decades to clear, resulting in people rushing to put their name down as soon as they are eligible.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>The quantity <span class="math inline">\(\bar{p}\)</span> depends on the value distribution <span class="math inline">\(F\)</span> and the cost of ownership <span class="math inline">\(c\)</span>. I leave the exact expression for <span class="math inline">\(\bar{p}\)</span> as an exercise for the reader.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>However, there is a <a href="https://bfi.uchicago.edu/wp-content/uploads/BFI_WP_2019139.pdf">black market</a>, as well as <a href="https://www.thedrive.com/news/31231/beijing-drivers-are-entering-sham-marriages-just-to-get-their-cars-registered">sham marriages</a> to enable license transfer.<a href="#fnref5">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

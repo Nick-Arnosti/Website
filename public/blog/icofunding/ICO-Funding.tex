@@ -1,0 +1,125 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\fbar}{\overline{F}}
+\usepackage{amsthm,amsmath}
+\usepackage{enumitem}
+%\newtheorem{background}{Background}
+
+%SetFonts
+
+%SetFonts
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\newcommand{\link}[2]{{\color{blue}\tt{\href{#1}{#2}}}}
+%SetFonts
+
+\title{\vspace{-.5 in} Raising Funds}
+\author{Nick Arnosti}
+\date{October 25 2019}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+
+\section{Motivation}
+
+At INFORMS, I saw a talk by Jingxing (Rowena) Gan, about her paper ``Inventory, Speculators, and Initial Coin Offerings" (joint with Gerry Tsoukalas and Serguei Netessine). I really liked the model, so I thought I'd give my take on it. Although the paper has implications for certain classes of ICOs, I think its applicability is much broader, and will describe it accordingly. 
+
+Suppose you've got an idea for a company, but no money on hand. To launch, you need to raise capital. The traditional approach is to sell shares in the company, which entitle investors to a share of future profits. Another possibility is to sell shares in the future {\em revenue} of the company. In either case, investors might have several concerns. First, can the product be produced at a cost lower than its value to consumers? Second, if they give you money, what prevents you from scrapping the plan for the company and walking away with the cash? For example, if you sell $100\%$ of future revenue, you clearly have no incentive to produce at all!  
+
+This paper asks several questions related to this moral hazard concern. I focus on two.
+\begin{enumerate}
+\item If you have no ability to commit to future production, is it possible to convince investors to lend to you? 
+\item If so, how profitable will the resulting company be (compared to the case where you had no capital constraints)?
+\end{enumerate}
+They address this question in a variant of the Newsvendor model,  with an additional fundraising round up front. In this model, the answer to the first question is ``it depends." If the profit margin on the product is at least 50\%, then it is possible to receive funding from investors. Otherwise, it is not. Assuming funding is feasible, the answer to the second question depends on what type of contract you sign with investors. Standard contracts result in inefficiently low levels of production, but a carefully designed contract restores efficiency.
+
+
+\newpage
+\section{Model}
+
+The model proceeds in three steps.
+\begin{enumerate}[leftmargin = 0.7 in]
+\item[Round 1:] The founder strikes a deal with investors. The founder receives an up-front payment of $P$, in return for promises for a future payoff that depends on outcomes. Formally, the founder commits to a function $R$ that determines payment to investors as a function of the company's production cost and sales revenue.
+\item[Round 2:] The founder decides a production quantity $Q$, incurring total cost $cQ$. He or she can't spend more than the money $P$ collected from investors. 
+\item[Round 3:] Demand $D$ is realized. Revenue is $p\min(Q,D)$, and the founder pays $R(Q,D)$ to investors.
+\end{enumerate}
+All parties are risk neutral, and know the production cost $c$, sales price $p$ (denoted by $v$ in the paper) and demand distribution $F$ up front. We let $\fbar(q) = 1 - F(q)$.
+\subsection{Unconstrained Newsvendor}
+If the founder had no capital constraints, then as long as $c < p$, you can make a profit. Your expected profit from producing quantity $Q$ is
+\begin{equation} \pi(Q) = \int_0^{Q} (p\fbar(q) - c)dq, \label{eq:newsvendor} \end{equation}
+and the optimal production quantity $Q^n$ solves 
+\begin{equation} p\fbar(Q^n) =c. \label{eq:news-opt} \end{equation}
+
+\subsection{Constrained}
+In this world, given the up front payment $P$, the maximum possible production is $P/c$. Given contract $R$, in round one the founder will choose 
+\begin{align} Q^*(R,P) \in &  \arg \max_{0 \leq q \leq P/c} \E_{D\sim F}[P - c q + p\min(q,D) - R(q,D)] \nonumber \\ 
+& =  \arg \max_{0 \leq q \leq P/c} \pi(q) + P - \E_{D \sim F}[R(q,D)].\label{eq:moralhazard} \end{align}
+ To capture the lack of commitment, we assume that if the founder produces nothing (and therefore sells nothing), then he or she doesn't need to pay anything back to investors: 
+\begin{equation} R(0,D) = 0. \label{eq:nocommitment}\end{equation}
+In the first stage, investors will only lend at (weakly) favorable terms. That is,\footnote{The paper considers an extension where investors demand positive expected returns, but I won't focus on that here.}
+\begin{equation}P \leq \E_{D\sim F}[R(Q^*(R,P),D)].\label{eq:investorIC} \end{equation}
+
+
+\subsection{Special Cases}
+
+The paper studies two special cases (possible forms for the function $R$). In one (``utility tokens"), investors are entitled to a share $\alpha$ (in the paper, $m/n$) of future revenue. That is, 
+\[R_u^\alpha(Q,D) = \alpha \, p \, \min(Q,D).\]
+In the other (``equity tokens"), they are entitled to a share $\alpha$ of future profit: 
+\[R_e^\alpha(Q,D) = \alpha \max ( p \, \min(Q,D) - c Q,0).\]
+We let $\alpha^u$ and $\alpha^e$ denote the optimal choices of $\alpha$, and $Q^u$ and $Q^e$ the corresponding production quantity.
+
+\section{Analysis}
+
+We can now address the two questions posed in the introduction. 
+
+\subsection{When can the founder get a loan?}
+First, when is it possible to convince investors to lend to you? That is, when is there a choice of $(P,R)$ that solve \eqref{eq:moralhazard}, \eqref{eq:investorIC}, \eqref{eq:nocommitment} and satisfies $P > 0$?
+Clearly, a necessary condition is that production level $Q^* > 0$ (else, no investor will give you money). By \eqref{eq:investorIC}, the expected payment to investors must be at least $P$:
+\[ \E[R(Q^*,D)] \geq P.\]
+Furthermore, your expected profit from producing $Q^*$ must exceed your expected profit from producing nothing and pocketing $P$. By \eqref{eq:moralhazard} and \eqref{eq:nocommitment}, this implies that
+\[\pi(Q^*) \geq \E[R(Q^*,D)] .\]
+Feasibility of $Q^*$ implies $P \geq c Q^*$ and  \eqref{eq:newsvendor} implies $\pi(q) \leq (p - c)Q$. Putting it all together we have
+\[ (p - c)Q^* \geq \pi(Q^*) \geq P \geq c Q^*.\]
+For $Q^* > 0$, this holds only if 
+\begin{equation} p > 2 c. \label{eq:necessary} \end{equation}
+This is a necessary condition to be able to raise money. In fact, under either revenue-sharing or profit-sharing, it is also sufficient: if it is satisfied, there is a choice of $\alpha$ such that investors will give you $P > 0$.
+
+To me, this is perhaps the cleanest result in the paper. It is not always possible to get a loan (of any size), even if the product could make profit. This is the cost of moral hazard.
+
+\subsection{How profitable will your company be?}
+
+Let's consider the case of revenue sharing. In that case, starting from production quantity $q$, the cost to you of producing an additional item is $c$, and the benefit to you is $(1-\alpha)p$ times the probability of selling this item, which is $\fbar(q)$. Thus, you will stop when these are equal:
+\[ (1 - \alpha^u) p\fbar(Q^u) = c.\]
+Comparing this to the solution without capital constraints given by \eqref{eq:news-opt}, we see that you always produce less than in the Newsvendor model: $Q^u < Q^n$. Furthermore, in your optimal contract, investors will break even in expectation, implying that your expected profit is $\pi(Q^{u})$. Because $\pi$ is increasing on $[0,Q^n)$, this implies that your profit is also strictly lower. The same idea implies that $Q^e < Q^n$, and in fact the authors show (subject to a technical condition -- I am curious to know whether it is necessary) that 
+\[Q^u < Q^e < Q^n,\]
+implying the same ranking in terms of expected profit.
+
+Thus, even projects that aRSture funded are less profitable than they would be without capital constraints. However, raising capital reduces the risk associated with these projects. In particular, under either profit sharing or revenue sharing, the founder cannot lose money (whereas in the standard Newsvendor model, this happens whenever demand is sufficiently low).
+
+\subsection{Optimal contract design}
+
+The natural follow-up question is, can we design a contract that has higher expected revenue than revenue-sharing or profit-sharing? The problem with those contracts is that my incentive to produce later units is diminished, because some of the profit from these units is distributed to investors. We can fix this by having $R$ pay all revenue to investors up to some pre-specified maximum, with any remaining revenue going to the founder's pocket. In particular, if $p > 2c$ and we define 
+\[R(Q,D) = p \min(Q,D,M) \]
+and choose $M < Q^n$ such that $p\E[\min(D,M)] = c Q^n$, then we can raise enough money to produce quantity $Q^n$, and will have an incentive to do so. In other words, so long as the profit margins are large enough to get any funding at all, then this contract recovers the full expected profit of the Newsvendor solution (and furthermore guarantees the founder non-negative profit)! This clearly maximizes expected profit, as the expected sum of investor and founder profit is at most $\pi(Q^n)$, and investors must expect non-negative profit.
+
+Of course, if investors demand a positive expected return, the founder cannot earn $\pi(Q^n)$. Even in this case, however, a larger choice of $M$ maintains incentives to produce at the efficient level $Q^n$, while shifting the distribution of profit between founder and investors.
+
+\newpage
+\section{Closing Comments}
+
+This is a cute model, with clean insights. It predicts that moral hazard concerns may prevent certain ideas from being funded, but that all sufficiently profitable ideas should be able to get funding. Furthermore, moral hazard need {\em not} distort production incentives, as long as the contract is designed to cap realized investor payout (leaving the founder as the sole claimant of revenue from later sales). While this may not be popular for some investors (I have heard it argued that many investors appear to be risk-seeking), I imagine that this contract does actually arise in certain contexts.
+
+At a technical level, this seems very closely related to principal-agent employment models. Seen in this light, we could imagine the investors as the principal, and the founder as the agent. If the production quantity is unobservable to investors and the contract conditions only on realized sales, we essentially recover classical model employment models: the only twist is that here, the agent makes a take-it-or-leave it contract offer to the principal, instead of the reverse.
+
+
+
+\end{document}  

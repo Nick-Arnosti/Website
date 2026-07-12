@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Paper Discussion on b</title>
+    <link>/categories/paper-discussion/</link>
+    <description>Recent content in Paper Discussion on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/paper-discussion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>When is Static Pricing Good Enough?</title>
+      <link>/futureposts/dynamicpricing/</link>
+      <pubDate>Wed, 11 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/dynamicpricing/</guid>
+      <description>In this post, I will discuss the paper Static Pricing: Universal Guarantees for Reusable Resources by Omar Besbes, Adam Elmachtoub, and Yunjie Sun.
+#Motivation</description>
+    </item>
+    
+  </channel>
+</rss>

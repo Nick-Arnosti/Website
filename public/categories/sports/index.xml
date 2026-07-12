@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sports on b</title>
+    <link>/categories/sports/</link>
+    <description>Recent content in Sports on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="/categories/sports/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Should the Lions Have Gone For It?</title>
+      <link>/blog/goingon4th/</link>
+      <pubDate>Sat, 07 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/goingon4th/</guid>
+      <description>Although I am not as invested in professional sports as I used to be, I still enjoy following along, and sometimes get a chance to put some math skills to use. This post will analyze a high-profile decision by Lions coach Dan Campbell at the end of their game against the Packers.
+The situation: tie game, Lions have the ball on the Packers’ 22 yard line. It’s 4th and inches with 43 seconds left, and the Packers have no timeouts.</description>
+    </item>
+    
+    <item>
+      <title>How Valuable is an Offensive Rebound?</title>
+      <link>/blog/offensiverebounds/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/offensiverebounds/</guid>
+      <description>Motivation This fall, I started playing basketball with other junior faculty members. Most of them are better shooters than I am, but I have one key advantage: I am 6’2“. As a result, a big part of my contribution is to grab as many rebounds as possible. Today’s post tries to quantify the value of this skill. I started with two key questions:
+How valuable is offensive rebounding skill, relative to shot-making?</description>
+    </item>
+    
+    <item>
+      <title>Why You Should Bet on Favorites</title>
+      <link>/blog/racetrackgambling/</link>
+      <pubDate>Tue, 03 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/racetrackgambling/</guid>
+      <description>Today’s post is about a topic that caught my eye during my first year of graduate school: inferring win probabilities from betting lines. It is an empirical fact that conventional betting line estimates systematically understate the favorite’s chance of winning. Traditional explainations argue that bettors are irrational. This post points out that the bias could appear even with rational bettors, due to the fact that bookies set the odds to minimize their exposure.</description>
+    </item>
+    
+    <item>
+      <title>LeBron James, Coupon Collector</title>
+      <link>/blog/collectingcoupons/</link>
+      <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/collectingcoupons/</guid>
+      <description>Last night, LeBron James became the first player to have a triple double against all 30 NBA teams. The article mentions that he has 86 career triple doubles. To me, it sounded surprising that he needed &amp;quot;only&amp;quot; 86 triple doubles to get one against every team. This post will do some quick back-of-the-envelope calculations to test my intuition.
+My first thought was to model this as a Coupon Collector&#39;s Problem.</description>
+    </item>
+    
+    <item>
+      <title>NFL Strategy: Going for 2</title>
+      <link>/blog/nfl-2pt/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/nfl-2pt/</guid>
+      <description>Setting the Scene Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? This was the decision that the Panthers faced against the Packers earlier this year.
+Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two. This ESPN article does a good job of working through an example.</description>
+    </item>
+    
+  </channel>
+</rss>

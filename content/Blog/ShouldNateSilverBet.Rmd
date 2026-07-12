@@ -1,0 +1,53 @@
+---
+title: 'Should Nate Silver Bet on his own Predictions?'
+date: '2020-05-17'
+author: Nick Arnosti
+tags:
+categories:
+  Miscellaneous
+---
+
+
+
+
+#The Proposal
+
+My friend [Shengwu Li](https://www.shengwu.li/) pointed me to the following (eight year old) [Marginal Revolution blog post](https://marginalrevolution.com/marginalrevolution/2012/11/a-bet-is-a-tax-on-bullshit.html) titled "A Bet is a Tax on Bullshit." In it, Alex Tabarrok argues that pundits should stake part of their salary on their predictions:
+
+>The NYTimes should require that Silver, and other pundits, bet their beliefs. Furthermore, to remove any possibility of manipulation, the NYTimes should escrow a portion of Silver’s salary in a blind trust bet. In other words, the NYTimes should bet a portion of Silver’s salary, at the odds implied by Silver’s model, randomly choosing which side of the bet to take, only revealing to Silver the bet and its outcome after the election is over. A blind trust bet creates incentives for Silver to be disinterested in the outcome but _very_ interested in the accuracy of the forecast.
+
+There are many reactions you might have to the idea of forecasters betting on their own predictions. In this post, we will focus on Alex's final claim: does this create an incentive for Silver to produce accurate forecasts?
+
+#Analysis: Betting a Fixed Amount
+
+Suppose that Silver is asked to report an estimated probability $p$ of Trump winning reelection. Then, a coin is flipped to decide whether he takes the Trump or Biden side of the bet. He bets a fixed amount of his salary (normalized to 1) at "fair" odds, according to his estimate $p$. Formally, the payoff matrix looks as follows.
+
+```{r,echo=FALSE}
+table2 <- data.frame(c("Bet Biden", "Bet Trump"), 
+                 c("p/(1-p)", "-1"), 
+                 c("-1", "(1-p)/p"))
+knitr::kable(table2, col.names = c("", "Biden Wins", "Trump Wins"), escape = F) 
+```
+
+Note that if the probability of Trump winning is in fact $p$, then either bet has an expected value of zero. Does it follow that if Silver believes that the probability of a Trump victory is $q$, he wants to report $p = q$? The answer is a resounding 'no!' To take one extreme, **if Silver is sure that Biden will win ($q = 0$) his optimal strategy is actually to report certainty that Trump will win**! By doing so, he gives himself a great bet: a coin flip between losing \$1 and winning an arbitrarily large amount. Conversely, if he is certain that Trump will win ($q=1$), he wants to report $p = 0$. When he holds intermediate beliefs ($q \in (0,1)$), his optimal bet depends on his utility function, but these extreme examples illustrate how poorly aligned his incentives are.
+
+#An Alternative Payoff Matrix
+
+The previous payoff matrix allowed Silver to set up a bet with limited downside and unlimited upside. An alternative implementation that avoids this concern is the following.^[Even if Silver can perfectly predict the election, he cannot give himself a sweetheart deal: any report $p$ that gives him the possibility of a big gain also carries an equal probability of a big loss.] 
+
+```{r,echo=FALSE}
+table1 <- data.frame(c("Bet Biden", "Bet Trump"), 
+                 c("p/(1-p)", "-p/(1-p)"), 
+                 c("-1", "1"))
+knitr::kable(table1, col.names = c("", "Biden Wins", "Trump Wins"), escape = F) 
+```
+
+As before, if the true probability of a Trump victory is $p$, either bet is fair. Also as before, Silver has no incentive to report his true belief $q$. If we assume that he is risk averse, then his optimal report is actually $p = 0$, regardless of his beliefs! In fact, the for **any** utility function that he has, the set of optimal reports **does not depend on his beliefs**! This is because his report only matters when Biden wins: thus, his beliefs about how likely this is are irrelevant.
+
+
+#Conclusion
+
+To me, this is a good illustration of the value of mathematical modeling. The claim "A blind trust bet creates incentives for Silver to be... very interested in the accuracy of the forecast" sounds reasonable (even to me!) on its face. However, as soon as you try to formalize this claim, it becomes immediately obvious that it is incorrect. To play off of the title of Alex's post, a mathematical model is a bullshit detector: it enforces precision that catches incorrect arguments that might slide by if stated only in English.
+
+I admit, the idea of requiring pundits to put their money where their mouth is has a certain appeal. This post says that a random blind trust bet is a terrible idea, but doesn't actually answer the question of whether pundits' salaries should be based on their predictions.^[For a discussion of alternative reward schemes that might better elicit truthful reports, see [this paper](https://healy.econ.ohio-state.edu/papers/Healy-ExplainingBDM_Note.pdf). Thanks again to [Shengwu](https://www.shengwu.li/) for the pointer.] What say you?
+

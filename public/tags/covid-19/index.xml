@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>COVID-19 on b</title>
+    <link>/tags/covid-19/</link>
+    <description>Recent content in COVID-19 on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Mar 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/covid-19/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How Useful is Pooled Testing?</title>
+      <link>/blog/poolingtests/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poolingtests/</guid>
+      <description>In a previous post, I wrote about several strategies for reducing turnaround times for COVID tests. One interesting strategy that I did not write about is pooling, also known as pooled testing. What is pooling? I&#39;ll let the CDC Interim Guidance for Use of Pooling Procedures explain:
+ Pooling... means combining respiratory samples from several people and conducting one laboratory test on the combined pool of samples. If a pooled test result is negative, then all specimens can be presumed negative with the single test.</description>
+    </item>
+    
+    <item>
+      <title>Reducing Turnaround Times for COVID Tests</title>
+      <link>/blog/testingdelays/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/testingdelays/</guid>
+      <description>COVID testing is a key tool for fighting the virus. If readily available with quick results, it can be used to identify and isolate positive cases, preventing further spread. Although there are several types of COVID test, I will focus on the PCR test, which is the most common (and most accurate) option. If you want to learn a bit more about the testing process, I recommend this video, which I assigned as &amp;quot;reading&amp;quot; for my Operations Management class.</description>
+    </item>
+    
+  </channel>
+</rss>

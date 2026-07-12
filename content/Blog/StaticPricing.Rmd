@@ -1,0 +1,191 @@
+---
+title: 'Static Pricing for Multi-Unit Prophet Inequalities'
+date: '2020-09-25'
+author: Nick Arnosti
+tags:
+  Prophet Inequalities
+categories:
+  Paper Discussions
+output:
+  blogdown::html_page:
+    number_sections: true
+---
+\newcommand{\bF}{\bf F}
+
+On Tuesday, I had the pleasure of seeing [Nikhil Devanur](https://www.nikhildevanur.com/) present [Static pricing for multi-unit prophet inequalities](https://arxiv.org/pdf/2007.07990.pdf), which is joint with [Thodoris Lykouris](https://teddlyk.github.io/) and [Shuchi Chawla](http://pages.cs.wisc.edu/~shuchi/).
+
+I liked the work, and want to bring it to other's attention. In this post, I describe some of the main ideas in the paper. An [accompanying post](/blog/iidprophet) presents some new results that I derived after seeing the talk.
+
+#The Setting
+
+You are presented with a sequence of $n$ values $V_1, \ldots, V_n$. In period $i$, you are shown $v_i$, and must make an irrevocable decision to keep or dismiss it. You can keep at most $k$ values, and earn a reward equal to the sum of kept values. You do not initially know $\{V_i\}_{i = 1}^n$, but know that they are drawn independently from distributions $\bF = \{F_i\}_{i = 1}^n$. We assume that the $F_i$ are continuous distributions with finite mean, although all ideas can be extended to the case where the $F_i$ are discrete.
+
+```{r, echo=FALSE}
+#One natural question is, how much worse is it to know only $F_i$, instead of the values $V_i$? For any $k$ and $\bF = \{F_i\}_{i = 1}^n$, this can be answered. 
+
+#**Optimal Policy.** It is possible to use dynamic programming to solve for the optimal policy. This policy will in general be quite complex, and depend on the order of the $F_i$. We denote its expected performance by $OPT_k(\bF)$.
+```
+
+Although one could solve for the optimal policy using dynamic programming, we will instead focus on a class of much simpler policies.
+
+**Static Threshold Policies.** Set a static threshold $t$. Keep item $i$ if and only if $V_i > t$ and fewer than $k$ items have been kept so far. Let $ST_k^t(\bF)$ denote the expected performance of this policy.
+
+We will benchmark these policies against a "prophet" who knows the values $V_i$ in advance, and keeps the $k$ highest.
+
+**Omniscient Benchmark.** Let $OMN_k(\bF)$ denote the expected sum of the $k$ highest values.
+
+We wish to know, if we choose the threshold $t$ well, how much worse can a static threshold policy be than the omniscient solution? In other words, we want to compute 
+$$\inf\limits_{\bF} \sup \limits_t  \frac{ST_k^t(\bF)}{OMN_k(\bF)}.$$
+
+Computing this value is hard, so this paper gives a lower bound by (i) proposing an elegant way to choose $t$, and (ii) analyzing the resulting performance.
+
+#What Was Already Known?
+
+The most studied case is $k = 1$. In that case, it is well-known that a suitable static threshold guarantees half of the omniscient value. (This is actually a pretty amazing fact, when you think about it.) No better guarantee is possible, as the following simple example shows that even the optimal policy guarantees only half of the omniscient value. Let $V_1$ be deterministically equal to 1, and let $V_2$ be $1/\epsilon$ with probability $\epsilon$, and $0$ otherwise. Any optimal policy obtains expected reward of $1$, whereas the omniscient policy obtains expected reward of $2 - \epsilon$.
+
+There are several ways to choose the threshold $t$ to guarantee $1/2$ of omniscient. One especially elegant method from [Samuel-Cahn (1984)](https://projecteuclid.org/download/pdf_1/euclid.aop/1176993150) is the "median strategy": take $t$ to be the median of the distribution of the maximum of the $V_i$. Another approach is the "mean strategy" of [Kleinberg and Weinberg (2012)](https://arxiv.org/pdf/1201.4764.pdf): take $t$ to be half of the mean of the distribution of the maximum of the $V_i$.
+
+The latter approach generalizes to the case $k > 1$, producing an identical guarantee of $1/2$. However, this guarantee is far from optimal. When $k$ is large, the law of large numbers kicks in, and you can do pretty well by choosing a threshold $t$ such that the expected number of items with value above $t$ is just a bit below $k$. [Hajiaghayi, Kleinberg and Sandholm (2007)](https://www.aaai.org/Papers/AAAI/2007/AAAI07-009.pdf) show that static threshold policies can achieve a fraction of $OMN$ that is $1 - \mathcal{O}(\sqrt{\log(k)/k})$. Note in particular that this guarantee goes to $1$ as $k \rightarrow \infty$. However, the constants established in that work are such that for $k \leq 20$, the best known guarantee is $1/2$.
+
+#Their Algorithm and Results
+
+The goal of the paper is to generalize the median strategy to arbitrary $k > 1$. 
+
+##Key Step \#1: Balancing Two Risks
+
+When setting $t$, we face a tradeoff. Set $t$ too high, and we might not keep very many items. Set  $t$ too low, and we might might take $k$ items early, and miss out on a valuable item later. The crux of the algorithm will be to find a way to balance these concerns. Define
+\begin{align}
+D_t(V) & = \sum_{i = 1}^n {\bf 1}(V_i > t) \\
+\delta_k(t,F) & = \mathbb{P}_{V \sim F}(D_t(V) < k)\\
+\mu_k(t,F) &  = \frac{1}{k} \mathbb{E}_{V \sim F}[\min(D_t(V),k)]
+\end{align}
+That is, $D_t(V)$ is the "demand" at $t$ (number of values above $t$), $\delta_k$ gives the probability of keeping fewer than $k$ items when using threshold $t$, and $\mu_k$ is our expected "fill rate" (the expected number of items that we keep, divided by $k$). The following result relates the performance of $ST_k^t$ to $\delta_k$ and $\mu_k$.
+
+```{proposition, label='min'}
+For all $\bF$, $k$, $t$, we have
+\[ \frac{ST_k^t(\bF)}{OMN_k(\bF)} \geq \min(\delta_k(t,\bF),\mu_k(t,\bF)).\]
+```
+
+The key idea is that when we consider any value $V_i$, the probability that we have not yet kept $k$ items (and could therefore choose $V_i$ if we wish) is at least $\delta_k$. Meanwhile, if $\mu_k$ is high, then we don't lose much due to keeping too few items. 
+
+
+**An Algorithm For Choosing $t$.**  Proposition \@ref(prp:min) immediately implies the following. 
+$$ \inf_{\bF} \sup_{t} \frac{ST_k^t(\bF)}{OMN_k(\bF)} \geq \inf_{\bF} \sup_{t} \min\left(\delta_k(t,\bF),\mu_k(t,\bF)\right).$$
+
+This suggests an algorithm for choosing $t$: since $\delta_k$ is increasing in $t$, and $\mu_k$ is decreasing in $t$, the supremum is obtained at a threshold $t$ such that $\delta_k(t,\bF) = \mu_k(t,\bF)$. When $k = 1$, we have $\mu_1(t,\bF) = 1 - \delta_1(t,\bF)$ for all $t$ and $\bF$. This implies that at their crossing point, both are equal to $1/2$. In other words, we set a threshold $t$ such that our probability of keeping any item is $1/2$: this is the median algorithm of [Samuel-Cahn (1984)](https://projecteuclid.org/download/pdf_1/euclid.aop/1176993150)!
+
+
+**Notes on the Proof.** The proof establishes a lower bound on $ST_k^t(\bF)$, expressed in terms of the following function:^[The authors use an extended analogy linking this setting to one in which an auctioneer has $k$ copies of an item and wishes to allocate them to the buyers with the highest values. The quantity $U$ can thus be interpreted as the total buyer surplus if each buyer allowed to purchase for price $t$.]
+\begin{equation} U(t,{\bf F}) =  \mathbb{E}_{V \sim {\bf F}}\left[\sum_{i = 1}^n\max(V_i - t,0) \right] = \sum_{i = 1}^n \int_t^\infty(1 - F_i(x))dx. \end{equation}
+The second inequality above uses my one of my favorite facts: for a non-negative random variable $X$, $$\mathbb{E}[X] = \int_0^\infty \mathbb{P}(X > x) dx.$$
+```{lemma,label='lower'}
+For all $t, k, \bF$, we have $ST_k^t({\bf F}) \geq \mu_k(t,{\bf F}) \cdot k \cdot t + \delta_k(t,\bF) \cdot U(t,{\bf F})$.
+```
+
+$\\$
+It also establishes an upper bound on OMN. Define 
+\begin{equation} B_k(t,{\bf F})  = k \cdot t + U(t,{\bf F}).\end{equation}
+
+```{lemma, label='upper'}
+For all $t, k, \bF$, we have $OMN_k(\bF) \leq B_k(t,\bF).$
+```
+Jointly, Lemmas \@ref(lem:lower) and \@ref(lem:upper) imply Proposition \@ref(prp:min). In fact, the resulting guarantee holds even against the benchmark of an LP relaxation of OMN, which is permitted to keep at most $k$ values *in expectation*, rather than for *every realization*. This relaxation sets a threshold $t_k^{LP}(\bF)$ such that the expected demand is equal to $k$, and then accepts all such items. Its expected payout is
+$$LP_k(\bF) = \mathbb{E}_{V \sim \bF} \left[\sum_{i = 1}^n V_i {\bf 1}(V_i > t_k^{LP}(\bF)) \right] = \min_t B_k(t,\bF).$$
+
+```{r echo = FALSE}
+#**Proof.**
+#For $j \in \{1, \ldots, n\}$, let
+#\[\delta_k^j(t,\bF) = \mathbb{P}_{V \sim \bF} \sum_{i < j} {\bf 1}(V_i > t) < k) \]
+#to be the probability that fewer than $k$ of the first $j-1$ values exceed $t$. In other words, it is the probability that we have the option of keeping item $j$ under policy $ST_k^t$. Then
+#\begin{align*}
+#ST_k^t({\bf F})& = \sum_{i = 1}^n \delta_k^i({\bf F})\mathbb{E}[V_i {\bf 1}(V_i > t)] \\
+#& = \sum_{i = 1}^n \delta_k^i({\bf F})\mathbb{E}[t \cdot {\bf 1}(V_i > t) + (V_i - t){\bf 1}(V_i > t)] \\
+#& = t\sum_{i = 1}^n \delta_k^i({\bf F}) (1 - \bar{F}_i(t)) + \sum_{i = 1}^n \delta_k^i({\bf F}) #\int_{t}^\infty (1 - F_i(x))dx\\
+#& \geq t\sum_{i = 1}^n \delta_k^i({\bf F}) (1 - \bar{F}_i(t))  + \delta_k(t,{\bf F})U(t,{\bf F}) \\
+#& = \mu_k(t,{\bf F}) \cdot k \cdot t + \delta_k(t,{\bf F})U(t,{\bf F}).
+#\end{align*}
+```
+
+```{r echo= FALSE}
+#Let $D(t,\bF)$ to be the "expected demand" at threshold $t$, given by 
+#\begin{equation} D(t,{\bf F}) = \sum_{i = 1}^n (1 - F_i(t))= \sum_{i = 1}^n \mathbb{P}(V_i > t).\end{equation}
+
+#**Proof.** $\frac{d}{dt}U_k(t,\bF) = k - D(t,\bF).$ Therefore, $U_k$ is minimized at the point $t_k^{LP}(\bF)$ where $D(t,\bF) = k$. Furthermore, $B_k(t_k^{LP}(\bF),{\bF}) = LP_k(\bF)$.
+
+#**LP Relaxation.** Suppose that instead of keeping at most $k$ values for every realization, you are allowed to adopt a strategy that keeps at most $k$ values *in expectation*. Then the best approach would be to choose a threshold $t_k^{LP}(\bF)$ such that $D(t_k^{LP}(\bF),\bF) = k$, and keep all items with value above $t_k^{LP}(\bF)$. This earns objective value
+#$$LP_k(\bF) = \mathbb{E}\left[\sum_{i = 1}^n V_i {\bf 1}(V_i > t_k^{LP}(\bF)) \right] = k \cdot t_k^{LP}(\bF) + U(t_k^{LP}(\bF),\bF).$$
+```
+
+##Key Step \#2: Determining the Worst Case
+
+We now need to find a worst case choice of the distributions $\bF$. One key advantage of this analysis is that the functions $\delta_k$ and $\mu_k$ depend only on the distribution of $D_t(V)$, which is a sum of independent Bernoulli random variables. Therefore, instead of optimizing over the space of all distributions, it is enough to optimize over the success probabilities (referred to as "biases" in the paper) $b_i = (1 - F_i(t))$.
+
+The most involved step in their analysis is to show that the worst case is when the biases are equal, and $D_t$ follows a binomial distribution. We let $X_{n,p}$ denote a binomial random variable with $n$ trials and success probability $p$. 
+
+```{proposition}
+For all $n,k$,
+$$\inf_{\bF} \sup_{t} \min\left(\delta_k(t,\bF),\mu_k(t,\bF)\right) \geq \sup_{p \in [0,1]} \min \left(\frac{1}{k} \mathbb{E}[\min(X_{n,p},k)],\mathbb{P}(X_{n,p} < k) \right) =  \gamma_{k,n}.$$
+```
+
+We can use the following code to compute the values $\gamma_{k,n}$. 
+```{r}
+delta_binom = function(n,k,p){
+  return(pbinom(k-1,n,p))
+}
+mu_binom = function(n,k,p){
+  prob = dbinom(0:(k-1),n,p)
+  prob = c(prob,1-sum(prob))
+  return(sum(prob*c(0:k))/k)
+}
+guarantee_at_p = function(n,k){
+  return(Vectorize(function(p){return(min(delta_binom(n,k,p),mu_binom(n,k,p)))}))
+}
+guarantee_finite = Vectorize(function(n,k){
+  return(optimize(guarantee_at_p(n,k),interval=c(0,1),maximum=TRUE)$objective)
+})
+kVals = c(2:4)
+colors = rainbow(length(kVals))
+nMax = 10 
+plot(NULL,xlim=c(2,nMax),ylim=c(0.5,0.75),las=1,xlab='n',ylab='',main='Performance Guarantee')
+for(i in 1:length(kVals)){
+  lines(c(kVals[i]:nMax),guarantee_finite(c(kVals[i]:nMax),kVals[i]),col=colors[i])
+}
+legend(2,.58,col=colors,lty=rep('solid',length(kVals)),legend = kVals)
+```
+
+The guarantee $\gamma_{k,n}$ is increasing in $k$ and decreasing in $n$, but depends much more on $k$ than $n$. If we take $n \rightarrow \infty$, the binomial distribution becomes a Poisson, and we obtain bounds that hold for all $n$. 
+```{r}
+delta_pois = function(lambda,k){return(ppois(k-1,lambda))}
+mu_pois = function(lambda,k){
+  prob = dpois(0:(k-1),lambda)
+  prob = c(prob,1-sum(prob))
+  return(sum(prob*c(0:k))/k)
+}
+guarantee_at_lambda = function(k){
+  return(Vectorize(function(lambda){
+    return(min(delta_pois(lambda,k),mu_pois(lambda,k)))
+  }))
+}
+guarantee_pois = Vectorize(function(k){
+  return(optimize(guarantee_at_lambda(k),interval=c(0,k),maximum=TRUE)$objective)
+})
+kVals = c(1:10)
+round(guarantee_pois(kVals),3)
+```
+For $k = 1$, we recover the guarantee of $1/2$, but this paper provides the first guarantee above $1/2$ for $k = 2$. The guarantee converges to $1$ (at an optimal rate) as $k \rightarrow \infty$.
+
+#Closing Thoughts
+
+What do I like about this paper? 
+
+1. It asks a clean question: I appreciate the simplicity of static threshold policies. 
+2. It offers a simple policy. Although the optimal threshold depends on the order in which the $V_i$ are presented, the authors' proposed choice of $t$ does not. 
+3. The analysis is elegant: 
+    * The first step offers clear intuition about balancing the risks of setting the threshold too high and too low.
+    * The second step leverages the fact that their bound depends only on the values $1 - F_i(t_i)$, rather than the full distributions $F_i$.
+4. The final result is a tight analysis of the performance of their policy. 
+5. The paper is written exceptionally clearly throughout, and is a joy to read.
+
+The authors seem to have found the "right" generalization of the Samuel-Cahn median strategy, which is not at all obvious: [Kleinberg and Weinberg (2012)](https://arxiv.org/pdf/1201.4764.pdf) write "it is hard to surpass the elegance of Samuel-Cahn’s proof", but argue that the advantage of their approach is that "it generalizes to arbitrary matroids." Meanwhile, these [lecture notes](http://www.cs.cmu.edu/~anupamg/ipco17/ipco-talk3.pdf) call the median strategy "beautiful," but "somewhat mysterious, and difficult to generalize."
+
+One special case of interest is when the $V_i$ are iid. Although this seems like an easier setting, simple examples show that their algorithm's performance may match the lower bound of $\gamma_{k,n}$ even with iid values. In this [follow-up post](/blog/iidprophet), I explore a simple algorithm that improves upon this guarantee.

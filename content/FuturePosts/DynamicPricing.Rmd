@@ -1,0 +1,23 @@
+---
+title: 'When is Static Pricing Good Enough?'
+date: '2020-11-11'
+author: Nick Arnosti
+tags:
+  Revenue Optimization
+categories:
+  Paper Discussion
+draft: true
+---
+
+In this post, I will discuss the paper [Static Pricing: Universal Guarantees for Reusable
+Resources](https://arxiv.org/pdf/1905.00731.pdf) by [Omar Besbes](http://www.columbia.edu/~ob2105/), [Adam Elmachtoub](http://www.columbia.edu/~ae2516/), and [Yunjie Sun](https://phd.ieor.columbia.edu/directory/yunjie-sun).
+
+
+#Motivation
+
+
+
+
+
+<!--One interesting direction for study would be to try to capture the dynamic nature of the problem. Researchers often re-submit rejected grant proposals. While individually rational, this creates a lot of work for grant panels. For a period, the NIH allowed researchers to submit each proposal only twice, but this policy has been abandoned. Other interesting questions related to dynamics include whether to bias allocations towards or against past grant recipients, and whether to directly incorporate past research output into funding decisions.
+-->

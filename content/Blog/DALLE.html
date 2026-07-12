@@ -1,0 +1,177 @@
+---
+title: 'Experimenting with Dall-E3'
+date: '2023-10-19'
+author: Nick Arnosti
+tags:
+
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>There have been a number of attention-grabbing advancements in the AI space recently, including large language models (i.e. Chat GPT) and image generation (i.e. Dall-E). I think that these developments are going to end up being very significant. While I am not a very experienced user of these services, I am trying to give myself more practice with them, to better understand their capabilities and see how they could be useful to me. In this post, I show you results from using GPT-4 with Dall-E3 integration to produce two different types of image.</p>
+<p>The first task is to generate possible designs for Minnesota’s state flag, which is in the process of being redesigned. The second task was to create fall foliage scenes, with a family walking through colorful woods. This was on my mind because (i) I love fall, and the foliage in the Twin Cities has just kicked into high gear, and (ii) my wife and I will welcome our first child into the world any day now, so I am enjoying imagining our future family life. While I chose these tasks for personal reasons, I realized that they are fairly different: for the flag, simple designs are best, while the fall scenes are much more complex.</p>
+<p>After this experience, I have concluded that Dall-E3 is very good at generating beautiful images – I can definitely imagine using it to create personalized artwork! However, it is surprisingly bad at following specific instructions for how to modify its images. Furthermore, while the descriptions that GPT-4 provided of the images were often initially accurate, the more rounds of iteration we went through, the more there emerged discrepancies between the image produced by Dall-E3 and the description of it by GPT-4. Perhaps with more experience, I would learn how to give prompts to generate specific output.</p>
+<p>Without further ado, let’s get to showing you results from each task. I hope you enjoy!</p>
+</div>
+<div id="flag" class="section level1">
+<h1>Flag</h1>
+<p>The Minnesota state flag is not the greatest:</p>
+<p><img src="../../../../../../_index_files/Flag/MinnesotaFlag.png" /><!-- --></p>
+<p>Everyone agrees that it is cluttered, and not memorable: despite having grown up in Minnesota, all I could tell you about what is on it is “blue background, a circular seal, and some picture stuff in the middle.” In addition, the “picture stuff” is controversial, for reasons explained in this <a href="https://www.minnpost.com/state-government/2023/06/formal-effort-begins-to-replace-cluttered-genocidal-mess-on-minnesota-state-flag-and-seal/?gad_source=1&amp;gclid=CjwKCAjwp8OpBhAFEiwAG7NaEmQJ_-zb9V6fRXUoa24UCgTvYUrVkFuPJvh1IdaYz8443B0SMwRIRRoCNkQQAvD_BwE">Minnpost article</a>.</p>
+<p>As a result, Minnesota has decided to replace its state flag by next May, and is soliciting proposed designs. I decided to try using Dall-E to produce possible alternatives. Before starting this exercise, I had read a bit about the proposed North Star Flag, which looks like this:</p>
+<p><img src="../../../../../../_index_files/Flag/NorthstarFlag.jpg" /><!-- --></p>
+<p>You can read more about the <a href="https://mnflag.tripod.com/">North Star Flag here</a>. Compared to the current flag, it is much simpler (easier to draw and remember). It pays homage to rivers, snow, and our motto “L’Etoile du Nord” (the North Star). Aesthetically, however, I don’t love the bright green, or the gold star, and it seems a bit weird to have the river be white.</p>
+<p>I decided to take the North Star design as my inspiration. I liked the idea of keeping the blue background, and of including natural colors such as green and white. I also wanted something simple enough that people can remember it, and children can readily learn to draw it. I decided to see whether Dall-E3 could help me with this task.</p>
+<p>Before diving into my process, I will present to you my final output. My proposed flag is here:</p>
+<p><img src="../../../../../../_index_files/Flag/FinalFlag1.png" /><!-- --></p>
+<p>I like the simplicity of this design, and the focus on nature (specifically, our many rivers, of which the Mississippi is the best known). I could imagine some people saying that the incorporation of pine trees places more focus on northern Minnesota, and ignores the more agrigultural southern part of the state. One alternative that includes agricultural motifs (including wild rice cultivation, which has been a staple for native tribes for centuries) is the following:</p>
+<p><img src="../../../../../../_index_files/Flag/FinalFlag2.png" /><!-- --></p>
+<p>I don’t like this quite as much (it would certainly be harder to draw), but it pays homage to more different parts and people in the state, so I think it could be worth considering.</p>
+<p>However, neither of these flags were produced directly by Dall-E3. Instead, I created them in Powerpoint, using images from Dall-E3 as inspiration. I did this because I found that Dall-E3 is great for generating beautiful and creative images, but not so great at following specific instructions attempting to modify these images.</p>
+<p>You can see my “conversation” with GPT-4/Dall-E3 below: my prompts are in gray boxes starting with <strong>N:</strong>, and the images are generated by Dall-E3. I excluded some of the text that accompanied each image, although in some cases I included this text to highlight mismatches between the image and how GPT-4 described it. I include comments that were not part of the interaction with Dall-E3 in normal white text (like this paragraph).</p>
+<blockquote>
+<p><strong>N:</strong> I would like to design a new state flag for the state of Minnesota. It should have dark blue as its primary color, with some white and green. It should include the north star. It should not be too cluttered. And it should include something that evokes the Minnesota experience. Could you suggest several possible designs?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags1.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I like flags 2 and 4 the most – the pine trees are beautiful. However, they would be hard for people to draw. I also like the idea of including something about the mississippi river on the flag. Could you try other designs that include the river?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags2.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I like the fourth flag for its simplicity! Could you change the river color to a light blue?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags3.png" /><!-- --></p>
+<p>At this point, I was pretty happy with the design, and just wanted to make a few minor modifications. As you will see, these modifications turned out to be more difficult to make than expected: what follows is a series of flags that don’t really get any closer to the image I had in my mind, despite my efforts.</p>
+<blockquote>
+<p><strong>N:</strong> I like that! Can you change the trees to green, and make slightly fewer of them to keep the design simple?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags4.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Pine trees look good, but the river and trees are the same color. I would like to make the trees green, and the river light blue. The river color from your previous design looked good, and the green from two designs ago for the trees.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags5.png" /><!-- --></p>
+<p>Notice that here, the description given by Chat GPT doesn’t match the image produced by Dall-E3: the trees are not green! Also, Dall-E3 seemed to be unable to keep itself from tinkering with tree placement and river shape, although no such changes were requested.</p>
+<blockquote>
+<p><strong>N:</strong> The trees in this design look white to me. And the river is a very greenish blue. That’s not as nice. Plus, I liked the trees in a line, like you had them before.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags6.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Those colors are good, but the design of the flag has gotten more complex. Please keep those colors, but go back to the simple design with a horizontal wavy river and a few trees right above it.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags7.png" /><!-- --></p>
+<p>As you can see, this is where things really went off the rails. The description offered by Chat GPT and the image produced by Dall-E3 do not really correspond: the river is white (not blue), and there are no pine trees!</p>
+<blockquote>
+<p><strong>N:</strong> You are hallucinating. there are no pine trees in that image! Put them back, and take out at least one of the wavy lines.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags8.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> This design is almost identical to the previous one. Let’s try again. I want a white north star, light blue wavy lines running horizontally to represent a river, and a few green pine trees above this river.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags9.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> That’s much closer. Could we reduce the number of wavy lines from 3 to 1 or 2, and color those blue?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags10.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> In this design, there are still 3 wavy lines. I want fewer wavy lines.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags11.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Thanks! Can you now make the wavy lines light blue?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags12.png" /><!-- --></p>
+<p>At this point, I was getting frustrated, so I decided to take matters into my own hands. I spent some time in Powerpoint moving wavy lines and pine tree drawings around, and came up with the designs I showed you at the beginning of the post. When I returned to GPT 4/Dall-E3, I decided to stop trying to be overly prescriptive, and just see what ideas it could generate.</p>
+<blockquote>
+<p><strong>N:</strong> Sorry, it seems that this is going nowhere. You’re better at creating new images than modifying existing ones according to instructions. So let’s try that again. Can you give me several other possibilities for a new Minnesota State Flag, and for each, explain a little about what it means?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags13.png" /><!-- --><img src="../../../../../../_index_files/Flag/FlagDescriptions.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I don’t think it makes sense to include the outline of Minnesota – too difficult to draw. Could you try some more minnesota-themed flags that would be simpler to draw?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags14.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Let’s get crazy. Suppose that we had a giant party of creative artists, who liked nature and natural tones, but had just taken some drugs. What might they come up with for a state flag for Minnesota?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags15.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I like the auroras in option 2! Could we take that, and remove some of the white foreground?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags16.png" /><!-- --></p>
+<p>I don’t think this would make a good flag, but it is a very interesting image!</p>
+<blockquote>
+<p><strong>N:</strong> That flag is cool, let’s try a different take. What if I wanted to include the state bird (the loon) in the flag?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags17.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I like the first option you included. could you create several variants of that?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Flag/Flags18.png" /><!-- --></p>
+</div>
+<div id="fall-foliage-family" class="section level1">
+<h1>Fall Foliage Family</h1>
+<blockquote>
+<p><strong>N:</strong> I would like to pivot away from flags, and just capture Minnesota up north scenery. Could you give me an image of a path through the woods with beautiful fall foliage?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage1.png" /><!-- --><img src="../../../../../../_index_files/Foliage/Foliage2.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I would like the pictures to be a bit more realistic, and zoomed in. Show some of the individual leaves.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage3.png" /><!-- --></p>
+<p>Here, Dall-E3 did a good job of zooming in and showing individual leaves. I had hoped to capture individual leaves on trees (rather than mostly focusing on fallen leaves on the path), but instead of specifying this, I decided to just add a family to the image. This decision was partly based on my flag experience: I decided that being overly prescriptive was not helpful, and figured that in the process of adding the family, Dall-E3 would probably refocus away from the ground. This turned out to be correct.</p>
+<blockquote>
+<p><strong>N:</strong> Can you add a family of three to the path? (A mother, a father, and a small girl, all with dark hair)</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage5.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> I like the first one the most – you did a very nice job with the trees! Could you try several variants in which the family is wearing different fall-appropriate clothing?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage6.png" /><!-- --></p>
+<p>These images were further from what I wanted, and in addition, we got an apparent violation of their “content policy.” I have no idea what this policy is, or how the image Dall-E3 produced violated it.</p>
+<blockquote>
+<p><strong>N:</strong> The second image is nice, but can you make all three people have dark hair, and be facing away from us?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage7.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Good, but now the image looks sort of cartoonish. I would like the forest to be a bit more realistic-looking.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage8.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Better! Can you make the image a little brighter, as though it is a bright sunny and clear day?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage9.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> That’s a cool effect! Could you zoom in slightly, and add a few maple trees?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage10.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Here, the path is wide and straight. Can you make it more of a hiking trail? It should be made of dirt, a bit winding, and less wide.</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage12.png" /><!-- --></p>
+<p>Here, GPT-4 says there are three people, but in fact there are four. As you will see, this type of issue recurs several times in the subsequent iterations. This is similar to the issue I had with the flag, where GPT-4 described one or two wavy lines when there were actually three.</p>
+<blockquote>
+<p><strong>N:</strong> That looks great! But now there are four people in the picture – could you go back to a mom, a dad, and a small girl?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage13.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Now it looks like a mother with two children, and no father. Could you make the father taller than the mother?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage14.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Great, thanks! I’ve noticed that you have included four people again: an older son and a younger daughter. Could you create two more images, one with just the daughter, and one with an older daughter and a younger son?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage15.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Thanks! For the second photo, with the family of four, could you add some aspen trees with yellow leaves?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage16.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> The aspen are beautiful, but it’s now a family of five. Can we go back to four?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage17.png" /><!-- --></p>
+<blockquote>
+<p><strong>N:</strong> Beautiful! Now it’s almost all aspen and pine. These are good, but could we add in some red/orange maple?</p>
+</blockquote>
+<p><img src="../../../../../../_index_files/Foliage/Foliage18.png" /><!-- --></p>
+</div>

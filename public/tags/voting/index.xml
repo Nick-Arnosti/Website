@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Voting on b</title>
+    <link>/tags/voting/</link>
+    <description>Recent content in Voting on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 26 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/voting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Long Lines at the Polls</title>
+      <link>/blog/waitingtovote/</link>
+      <pubDate>Thu, 26 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/waitingtovote/</guid>
+      <description>Before COVID-19 took over, the hottest news story was the 2020 Democratic Presidential Primary. On “Super Tuesday” (March 3rd), 14 states voted. Joe Biden won 10 of them, solidifying his status as front-runner and causing Mike Bloomberg and Elizabeth Warren to drop out of the race.
+This post will focus on a different aspect of Super Tuesday: the long lines that some voters experienced at the polls. In Harris County (which includes the city of Houston), some voters waited past 1 am to cast their votes.</description>
+    </item>
+    
+  </channel>
+</rss>

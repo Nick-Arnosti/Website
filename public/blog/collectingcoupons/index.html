@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LeBron James, Coupon Collector | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>LeBron James, Coupon Collector</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2019/11/20</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>Last night, LeBron James became the first player to have a <a href="https://www.espn.com/nba/story/_/id/28119808/lebron-james-first-player-ever-triple-double-vs-all-30-teams">triple double against all 30 NBA teams</a>. The article mentions that he has 86 career triple doubles. To me, it sounded surprising that he needed &quot;only&quot; 86 triple doubles to get one against every team. This post will do some quick back-of-the-envelope calculations to test my intuition.</p>
+<p>My first thought was to model this as a <a href="https://en.wikipedia.org/wiki/Coupon_collector%27s_problem">Coupon Collector's Problem</a>. This asks how many triple doubles should be needed, assuming that each triple double is equally likely to come against any team in the league. With 30 teams, it predicts that on average, 120 triple doubles are needed. The limit theorem of Laplace, Erdos and Renyi suggests that the chance of collecting all 30 teams after 86 triple doubles is approximately 18%.</p>
+<pre class="r"><code>n = 30
+n*sum(1/c(1:n)) #Expected number of triple doubles needed</code></pre>
+<pre><code>## [1] 119.8496</code></pre>
+<pre class="r"><code>alpha = (86-n*log(n))/n
+exp(-exp(-alpha)) #Probability of collecting every team with 86 triple doubles</code></pre>
+<pre><code>## [1] 0.1814732</code></pre>
+<p>Of course, triple doubles are not equally likely to come against every team. Most notably, you can never get a triple double against your own team! Russell Westbrook has many more triple doubles (141) than LeBron , but never had a chance to get one against the Thunder until he moved to the Rockets this season. So let's take a different simple model: each game is equally likely to produce a triple double, and outcomes are independent across games.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Using data on the number of games against each team for <a href="https://www.statmuse.com/nba/player/lebron-james-1780/splits?playerStatsBreakdown=perGame&amp;seasonYear=0">LeBron</a> and <a href="https://www.statmuse.com/nba/player/russell-westbrook-3933/splits?playerStatsBreakdown=perGame&amp;seasonYear=0">Westbrook</a>, and using a frequentist estimate for the probability of a triple double, we get the following:</p>
+<pre class="r"><code>lebron_games_played = c(56, 54, 51, 51, 57, 14, 31, 31, 55, 29, 30, 56, 31, 30, 32, 39, 56, 31, 34, 53, 28, 55, 49, 33, 30, 29, 32, 54, 31, 50)
+lebron_pTriple = 86/sum(lebron_games_played)
+prod(1-(1-lebron_pTriple)^lebron_games_played) #Probability of triple double against every team</code></pre>
+<pre><code>## [1] 0.08971551</code></pre>
+<pre class="r"><code>westbrook_games_played = c(20, 18, 19, 20, 22, 19, 38, 39, 20, 37, 35, 22, 40, 35, 36, 21, 20, 39, 40, 19,  1, 21, 20, 37, 41, 38, 37, 20, 38, 21)
+westbrook_pTriple = 141/sum(westbrook_games_played)
+prod(1-(1-westbrook_pTriple)^westbrook_games_played) #Probability of triple double against every team</code></pre>
+<pre><code>## [1] 0.1153136</code></pre>
+<p>The estimate of 9% for LeBron suggests that my intuition was reasonable: it's somewhat unlikely that LeBron would have a triple double against every team, though certainly not shocking. These calculations suggest that Russel Westbrook is actually more likely to have gotten a triple double against each team, despite having only played against the Thunder once! He plays them several more times this year, giving him a decent shot of matching LeBron soon.</p>
+<p>Similar ideas apply in other sports. For example, Brett Favre and Peyton Manning are the only QBs to have defeated all 32 NFL teams, and <a href="http://www.nfl.com/news/story/0ap3000000975492/article/drew-brees-has-chance-to-be-3rd-qb-to-beat-all-32-clubs">Drew Brees has a chance to join them</a> this week. Pulling his <a href="https://www.pro-football-reference.com/players/B/BreeDr00/splits/">game splits</a>, the model predicts a 47% chance that he would already have hit this mark. This jumps to 80% if we condition on the event that he won his only game against the Saints. So in some ways, he's actually unlucky not to have accomplished this feat already!<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p><strong>Questions for readers:</strong> what are some of your favorite (or least favorite) sports records?</p>
+<pre class="r"><code>brees_games_played = c(7, 28,  5,  5, 24,  7,  5,  6,  9, 10,  7,  7,  6,  5,  5, 10, 11,  6,  6,  5,  1,  8,  6,  7,  6,  3,  9,  5, 10, 28,  4,  8)
+brees_pWin = 158/269
+prod(1 - (1-brees_pWin)^brees_games_played) #Probability of defeating all 32 teams</code></pre>
+<pre><code>## [1] 0.4670173</code></pre>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Of course, this still neglects many factors. Certain opponents may be tougher on defense, or players may try harder in marquee matchups. Most notably, LeBron has been playing primarily as a point guard with the Lakers, making triple doubles more frequent this season than in years past. All models are wrong, but some are useful. Although we could build and calibrate a more detailed model with more data, I think this model is already useful.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Admittedly, the iid model seems worse for quarterback wins than triple doubles. Clearly, some teams are harder to defeat than others, and neglecting this in the analysis inflates the estimated probability of collecting a win against every team.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

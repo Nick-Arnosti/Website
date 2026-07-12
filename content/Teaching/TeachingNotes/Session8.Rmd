@@ -1,0 +1,36 @@
+---
+title: 'Session 8: Tie-Breaking in School Choice8'
+date: "2022-02-14"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Lesson Recap
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "xxx")
+```
+
+# Materials
+
+[Lecture Slides](/IE5080/Session8/Session8.pdf) (pptx version available to instructors upon request).
+
+
+[Homework](/IE5080/Session8/Session8_Homework.pdf) (solutions available to instructors upon request).
+
+
+**References**:
+
+[Strategy-Proof Allocation Mechanisms at Differentiable Points](/IE5080/Session6/Satterthwaite-Sonnenschein_1981.pdf). Satterthwaite and Sonnenschein, 1981. (Introduces the concept of "bossiness.")
+
+[Machiavelli and the Gale-Shapley Algorithm](/IE5080/Session6/Dubins-Freedman_1981.pdf). Dubins and Freedman 1981. (Shows that student-proposing DA is truthful for students.)
+
+[The Economics of Matching: Stability and Incentives](/IE5080/Session6/Roth_1982.pdf). Roth, 1982. (Shows that no stable matching is truthful for both sides, and that student-proposing DA is truthful for students.)
+
+[An Efficient Algorithm for the "Stable Roommates" Problem](/IE5080/Session6/Irving_1985.pdf). Irving, 1985. (Provides an efficient algorithm to determine whether a stable matching exists, and if so, find it.)
+
+[The Economist as Engineer: Game Theory, Experimentation, and Computation as Tools for Design Economics](/IE5080/Session6/Roth_2002.pdf). Roth, 2002. (Provides a table of centralized clearinghouses, indicating whether they are stable, and whether they are still in use.)
+
+[Impossibility of stable and nonbossy matching mechanisms](/IE5080/Session6/Kojima_2010.pdf). Kojima, 2010. (Provides an example showing that no stable mechanism can be non-bossy.)
+

@@ -1,0 +1,40 @@
+---
+title: 'Why Do Expensive Products Get Worse Ratings?'
+date: '2020-09-17'
+author: Nick Arnosti
+tags:
+  Simpson's Paradox
+categories:
+  Statistics
+---
+
+
+
+<div id="motivation" class="section level1">
+<h1>Motivation</h1>
+<p>Several years ago, I was looking for speakers on Amazon. Prices varied widely, from $25 to $250 or more. As I browsed, I noticed an interesting pattern: the most expensive speakers had the lowest average rating. More recently, I discovered the study “<a href="https://runrepeat.com/expensive-running-shoes-are-not-better-than-more-affordable-running-shoes-study">Expensive Running Shoes Are Not Better Than More Affordable Running Shoes</a>.” The study finds that shoes with higher prices tended to get lower ratings. The 10 most expensive shoes in the study had an average cost of $191 and an average rating of 79, while the 10 cheapest had an average cost of $60 and an average rating of 86. At a brand level, Sketchers had the lowest average cost, and the highest average rating.</p>
+</div>
+<div id="possible-explanations" class="section level1">
+<h1>Possible Explanations</h1>
+<p>What could explain this pattern?</p>
+<p>The study’s title assumes that average rating corresponds to true quality. It implies that if people were awarded a free pair of shoes of their choosing (and could not resell these shoes), many would choose a cheap pair.</p>
+<p>An alternative explanation is that ratings reflect <em>value</em>, rather than quality. Someone might rate cheap shoes more highly than expensive ones, even if they thought the quality was slightly lower. If we believe this hypothesis, we might title our study “Expensive Running Shoes Are Penalized for their Price.”</p>
+<p>This post will explore a third explanation: the shoes are being rated by different groups of people. People who buy Sketchers tend to be different from those who buy high-end Adidas. This hypothesis suggests that a more accurate title for the study might be “Expensive Running Shoes Are Purchased by Demanding Customers.”</p>
+</div>
+<div id="a-simple-model" class="section level1">
+<h1>A Simple Model</h1>
+<p>Let’s illustrate with a simple example. There are two types of shoe: basic for $60 and premium for $180. There are also two types of runners: competitive and casual. Casual runners are not very discerning: they would rate the basic sneakers 90 and the premium ones 95. Meanwhile competitive runners are aware of every imperfection: they rate the basic sneakers 50 and the premium ones 75.</p>
+<p>Of course, runners don’t choose which shoe to rate at random. Most casual runners buy basic shoes, though there are some exceptions (Silicon Valley venture capitalists come to mind). Meanwhile, competitive runners almost always buy premium shoes. To make things concrete, let’s suppose that there are 130 runners of each type. 90 of the casual runners buy basic shoes, and 40 choose premium. Meanwhile, only 10 of the competitive runners buy basic shoes – the remaining 120 choose premium.</p>
+<p>The end result? The basic shoes get <span class="math inline">\(90+10 = 100\)</span> reviews, and an average rating of <span class="math inline">\((90 \times 90 + 10 \times 50)/100 = 85\)</span>. The premium shoes get <span class="math inline">\(40+120 = 160\)</span> reviews, and an average rating of <span class="math inline">\((40\times 95 + 120 \times 75)/160 = 80\)</span>.</p>
+<p>Note that something strange has happened: even though <strong>every individual customer would rate premium shoes above basic ones</strong>, the premium shoes end up with a lower rating! This could never happen if everyone rated both shoes (or chose which shoes to rate randomly). Instead, it arises because of selection.</p>
+</div>
+<div id="simpsons-paradox" class="section level1">
+<h1>Simpson’s Paradox</h1>
+<p>In our shoe example, a conclusion based on aggregate data (“premium shoes get lower ratings”) <strong>reverses</strong> when the data is divided into several groups (“premium shoes get higher ratings from both casual and competitive runners”). This phenomenon is known as <a href="https://en.wikipedia.org/wiki/Simpson%27s_paradox">Simpson’s Paradox</a>. The Wikipedia page includes several examples using real data from college admissions, kidney stone treatment, baseball, and racial disparities in sentencing, which I reference below – I encourage you to check it out before proceeding!</p>
+<p>When the aggregate data disagrees with the group-based story, which is correct? I tend to believe that breaking the data into groups gives a more accurate picture. In Wikipedia’s kidney stone example, treatment A seems more effective. In the sentencing example, the data seems consistent with a bias against black defendants, even though white defendants are more likely to receive the death penalty. Of course, there are exceptions to this rule: in the batting average example, it is reasonable to conclude that Derek Jeter is a better hitter than David Justice (based on aggregate batting averages).</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>Simpson’s paradox arises frequently, yet is easy to miss. One challenge is that we rarely see both analyses side-by-side. Instead, we are often shown only aggregate data, causing us to reach incorrect conclusions. Group-based analysis is complicated by the fact that a priori, there are many possibly relevant groupings. In the college admissions example, we could group by SAT score, and never realize that women are applying to more selective departments. In the kidney stone example, we could group by patient age, and never find that treatment ‘A’ looks worse simply because it is primarily used on patients with large stones. Often, the data isn’t even available to do a detailed breakdown: for running shoes, we likely don’t have enough information to classify each reviewer as “casual” or “serious.”</p>
+<p>One thing we can do is to try to be more aware of the limitations of any analysis. The study includes a section titled “Potential Biases,” which mentions the value hypothesis as a competing alternative. It also mentions that those leaving reviews may not be representative, but does not address the possibility that the reviewers are different <em>for each shoe</em>. I think that this section understates the importance of these limitations. While I am prepared to believe that marketing accounts for much of a shoe’s price, it seems implausible that basic shoes are typically higher quality than premium ones. Instead, much of the difference likely comes from the other two hypotheses discussed in this post: value-based ratings, and selection among reviewers.</p>
+</div>

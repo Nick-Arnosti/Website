@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nick Arnosti on b</title>
+    <link>/</link>
+    <description>Recent content in Nick Arnosti on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes from EC 2026</title>
+      <link>/futureposts/ec26/</link>
+      <pubDate>Sun, 05 Jul 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/ec26/</guid>
+      <description>Best Paper
+Stochastic optimization and coupling.
+Best Paper with a student lead author:
+Personalized Recommendations without Inducing Congestion: Mitigating Disparities in the NYC High School Match.
+Presenter (Erica) was employed at NYCPS over the last year (insider access).
+Goal is personalized recommendations of students to high-performing schools where they are likely to be admitted.
+Exemplary Papers
+ Competition and Welfare in Airport Slot Allocation, Sebastian Bauer (Stanford)
+ Calibrated Coarsening</description>
+    </item>
+    
+    <item>
+      <title>When Do Stable Matchings Exist?</title>
+      <link>/blog/matchingwithcontracts/</link>
+      <pubDate>Sun, 05 Jul 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/matchingwithcontracts/</guid>
+      <description>I just attended MATCHUP 2026 in Paris. There, I learned of the paper “Matching with Attributes” by Aytek Erdil and Battal Dogan (also accepted to EC 2026). This paper gives a creative and satisfying resolution to a longstanding research question: in many-to-one matching with contracts (for concreteness of language, imagine matching doctors to hospitals), what are minimal conditions on hospital choice functions that ensure the existence of a stable matching?</description>
+    </item>
+    
+    <item>
+      <title>Dynamic Matching Papers</title>
+      <link>/futureposts/dynamicmatchingsurvey/</link>
+      <pubDate>Wed, 06 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/dynamicmatchingsurvey/</guid>
+      <description>This post collects a few papers on dynamic matching.
+Gupta gives a sum-of-squares greedy algorithm for multiway matching with bounded regret (Gupta 2024).
+Wei, Xu, and Yu propose a primal-dual policy for multi-way dynamic matching (Wei, Xu, and Yu 2023).
+Dynamic Matching Without Departures Kerimov, Ashlagi, and Gurvich have two papers which consider a very similar model, in which agents do not depart.
+TODO: describe the model.
+The first of these, Kerimov, Ashlagi, and Gurvich (2023), published in Management Science, considers a model in which some matches can involve more than two agents.</description>
+    </item>
+    
+    <item>
+      <title>Is There A Miracle in Mississippi? (Examination of State NAEP Scores)</title>
+      <link>/blog/mississippimiracle/</link>
+      <pubDate>Fri, 01 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/mississippimiracle/</guid>
+      <description>In a previous post, I looked at scores from the National Assessment of Educational Progress (NAEP), which is a set of tests administered every two years. In that post, I focused on national trends, which show that reading and math scores are falling – especially among the lowest-performing students. I pointed out that while this is important to know, it’s not particularly actionable.
+In this post, I will explore state-level data, looking at trends in my home state of Minnesota, as well as for Mississippi and Louisiana, which are actually seeing significant improvement in their scores.</description>
+    </item>
+    
+    <item>
+      <title>Is Our Children Learning? (A look at National NAEP scores)</title>
+      <link>/blog/naep/</link>
+      <pubDate>Sat, 25 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/naep/</guid>
+      <description>As an educator, I hear it all the time. Students are less prepared than they used to be. Curriculum is less rigorous. But is there any data to back this up?
+As it turns out, there is! The National Assessment of Educational Progress (NAEP) is a set of tests given every two years to 4th, 8th and 12th graders across the country.1 These tests are sometimes called “The Nation’s Report Card,” and the resulting data are available for download.</description>
+    </item>
+    
+    <item>
+      <title>College students are less prepared. Their grades don&#39;t show it</title>
+      <link>/blog/cse-calculusready/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/cse-calculusready/</guid>
+      <description>As an educator, I hear it all the time. Students are less prepared than they used to be. Curriculum is less rigorous. But is there any data to back this up? As it turns out, there is!
+In a previous post, I took a look at nationwide reading and math scores for 4th and 8th graders. These scores are falling, especially among the bottom quartile of students. This post will look at a report from the University of California, San Diego, and some data from the University of Minnesota, Twin Cities.</description>
+    </item>
+    
+    <item>
+      <title>College students are less prepared. Their grades don&#39;t show it</title>
+      <link>/futureposts/cse-calculusready/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/cse-calculusready/</guid>
+      <description>Kelsey Piper</description>
+    </item>
+    
+    <item>
+      <title>College students are less prepared. Their grades don&#39;t show it</title>
+      <link>/futureposts/dynamicmatchingreview/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/dynamicmatchingreview/</guid>
+      <description>Kelsey Piper</description>
+    </item>
+    
+    <item>
+      <title>Who Studies Science and Engineering at Minnesota?</title>
+      <link>/blog/cse-demographics/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/cse-demographics/</guid>
+      <description>Yesterday, I attended a presentation where I learned various facts about the undergraduate student body in the College of Science and Engineering at the University of Minnesota. Here are a few that seemed worth knowing, presented in quiz form.
+Questions.
+Origin. What percentage of the CSE entering class comes from the Twin Cities metro area? From Minnesota? From the United States? Gender. What percentage of CSE undergraduates are women? Race.</description>
+    </item>
+    
+    <item>
+      <title>Exact Weighted Lottery</title>
+      <link>/blog/weightedlotteryprocedure/</link>
+      <pubDate>Sat, 20 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/weightedlotteryprocedure/</guid>
+      <description>In my previous post, I described the lottery for the Western States Endurance Run, which uses a weighted lottery to allocate \(m\) identical prizes among \(n\) participants. Each participant \(i\) has \(t_i\) tickets, and tickets are drawn in a uniformly random order until \(m\) distinct participants have been selected.
+The point of the previous post was that it’s not so easy to calculate the probability of selection for a given applicant (even if you know all of the \(t_i\) and are good at math).</description>
+    </item>
+    
+    <item>
+      <title>The Western States Ultramarathon Lottery</title>
+      <link>/blog/westernstates/</link>
+      <pubDate>Thu, 04 Dec 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/westernstates/</guid>
+      <description>Running Marathons and Ultramarathons This year, I ran my first marathon! The Twin Cities Marathon passes 2 blocks from my house (we are at mile 22). I enjoyed the training and race day, and ended the race feeling surprisingly good.
+It turns out, some people enjoy running further than a marathon! The most famous ultramarathon in the United States is the Western States Endurance Run, which covers 100.2 miles of trail in California.</description>
+    </item>
+    
+    <item>
+      <title>The Saint Paul Public School Budget</title>
+      <link>/blog/spps-budget/</link>
+      <pubDate>Thu, 20 Nov 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/spps-budget/</guid>
+      <description>Saint Paul just approved an increase in property taxes to provide an additional $37 million per year for public schools. This is approximately $1,100 for each student in the district. This made me wonder, what is the current budget? How does this compare to historical budgets, and to budgets of other nearby districts? And how is this money being spent?
+I knew almost nothing about the Saint Paul Public School (SPPS) budget, but fortunately, a lot of information is publicly available if you are willing to do some digging!</description>
+    </item>
+    
+    <item>
+      <title>The Surprising Effectiveness of Linear Approximation</title>
+      <link>/blog/linearapproximation/</link>
+      <pubDate>Thu, 18 Sep 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/linearapproximation/</guid>
+      <description>A key idea from calculus – used frequently in optimization – is that we can use linear functions to locally approximate complicated non-linear functions. This post will illustrate the effectiveness of this approach for a very specific function, the square root (maintaining some continuity with my previous post).
+Estimating Square Roots to the Nearest Integer Let’s start with the following goal: find the integer closest to \(\sqrt{28}\). This is the type of problem that my wife gives to her middle school students.</description>
+    </item>
+    
+    <item>
+      <title>A Simple Method to Approximate Square Roots</title>
+      <link>/blog/approximatingsquareroots/</link>
+      <pubDate>Tue, 16 Sep 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/approximatingsquareroots/</guid>
+      <description>The number \(\sqrt{2}\) is famously irrational: it cannot be expressed as a fraction (ratio of two integers). However, we can use fractions to approximate it.
+Here is one simple algorithm to do so, which uses only elementary operations. Let our initial estimate be \(x_0 = 1\). From there, we generate the next estimate using the following procedure:
+ Add one to the current estimate. Invert the result. Add one again.</description>
+    </item>
+    
+    <item>
+      <title>A Simple Analysis of Random Matching Markets</title>
+      <link>/blog/probabilisticpredictions/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/probabilisticpredictions/</guid>
+      <description>Ashlagi, Kanoria and Leshno
+Azevedo and Leshno
+This is really from my paper “Lottery Design for School Choice.” (Do a separate post for Probabilistic Predictions in Random Matching Markets.)
+Note that I have a chip on my shoulder.
+Without my work, this would be a dissertation. With my work, it becomes a class exercise for a PhD student. (Reference “which markets lead to stark effect of competition”?)
+If people aren’t using it, I need to do a better job of making it seem usable.</description>
+    </item>
+    
+    <item>
+      <title>A Simple Analysis of Random Matching Markets</title>
+      <link>/blog/probabilisticpredictions2/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/probabilisticpredictions2/</guid>
+      <description>In</description>
+    </item>
+    
+    <item>
+      <title>A Simple Analysis of Random Matching Markets</title>
+      <link>/futureposts/probabilisticpredictions/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/probabilisticpredictions/</guid>
+      <description>Ashlagi, Kanoria and Leshno
+Azevedo and Leshno
+This is really from my paper “Lottery Design for School Choice.” (Do a separate post for Probabilistic Predictions in Random Matching Markets.)
+Note that I have a chip on my shoulder.
+Without my work, this would be a dissertation. With my work, it becomes a class exercise for a PhD student. (Reference “which markets lead to stark effect of competition”?)
+If people aren’t using it, I need to do a better job of making it seem usable.</description>
+    </item>
+    
+    <item>
+      <title>A Simple Analysis of Random Matching Markets</title>
+      <link>/futureposts/probabilisticpredictions2/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/probabilisticpredictions2/</guid>
+      <description>In</description>
+    </item>
+    
+    <item>
+      <title>Where is the Center of a Triangle?</title>
+      <link>/blog/triangles/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/triangles/</guid>
+      <description>My wife is a middle-school math teacher, and this spring, she is teaching geometry to some of her students. This gave me a chance to learn some geometry! Her upcoming unit is different notions of the center of a triangle. She gave me a quick primer on a few definitions, and then I went to think about things on my own. This post is what resulted from that thinking, and is not endorsed for use on middle-schoolers.</description>
+    </item>
+    
+    <item>
+      <title>Will HH appear before TH?</title>
+      <link>/blog/probabilitypuzzles/</link>
+      <pubDate>Sun, 08 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/probabilitypuzzles/</guid>
+      <description>I recently wrote about a flawed analysis of the hot hand in shooting data, which revealed some potentially counter-intuitive phenomena involving coin flips. Continuing in that vein, here are some more fun facts about fair coin flips!
+Let’s start with an exercise for the reader. Suppose we repeatedly flip a fair coin. Which of the following statements are correct?
+There is a 50% chance that the sequence HH appears before the sequence HT There is a 50% chance that the sequence HH appears before the sequence TH The expected number of flips until HH appears is the same as the expected number of flips until HT appears.</description>
+    </item>
+    
+    <item>
+      <title>Should the Lions Have Gone For It?</title>
+      <link>/blog/goingon4th/</link>
+      <pubDate>Sat, 07 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/goingon4th/</guid>
+      <description>Although I am not as invested in professional sports as I used to be, I still enjoy following along, and sometimes get a chance to put some math skills to use. This post will analyze a high-profile decision by Lions coach Dan Campbell at the end of their game against the Packers.
+The situation: tie game, Lions have the ball on the Packers’ 22 yard line. It’s 4th and inches with 43 seconds left, and the Packers have no timeouts.</description>
+    </item>
+    
+    <item>
+      <title>The Fallacy of the Hot Hand Fallacy</title>
+      <link>/blog/hothand/</link>
+      <pubDate>Fri, 06 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/hothand/</guid>
+      <description>Harry and Tom decide to play a game. They flip a fair coin \(n\) times. Each time the coin comes up heads, there is an opportunity to score. Harry scores a point if the next flip is heads, and Tom scores if the next flip is tails. A player wins if after all \(n\) tosses, their score is higher than their opponents. Who is more likely to win?
+A natural instinct is that because each flip is fair (and independent of the past), both players are equally likely to win.</description>
+    </item>
+    
+    <item>
+      <title>Price Fixing in Exchange Markets</title>
+      <link>/blog/fixingprices/</link>
+      <pubDate>Thu, 12 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/fixingprices/</guid>
+      <description>I recently attended MATCH-UP 2024 at Oxford, where I saw Julius Goedde present the paper “Pricing in markets without money: Theory and evidence from home exchanges”. I found it quite interesting! The paper considers platforms that enable home exchange – examples include Trade to Travel, People Like Us, and Home Exchange.
+The idea behind all of these sites is, you let strangers stay in your home, and in turn you can visit somewhere else in the world for free!</description>
+    </item>
+    
+    <item>
+      <title>Detecting Bias in the Allocation of Public Resources</title>
+      <link>/blog/biasedallocation/</link>
+      <pubDate>Tue, 03 Sep 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/biasedallocation/</guid>
+      <description>This post is about using data to detect bias in systems that allocate public resources.
+For example, in the US there are approximately 90,000 people waiting for a kidney transplant. When kidneys from a deceased donor become available, the Organ Procurement and Optimization Network (OPTN) must decide which of these waiting patients to make offers to. As another example, in Hennepin County there are currently around 1,000 homeless single adults on a priority list waiting for housing assistance.</description>
+    </item>
+    
+    <item>
+      <title>The Bingo Paradox</title>
+      <link>/blog/bingo/</link>
+      <pubDate>Tue, 27 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/bingo/</guid>
+      <description>Suppose you are playing Bingo. The caller reads a number, and someone in the room shouts out, “BINGO!” Are they more likely to have a complete row, or a complete column? Surprisingly, the answer is a complete row. This is has been referred to as The Bingo Paradox, and I will explore it in this post.
+Rules of Bingo Let’s start with the rules of Bingo. Each Bingo card is a 5x5 square.</description>
+    </item>
+    
+    <item>
+      <title>An Open Problem on Sums of Independent Random Variables</title>
+      <link>/blog/openproblem/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/openproblem/</guid>
+      <description>I’m enjoying EC this week, and had two thoughts. First, interesting math problems are often buried deep in a paper that is nominally on another topic. Second, there are lots of bright people who might know how to solve these math problems, but never see them!
+Inspired by these thoughts, I am sharing one open problem from my work Lotteries for Shared Experiences with Carlos Bonet, which involves sums of independent random variables.</description>
+    </item>
+    
+    <item>
+      <title>A Simple Formula for Mortgage Payments</title>
+      <link>/blog/mortgagepayments/</link>
+      <pubDate>Tue, 30 Apr 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/mortgagepayments/</guid>
+      <description>Mortgages are confusing! Suppose you wish to borrow money, and pay it back in monthly intallments using a fixed rate mortgage.
+ How much will your monthly payment be? How much will you pay in interest over the lifetime of the loan? If you refinance or move partway through the mortgage, how large will your remaining balance be?  Even very mathematically inclined people like me often struggle to have any intuition for how the answer to these questions depends on the interest rate and the length of the mortgage.</description>
+    </item>
+    
+    <item>
+      <title>An Introduction to Linear Programming &#43; Duality</title>
+      <link>/blog/lp_duality/</link>
+      <pubDate>Sat, 16 Mar 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/lp_duality/</guid>
+      <description>Today, my wife and I dropped my daughter off with grandma, so that we could have a “date morning.” My mom asked what our plans were. We said that we were going to a cafe, order some drinks, and talk about math. And that is exactly what we did. It was great. (I love my wife.)
+More specifically, I taught Amanda about linear programming, in a way that I wish I had been taught.</description>
+    </item>
+    
+    <item>
+      <title>Ex Ante vs Ex Post Guarantees (&#43; Open Problem)</title>
+      <link>/blog/exanteexpost/</link>
+      <pubDate>Sun, 28 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/exanteexpost/</guid>
+      <description>Note: this post is closely related to my video The Virtues of Random Priority and blog post Famous Open Question Resolved… since 2014?!?!, although it is written to be self-contained.
+Motivation When giving away resources, two natural goals are to allocate these resources efficiently and fairly. Achieving these goals requires asking people about their preferences, so a third goal is to allocate in a way that is truthful (incentivizes people to tell us their true preferences).</description>
+    </item>
+    
+    <item>
+      <title>Great Zimbabwe</title>
+      <link>/blog/greatzimbabwe/</link>
+      <pubDate>Mon, 18 Dec 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/greatzimbabwe/</guid>
+      <description>I recently got the opportunity to play the game “Great Zimbabwe.” I found it to be a very interesting game, with several mechanics that I hadn’t really seen in other games. I don’t think it will ever be a top game for me (for reasons outlined below), but I did find myself thinking about it for days after playing, so I figured I’d share my thoughts. An important caveat to all of the below is that I am a total novice (with one game under my belt, played against other novices), so I definitely don’t understand all of the complexity that attracts some people to play the game repeatedly.</description>
+    </item>
+    
+    <item>
+      <title>Short Proofs for Characterizations of Top Trading Cycles</title>
+      <link>/blog/ttc-characterization/</link>
+      <pubDate>Tue, 31 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ttc-characterization/</guid>
+      <description>One of the most elegant matching algorthms out there is the Top Trading Cycles algorithm, introduced by Shapley and Scarf in their 1974 paper “On cores and indivisibility”, and attributed to David Gale. This algorithm finds the unique core allocation, and its outcome is therefore individually rational and pareto efficient. In addition, this algorithm makes truth-telling a dominant strategy for all individuals.
+In fact, a striking 1994 paper by Ma (“Strategy-Proofness and the Strict Core in a Market with Indivisibilities”) shows that Top Trading Cycles is the only mechanism that is individually rational, pareto efficient, and truthful.</description>
+    </item>
+    
+    <item>
+      <title>Experimenting with Dall-E3</title>
+      <link>/blog/dalle/</link>
+      <pubDate>Thu, 19 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/dalle/</guid>
+      <description>Introduction There have been a number of attention-grabbing advancements in the AI space recently, including large language models (i.e. Chat GPT) and image generation (i.e. Dall-E). I think that these developments are going to end up being very significant. While I am not a very experienced user of these services, I am trying to give myself more practice with them, to better understand their capabilities and see how they could be useful to me.</description>
+    </item>
+    
+    <item>
+      <title>A Short Proof of the Truthfulness of DA</title>
+      <link>/blog/da_truthful/</link>
+      <pubDate>Sun, 01 Oct 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/da_truthful/</guid>
+      <description>Note: this post assumes knowledge of the definition of stability in two-sided matching markets.
+ If you aren’t familiar with this definition, you should first learn about that. If you are familiar with the definition of stability, please consider providing a public good by amending the Wikipedia page on the stable marriage problem. When writing this post, I noticed that this page assumes a balanced market in which all matches are acceptable, and does not mention the possibility of an individual blocking a match, or going unmatched (thus making it an unsuitable reference for someone trying to understand this post from first principles).</description>
+    </item>
+    
+    <item>
+      <title>Famous Open Question Resolved... since 2014?!?!</title>
+      <link>/blog/rp_resolved/</link>
+      <pubDate>Sun, 24 Sep 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rp_resolved/</guid>
+      <description>Motivation Suppose I have a set of objects to give away. What goals should I have? Of course, the answer depends on the setting, but two natural goals are efficiency and fairness. If I don’t know people’s preferences, I also need to design a system that incentivizes people to tell me their true preferences.
+Skipping over the mathematical definitions of efficiency, fairness, and truthfulness (more detail on these below), I assert that there is a simple mechanism that satisfies all three goals: line people up, and have the first person choose their favorite object, the second their favorite from those that remain, and so on.</description>
+    </item>
+    
+    <item>
+      <title>SOAR: My Favorite Paper from EC 2023</title>
+      <link>/blog/soar/</link>
+      <pubDate>Sat, 26 Aug 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/soar/</guid>
+      <description>In this post, I want to share a paper that I learned about at EC 2023 in July: Feature Based Dynamic Matching, by Yilun Chen, Yash Kanoria, Akshit Kumar, and Wenxin Zhang.
+After hearing this work presented, I immediately told my wife about it on a walk in Saint James’ park. No, my wife is not an academic, but the paper is just that great (and she is even greater!</description>
+    </item>
+    
+    <item>
+      <title>Reflections on &#34;Design on Matroids&#34;</title>
+      <link>/blog/designonmatroids/</link>
+      <pubDate>Sat, 07 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/designonmatroids/</guid>
+      <description>I recently read the working paper “Design on Matroids” by Isa Hafalir, Fuhito Kojima, Bumin Yenmez, and Koji Yokote. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look.
+Disclaimer. This is part of a series of posts in which I discuss others’ work. My goal with these posts is to organize my thoughts, and share these thoughts with the authors (and anyone else who may be interested).</description>
+    </item>
+    
+    <item>
+      <title>Reflections on &#34;Efficient Market Design&#34;</title>
+      <link>/blog/efficientmarketdesign/</link>
+      <pubDate>Fri, 06 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/efficientmarketdesign/</guid>
+      <description>I recently read the working paper “Efficient Market Design” by Isa Hafalir, Fuhito Kojima, and Bumin Yenmez. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look. In this post, I briefly summarize the paper, and then offer some thoughts on the applicability of the model.
+Disclaimer. This is part of a series of posts in which I discuss others’ work.</description>
+    </item>
+    
+    <item>
+      <title>Does Algorithmic Hiring Lead to Worse Outcomes?</title>
+      <link>/blog/algorithmicmonoculture/</link>
+      <pubDate>Sat, 12 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/algorithmicmonoculture/</guid>
+      <description>Motivation One recent trend in hiring is for companies to use machine learning models to sort through piles of job applications. This has the obvious advantage (to the company) of reducing the number of hours that recruiters need to spend reading resumes. Algorithmic assessment may also avoid certain biases that human recruiters have, although it is likely to be biased in other ways. Noise or bias in an individual firm’s hiring decision is unfortunate, but one might hope it doesn’t matter too much: strong candidates should be able to find work elsewhere.</description>
+    </item>
+    
+    <item>
+      <title>Rolling to Reach 100</title>
+      <link>/blog/rollto100/</link>
+      <pubDate>Tue, 28 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rollto100/</guid>
+      <description>One of the delights of being married to a teacher is vacationing together over the summer. One of the delights of being married to an adventurous teacher is vacationing in Albania. And one of the delights of being married to an adventurous math teacher is talking about math while vacationing in Albania. This post is inspired by discussions during our recent trip. It uses dynamic programming and martingale theory to study a simple question about rolling dice.</description>
+    </item>
+    
+    <item>
+      <title>Do &#34;Community Preference&#34; Policies Violate the Fair Housing Act? (Part 3)</title>
+      <link>/blog/communitypreference-part3/</link>
+      <pubDate>Fri, 03 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/communitypreference-part3/</guid>
+      <description>New York City faces a lawsuit alleging that its “Community Preference” policy creates a disparate racial impact. In previous videos on this topic, examined the plaintiff’s and defendant’s analysis. In this video, I conduct my own analysis.
+   The slides accompanying this lecture are available here.
+My main conclusion is that the current implementation of the Community Preference policy has large consequences for low-income units, and much smaller effects for middle-income units.</description>
+    </item>
+    
+    <item>
+      <title>Lottery Glitch in NYC Public Schools</title>
+      <link>/blog/lotteryglitch/</link>
+      <pubDate>Tue, 19 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/lotteryglitch/</guid>
+      <description>The New York Post recently reported on a “lottery glitch” in the application process for New York City Public Schools. Basically, parents could see their child’s lottery number, and could get a new lottery number by cancelling and re-starting their application. This creates an obvious issue, as applications can be repeatedly canceled until the child receives a good lottery number.
+What I want to focus on, however, is the line in the article, where a Manhattan mom learned that her daughter had a good lottery number, and “decided her daughter should re-do her list by putting more desirable schools at the top.</description>
+    </item>
+    
+    <item>
+      <title>The Devilish Details of H2B Visa Lotteries</title>
+      <link>/blog/h2bvisas/</link>
+      <pubDate>Sat, 26 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/h2bvisas/</guid>
+      <description>Today I’m writing about the allocation of H2B visas. This can be thought of as a sister post to my previous writing on H1B visas, although the technical content is quite different. I describe how the H2B allocation procedure evolved from first-come first-served to a lottery. I examine the rules of the current lottery, and propose and analyze several alternative designs. I also look into recent data, which suggests that companies are finding loopholes in the application process.</description>
+    </item>
+    
+    <item>
+      <title>Do &#34;Community Preference&#34; Policies Violate the Fair Housing Act? (Part 2)</title>
+      <link>/blog/communitypreference-part2/</link>
+      <pubDate>Sun, 13 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/communitypreference-part2/</guid>
+      <description>New York City faces a lawsuit alleging that its “Community Preference” policy creates a disparate racial impact. In a previous video, I examined the plaintiffs’ analysis. In this video, I look at the city’s rebuttal, presented by Bernard Siskin. While Siskin does a good job of highlighting flaws in the plaintiffs’ analysis, his own report uses uninformative outcome measures and some questionable methods for estimating the counterfactual.
+The slides accompanying this lecture are available here.</description>
+    </item>
+    
+    <item>
+      <title>Do &#34;Community Preference&#34; Policies Violate the Fair Housing Act? (Part 1)</title>
+      <link>/blog/communitypreference-part1/</link>
+      <pubDate>Sun, 06 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/communitypreference-part1/</guid>
+      <description>  New York City faces a lawsuit alleging that its “Community Preference” policy creates a disparate racial impact. In this video, I explain why the analysis conducted by the plaintiffs’ “expert witness” does not address this claim.
+The slides accompanying this lecture are available here.
+   </description>
+    </item>
+    
+    <item>
+      <title>The Virtues of Random Priority</title>
+      <link>/blog/randompriority/</link>
+      <pubDate>Sat, 29 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/randompriority/</guid>
+      <description>I’ve decided to try a video blog! My first video is on an amazing and fundamental open question, and is intended for a general audience.
+  I’d love to hear any thoughts you have on this new format!
+Note: Since this video was created, I have learned of a paper by Aytek Erdil which resolves this question for a particular definition of truthfulness. The question remains open if we use a slightly stronger definition.</description>
+    </item>
+    
+    <item>
+      <title>The 10th Mountain Division Hut Lottery</title>
+      <link>/blog/10thmountainhutlottery/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/10thmountainhutlottery/</guid>
+      <description>The 10th Mountain Division Huts in Colorado are amazing. I’ve done two winter hut trips, which involve backcountry skiing through beautiful terrain, and arriving at lovely cabins stocked with lots of firewood and equipped with all the cooking gear you can imagine. These photos from three years ago make me want to return immediately:
+.
+I know what you’re wondering: how do I book my own trip to this amazing place?</description>
+    </item>
+    
+    <item>
+      <title>The Minnesota Fringe Lottery</title>
+      <link>/blog/fringefestivallottery/</link>
+      <pubDate>Sun, 28 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/fringefestivallottery/</guid>
+      <description>I was recently looking at the page of the Minnesota Fringe Festival. This is an 10+ day event where artists can perform original work. However, there are not enough spots to accommodate all interested artists. Rather than raising fees or using auditions, they have decided to select artists by lottery! Of course, I had to read more.
+While selecting by lottery sounds simple, there are often many hidden complexities, and this case is no exception.</description>
+    </item>
+    
+    <item>
+      <title>Reflections on Research</title>
+      <link>/blog/researchreflections/</link>
+      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/researchreflections/</guid>
+      <description>Unlike most of my posts, this one is very personal. In it, I reflect on my research journey, and insights about the research process that I’ve gained over the past five years.
+Three Components of Research Success Many PhD students suffer from imposter syndrome, and wonder whether they are “good enough” to belong. I never had this problem. Coming out of my PhD, I felt confident that I was good at research, and filled with ideas for new projects.</description>
+    </item>
+    
+    <item>
+      <title>A Better Way to Schedule Vaccinations</title>
+      <link>/blog/schedulingvaccines/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/schedulingvaccines/</guid>
+      <description>Over the past months, eligibility for COVID-19 vaccination has expanded, and it was recently announced that all Americans are now eligible. However, just because you are eligible doesn&#39;t mean you can schedule an appointment, and I know a lot of people who have spent hours refreshing webpages in an effort to book one.
+In a previous post, I expressed concerns that the system for scheduling vaccination appointments is (i) a challenging and frustrating process, and (ii) inequitable, as the challenges are likely most acute for elderly and low-income populations that have been hardest-hit by the virus.</description>
+    </item>
+    
+    <item>
+      <title>How Useful is Pooled Testing?</title>
+      <link>/blog/poolingtests/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/poolingtests/</guid>
+      <description>In a previous post, I wrote about several strategies for reducing turnaround times for COVID tests. One interesting strategy that I did not write about is pooling, also known as pooled testing. What is pooling? I&#39;ll let the CDC Interim Guidance for Use of Pooling Procedures explain:
+ Pooling... means combining respiratory samples from several people and conducting one laboratory test on the combined pool of samples. If a pooled test result is negative, then all specimens can be presumed negative with the single test.</description>
+    </item>
+    
+    <item>
+      <title>Reducing Turnaround Times for COVID Tests</title>
+      <link>/blog/testingdelays/</link>
+      <pubDate>Sat, 27 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/testingdelays/</guid>
+      <description>COVID testing is a key tool for fighting the virus. If readily available with quick results, it can be used to identify and isolate positive cases, preventing further spread. Although there are several types of COVID test, I will focus on the PCR test, which is the most common (and most accurate) option. If you want to learn a bit more about the testing process, I recommend this video, which I assigned as &amp;quot;reading&amp;quot; for my Operations Management class.</description>
+    </item>
+    
+    <item>
+      <title>Centralized Registration for COVID Vaccines</title>
+      <link>/blog/centralizedcovidvaccines/</link>
+      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/centralizedcovidvaccines/</guid>
+      <description>The Power of Pooling One of the central lessons from the waiting time unit of my operations management course is &amp;quot;the power of pooling&amp;quot;1: a single centralized system can result in lower waiting times than many independent systems. The reason for this is that when you have separate systems, it&#39;s possible to have a backlog in one, while servers remain idle in the other. This is inefficient! A (properly designed) centralized system ensures that whenever there is a queue, all servers are busy.</description>
+    </item>
+    
+    <item>
+      <title>Why Are Waits So Long At High Utilization?</title>
+      <link>/blog/longwaits/</link>
+      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/longwaits/</guid>
+      <description>One of the units in my operations management course is on variability and waiting time. I really enjoy this unit, for several reasons. First, we all have experience waiting in lines, so the topic feels personally relevant. Second, despite our experience waiting in lines, we don&#39;t have experience thinking about them systematically, and our intuition is actually quite poor.
+One of the most important insights from queueuing theory is that as utilization rises, average waiting time &amp;quot;blows up.</description>
+    </item>
+    
+    <item>
+      <title>Bottleneck Analysis through Laundry</title>
+      <link>/blog/laundrybottleneckanalysis/</link>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laundrybottleneckanalysis/</guid>
+      <description>&amp;quot;Find the bottleneck, and address it!&amp;quot; This is the advice that many MBAs receive in their Operations Management class. It&#39;s good advice, but distilled to the point that it&#39;s more of a platitude than anything actionable.
+I&#39;m a firm believer that people often have to struggle with a concept before they can really understand it. This post will discuss an in-class exercise that I use to introduce bottleneck analysis.</description>
+    </item>
+    
+    <item>
+      <title>Why &#34;Margin of Error&#34; is a Misleading Statistic</title>
+      <link>/blog/marginoferror/</link>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/marginoferror/</guid>
+      <description>Many people have had their eyes on election polls recently. These polls typically report percentages supporting each candidate, alongside a &amp;quot;margin of error.&amp;quot;
+What does this number mean? If you read the fine print, you&#39;ll sometimes see that this margin of error is a &amp;quot;95% confidence interval.&amp;quot; Although this makes it sound like the election result should fall between these bounds 95% of the time, this interpretation is wrong.1</description>
+    </item>
+    
+    <item>
+      <title>IID Prophet Inequalities</title>
+      <link>/blog/iidprophet/</link>
+      <pubDate>Fri, 02 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/iidprophet/</guid>
+      <description>Last week I had the pleasure of seeing Nikhil Devanur present Static pricing for multi-unit prophet inequalities, which is joint with Thodoris Lykouris and Shuchi Chawla. I greatly enjoyed the paper, and discussed it in a blog post last week. Today, I will go beyond what is in their paper to tackle a question asked by my colleague Will Ma.
+1 Setting the Stage The original paper considers a setting where we are presented with a sequence of values.</description>
+    </item>
+    
+    <item>
+      <title>Static Pricing for Multi-Unit Prophet Inequalities</title>
+      <link>/blog/staticpricing/</link>
+      <pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/staticpricing/</guid>
+      <description>On Tuesday, I had the pleasure of seeing Nikhil Devanur present Static pricing for multi-unit prophet inequalities, which is joint with Thodoris Lykouris and Shuchi Chawla.
+I liked the work, and want to bring it to other’s attention. In this post, I describe some of the main ideas in the paper. An accompanying post presents some new results that I derived after seeing the talk.
+1 The Setting You are presented with a sequence of \(n\) values \(V_1, \ldots, V_n\).</description>
+    </item>
+    
+    <item>
+      <title>Why Do Expensive Products Get Worse Ratings?</title>
+      <link>/blog/simpsonsparadox/</link>
+      <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/simpsonsparadox/</guid>
+      <description>Motivation Several years ago, I was looking for speakers on Amazon. Prices varied widely, from $25 to $250 or more. As I browsed, I noticed an interesting pattern: the most expensive speakers had the lowest average rating. More recently, I discovered the study “Expensive Running Shoes Are Not Better Than More Affordable Running Shoes.” The study finds that shoes with higher prices tended to get lower ratings. The 10 most expensive shoes in the study had an average cost of $191 and an average rating of 79, while the 10 cheapest had an average cost of $60 and an average rating of 86.</description>
+    </item>
+    
+    <item>
+      <title>Optimizing for Students</title>
+      <link>/futureposts/funwithda/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/funwithda/</guid>
+      <description>Increasingly, priorities viewed as design lever. Only two problems: not clear what objective is, and not clear how to achieve it.
+This post will go through a very stylized set of results.
+Designing DA Priorities Consider a market with \(n\) students and \(n\) schools, each with a single seat. We are going to assign students using the student-proposing deferred acceptance algorithm. The student preference profile \(P\) is drawn from known distribution \(D\).</description>
+    </item>
+    
+    <item>
+      <title>An Analogy Between Matching and Queueing, Part I: Modeling Approaches</title>
+      <link>/blog/queueinganalogy1/</link>
+      <pubDate>Sun, 23 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/queueinganalogy1/</guid>
+      <description>I often find myself explaining stable matching to researchers who have little background in matching, but are familiar with queueing theory. Through these conversations, I have come to realize that there are a lot of parallels between queueing and matching!
+This is the first of several blog posts that will present an extended analogy between these fields. It describes the advantages and disadvantages of several several classes of models (deterministic, stochastic, and fluid limit) that have been used for both queueing and matching.</description>
+    </item>
+    
+    <item>
+      <title>Deferred Acceptance is Unpredictable</title>
+      <link>/blog/da-predictability/</link>
+      <pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/da-predictability/</guid>
+      <description>In February 2019, the Brookings Institution published The Opportunities and Risks of K-12 Student Placement Algorithms, which includes the following quote:
+ Even if DA algorithms are relatively simple, predicting how student assignment policies will affect enrollment and outcomes is difficult.
+ In this post, I explore both parts of this claim: what makes the Deferred Acceptance (DA) algorithm simple, and why is it difficult to predict the effect of using it?</description>
+    </item>
+    
+    <item>
+      <title>Rationing Medical Supplies</title>
+      <link>/blog/rationingmedicalsupplies/</link>
+      <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingmedicalsupplies/</guid>
+      <description>Overview The Coronavirus pandemic has resulted in a need to ration scarce medical supplies. Most people agree that test kits, ventilators, antiviral medication, and vaccines should not necessarily go to those willing to pay the most for them. States have been revising their allocation guidelines to reflect various ethical considerations.1
+One question that emerges is whether to give priority to certain categories of people, such as emergency personnel. A recent working paper by Parag Pathak, Tayfun Sonmez, Utku Unver, Bumin Yenmez examines existing guidelines, and notes that some states prioritize emergency personnel, whereas others (including my home states of New York and Minnesota) do not.</description>
+    </item>
+    
+    <item>
+      <title>How Can You Move Back on a Waiting List?</title>
+      <link>/blog/movingbackonawaitlist/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/movingbackonawaitlist/</guid>
+      <description>Changes to School Admissions in NYC New York has made some recent changes to their middle and high school admissions process. Previously, all students would submit preference lists, which were processed using a variant of the Deferred Acceptance algorithm. Students who were not admitted to any school on their list1 could apply to schools with vacancies in a second round. In addition, those who were unhappy with their assignment could participate in an opaque appeals process.</description>
+    </item>
+    
+    <item>
+      <title>Should Nate Silver Bet on his own Predictions?</title>
+      <link>/blog/shouldnatesilverbet/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/shouldnatesilverbet/</guid>
+      <description>The Proposal My friend Shengwu Li pointed me to the following (eight year old) Marginal Revolution blog post titled “A Bet is a Tax on Bullshit.” In it, Alex Tabarrok argues that pundits should stake part of their salary on their predictions:
+ The NYTimes should require that Silver, and other pundits, bet their beliefs. Furthermore, to remove any possibility of manipulation, the NYTimes should escrow a portion of Silver’s salary in a blind trust bet.</description>
+    </item>
+    
+    <item>
+      <title>Running in Circles</title>
+      <link>/blog/runningincircles/</link>
+      <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/runningincircles/</guid>
+      <description>Prologue: Running in Graduate School The motivation for this post comes from my time in graduate school. A popular run on the Stanford campus is Campus Drive Loop. There are sidewalks on either side of the road, giving the runner a choice of which to take. On days when I felt low-energy, I would sometimes take the inside sidewalk, figuring that this would shorten my run. But by how much?</description>
+    </item>
+    
+    <item>
+      <title>Should Grants be Awarded by Lottery?</title>
+      <link>/blog/grantfunding/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/grantfunding/</guid>
+      <description>Motivation Many researchers rely on grants to fund their work. Typically, they write a proposal for a future project. Proposals are scored and ranked by a panel, and the top-ranking proposals are funded. The percentage of proposals that receive funding is referred to as the &amp;quot;payline,&amp;quot; and has fallen dramatically over time.
+Recent papers in mBio and PLOS Biology have called for a change to this process. They propose using a lottery, rather than a ranking system, to select proposals for funding.</description>
+    </item>
+    
+    <item>
+      <title>What do Toilet Paper and License Plates Have in Common?</title>
+      <link>/blog/rationingcreatesscarcity/</link>
+      <pubDate>Sun, 12 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingcreatesscarcity/</guid>
+      <description>My research usually starts from the premise that there is a shortage of some item, which triggers the need for an allocation policy. However, sometimes the allocation policy can cause a shortage – especially in the presence of uncertainty. This, in turn, results in an inefficient allocation.
+For one topical example, consider toilet paper. In normal times, people have confidence that they will be able to buy toilet paper whenever they need it.</description>
+    </item>
+    
+    <item>
+      <title>Long Lines at the Polls</title>
+      <link>/blog/waitingtovote/</link>
+      <pubDate>Thu, 26 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/waitingtovote/</guid>
+      <description>Before COVID-19 took over, the hottest news story was the 2020 Democratic Presidential Primary. On &amp;quot;Super Tuesday&amp;quot; (March 3rd), 14 states voted. Joe Biden won 10 of them, solidifying his status as front-runner and causing Mike Bloomberg and Elizabeth Warren to drop out of the race.
+This post will focus on a different aspect of Super Tuesday: the long lines that some voters experienced at the polls. In Harris County (which includes the city of Houston), some voters waited past 1 am to cast their votes.</description>
+    </item>
+    
+    <item>
+      <title>A Visual Approach to Optimal Orders</title>
+      <link>/blog/newsvendor/</link>
+      <pubDate>Wed, 11 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/newsvendor/</guid>
+      <description>The final unit of my operations course is on inventory management. Among other topics, we study the classic “Newsvendor” model.1 In my first year teaching at Columbia, I came up with a neat visualization of this model. The goal of this post is to share my visualization – hopefully you will agree that it’s helpful!
+The Newsvendor Model You are planning to sell a product – let’s say a new board game that you have developed.</description>
+    </item>
+    
+    <item>
+      <title>Should Government Programs be Means-Tested?</title>
+      <link>/blog/ubi/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ubi/</guid>
+      <description>Today, we’ll address a question that comes up frequently in policy discussions: whether government programs should be means-tested. For example, should a “basic income” program be available to all, or only those making below a certain income level? Similarly, one might ask whether it should be paid for by taxes on all, or only on the rich. This post raises a simple but important point, and is largely copied from Greg Mankiw.</description>
+    </item>
+    
+    <item>
+      <title>How Valuable is an Offensive Rebound?</title>
+      <link>/blog/offensiverebounds/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/offensiverebounds/</guid>
+      <description>Motivation This fall, I started playing basketball with other junior faculty members. Most of them are better shooters than I am, but I have one key advantage: I am 6’2“. As a result, a big part of my contribution is to grab as many rebounds as possible. Today’s post tries to quantify the value of this skill. I started with two key questions:
+How valuable is offensive rebounding skill, relative to shot-making?</description>
+    </item>
+    
+    <item>
+      <title>Are Cramped Quarters on Planes a Safety Hazard?</title>
+      <link>/blog/seatpitch/</link>
+      <pubDate>Sat, 14 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/seatpitch/</guid>
+      <description>Continuing on a theme from yesterday’s post, let’s stick with the airline industry.
+Many people are familiar with the fact that legroom in airplane seats has been declining over the years. Some people are upset about this fact. A few even sued the Federal Aviation Administration, arguing that the cramped quarters increase the risk during an emergency evacuation. Setting aside that I generally believe that emergency safety measures on planes are not cost-effective (emergencies are rare, and emergencies in which life vests, safety slides, etc are actually helpful appear to be almost non-existent), the argument sounds logical – doesn’t it take longer to get in and out of a cramped seat than a spacious one?</description>
+    </item>
+    
+    <item>
+      <title>Biometric Scans at Airports: Where is the Bottleneck?</title>
+      <link>/blog/biometricscans/</link>
+      <pubDate>Fri, 13 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/biometricscans/</guid>
+      <description>In the past year, Delta has rolled out biometric boarding for international flights from Atlanta, Salt Lake City, and my home airport of Minneapolis/Saint Paul. The idea is that rather than having to repeatedly scan your boarding pass and passport, facial recognition software will identify you.1 Delta claims that this can reduce the time to scan each passenger by several seconds, shaving up to 9 minutes from the boarding process.</description>
+    </item>
+    
+    <item>
+      <title>Why You Should Bet on Favorites</title>
+      <link>/blog/racetrackgambling/</link>
+      <pubDate>Tue, 03 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/racetrackgambling/</guid>
+      <description>Today’s post is about a topic that caught my eye during my first year of graduate school: inferring win probabilities from betting lines. It is an empirical fact that conventional betting line estimates systematically understate the favorite’s chance of winning. Traditional explainations argue that bettors are irrational. This post points out that the bias could appear even with rational bettors, due to the fact that bookies set the odds to minimize their exposure.</description>
+    </item>
+    
+    <item>
+      <title>The Devilish Details of H1B Visa Lotteries</title>
+      <link>/blog/h1bvisas/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/h1bvisas/</guid>
+      <description>Today I&#39;m writing about a process that many of my friends from graduate school have faced: the lottery for H1B visas. Earlier this year, the government announced a seemingly small change to the process. This post explains the change, which will have the effect of granting more visas to applicants with advanced degrees from US institutions (and fewer to applicants without such degrees).
+Background Each year, US Citizenship and Immigration Services (USCIS) offers a total of 85,000 H1B visas: 65,000 are available to anybody, and the remaining 20,000 are only available to applicants with an advanced degree from a US institution.</description>
+    </item>
+    
+    <item>
+      <title>LeBron James, Coupon Collector</title>
+      <link>/blog/collectingcoupons/</link>
+      <pubDate>Wed, 20 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/collectingcoupons/</guid>
+      <description>Last night, LeBron James became the first player to have a triple double against all 30 NBA teams. The article mentions that he has 86 career triple doubles. To me, it sounded surprising that he needed &amp;quot;only&amp;quot; 86 triple doubles to get one against every team. This post will do some quick back-of-the-envelope calculations to test my intuition.
+My first thought was to model this as a Coupon Collector&#39;s Problem.</description>
+    </item>
+    
+    <item>
+      <title>Do Target Date Funds Make Sense?</title>
+      <link>/blog/investmentadvice/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/investmentadvice/</guid>
+      <description>Motivation A common piece of investing advice goes as follows:1
+ Stock-based funds have higher long-term return potential but also have relatively high volatility. On the other hand, bond funds are more stable, especially in terms of income, but don’t have the long-term growth potential of stocks. Therefore, it’s generally suggested that younger investors put most of their money into stocks and gradually shift their investments into bonds as they get closer to retirement.</description>
+    </item>
+    
+    <item>
+      <title>How to Raise Money for Your Startup</title>
+      <link>/blog/icofunding/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/icofunding/</guid>
+      <description>\(\newcommand{\fbar}{\overline{F}}\) \(\newcommand{\E}{\mathbb{E}}\)
+1 Motivation At INFORMS, I saw a talk by Jingxing (Rowena) Gan, about her paper Inventory, Speculators, and Initial Coin Offerings (joint with Gerry Tsoukalas and Serguei Netessine). I really liked the model, so I thought I&#39;d give my take on it. Although the paper is framed as pertaining to certain classes of ICOs, I think its applicability is much broader, and will describe it accordingly.
+Suppose you&#39;ve got an idea for a company, but no money on hand.</description>
+    </item>
+    
+    <item>
+      <title>NFL Strategy: Going for 2</title>
+      <link>/blog/nfl-2pt/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/nfl-2pt/</guid>
+      <description>Setting the Scene Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? This was the decision that the Panthers faced against the Packers earlier this year.
+Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two. This ESPN article does a good job of working through an example.</description>
+    </item>
+    
+    <item>
+      <title>About Hugo XMin</title>
+      <link>/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>XMin is the first Hugo theme I have designed. The original reason that I wrote it was I needed a minimal example of Hugo themes when I was writing the blogdown book. Basically I wanted a simple theme that supports a navigation menu, a home page, other single pages, lists of pages, blog posts, categories, tags, and RSS. That is all. Nothing fancy. In terms of CSS and JavaScript, I really want to keep them minimal.</description>
+    </item>
+    
+    <item>
+      <title>Looking for a serious critique of Mississippi&#39;s NAEP Scores</title>
+      <link>/futureposts/mississippimiracle2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/mississippimiracle2/</guid>
+      <description>In a previous post, I highlight that 4th grade math and reading scores are
+Some have called this the “Mississippi Miracle”. Karen Vaites has termed it the “Southern Surge.”
+People don’t know it’s happening. They question whether it is real. They claim – in contrast to the data – that Minnesota has some of the best educational outcomes in the country.
+A variety of skeptics have doubted the validity or relevance of Mississippi’s gains.</description>
+    </item>
+    
+    <item>
+      <title>Research</title>
+      <link>/research/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/research/</guid>
+      <description>Journal Publications  Tight Guarantees for Threshold Policies in the Prophet Secretary Problem (with Will Ma). Operations Research, 2022. (Extended Abstract in EC 2022.) Ungated pdf.
+ Lottery Design For School Choice, and Online Appendix. Management Science, forthcoming. (Extended Abstract in EC 2015: Short Lists in Centralized Clearinghouses)
+ Bitcoin: A Natural Oligopoly (with Matt Weinberg). Management Science, 2022. (Extended Abstract in ITCS 2019.) Ungated pdf.
+ Parallel Lotteries: Insights from Alaskan Hunting Permit Allocation (with Tim Randolph).</description>
+    </item>
+    
+    <item>
+      <title>School Choice Lotteries</title>
+      <link>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Session 1: Efficiency</title>
+      <link>/teaching/session1_paretoefficient/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/teaching/session1_paretoefficient/</guid>
+      <description>Hello World</description>
+    </item>
+    
+    <item>
+      <title>Session 1: Efficiency</title>
+      <link>/teaching/session2_incentives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/teaching/session2_incentives/</guid>
+      <description>Hello World</description>
+    </item>
+    
+  </channel>
+</rss>

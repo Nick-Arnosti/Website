@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>An Analogy Between Matching and Queueing \n Part I: Modeling Approaches \\ Part II: Kendall Notation for Matching \\ Part III: A Striking Equivalence | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">An Analogy Between Matching and Queueing \n Part I: Modeling Approaches \ Part II: Kendall Notation for Matching \ Part III: A Striking Equivalence</span></h1>
+<h2 class="author">Nick Arnosti</h2>
+<h2 class="date">2019/11/22</h2>
+</div>
+
+<main>
+
+
+
+<div id="part-i-different-models" class="section level1">
+<h1>Part I: Different Models</h1>
+<p>This post describes several models for stable matching: deterministic models, models of large random matching markets, and ``fluid limit&quot; models.</p>
+<p>Throughout, I use analogies to queueing theory, which may be more familiar to some readers. Each of these approaches has advantages and limitations.</p>
+<div id="deterministic-models" class="section level2">
+<h2>Deterministic Models</h2>
+<p>For decades, most matching research studied deterministic models (<a href="https://www.amazon.com/Two-Sided-Matching-Econometric-Society-Monographs/dp/0521437881">this book</a> offers a fairly comprehensive survey of early work).</p>
+<p>The advantage of this approach is that it doesn’t require <em>any</em> assumptions on student preferences or school priorities. This makes it possible to prove very general results. For example, adding a student to a matching market always weakly hurts every other student.</p>
+<p>One drawback of this approach is that with weaker assumptions come weaker conclusions. If we ask “How much does the addition of a new student hurt others?”, there is no good answer. In some cases, adding a student might not displace anyone else; in others, it has a dramatic effect (as I discuss in more detail <a href="https://nickarnosti.com/blog/da-predictability/">here</a>). For any given preference profile we can answer this question, but specifying a full preference profile is cumbersome: the input is too high dimensional for clean insights.</p>
+<p>In queueing, the analogous approach would be to specify each individual arrival time and service time. Again, we could derive a few general results (i.e. adding a new customer weakly hurts all others), but we would quickly run out of interesting things to say. Tellingly, few queueing papers work with general deterministic models.</p>
+</div>
+<div id="stochastic-models-asymptotics." class="section level2">
+<h2>Stochastic Models + Asymptotics.</h2>
+<p>Instead, queueing is traditionally studied using stochastic models, in which arrival and service processes are described by a few parameters. Additionally, most analysis focuses on steady-state outcomes: (that is, the average experience of a large number of customers). Jointly, these modeling choices enable insightful analysis into each parameter’s effect on metrics such as the average waiting time. One of the most celebrated insights is that wait time ``blows up&quot; as utilization approaches one: small changes in arrival rate can have a dramatic effect on average waiting times. The third post in this series will</p>
+<p>The analogous approach in matching theory is to study markets where preferences and priorities are drawn randomly, and to study outcomes as the number of students and seats grow. This approach was pioneered by Don Knuth in <a href="https://www-cs-faculty.stanford.edu/~knuth/ms.html">this monograph</a>, but was slow to catch on. Recently, however, it has become ubiquitous in the matching literature.</p>
+<p>In queueing, stochastic analysis is so common that it was helpful to develop a shorthand (known as <a href="https://en.wikipedia.org/wiki/Kendall%27s_notation">Kendall’s Notation</a>) for specifying assumptions. I believe that matching may have reached this point: the second post in this series will propose analogous notation for matching markets.</p>
+<p>who introduces what I refer to as the <span class="math inline">\(U/U/1\)</span> model (intentionally invoking the <span class="math inline">\(M/M/1\)</span> model from queueing): preferences and priorities are drawn uniformly at random, and each school matches to a single student.</p>
+<p>An alternative approach is to study markets where preferences and priorities are drawn randomly, and to study outcomes as the number of students and seats grow. This approach was pioneered by , who introduces what I refer to as the <span class="math inline">\(U/U/1\)</span> model (intentionally invoking the <span class="math inline">\(M/M/1\)</span> model from queueing): preferences and priorities are drawn uniformly at random, and each school matches to a single student.</p>
+<p>Although the M/M/1 queueing model is highly stylized, it generates one of the most celebrated insights from queueing theory: wait time ``blows up&quot; as utilization approaches one, and small changes in arrival rate can have a dramatic effect on average waiting times. An analogous result for the <span class="math inline">\(U/U/1\)</span> matching model was proven only very recently , despite many prior papers considering this model . Although there is now a large literature in queueing theory working with general service times, there is no analogous matching literature working with general priorities: all results on students’ average rank assume that priorities are either iid or identical (see e.g. ). This points to the difficulty of analyzing stable outcomes in large random markets: a comparison of many different priority rules is well beyond the reach of this methodology.</p>
+</div>
+</div>
+<div id="part-ii-kendall-notation-for-matching" class="section level1">
+<h1>Part II: Kendall Notation for Matching</h1>
+<p>There is a growing literature on random matching markets. It can be difficult to keep track of which settings each paper studies. In queueing theory, Kendall’s notation has been helpful for succinctly communicating stochastic assumptions. The goal of this note is to create an analog for matching theory.</p>
+<p>There are three key inputs to the Deferred Acceptance algorithm: student preferences, school priorities, and school capacities. Let’s discuss several commonly studied cases for each.</p>
+<ul>
+<li>Preferences: Can be drawn from a deterministic distribution and thus identical across students (D), uniformly distributed (U), drawn by sampling from a known distribution capturing the popularity of each school (P), or general (G).</li>
+<li>Priorities: Same as for student preferences.</li>
+<li>School Seats: Could assume single seat (1), identical number of seats (I), large capacity limits (L) or general (G).
+<p style="color:red">
+Should G mean fully general, or general but bounded as market grows?
+</p></li>
+</ul>
+<p>Note that this classification scheme doesn’t easily accommodate correlation between preferences and priorities. These might be prevalent in practice: learning that a student has applied to a selective school such as Stuyvesant also gives us information about their priority at other schools. However, such correlation is rarely captured in theoretical models, so it is omitted from the proposed scheme.</p>
+<p>Another factor to consider is the length of student lists. Many works assume a complete lists (or lists that are “as long as needed”), which could be the default assumption. Others assume a deterministic list length (D), a limited list length (L), or a general list length distribution (G).</p>
+<p>If we let <span class="math inline">\(n\)</span> be the number of students and <span class="math inline">\(m\)</span> be the number of schools, then several papers assume <span class="math inline">\(n = m\)</span>, while others take <span class="math inline">\(n, m \rightarrow \infty\)</span> (with fixed ratio or absolute difference). I’m not sure how best to document these choices.</p>
+<p>Let us review the literature, describing papers using this scheme.</p>
+
+</div>
+<div id="part-iii-a-striking-equivalence" class="section level1">
+<h1>Part III: A Striking Equivalence</h1>
+<p>Let’s study a fluid model of an Erlang A queueing system. Agents arrive at rate <span class="math inline">\(\lambda\)</span>, depart at rate <span class="math inline">\(d\)</span>, and are serviced at rate <span class="math inline">\(\mu\)</span>. The fluid model predicts a queue length <span class="math inline">\(L\)</span> satisfying <span class="math inline">\(Ld + \mu \geq \lambda\)</span> with equality if <span class="math inline">\(L &gt; 0\)</span>, implying <span class="math inline">\(L = (\lambda - \mu)_+/d\)</span>. By Little’s Law, average time in system is <span class="math inline">\(L/\lambda\)</span> <span class="math display">\[T = \frac{(1 - \mu/\lambda)_+}{d}. \]</span></p>
+<p>Now, let’s study the Azevedo-Leshno fluid model with iid priorities. To match exponential departures, assuming that student list length follows a geometric distribution with mean <span class="math inline">\(1/q\)</span> (so the probability of listing more than <span class="math inline">\(k\)</span> schools is <span class="math inline">\((1-q)^k\)</span>). Suppose that <span class="math inline">\(n\)</span> students compete for <span class="math inline">\(m\)</span> seats. If <span class="math inline">\(n \leq m\)</span>, then the model predicts that every school has a cutoff of zero (<span class="math inline">\(p = 1\)</span>), so students experience no rejections. Otherwise, the success probability is set such that the expected number of students who match is <span class="math inline">\(m\)</span>. After summing a geometric series, we get the following consistency condition for <span class="math inline">\(p\)</span>: <span class="math display">\[\frac{p}{1 - (1-q)(1-p)} = \frac{m}{n}.\]</span> The average number of applications sent by each student is <span class="math inline">\(\frac{1}{1 - (1-q)(1-p)}\)</span>, and the average number of rejections experienced by students is <span class="math inline">\(\frac{1-p}{1 - (1-q)(1-p)}\)</span>. Using the consistency condition, solving for <span class="math inline">\(p\)</span> and substituting, we see that the average number of rejections <span class="math inline">\(R\)</span> is <span class="math display">\[R = \frac{(1 - m/n)_+}{q}. \]</span></p>
+<p>Note that the equations for average wait <span class="math inline">\(W\)</span> and average rank <span class="math inline">\(R\)</span> are exactly parallel, with number of students = arrival rate, number of seats = service rate, and average list length = average time to departure absent service.</p>
+</div>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+  
+  <hr/>
+  &copy; <a href="https://nickarnosti.com">Nick Arnosti</a> 2020
+  
+  </footer>
+  </body>
+</html>

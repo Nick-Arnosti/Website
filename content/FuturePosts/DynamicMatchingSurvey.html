@@ -1,0 +1,96 @@
+---
+title: "Dynamic Matching Papers"
+date: "2026-05-06"
+bibliography: ../../static/dynamic-matching-references.bib
+output: html_document
+---
+
+
+
+<p>This post collects a few papers on dynamic matching.</p>
+<p>Gupta gives a sum-of-squares greedy algorithm for multiway matching with bounded regret <span class="citation">(<a href="#ref-gupta_2024_greedy_multiway">Gupta 2024</a>)</span>.</p>
+<p>Wei, Xu, and Yu propose a primal-dual policy for multi-way dynamic matching <span class="citation">(<a href="#ref-wei_xu_yu_2023_primal_dual">Wei, Xu, and Yu 2023</a>)</span>.</p>
+<div id="dynamic-matching-without-departures" class="section level1">
+<h1>Dynamic Matching Without Departures</h1>
+<p>Kerimov, Ashlagi, and Gurvich have two papers which consider a very similar model, in which agents do not depart.</p>
+<p>TODO: describe the model.</p>
+<p>The first of these, <span class="citation">Kerimov, Ashlagi, and Gurvich (<a href="#ref-kerimov_ashlagi_gurvich_2023_constant_regret">2023</a>)</span>, published in Management Science, considers a model in which some matches can involve more than two agents. It shows “batching” policies</p>
+<p>The second, <span class="citation">Kerimov, Ashlagi, and Gurvich (<a href="#ref-kerimov_ashlagi_gurvich_2025_greedy">2025</a>)</span> published in Operations Research in 2025, assumes that we are matching pairs of agents. They consider “greedy” policies, which identify a set of acceptable matches, and make an acceptable match whenever possible. Greedy policies differ in how they select among acceptable matches when multiple are available. They consider one policy which always forms the acceptable match involving the longest queue.</p>
+<p>Within the class of greedy policies are “static priority” policies, which have a ranking of matches that does not depend on the system state, and always perform the highest-priority match that is available.</p>
+<p>Here is a leading example, which we will use throughout. There are three types of agents: patients (arrival rate <span class="math inline">\(\lambda_P\)</span>), high-quality items (arrival rate <span class="math inline">\(\lambda_H\)</span>), and low-quality items (arrival rate <span class="math inline">\(\lambda_L\)</span>). The value of matching a patient to a high-quality item is <span class="math inline">\(v_H\)</span>, and to a low-quality item is <span class="math inline">\(v_L\)</span>. Assume <span class="math inline">\(v_H &gt; v_L &gt; 0\)</span>, and that there are enough items for everyone to get one <span class="math inline">\(\lambda_H + \lambda_L &gt; \lambda_P\)</span>.</p>
+<p><strong>What is the goal?</strong></p>
+<p>Constant regret.</p>
+<p>Can think of nested set of goals:</p>
+<ol style="list-style-type: lower-roman">
+<li>Sub-linear regret (asymptotic optimality)</li>
+<li>Constant regret</li>
+<li>Constant regret with correct scaling with <span class="math inline">\(\epsilon\)</span>.</li>
+</ol>
+<p><strong>What is the general position gap condition, and why is it necessary to achieve constant regret?</strong></p>
+<p>Informally, the condition says that small perturbations shouldn’t change which matches we do.</p>
+<p>Rather than getting into the technicalities, let’s illustrate with our leading example. Consider three cases:</p>
+<ul>
+<li><p><em>There is a surplus of high-quality items</em> (<span class="math inline">\(\lambda_H &gt; \lambda_P\)</span>). Then each patient should wait for a high-quality item. More precisely, use a policy that discards low-value items, and forms a high-value match whenever possible.</p></li>
+<li><p><em>There is a shortage of high-quality items</em> (<span class="math inline">\(\lambda_H &lt; \lambda_P\)</span>). Then some patients must accept a low quality item. Use a policy that forms a high-value match whenever possible, and forms low-value matches if they are available and no high-value matches are.</p></li>
+<li><p><em>There are exactly enough high-quality items</em> (<span class="math inline">\(\lambda_H = \lambda_P\)</span>). In this case, intuitively we want to follow the same policy as in the first case (match to only high-quality items). However, doing this does not achieve constant regret. After time <span class="math inline">\(T\)</span>, with probability <span class="math inline">\(1/2\)</span>, we will have more patients than high-quality items. In this cases, the expected surplus of patients is <span class="math inline">\(\mathcal{O}(\sqrt{T})\)</span>. If we do not match them, then we have lost <span class="math inline">\(\mathcal{O}(\sqrt{T})\)</span> relative to offline optimal. However, if we do match them, then there is a 50% chance that between <span class="math inline">\(T\)</span> and <span class="math inline">\(2T\)</span>, there will be a surplus of high-value items. In this case, we end with some unmatched high-value items, and some patients matched to low-value items. This also results in <span class="math inline">\(\mathcal{O}(\sqrt{T})\)</span> regret. So it is impossible to achieve bounded regret at both <span class="math inline">\(T\)</span> and <span class="math inline">\(2T\)</span> (let alone for all times).</p></li>
+</ul>
+<p>Represent the state by a one-dimensional queue (positive = waiting patients, negative = waiting high-value items). In the first case, we might have patients queueing up. But the all time maximum state is bounded. In the second case, quickly we have an excess of low-value items accumulating.</p>
+<p><strong>Is it easy to achieve <span class="math inline">\(\mathcal{O}(\sqrt{T})\)</span> regret without the GP condition?</strong></p>
+<p><strong>Why do departures make the problem harder?</strong></p>
+<p>Note that adding departures means even sublinear regret becomes impossible. Consider our example, and suppose that there is a shortage of high-quality items.</p>
+<p>If we add departures, these first two cases become much harder. Each time we have a patient wait for a high-value item, there is a positive probability that patient will depart, and we will irrevocably lose potential value <span class="math inline">\(v_L\)</span>. However, if we have a patient match to a low-value item, there is a positive probability that a high-value item will arrive soon afterwards, and ultimately go to waste.</p>
+<p>Thus, it is easy to see that regret of any online algorithm must scale linearly with <span class="math inline">\(T\)</span> (we make mistakes at a constant rate).</p>
+<p>On some bad instances, we can lose half of the value of the static planning problem.</p>
+<p><strong>What are their algorithms?</strong></p>
+<p>The different papers consider different algorithms.</p>
+<ol style="list-style-type: decimal">
+<li>Batching</li>
+<li>Greedy, longest queue with dismissal</li>
+<li>Static priority</li>
+</ol>
+<p>Below discusses #2.</p>
+<p>In our running example, when there is a surplus of high-quality items, the authors actually propose an algorithm that throws away high-quality items that arrive when no patients are queued. In a sense, this is wasteful: if we didn’t throw these items away, patients could match immediately. Instead, they must wait for future high-quality items to arrive. But you can show that this is not too costly, in the sense that the queue of waiting patients never gets too large.</p>
+<p>More formally, if you fix any time <span class="math inline">\(t\)</span>, the expected number of patients in the system at time <span class="math inline">\(t\)</span> is bounded by an absolute constant (independent of <span class="math inline">\(t\)</span>).</p>
+<p>Let <span class="math inline">\(N^\pi(t)\)</span> be the number of waiting patients at time <span class="math inline">\(t\)</span>. They show that under their policy, <span class="math inline">\(\sup_t \mathbb{E}[N^\pi(t)] \le B\)</span> for some <span class="math inline">\(B = \mathcal{O}(\epsilon)\)</span>. However, <span class="math inline">\(\mathbb{E}[\sup_t N^\pi(t)] = \infty\)</span>. That is, if the horizon is long enough, the queue will get long at some point, we just can’t predict when that will be.</p>
+<p>In this example, a stronger guarantee is possible. If we use a policy <span class="math inline">\(\pi^*\)</span> that actually allows high-value items to queue, then <span class="math inline">\(\mathbb{E}[\sup_t N^{\pi^*}(t)] &lt; \infty\)</span>. That is, initially there might be a queue of patients, but after some point, we always have waiting items and future patients never have to wait.</p>
+<p>So the order of quantifiers matters. Expected regret at time <span class="math inline">\(t\)</span> is finite, but expected supremum of regret over time is not.</p>
+<p><strong>When is the residual graph cyclic?</strong></p>
+<p>If the matching network is bipartite, this will never happen.</p>
+<p>Consider an example with three types, but now <span class="math inline">\(12\)</span>, <span class="math inline">\(23\)</span>, and <span class="math inline">\(13\)</span> matches are all valuable.</p>
+<p>Start by considering a symmetric case where <span class="math inline">\(\lambda_1 = \lambda_2 = \lambda_3 = 1\)</span> and <span class="math inline">\(r_{12} = r_{13} = r_{23} = 2\)</span>.</p>
+<p>Then the optimal matching rates are <span class="math inline">\(x_{12} = x_{23} = x_{13} = 1/2\)</span>, and the optimal reward is <span class="math inline">\(3\)</span>. This is the unique optimal solution. Furthermore, this remains optimal with perturbed rewards, so long as the maximum reward is greater than the sum of the remaining two rewards. Similarly, if we perturb arrival rates, the optimal <span class="math inline">\(x\)</span>’s will satisfy</p>
+<p><span class="math inline">\(x_{ij} = (\lambda_i + \lambda_j - \lambda_k)/2\)</span>,</p>
+<p>so long as this quantity is positive for all <span class="math inline">\(i,j\)</span>. So in this instance, we robustly want to do all three types of matches.</p>
+<p><strong>What are the challenges with dual-based (value-based) matching?</strong></p>
+<p>A natural approach is to identify values <span class="math inline">\(u_i\)</span>, intuitively representing the value of keeping a type <span class="math inline">\(i\)</span> agent in the system. (For example, these might be dual values.) Then give each match <span class="math inline">\(M\)</span> a score <span class="math inline">\(r_m - \sum_{i \in m} u_i\)</span>. Form matches with non-negative scores; ignore those with positive scores.</p>
+<p>Apply this to our leading example.</p>
+<p>If there is a surplus of high-value matches, then we will have that <span class="math inline">\(u_P = v_H\)</span>, and <span class="math inline">\(u_H = u_L = 0\)</span>.</p>
+<p>If there is a shortage of high-value matches, then we will have that <span class="math inline">\(u_H = v_H - v_L\)</span>, and <span class="math inline">\(u_P = v_L\)</span>, and <span class="math inline">\(u_L = 0\)</span>.</p>
+<p>In either case, some matches will have negative scores, and others will have a score of zero (no matches will have a positive score).</p>
+<p>In the latter case, we can’t just use an arbitrary static priority policy to prioritize “acceptable matches” (those with a score of zero). Suppose we prioritized low-value matches above high-value ones. Then we would end up making too many low-value matches!</p>
+<p>So the value information tells us how objective will respond to changes in arrival rates, but it doesn’t give us enough information to decide which matches to do.</p>
+<p><strong>Even in the case where <span class="math inline">\(\mu \to 0\)</span>, our LP does not provide a lower bound that goes to 1</strong></p>
+<p>Consider an example where we wish to match two types, which have equal arrival rates. We should be able to match all agents. But our constraint requires that if there is no slack, there are no matches. Thus, we need to leave some slack (unmatched agents).</p>
+<style>
+#refs .csl-entry {
+  margin-bottom: 1.25em;
+}
+</style>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-gupta_2024_greedy_multiway" class="csl-entry">
+Gupta, Varun. 2024. <span>“Greedy Algorithm for Multiway Matching with Bounded Regret.”</span> <em>Operations Research</em> 72 (3): 1139–55. <a href="https://doi.org/10.1287/opre.2022.2400">https://doi.org/10.1287/opre.2022.2400</a>.
+</div>
+<div id="ref-kerimov_ashlagi_gurvich_2023_constant_regret" class="csl-entry">
+Kerimov, Süleyman, Itai Ashlagi, and Itai Gurvich. 2023. <span>“Dynamic Matching: Characterizing and Achieving Constant Regret.”</span> <em>Management Science</em>. <a href="https://doi.org/10.1287/mnsc.2021.01215">https://doi.org/10.1287/mnsc.2021.01215</a>.
+</div>
+<div id="ref-kerimov_ashlagi_gurvich_2025_greedy" class="csl-entry">
+———. 2025. <span>“On the Optimality of Greedy Policies in Dynamic Matching.”</span> <em>Operations Research</em> 73 (1): 560–82. <a href="https://doi.org/10.1287/opre.2021.0596">https://doi.org/10.1287/opre.2021.0596</a>.
+</div>
+<div id="ref-wei_xu_yu_2023_primal_dual" class="csl-entry">
+Wei, Yehua, Jiaming Xu, and Sophie H. Yu. 2023. <span>“Constant Regret Primal-Dual Policy for Multi-Way Dynamic Matching.”</span>
+</div>
+</div>
+</div>

@@ -1,0 +1,143 @@
+---
+title: 'Running in Circles'
+date: '2020-04-26'
+author: Nick Arnosti, Jake Levinson
+categories:
+  Miscellaneous
+---
+
+
+
+<div id="prologue-running-in-graduate-school" class="section level1">
+<h1>Prologue: Running in Graduate School</h1>
+<p>The motivation for this post comes from my time in graduate school. A popular run on the Stanford campus is Campus Drive Loop. There are sidewalks on either side of the road, giving the runner a choice of which to take. On days when I felt low-energy, I would sometimes take the inside sidewalk, figuring that this would shorten my run. But by how much?</p>
+<p>If the loop were a perfect circle, the answer would be easy – my savings would be <span class="math inline">\(2 \pi\)</span> times the width of the road, implying a shorter route by something like 300 ft. But as shown in Figure <a href="#fig:campusdrive">1</a>, the loop is far from circular, and is not even convex. I wondered, is 300 feet still a reasonable answer, or is it possible that the savings could be much more or much less?</p>
+<div class="figure" style="text-align: center"><span id="fig:campusdrive"></span>
+<img src="/RunningInCircles/campus-drive.png" alt="Campus Drive Loop at Stanford University."  />
+<p class="caption">
+Figure 1: Campus Drive Loop at Stanford University.
+</p>
+</div>
+<p>After drawing a few simple shapes (mostly compositions of straight lines and partial circles), I became convinced that in fact, the answer was <span class="math inline">\(2\pi\)</span> times the width of the road, regardless of its shape. But I felt I lacked the tools to tackle the problem formally. This is where my friend <a href="http://sites.math.washington.edu/~jlev/">Jake Levinson</a> comes in. I posed this question to him while on Safari in Tanzania, and he promptly tackled it with gusto (see Figure <a href="#fig:safari">2</a>). He managed to show that for any reasonable running loop, my intuition was correct. However, he also found some interesting exceptions!</p>
+<p>At this point, I’ll let Jake take over – the rest of this post is all his.</p>
+<div class="figure" style="text-align: center"><span id="fig:safari"></span>
+<img src="/RunningInCircles/Math.jpg" alt="Left: Jake sketching ideas in a cafe in Moshi. Right: how we spent the rest of our time." width="50%" /><img src="/RunningInCircles/Safari.jpg" alt="Left: Jake sketching ideas in a cafe in Moshi. Right: how we spent the rest of our time." width="50%" />
+<p class="caption">
+Figure 2: Left: Jake sketching ideas in a cafe in Moshi. Right: how we spent the rest of our time.
+</p>
+</div>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Two friends are out running together along a winding path, traveling in parallel and at a fixed distance from one another:</p>
+<p><img src="/RunningInCircles/dists.png" style="display: block; margin: auto;" /></p>
+<p>A natural question is, how much longer is the ‘outer path’ than the ‘inner’ path? This question is particularly interesting in the case where both paths are closed loops, so the outer path traces out a ribbon or bounding envelope around the inner path. We’ll show a surprising fact: in most cases, <em>the precise shape of the path doesn’t matter</em>: the difference in lengths is an integer multiple of <span class="math inline">\(2\pi d\)</span>.</p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+Let <span class="math inline">\({\bf p}(t)\)</span> and <span class="math inline">\({\bf q}(t)\)</span> be the two paths in <span class="math inline">\(\mathbb{R}^2\)</span>. So, for some constant <span class="math inline">\(d &gt; 0\)</span> and all <span class="math inline">\(t\)</span>,
+<span class="math display">\[\begin{equation} \label{eqn:core_assumption}
+||{\bf q}(t)-{\bf p}(t)|| = d, \quad \text{and} \quad {\bf q}&#39;(t) \propto {\bf p}&#39;(t).
+\end{equation}\]</span>
+We will assume both paths are differentiable closed loops, and set <span class="math inline">\(t \in [0, 1]\)</span>, so
+<span class="math display">\[\begin{align*}
+{\bf p}(0) = {\bf p}(1), \qquad {\bf q}(0) = {\bf q}(1), \\
+{\bf p}&#39;(0) = {\bf p}&#39;(1), \qquad {\bf q}&#39;(0) = {\bf q}&#39;(1).
+\end{align*}\]</span>
+<p>Differentiating condition <span class="math inline">\(\eqref{eqn:core_assumption}\)</span> leads to two possibilities for <span class="math inline">\({\bf p}(t)\)</span> and <span class="math inline">\({\bf q}(t)\)</span>:</p>
+<ol style="list-style-type: lower-roman">
+<li>We have <span class="math inline">\({\bf q}&#39;(t) = {\bf p}&#39;(t)\)</span>, so that <span class="math inline">\({\bf q}\)</span> is just a translate of <span class="math inline">\({\bf p}\)</span>, or</li>
+<li>We have <span class="math inline">\({\bf q}(t)-{\bf p}(t) \propto {\bf n_p}(t)\)</span>, the normal vector to <span class="math inline">\({\bf p}(t)\)</span> that is, <span class="math inline">\({\bf q}\)</span> ‘swerves’ around <span class="math inline">\({\bf p}(t)\)</span>, as illustrated above. (Equivalently, <span class="math inline">\({\bf p}(t) - {\bf q}(t) \perp {\bf p}&#39;(t).\)</span>)</li>
+</ol>
+<p>A given pair of paths may switch between cases (i) and (ii) for different values of <span class="math inline">\(t\)</span>, but condition (ii) captures the behavior we want, so we will assume (ii) holds for all values of <span class="math inline">\(t\)</span>. (See Figure <a href="#fig:rigid">3</a>.)</p>
+<div class="figure"><span id="fig:rigid"></span>
+<img src="/RunningInCircles/rigid1.png" alt="Fixed-distance parallel paths." width="50%" /><img src="/RunningInCircles/rigid3.png" alt="Fixed-distance parallel paths." width="50%" />
+<p class="caption">
+Figure 3: Fixed-distance parallel paths.
+</p>
+</div>
+<p>With this in mind, the question is: what are the arclengths of <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span>? If the two paths trace out concentric circles (or certain other toy paths, such as rounded squares) it is easy to see that the arclengths differ by exactly <span class="math inline">\(2\pi d\)</span>. One might expect, however, that in general the difference in arclengths may depend on the particular shapes of the paths.</p>
+<p>Our main goal is to examine the following surprising fact:</p>
+<blockquote>
+
+<div class="theorem">
+<span id="thm:main" class="theorem"><strong>Theorem 1  </strong></span>Suppose <span class="math inline">\({\bf q}&#39;(t)\)</span> is always a <em>positive</em> multiple of <span class="math inline">\({\bf p}&#39;(t)\)</span>. Then <span class="math display">\[arclength({\bf q}) - arclength({\bf p}) = k \cdot 2\pi d\]</span> for some integer <span class="math inline">\(k \in \mathbb{Z}\)</span>. If <span class="math inline">\({\bf p}\)</span> is a simple closed curve, traced once as <span class="math inline">\(0 \leq t \leq 1\)</span>, then <span class="math inline">\(k=1\)</span>.
+</div>
+
+</blockquote>
+<p>We’ll also see a couple of examples of why the ‘positive multiple’ requirement is necessary, and what kinds of exceptional curves you can get otherwise.</p>
+</div>
+</div>
+<div id="controls" class="section level1">
+<h1>Controls</h1>
+<p>We proceed as follows. Since the path is a smooth curve, <span class="math inline">\({\bf p}\)</span> is differentiable and <span class="math inline">\({\bf p}&#39;\)</span> never vanishes. So, without loss of generality (rescaling <span class="math inline">\(t\)</span> and <span class="math inline">\(\mathbb{R}^2\)</span> if necessary), we assume <span class="math inline">\({\bf p}(t)\)</span> is arclength parametrized: <span class="math inline">\(||{\bf p}&#39;(t)|| = 1\)</span> for all <span class="math inline">\(t\)</span>. Effectively, we assume one of our two ‘runners’ runs at a constant speed along the path, while the other runner speeds up or slows down as necessary to keep pace.</p>
+<p>Now, since <span class="math inline">\({\bf p}&#39;(t)\)</span> is always a unit vector, there exists a differentiable function <span class="math inline">\(\theta : [0,1] \to \mathbb{R}\)</span> such that <span class="math display">\[{\bf p}&#39;(t) = \big(\cos \theta(t),\ \sin \theta(t)\ \big).\]</span> The angle <span class="math inline">\(\theta\)</span> is just the angle in which the path <span class="math inline">\({\bf p}(t)\)</span> points – the compass direction the runner is facing at time <span class="math inline">\(t\)</span>. We will see that the important quantity is <span class="math inline">\(\theta&#39;(t)\)</span>, which tells us how fast the runner is turning.</p>
+<p>(A similar mathematical setup occurs in other contexts in control theory. It can be helpful to think of <span class="math inline">\({\bf p}(t)\)</span> as a scooter or motorboat, traveling at constant unit speed, but which is controlled by a driver. The quantity <span class="math inline">\(\theta(t)\)</span> is the direction the vehicle is facing at time <span class="math inline">\(t\)</span>, while <span class="math inline">\(\theta&#39;(t)\)</span> is the angle at which the steering wheel is being held.)</p>
+<p>Now the arclength of <span class="math inline">\({\bf p}\)</span> is, by our normalized setup, <span class="math display">\[\mathrm{arclength}_{[0,1]}({\bf p}) = \int_0^1 ||{\bf p}&#39;(t)||dt = \int_0^1 1\ dt = 1.\]</span></p>
+We now describe <span class="math inline">\({\bf q}\)</span>. We know that <span class="math inline">\({\bf q}(t) - {\bf p}(t)\)</span> is always a normal vector to <span class="math inline">\({\bf p}\)</span> of length <span class="math inline">\(d\)</span>, so we may write <span class="math display">\[{\bf q}(t) - {\bf p}(t) = \pm d \cdot {\bf n_p}(t) =\pm d \cdot \big( {-}\sin \theta(t), \cos \theta(t) \big). \]</span> (We have chosen <span class="math inline">\({\bf n_p}(t)\)</span> counterclockwise to <span class="math inline">\({\bf p}&#39;\)</span>, i.e. <span class="math inline">\(\{{\bf p}&#39;, {\bf n_p}\}\)</span> is positively oriented.) The choice of sign says whether <span class="math inline">\({\bf q}(t)\)</span> is ‘to the left or right’ of <span class="math inline">\({\bf p}(t)\)</span>. We choose <span class="math inline">\(-\)</span>, so:
+<span class="math display">\[\begin{equation} \label{eqn:q from p}
+{\bf q}(t) = {\bf p}(t) - d \cdot \big( {-}\sin \theta(t), \cos \theta(t) \big).
+\end{equation}\]</span>
+<p>Note that <span class="math inline">\(\theta&#39;, d &gt; 0\)</span> means <span class="math inline">\({\bf p}&#39;\)</span> turns counterclockwise with <span class="math inline">\({\bf q}\)</span> to its right.</p>
+<div id="a-motivational-computation" class="section level2">
+<h2>A motivational computation</h2>
+<p>We now examine the arclength of <span class="math inline">\({\bf q}\)</span> and see why usually it is exactly <span class="math inline">\(2\pi d\)</span> longer than that of <span class="math inline">\({\bf p}\)</span>. We have</p>
+<span class="math display">\[\begin{align*}
+\mathrm{arclength}_{[0,1]}({\bf q}) = \int_0^1 ||{\bf q}&#39;(t)|| dt.
+\end{align*}\]</span>
+From Equation <span class="math inline">\(\eqref{eqn:q from p}\)</span>,
+<span class="math display">\[\begin{align*}
+{\bf q}&#39;(t) &amp;= {\bf p}&#39;(t) - d \theta&#39;(t) \cdot \big( {-}\cos \theta(t), \sin \theta(t) \big) \\
+&amp;= {\bf p}&#39;(t) + d \theta&#39;(t) \cdot {\bf p}&#39;(t) \\
+&amp;= (1+d \theta&#39;(t)) \cdot {\bf p}&#39;(t).
+\end{align*}\]</span>
+<p>Since <span class="math inline">\({\bf p}&#39;(t)\)</span> is a unit vector, <span class="math inline">\(||{\bf q}&#39;(t)|| = |1+d\theta&#39;(t)|\)</span>. </p>
+<strong>Suppose</strong> this quantity is always positive: <span class="math display">\[\theta&#39;(t) \geq -\tfrac{1}{d}.\]</span> We will examine this assumption later and see that it has an elegant geometric significance. For now, we just observe that it then follows
+<span class="math display">\[\begin{align*}
+\mathrm{arclength}_{[0,1]}({\bf q}) &amp;= \int_0^1 ||{\bf q}&#39;(t)|| dt \\
+&amp;= \int_0^1 (1+d\theta&#39;(t)) dt \\
+&amp;= 1 + d\big( \theta(1) - \theta(0) \big) \\
+&amp;= \mathrm{arclength}_{[0,1]}({\bf p}) + d\big( \theta(1) - \theta(0) \big).
+\end{align*}\]</span>
+<p>Since <span class="math inline">\({\bf p}\)</span> is a differentiable closed curve, <span class="math inline">\({\bf p}&#39;(0) = {\bf p}&#39;(1)\)</span>, and so <span class="math inline">\(\theta(1) - \theta(0)\)</span> is a multiple of <span class="math inline">\(2\pi\)</span>. This multiple is called the <strong>winding number</strong> of <span class="math inline">\({\bf p}&#39;\)</span>, counting <em>how many times</em> the direction vector <span class="math inline">\({\bf p}&#39;\)</span> twists all the way around as <span class="math inline">\(t\)</span> ranges from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span>.</p>
+
+
+<p>For many curves encountered in practice, such as running paths – in particular if <span class="math inline">\({\bf p}\)</span> is a <em>simple closed curve</em>, i.e. does not cross itself – the winding number is <span class="math inline">\(1\)</span>. In other words, <span class="math inline">\({\bf p}\)</span> turns all the way around once as it circles back on itself. This is self-evident in each of the curves depicted in Figure <a href="#fig:rigid">3</a>$, so the arclength difference is <span class="math inline">\(2\pi d\)</span> in those cases. This completes Theorem <a href="#thm:main">1</a>! For other sorts of paths, such as self-crossing spirals, <span class="math inline">\({\bf p}\)</span> may twist around numerous times (see Figure <a href="#fig:spiral">4</a>), and the arclengths will differ by larger multiples of <span class="math inline">\(2\pi d\)</span>.</p>
+<div class="figure"><span id="fig:spiral"></span>
+<img src="/RunningInCircles/crossing1.png" alt="A spiraling, self-crossing curve and its parallel counterpart. Tracing along the inner curve ${\bf p}$, observe that the tangent vector ${\bf p}'$ twists around _twice_ as we traverse the curve (note it is horizontal at $(0, -1)$). In this case, the arclengths differ by $2\pi d \cdot 2 = 4\pi d$."  />
+<p class="caption">
+Figure 4: A spiraling, self-crossing curve and its parallel counterpart. Tracing along the inner curve <span class="math inline">\({\bf p}\)</span>, observe that the tangent vector <span class="math inline">\({\bf p}&#39;\)</span> twists around <em>twice</em> as we traverse the curve (note it is horizontal at <span class="math inline">\((0, -1)\)</span>). In this case, the arclengths differ by <span class="math inline">\(2\pi d \cdot 2 = 4\pi d\)</span>.
+</p>
+</div>
+<p>If, however, the quantity <span class="math inline">\(1+d\theta&#39;(t)\)</span> is negative, (we will see) the arclengths may differ by any arbitrary quantity! We now consider such curves; we will see that they are quite different from those depicted above.</p>
+</div>
+</div>
+<div id="ribbons-and-the-condition-1dthetat-geq-0" class="section level1">
+<h1>Ribbons and the condition <span class="math inline">\(1+d\theta&#39;(t) \geq 0\)</span></h1>
+<p>We now reexamine the condition <span class="math inline">\(1+d\theta&#39;(t) \geq 0\)</span>. Recall from earlier that <span class="math display">\[{\bf q}&#39;(t) = (1+d \theta&#39;(t)) \cdot {\bf p}&#39;(t).\]</span> <strong>When the ratio is positive</strong>, <span class="math inline">\({\bf p}&#39;\)</span> and <span class="math inline">\({\bf q}&#39;\)</span> point in the same direction. <strong>When it is negative</strong>, they point in reverse directions. In the first case, the paths <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span> locally sweep out a ‘ribbon’ shape. Otherwise, they sweep a ‘bowtie’ shape (see Figure <a href="#fig:ribbon-bowtie">5</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:ribbon-bowtie"></span>
+<img src="/RunningInCircles/ribbon.png" alt="Ribbons and bowties." width="50%" /><img src="/RunningInCircles/bowtie.png" alt="Ribbons and bowties." width="50%" />
+<p class="caption">
+Figure 5: Ribbons and bowties.
+</p>
+</div>
+<p>A helpful related notion is the best-approximating or <strong>osculating circle</strong> to <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span>. It’s not too hard to see that our rigidity assumption causes the osculating circles to <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span> to be concentric! The osculating center lies along the (shared) normal vector from <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span>. Its radius from <span class="math inline">\({\bf p}\)</span> is <span class="math inline">\(|\tfrac{1}{\theta&#39;(t)}|\)</span>. Thus in the ‘ribbon’ case, <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span> are on the same outward ray from the osculating center. In the ‘bowtie’ case, they are on opposite rays! </p>
+<p>So, the condition <span class="math inline">\(1+d\theta&#39;(t) \geq 0\)</span> says that the curves always remain in ‘ribbon’ form, that they never rotate in ‘bowtie’ form on opposite sides of the osculating center. The latter sort of motion occurs between the former planet Pluto and its moon Charon (they are similar in size, and their collective center of mass lies approximately halfway in between them). More familiarly, it occurs between two spinning contradance partners. </p>
+<p>Finally, we note that <span class="math inline">\(1+d\theta&#39;(t) = 0\)</span> if and only if <span class="math inline">\({\bf q}&#39;(t) = 0\)</span>. In this case <span class="math inline">\({\bf q}\)</span> will usually have a cusp singularity, instantaneously pausing in place as <span class="math inline">\({\bf p}\)</span> rotates directly around it.</p>
+<div id="ribbons-and-arclengths" class="section level2">
+<h2>Ribbons and arclengths</h2>
+<p>We examine a simple example where the assumptions of Equation <span class="math inline">\(\eqref{eqn:core_assumption}\)</span> hold, but the arclengths of <span class="math inline">\({\bf p}\)</span> and <span class="math inline">\({\bf q}\)</span> do not differ by an integer multiple of <span class="math inline">\(2\pi d\)</span>. Based on the discussion above, this can only occur when <span class="math inline">\({\bf p}&#39;(t) \cdot {\bf q}&#39;(t) &lt; 0\)</span> for some or all values of <span class="math inline">\(t\)</span>, so the curves must move on opposite sides of the osculating center.</p>
+A first case is to consider the spinning contradance partners who, we will assume, have arms of different lengths. Let <span class="math inline">\(d = a+b\)</span>, and let <span class="math inline">\({\bf p}, {\bf q}\)</span> trace out concentric circles of radii <span class="math inline">\(a, b\)</span>, on opposite sides of a radial center point:
+<span class="math display">\[\begin{align*}
+{\bf p}(t) &amp;= -a (\cos t, \sin t), \\
+{\bf q}(t) &amp;= \ b (\cos t, \sin t).
+\end{align*}\]</span>
+<p>Clearly <span class="math inline">\(||{\bf q}-{\bf p}|| = a+b = d\)</span> for all <span class="math inline">\(t\)</span>, and <span class="math inline">\({\bf q}&#39; = -\tfrac{b}{a}{\bf p}&#39;\)</span>. In this case, the arclengths are <span class="math inline">\(2\pi a\)</span> and <span class="math inline">\(2\pi b\)</span>, and the difference is <span class="math inline">\(2\pi(b-a)\)</span>, which can be anything from <span class="math inline">\(0\)</span> to <span class="math inline">\(2\pi d\)</span>. </p>
+<div class="figure"><span id="fig:cusps"></span>
+<img src="/RunningInCircles/cusps.png" alt="Parallel curves with unusual arclengths! The outer curve has arclength approximately $6.455$, while the inner curve (at unit distance $d=1$) has arclength $\approx 1.929$. The difference is $4.526$, which is not a multiple of  $2 \pi$. Note that these curves are traversed in opposite rotational directions: the runner on the outer path goes counterclockwise, and the runner on the inner path goes clockwise. The horizontal parts of the paths are in &quot;ribbon formation&quot; and the vertical parts are in &quot;bowtie formation&quot;." width="50%" /><img src="/RunningInCircles/cusps-arrows.png" alt="Parallel curves with unusual arclengths! The outer curve has arclength approximately $6.455$, while the inner curve (at unit distance $d=1$) has arclength $\approx 1.929$. The difference is $4.526$, which is not a multiple of  $2 \pi$. Note that these curves are traversed in opposite rotational directions: the runner on the outer path goes counterclockwise, and the runner on the inner path goes clockwise. The horizontal parts of the paths are in &quot;ribbon formation&quot; and the vertical parts are in &quot;bowtie formation&quot;." width="50%" />
+<p class="caption">
+Figure 6: Parallel curves with unusual arclengths! The outer curve has arclength approximately <span class="math inline">\(6.455\)</span>, while the inner curve (at unit distance <span class="math inline">\(d=1\)</span>) has arclength <span class="math inline">\(\approx 1.929\)</span>. The difference is <span class="math inline">\(4.526\)</span>, which is not a multiple of <span class="math inline">\(2 \pi\)</span>. Note that these curves are traversed in opposite rotational directions: the runner on the outer path goes counterclockwise, and the runner on the inner path goes clockwise. The horizontal parts of the paths are in “ribbon formation” and the vertical parts are in “bowtie formation”.
+</p>
+</div>
+<p>A more interesting case is the ‘pinched’ curve in Figure <a href="#fig:cusps">6</a>. In this case the arclength differs by a real number that is not an integer multiple of <span class="math inline">\(2\pi\)</span>, even though <span class="math inline">\({\bf p}(t)\)</span> and <span class="math inline">\({\bf q}(t)\)</span> are always unit distance apart. Note that <span class="math inline">\({\bf p}&#39; \cdot {\bf q}&#39;\)</span> changes sign four times, giving four cusps.</p>
+</div>
+</div>

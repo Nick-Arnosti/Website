@@ -1,0 +1,120 @@
+---
+title: 'The Minnesota Fringe Lottery'
+date: "2021-11-28"
+author: Nick Arnosti
+output:
+  blogdown::html_page:
+    toc: false
+    number_sections: true
+---
+
+I was recently looking at the page of the [Minnesota Fringe Festival](https://minnesotafringe.org/). This is an 10+ day event where artists can perform original work. However, there are not enough spots to accommodate all interested artists. Rather than raising fees or using auditions, they have decided to select artists by lottery! Of course, I had to read more. 
+
+While selecting by lottery sounds simple, there are often many hidden complexities, and this case is no exception. The [Fringe lottery](https://fringefestival.org/lottery-app-info) not only decides which artists will be performing, but also matches artists to venues. Furthermore, the organizers have set aside some of the festival spots for BIPOC artists and artists from outside the Twin Cities region.
+
+In this post, I take the lens of a lottery consultant. I will focus on three goals which the organizers might have: minimizing effort for artists and organizers, allowing artists to choose the venues that suit them, and prioritizing BIPOC and Touring artists. For each goal, I will do the following:
+
+1. Describe a relevant feature of the current lottery,
+2. Propose potential changes,
+3. Discuss possible unintended consequences of my changes, 
+4. Note connections to other topics that I have written about and worked on, and
+5. Provide a brief "Executive Summary".
+
+# Minimizing Effort and Delays
+
+## Background
+
+The festival has access to many different venues, each with a different stage and seating capacity. They classify these into three "tiers": venues in Tier 1 have capacity under 100, those in Tier 2 have capacity from 100-199, and those in Tier 3 can accommodate 200+. 
+
+Artists choose which tier(s) to apply to (paying a $30 application fee for each). Then separate lotteries are run for each tier. Winners are notified, and losers are placed on a waitlist. Artists that win multiple tiers are asked which tier they prefer, with the remaining spots filled from the waitlist.
+
+## Proposed Alternative: Ask For Preferences in Advance
+
+One inefficient aspect of the current process is that the festival must wait for performers who are selected for multiple tiers to indicate their preferences. In the meantime, others are notified that they were placed on a waitlist, only to be given a spot soon afterwards. 
+
+An alternative is to ask artists to rank tiers when they apply, so that artists who are selected for multiple tiers immediately relinquish less-preferred options.  
+
+## Unintended Consequences
+
+This change may seem like a no-brainer, but it's always worthwhile to consider potential downsides. The lottery is currently run as a live event: "Each application is assigned a number, we put the numbers on ping-pong balls, then draw the balls out of a bingo cage as a public event." To make this change, the person drawing the balls would need to be able to (i) identify when the same artist has been drawn multiple times, and (ii) have access to that artist's preferences. With a little training and thought, this seems quite manageable.
+
+A more interesting downside is that this change requires artists to know their preferences at the time of application, rather than after learning what they won. When I completed my PhD and applied for faculty positions, I got exactly one offer, making the decision easy. Researching and ranking the 20+ positions to which I applied would have been a huge waste of effort. Similarly, asking each artist to rank tiers in advance may be wasteful if few artists will be selected for multiple tiers. I might have more sympathy for this argument if artists were being asked to apply for (and rank) individual performance venues. However, deciding whether your show is best suited for a small, medium, or large venue seems like it should require minimum effort.
+
+## Connection to Alaskan Hunting License Lotteries, Teach for America Placement, and Auctions for Wireless Spectrum
+
+There are many settings where participants are asked to rank options in advance. One interesting one is the allocation of hunting permits in Alaska. There are many types of permits for each species, and although hunters may apply for several, they may win only one. Hunters rank permits as part of their application, in order to streamline the subsequent matching process. You can read more about these lotteries in [my paper with Tim Randolph](https://nickarnosti.com/ResearchPapers/Arnosti-Randolph_AlaskanHuntingPermitLotteries.pdf).
+
+The decision to cluster venues into tiers relates to the concept of "conflation" (treating similar but different products as identical). This arises in many matching markets (see [this paper](https://www.aeaweb.org/articles?id=10.1257/aer.100.2.603) by Paul Milgrom and John Levin for some examples). Conflating similar products can make it easier for participants to express preferences (ranking three tiers may be easier than ranking each individual venue). However, it may cause difficulties if participants do not see products as close substitutes (i.e. if some tier 2 venues are much better than others). Furthermore, conflation introduces the need for a second matching process where artists are assigned to specific venues and times. Such stages arise frequently in other applications. Teach For America first assigns teachers to regions and grade levels, before later assigning them to a specific school. Meanwhile, auctions for wireless spectrum frequently ask bidders to specify only the number of "bands" that they wish to acquire at each price, with the exact broadcast frequency received by each bidder determined later.
+
+## Executive Summary
+
+Waiting to ask artists for their preferences until after winners have been announced introduces unnecessary back-and-forth. Asking artists to rank tiers when applying streamlines the process, and requires only minimal additional effort from artists. 
+
+The benefits of this change are largest if it is common for artists to be selected to multiple tiers (i.e. if many artists list multiple tiers, and selection probabilities are not too low).
+
+# Giving Artists More Choice
+
+## Background
+
+As described above, each tier conducts a separate lottery. This can produce inefficient outcomes where Artist A is selected for Tier 2 and Artist B for Tier 3, even though both prefer to switch. In essence, the tiers are choosing artists, rather than the other way around.^[The current lottery is roughly equivalent to the tier-proposing deferred acceptance algorithm. Readers familiar with this algorithm might be tempted to switch to the artist-proposing algorithm, but results from [several](http://www.columbia.edu/~yk2577/Unequalmatch-JPE.pdf) [papers](https://eduardomazevedo.github.io/papers/Azevedo-Leshno-Supply-and-Demand-Matching.pdf) suggest that this will make little difference. As long as artists notably outnumber available slots and have different preferences over tiers, using independent lotteries will result in these sorts of inefficiencies.]
+
+## Proposed Alternative: Use a Single Lottery
+
+One simple solution is to give one lottery number to each *artist*, rather than to each application. This would require only a single lottery, instead of one for each tier. Give each artist an application number (written on a ping-pong ball if you wish), and draw numbers one by one, allowing each artist to claim their most preferred tier among those that remain. Academics call this mechanism the "random serial dictatorship."
+
+Note that this is only practical if my first change (asking artists for their preferences in advance) is made. The point of the random serial dictatorship is to increase the number of artists that can choose between multiple tiers. This makes it impractical to ask for preferences after the lottery.
+
+## Unintended Consequences
+
+One consequence of the current system is that artists who apply to more tiers are more likely to be selected than those who apply to only one. This would still be true after making my proposed change, but the benefit of applying to multiple tiers would be much more modest. Relative to the status quo, my proposal would select more artists who apply to only one tier.^[This assumes that the set of tiers to which an artist applies does not depend on the selection process. If the $30 application fee per tier is seen as a minimal expense, then this is a reasonable assumption. However, if the fee deters artists from applying to multiple tiers, then changes to the selection process might change artists' choices. Interestingly, the [lottery page](https://fringefestival.org/lottery-app-info) notes "we won't know what the odds are in each tier. Please don't spend time worrying about probability. Just pick the category [tier] that feels right for you."] This doesn't seem like a major concern, as it is not clear that those who apply to several tiers are much more deserving of a spot in the festival than those who apply to only one.
+
+
+## Connection to School Choice and Affordable Housing
+
+The question of whether to run a single lottery or independent lotteries for each type of item arises frequently in school choice. Most people instinctively feel that it is unfair to use a single lottery, as some children will get a bad lottery number at every school. However, empirical evidence suggests that [using a single lottery gives more students their first choice](https://economics.mit.edu/files/3962). Meanwhile, a [lawsuit in Amsterdam](https://marketdesigner.blogspot.com/2015/06/school-choice-in-amsterdam-goes-to.html) caused the district to [switch to using a single lottery](https://marketdesigner.blogspot.com/2015/12/amsterdam-school-choice-next-year-will.html). For a theoretical comparison of these alternatives, see my paper [Lottery Design for School Choice](https://nickarnosti.com/ResearchPapers/Arnosti_LotteryDesignForSchoolChoice.pdf).
+
+This issue is also related to my paper with Peng Shi, [Design of Lotteries and Waitlists for Affordable Housing Allocation](https://nickarnosti.com/ResearchPapers/Arnosti-Shi_AffordableHousing.pdf). We point out that having separate lotteries for each building (as is done in [New York City](https://housingconnect.nyc.gov/PublicWeb/search-lotteries)) results in few applicants having a choice of where to live. One of our proposed alternatives is to use a "common lottery" for all buildings. We mention that using a common lottery might also change who matches, reducing the match probability for those who apply to every building. This could be undesirable if people who apply to everything are the ones who are most in need of housing.
+
+## Executive Summary 
+
+Running independent lotteries risks inefficient outcomes where artists want to trade tiers. This can be eliminated by using a single universal ranking of artists.
+
+If all artists apply to only one tier, or all agree that larger venues are preferable, then this change will have no effect. The benefits of this change are largest if tiers are similarly competitive, and applications far outnumber available slots. 
+
+# Prioritizing BIPOC and Touring Artists
+
+## Background
+
+The organizers wanted to increase representation of "BIPOC producers, writers, directors, and choreographers" and "national, international, and Minnesotan artists coming from outside the 11-county metro area." There are many ways to do this, but the approach they have taken is to reserve 10% of slots for each of these categories. They first conduct the "Equity Lottery" and "Touring Artists Lottery" for artists in these categories. Artists who are not selected in these lotteries join the rest of the applicants in the general lottery for the remaining 80% of slots.^[Several details remain unclear to me. For example, how are artists selected in the Equity and Touring Artist lotteries matched to tiers? Additionally, can artists satisfying both criteria enter both lotteries? Finally, are artists who win the Equity Lottery (which is pay-what-you-can) but also paid to apply to the General Lottery offered any refunds for the latter?]
+
+## Possible Alternatives: Change the Lottery Order
+
+One (obvious) way to increase the number of BIPOC and Touring artists who are selected is to increase the number of slots awarded by the Equity and Touring Artist lotteries beyond 10%. However, we can also increase this number by keeping each reserve at 10% and reversing the order of the lotteries, so that the general lottery is held first. Currently, winners of the Equity and Touring Artist lotteries do not compete in the general lottery. Reversing the lotteries ensures that everyone competes in the general lottery, resulting in more of these slots going to BIPOC and Touring artists. The effect of reversing the order is largest if applicants only modestly outnumber available slots, and diminishes as the number of applicants grows.
+
+This change is also compatible with my previous proposal of holding a single lottery for all artists. Reversing the order of the lotteries will have (roughly) the same effect as using a single lottery, and assigning BIPOC and Touring artists to "general" slots whenever possible (so that slots reserved for these groups are allocated only after general slots are filled). 
+
+Conversely, one could imagine using a single lottery for all artists, but assigning BIPOC and Touring artists to slots reserved for them, so long as these slots remain. Under this approach, the 10% reserves act as "minimum guarantees": they ensure that at least 10% of all selected artists come from each category, but if this would happen "naturally" (i.e. in a lottery without reserved positions), they give no additional boost.
+
+## Unintended Consequences
+
+When designing systems, it is easy to neglect the importance of factors such as the order in which lotteries are run (as I describe below). However, here I am highlighting that effect. One possible unintended consequence of holding the general lottery first is that it might reduce the flexibility that BIPOC and Touring artists have to choose their tier. This depends in part on the current process for matching Equity and Touring artists to tiers, which I don't understand.
+
+## Connections to School Choice and H1B Visa Lotteries
+
+Schools often reserve a certain number of seats for specific groups of students. However, the algorithms used to fill these seats can matter as much as the number of seats set aside! For one example, see the paper [Reserve Design: Unintended Consequences
+and the Demise of Boston’s Walk Zones](https://economics.mit.edu/files/12443). Boston implemented a compromise in which 50% of each school's seats prioritized students who lived in the walk zone for that school, while the other 50% did not. However, this compromise was (likely unintentionally) implemented as a "minimum guarantee", and resulted in outcomes that were similar to what would have happened with no walk zone priority at all.
+
+The importance of lottery order also has arisen with H1B visa lotteries. Some visas are reserved for applicants with advanced degrees from US institutions. Until recently, the lottery was run like the Fringe lottery: start with reserved categories, and then allow unsuccessful applicants from these categories to enter the general lottery. In 2019, the government swapped the order of the two lotteries (now all applicants are considered in the general lottery, with additional visas allocated in a second round to advanced degree holders who were not initially selected). This change increased the number of advanced degree holders who were awarded visas by 4000 (at the expense of those who do not hold advanced degrees). For more details, see [my previous blog post](https://nickarnosti.com/blog/h1bvisas/) on the topic, as well as the paper [Immigration Lottery Design](https://www.nber.org/system/files/working_papers/w26767/w26767.pdf).
+
+## Executive Summary
+
+The order in which lotteries are held matters, but is often neglected. Holding the general lottery first would increase the number of BIPOC and Touring artists who are selected. Conversely, the 10% reserves could be implemented as "minimum guarantees" by using a suitable single lottery.
+
+
+# Final Thoughts
+
+It's interesting to see the Fringe selecting artists by lottery, with no initial screening process. This does seem to align with being "uncensored," which is one of the [defining characteristics of a Fringe](https://www.usaff.org/fringe-definition.html). However, as this post illustrates, there are many details to sort out! Although the lottery is relatively simple, it includes features which arise in high-stakes lotteries for visas, affordable housing, and public schools. 
+
+I hope you've enjoyed this deep dive into lotteries! If you can think of other areas where you've encountered lotteries, I'd love to hear about them in the comments below.
+
+

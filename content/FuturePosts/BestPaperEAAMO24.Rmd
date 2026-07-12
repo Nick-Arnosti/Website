@@ -1,0 +1,175 @@
+---
+title: 'EAAMO 2024 Best Paper: A Simple, Statistically Robust Test of Discrimination'
+date: '2024-11-01'
+author: Nick Arnosti
+tags:
+draft: TRUE
+---
+
+
+<!--
+I don't want to replicate their paper, I want to add commentary/interpretation. Just clarify the ideas enough.
+-->
+
+# Introduction 
+In many circumstances, we might want to audit a set of decisions made by an organization, to determine whether these decisions appear biased against a particular group. (We could be an external auditor looking for intentional bias, or the organization itself could want to know whether policies it has put into place have had unintended consequences.)
+
+
+
+Suppose you are auditing a bank. You get access to their recent loan applications which includes the race of the applicant and whether the loan was approved. You find that 33% of applications from white applicants were approved, whereas only 24% of loans from black applicants were. Can we conclude from this that the bank is biased against black applicants?
+
+It seems clear that we don't have enough information. Black applicants and white ones might differ along many dimensions, including credit score, outstanding debt, amount of money requested, and so on. If the bank is using this information to make a decision, there is 
+
+Suppose that what the bank is doing is sorting applicants (based on observed features) into risk buckets, and then accepting those from the several lowest-risk buckets. 
+
+On its own, that doesn't mean much: what if the bank just puts all black applicants into the high-risk bucket, regardless of their credit-worthiness? 
+
+# Results
+
+<!-- 
+Describe the main theorem, as well as (briefly) the domains to which they apply it -- what does "acceptance" mean, what utility/outcome do we observe for accepted applicants?
+-->
+
+# What I like about this idea
+
+1. *The test is simple.* It's easy to explain what numbers to calculate and compare. I can easily imagine practitioners actually using this test.
+2. *The test is versatile.* As the examples show, this idea can be applied in many domains, with different definitions of "acceptance" and "expected utility."
+3. *The monotonicity condition is plausible.* Almost any test is valid under some conditions. For example, the benchmark test is valid if the risk (expected utility) distributions for the two groups are identical. But this will almost never hold! However, the monotonicity condition could plausibly hold -- at least approximately -- in a number of domains.
+4. *There is a region where it is inconclusive.* Given enough data, the benchmark test will always point towards discrimination against one group or another. So will the outcome test. This is concerning! Tests should sometimes be inconclusive, so that (i) organizations with non-discriminatory practices are not making unnecessary changes in response to each audit, and (ii) discriminatory policies are actually taken seriously and addressed. 
+
+
+No matter what the decision-maker is doing, there is some test that will conclude the result is discriminatory. I think it's important in these domains not to be the boy who called wolf -- only flag discrimination when there is sufficiently strong evidence, so that 
+
+# Limitations and Extensions
+
+One limitation of the work is that 
+
+## Finite Sample Correction
+
+So far, we have described the test as simply making two comparisons: the historical acceptance rates for the two groups, and the historical success rates for accepted applicants of each group. 
+
+If there are limited data points, we should actually use a test that accounts for sampling error. That is, even if group A is more likely to be accepted than B, it is possible that on a finite sample, B is accepted more often.
+
+Conceptually, we can deal with this by drawing an ellipse of uncertainty around each data point in the policing figure: if the ellipse is entirely contained in the upper left or lower right corners, then the test indicates bias against one of the groups. (The dimensions of the ellipse shrink as the number of data points from each group grows.)
+
+## One definition of bias
+
+So far, we have said that the decision-maker is unbased if they (i) use calibrated risk estimates for each group (that is, among members of the group with a given predicted risk score, this risk score is actually the average risk of that group), and (ii) apply the same risk threshold to all groups.
+
+However, even a decision-maker who proceeds in this manner could (reasonably) be accused of bias, depending on what information their calibrated risk estimates use.
+
+For example, suppose the bank predicts repayment rates based on only two factors: an applicant's race and neighborhood. Suppose that there are two neighborhoods, low 
+
+
+other definitions of bias might restrict the kind of information the decision-maker can use. 
+
+
+# Applications to Coordinated Entry
+
+Suppose we find that black applicants are more (or less) likely to receive assistance than white ones. Does this mean that the system is racist? Not necessarily! 
+
+
+```{r}
+#Should I do this for discrete or continuous distributions?
+
+#Function to calculate acceptance rate, given distribution of risk d and threshold t
+
+#Function to calculate expected outcome for accepted applicants, given distribution of risk d and threshold t
+
+
+
+
+
+
+```
+
+
+
+Introduce setting: you have data on decisions on outcomes (but not necessarily a view into the exact process, or the data that they had available to them.) How would you detect bias?
+
+Two widely used tests. Problems with each.
+
+Formalizing model. Defining what "unbiased" decision-making looks like. Show how these two tests could each (incorrectly) identify bias. Note that they point in opposite directions.
+
+# Model and Result
+
+A decision-maker is presented with a set of applicants. For each applicant, the decision-maker observes their group label (i.e. minority or non-minority), as well as their 'score.' Based on this information, the decision-maker makes a binary decision (i.e. whether to give a loan, or whether to stop the vehicle). For individuals selected by the decision-maker, we eventually observe an outcome (whether the borrower repaid the loan, whether the vehicle contained contraband).
+
+Think of the score as an estimate of the outcome: in the bank example, it could be the probability of full repayment, or the expected amount of the loan that is repaid. Formally, we are going to assume that for each group, the scores are calibrated: among those from group $X$ given score $s$, the true average outcome is $s$. (Without some constraint like this, the decision-maker could simply assign scores arbitrarily. For example, it could assign low "personality" scores to Asian applicants and then claim it was letting in everyone with sufficiently high personality scores.)
+
+
+A natural policy to follow is to select all individuals whose scores are sufficiently high. A 'biased' policy uses different score thresholds for different groups. **Could also not use a threshold -- what if we have randomized thresholds? Presumably, results go through?**
+
+For example, 
+
+Is it better to look at pdfs or cdfs? In some sense, can see MLRP from pdfs -- is ratio of pdf height increasing (or deacreasing) in score? If so, implies stochastic dominance of cdfs (one always above the other), but stochastic dominance of cdfs is not enough to get the result.
+
+<!--The assumption is that outcomes are conditionally independent of group, given the score. (That is)-->
+
+```{r}
+library(ggplot2)
+plot_pdfs_with_threshold <- function(pdf1, pdf2, threshold, xmin, xmax, 
+                                     color1 = "red", color2 = "blue", 
+                                     name1 = "Distribution 1", name2 = "Distribution 2") {
+  # Create a data frame for plotting
+  x <- seq(xmin, xmax, length.out = 1000)
+  df <- data.frame(
+    x = x,
+    density1 = pdf1(x),
+    density2 = pdf2(x)
+  )
+  
+  # Calculate conditional expectations
+  conditional_expectation <- function(pdf, threshold, xmax) {
+    integrate(function(x) x * pdf(x), threshold, xmax)$value / 
+      integrate(pdf, threshold, xmax)$value
+  }
+  
+  ce1 <- conditional_expectation(pdf1, threshold, xmax)
+  ce2 <- conditional_expectation(pdf2, threshold, xmax)
+  
+  # Create the plot
+  p <- ggplot(df) +
+    geom_line(aes(x = x, y = density1, color = name1)) +
+    geom_line(aes(x = x, y = density2, color = name2)) +
+    geom_area(data = subset(df, x >= threshold), aes(x = x, y = density1, fill = name1), alpha = 0.3) +
+    geom_area(data = subset(df, x >= threshold), aes(x = x, y = density2, fill = name2), alpha = 0.3) +
+    scale_color_manual(values = c(color1, color2), name = "Distribution") +
+    scale_fill_manual(values = c(color1, color2), name = "Distribution") +
+    geom_vline(xintercept = threshold, color = "black", size = 1) +
+    geom_vline(xintercept = ce1, color = color1, linetype = "dashed") +
+    geom_vline(xintercept = ce2, color = color2, linetype = "dashed") +
+    labs(title = "PDFs with Threshold and Conditional Expectations",
+         x = "Value", y = "Density") +
+    theme_minimal() +
+    coord_cartesian(ylim = c(0, NA))  # Set y-axis minimum to 0
+  
+  return(p)
+}
+
+
+# Example usage with normal distributions
+pdf1 <- function(x) dnorm(x, mean = 4, sd = 1)
+pdf2 <- function(x) dnorm(x, mean = 5, sd = 1)
+threshold <- 4
+
+plot <- plot_pdfs_with_threshold(pdf1, pdf2, threshold, 0, 9)
+print(plot)
+```
+
+
+State main result. Work through examples: normal (beta) with different means, same mean but different variance, etc.
+
+Discussion: what I like is clean message, and test that could actually be used (i.e. data is available, and administrators could understand what questions are being asked). Main concerns are (i) difficulty verifying the assumption, and (ii) other definitions of bias beyond calibrated predictions. Also (iii) multiple groups. Is this as simple as turning into many binary problems and adjusting for multiple corrections?
+
+**Where do these scores come from? How are they generated?**
+
+Calibration is fairly weak: could simply pool groups to get more accepted (i.e. Columbia business school). Example: employer has applicants from CUNY and Columbia. If you estimate scores based on grades and school, employer will take more from Columbia, but some from each. If you choose not to include grades, result could be to hire nobody from CUNY and everybody from Columbia. What information you are using makes a big difference!
+
+For example, suppose that you have a data set which consists of two variables -- age and race. You try building a model with just age, and find that including race predicts better. That is, log probability of repayment is estimated to be a function of the two, and race helps to explain. From a statistical/information perspective, this could be justified. But quite literally, what this means is that some applicants receive lower scores just because they are black, and these lower scores are the reason their loan application is denied. 
+
+Eliminating the ability to use race doesn't fully fix the issue. What if we look at something very correlated with race -- i.e. neighborhood? Should we be allowed to use this? It's hard for me to say 'no' (I'm inclined to say yes), but I understand why some people would find this problematic.
+
+Example from medicine -- KDPI score is lower for kidneys from black donors. (This is an aside, but an interesting one.) In what sense are KDPI scores calibrated? They are not -- explicitly normalized. What is KDRI supposed to measure? Why not use KDRI instead of KDPI?
+
+

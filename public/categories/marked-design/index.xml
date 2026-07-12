@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Marked Design on b</title>
+    <link>/categories/marked-design/</link>
+    <description>Recent content in Marked Design on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/marked-design/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Devilish Details of Neighborhood School Priority</title>
+      <link>/blog/futureposts/neighborhoodpriority/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/futureposts/neighborhoodpriority/</guid>
+      <description>Setting the Scene Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two. This ESPN article does a good job of working through an example. I will attempt to summarize and simplify.</description>
+    </item>
+    
+  </channel>
+</rss>

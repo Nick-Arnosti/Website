@@ -1,0 +1,31 @@
+---
+title: 'Session 1: Course Overview and Pareto Efficiency'
+date: "2022-01-19"
+author: Nick Arnosti
+draft: true
+---
+
+# Lesson Recap
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "j1sjZXRt6Bg")
+```
+
+# Materials
+
+[Lecture Slides](/IE5080/Session1/Session1.pdf) (pptx version available to instructors upon request).
+
+
+[Homework](/IE5080/Session1/Session1_Homework.pdf) (solutions available to instructors upon request).
+
+# Reflections
+
+Three things I am proud of:
+
+1. We start class with a tangible example, rather reading the syllabus. Students get to work through this example to gain familiarity with the concept of preference profiles, allocations, and Pareto efficiency.
+2. My outline for the course. I like organizing Unit 1 around defining efficiency, truthfulness, and fairness (equal treatment). I also like that Units 2, 3, and 4 each explore a different notion of fairness, and Units 5 and 6 are deeper dives into important applications. 
+3. The fact that I actually managed to find a durian and bring it to class!
+
+
+
+

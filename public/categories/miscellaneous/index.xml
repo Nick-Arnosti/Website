@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Miscellaneous on b</title>
+    <link>/categories/miscellaneous/</link>
+    <description>Recent content in Miscellaneous on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/miscellaneous/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Should Nate Silver Bet on his own Predictions?</title>
+      <link>/blog/shouldnatesilverbet/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/shouldnatesilverbet/</guid>
+      <description>The Proposal My friend Shengwu Li pointed me to the following (eight year old) Marginal Revolution blog post titled “A Bet is a Tax on Bullshit.” In it, Alex Tabarrok argues that pundits should stake part of their salary on their predictions:
+ The NYTimes should require that Silver, and other pundits, bet their beliefs. Furthermore, to remove any possibility of manipulation, the NYTimes should escrow a portion of Silver’s salary in a blind trust bet.</description>
+    </item>
+    
+    <item>
+      <title>Running in Circles</title>
+      <link>/blog/runningincircles/</link>
+      <pubDate>Sun, 26 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/runningincircles/</guid>
+      <description>Prologue: Running in Graduate School The motivation for this post comes from my time in graduate school. A popular run on the Stanford campus is Campus Drive Loop. There are sidewalks on either side of the road, giving the runner a choice of which to take. On days when I felt low-energy, I would sometimes take the inside sidewalk, figuring that this would shorten my run. But by how much?</description>
+    </item>
+    
+    <item>
+      <title>Should Government Programs be Means-Tested?</title>
+      <link>/blog/ubi/</link>
+      <pubDate>Tue, 07 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/ubi/</guid>
+      <description>Today, we’ll address a question that comes up frequently in policy discussions: whether government programs should be means-tested. For example, should a “basic income” program be available to all, or only those making below a certain income level? Similarly, one might ask whether it should be paid for by taxes on all, or only on the rich. This post raises a simple but important point, and is largely copied from Greg Mankiw.</description>
+    </item>
+    
+    <item>
+      <title>Do Target Date Funds Make Sense?</title>
+      <link>/blog/investmentadvice/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/investmentadvice/</guid>
+      <description>Motivation A common piece of investing advice goes as follows:1
+ Stock-based funds have higher long-term return potential but also have relatively high volatility. On the other hand, bond funds are more stable, especially in terms of income, but don’t have the long-term growth potential of stocks. Therefore, it’s generally suggested that younger investors put most of their money into stocks and gradually shift their investments into bonds as they get closer to retirement.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,36 @@
+---
+title: "Who Studies Science and Engineering at Minnesota?"
+output: html_document
+date: "2026-04-01"
+---
+
+Yesterday, I attended a presentation where I learned various facts about the **undergraduate** student body in the **College of Science and Engineering** at the University of Minnesota. Here are a few that seemed worth knowing, presented in quiz form.
+
+**Questions.**
+
+ 1. *Origin.* What percentage of the CSE entering class comes from the Twin Cities metro area? From Minnesota? From the United States?
+ 2. *Gender.* What percentage of CSE undergraduates are women?
+ 3. *Race.* What percentage of the CSE entering class was Black in 2020? 2023? 2025?
+ 4. *Major.* What percentage of CSE undergraduates had declared a major in Computer and Data Science in  2020? 2023? 2025?
+ 
+As a hint, the answers to the first two questions have been pretty stable over the past decade, while the third and fourth questions have changed significantly across years.
+ 
+**Answers.**
+
+1. 53% from the Twin Cities area, 65% from Minnesota, 91% Domestic.
+2. 28% Women.
+3. In 2020: 2.7% Black. In 2023: 6.8% Black. In 2025: 9.9% Black
+4. In 2020: 17% CS majors. In 2023: 32% CS majors. In 2025: 17% CS majors.
+
+
+**Brief Commentary.**
+
+1. I knew that a majority of our students were from Minnesota, but didn't realize how few came from outside the Twin Cities area.
+2. I believe my department (ISyE) is roughly gender balanced, bucking the college-wide pattern.
+3. I was not aware of this dramatic rise.
+4. I was directionally aware of the CS bubble growing and bursting, but didn't realize how quickly it had collapsed! I am somewhat surprised that students responded so quickly -- this shows that many students are choosing majors primarily based on career prospects, rather than interest.
+ 
+ 
+ 
+
+ 

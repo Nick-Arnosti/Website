@@ -1,0 +1,35 @@
+---
+title: 'Lesson 1: Pareto Efficiency'
+date: ""
+author: Nick Arnosti
+draft: TRUE
+---
+
+*Note:* Educators are welcome and encouraged to use and/or adapt these materials for their own classes. I ask only that if you do this, please let me know at arnosti@umn.edu.Solutions to practice problems are available upon request. 
+
+Please let me know if you identify any mistakes that I should correct, if you have suggestions for additional topics to cover, or if you know of other materials that I might be interested to learn about!
+
+
+# Learning Objectives
+
+* Students will be able to define Pareto efficiency and Rank Efficiency.
+* Students will be able to determine whether or not an allocation is Pareto efficient.
+* Students will be able to use the serial dictatorship and first preferences first algorithms to find Pareto efficient allocations.
+
+# Key Concepts and Algorithms
+
+* Pareto Efficiency
+* Serial Dictatorship
+* First Preferences First
+
+# Materials
+
+[Lecture Slides]()
+[Practice Problems]()
+
+# Lesson Plan and Commentary
+
+# Mistakes and Misconceptions
+
+* Students often conflate Pareto efficiency with "Pair Efficiency" (the absence of pairs of people who want to swap items). Simple examples can be used to illustrate that Pair Efficiency does not imply Pareto Efficiency.
+* Students 

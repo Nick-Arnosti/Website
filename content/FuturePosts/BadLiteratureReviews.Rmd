@@ -1,0 +1,52 @@
+---
+title: 'Almost All Literature Reviews Are Bad'
+date: "2023-2-14"
+author: Nick Arnosti
+draft: true
+---
+
+One of my biggest academic pet peeves is a useless literature review. Unfortunately, most of them fall into this category.
+
+
+# Literature Reviews in Talks
+
+The most common form of literature review in a talk is "Here is a slide with a lot of papers on it. In the interest of time, I will skip it." This feels unnecessary to me, but is not so bad, as it doesn't consume much time or energy, and the references could be useful for someone who is new to the area if slides are later posted online.
+
+The other approach is to 
+
+*Proposal* With rare exceptions, most talks should save discussions of related work until 
+
+
+# Literature Reviews in Papers
+
+Statements that don't show that you read beyond the title:
+
+"Many papers have studied platform marketplaces -- see for example A, B, C, and D."
+
+
+The defensive citation: 
+
+"Paper A considers a related model, but unlike our work [highlight a minor and mostly irrelevant difference]."
+
+"While past work has studied topic X (see paper A) and topic Y (see paper B), we are the first to combine W, X, Y, and Z."
+
+
+These statements are written primarily for two audiences:
+* Reviewers who have authored related papers and might be grumpy if their work is not cited.
+* Reviewers who are inclined to critique a paper as not novel.
+
+They also benefit authors who are looking to write a useless literature review of their own, and can essentially copy-paste a long list of references (no need to even read the papers!).
+
+Generally, papers cite way to many others.
+
+The ideal literature review would discuss the 1-3 most related papers in detail. This could include describing differences in the models (and how they drive differences in results), and reconciling 
+
+*Proposal* Institute a cap on the number of cited papers. My instinct is that the optimal cap in my field would be something like five, though this is probably too radical of a limit to gain much support. I also don't claim to understand whether a higher cap would be more appropriate in other fields. 
+
+Obviously, this 
+
+
+
+
+
+

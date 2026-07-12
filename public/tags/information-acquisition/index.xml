@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Information Acquisition on b</title>
+    <link>/tags/information-acquisition/</link>
+    <description>Recent content in Information Acquisition on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/information-acquisition/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Do Target Date Funds Make Sense?</title>
+      <link>/blog/investmentadvice/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/investmentadvice/</guid>
+      <description>Motivation A common piece of investing advice goes as follows:1
+ Stock-based funds have higher long-term return potential but also have relatively high volatility. On the other hand, bond funds are more stable, especially in terms of income, but don’t have the long-term growth potential of stocks. Therefore, it’s generally suggested that younger investors put most of their money into stocks and gradually shift their investments into bonds as they get closer to retirement.</description>
+    </item>
+    
+    <item>
+      <title>NFL Strategy: Going for 2</title>
+      <link>/blog/nfl-2pt/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/nfl-2pt/</guid>
+      <description>Setting the Scene Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? This was the decision that the Panthers faced against the Packers earlier this year.
+Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two. This ESPN article does a good job of working through an example.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,17 @@
+---
+author: Nick Arnosti
+categories:
+  Operations
+date: "2019-11-04"
+tags:
+  Inventory Management
+title: Rebates
+draft: true
+---
+
+
+
+Pathak (2016) writes:^[Testing Footnotes]
+
+> Quisque mattis volutpat lorem vitae feugiat. Praesent porta est quis porta imperdiet. Aenean porta, mi non cursus volutpat, mi est mollis libero, id suscipit orci urna a augue. In fringilla euismod lacus, vitae tristique massa ultricies vitae. 
+

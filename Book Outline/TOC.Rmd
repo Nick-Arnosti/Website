@@ -1,0 +1,64 @@
+---
+title: A Theoretician's Practically-Minded Handbook to Lotteries and Waitlists
+layout: single-nocomments
+categories: []
+tags: []
+---
+
+Lead off with fruit example! Can introduce many mechanisms (SD, DA, lottery, waitlist), ideas (fairness, IC, etc). Point out that most analysis will assume no externalities (people care only about what they get).
+
+0. Stuff we will need to cover. Basic stable matching, then matching with substitutable choice functions (ideally cover in context, not abstractly).
+
+
+0. Assignment Problem (classical)
+  
+1. Giving Away a Homogeneous Item through Diversity Constraints
+
+  Leading examples: Visas, Indian Diversity
+
+  a. Perspective: we can't (and wouldn't want to) force people of certain targeted groups to take a particular position. In other words, we can't have hard minimum quotas. All we can do is influence who we choose from the set of applicants. Hence, need choice function.
+  b. H1B visa lotteries as a simple example of how a policy can be implemented/interpreted.
+  c. Diversity in India: multiple overlapping groups. How to handle? "Vertical" vs "Horizontal" priorities: which to use? What are implications? In particular, horizontal has no effect if you have "enough" diversity applicants, but vertical does.
+  d. Intersectionality: what if I belong to several groups? One approach is to define all quotas with respect to intersections, so that groups are disjoint (i.e. a quota for black women, another for black men). However this is very rigid, and likely doesn't reflect our true policy goals. For example, if we want even gender balance and two black people, we could give priority to one black woman and one black man, but if we only get black women applicants, we may wish to accept both and balance gender elsewhere.
+  e. Discuss the Hall's marriage choice function: doesn't double count, is substitutable and incentivizes truthful trait reporting. Note that even without test score/inherent priority, you could generate a single lottery and use this choice function.
+  f. Other applications: Mechinot gap programs.
+  g. Coming up: school choice (more complex). Decentralized day care?
+  
+  2. Giving Away a Homogeneous Item Anonymously
+
+  a. Redistribution Through Markets (Akbarpour, Dworczak, Kominers)
+  b. Optimal Mechanism Design and Moneyburning (Hartline Roughgarden), and other money-burning literature.
+  c. Priority Queues and Consumer Surplus (Lariviere)
+  
+  Can collapse to one dimension ($v/c$) with arbitrary weight $w$. Problem is to maximize $\int \pi(v)w(v)f(v) dv$ subject to constraint that $\int \pi(v)f(v) \leq q$, $\pi$ is increasing (IC), and $0 \leq \pi(v) \leq 1$.
+  
+  Can also discuss idea of _influencing_ distribution $\eta$ through choice of how to make waiting costly.
+  
+  3. Heterogeneous Items
+  
+  a. Leading example: school choice. Other examples: cadet branch matching, hunting license lotteries, camping and hiking permits. Also mentione residency matching, though focus is not two-sided allocation. Note that here, literature tends to focus less on need, more on matching effectively.
+  b. Lots of papers to talk about -- how to organize? Mechanisms include SD, DA, TTC, Boston, k-ticket lottery...
+  c. I guess Abdulkadiroglu-Sonmez, RSD vs TTC. And Sonmez et al on School Choice. YRMHIGYT is a variant of above, not sure I want to focus on property rights, but perhaps interesting.
+  d. Would be good to tie in to earlier units: what is private information, what is public?
+  
+  
+  4. Dynamic Allocation
+  
+  Applications: organ allocation, housing, Beijing license plates.
+  
+  Common valuations.
+  a. Su and Zenios 2004
+  b. Schummer 2020
+  c. Bloch Cantala
+  
+  Horizontal preferences
+  a. Bloch Cantala
+  b. Leshno (not so excited about this)
+  c. Arnosti-Shi (here we also have agent heterogeneity)
+  
+  5. Beyond Unit Demand
+  
+  a. Coursematch (Budish)
+  b. Lariviere and work he builds on
+  c. Lotteries for Shared Experiences
+  d. Look into applications: early release from prison (dynamic), rationing gas during WWII (coupon books, not used well)

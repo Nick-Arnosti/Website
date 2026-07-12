@@ -1,0 +1,125 @@
+---
+title: 'How Useful is Pooled Testing?'
+date: "2021-03-01"
+author: Nick Arnosti
+tags:
+  COVID-19
+categories:
+  Operations
+---
+
+
+
+<p>In a <a href="/blog/TestingDelays/">previous post</a>, I wrote about several strategies for reducing turnaround times for COVID tests. One interesting strategy that I did not write about is pooling, also known as pooled testing. What is pooling? I'll let the CDC <a href="https://www.cdc.gov/coronavirus/2019-ncov/lab/pooling-procedures.html">Interim Guidance for Use of Pooling Procedures</a> explain:</p>
+<blockquote>
+<p>Pooling... means combining respiratory samples from several people and conducting one laboratory test on the combined pool of samples. <br> <br> If a pooled test result is negative, then all specimens can be presumed negative with the single test. If the test result is positive or indeterminate, then all the specimens in the pool need to be retested individually. <br> <br> The advantages of this two-stage specimen pooling strategy include preserving testing reagents and resources, reducing the amount of time required to test large numbers of specimens, and lowering the overall cost of testing.</p>
+</blockquote>
+<p>The guidance goes on to explain that</p>
+<blockquote>
+<p>A pooling strategy depends on the community prevalence of virus, and pool size will need to be adjusted accordingly. CDC recommends that laboratories should determine prevalence based on a rolling average of the positivity rate of their own SARS-CoV-2 testing over the previous 7–10 days.</p>
+</blockquote>
+<p>The outline of this post is as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Propose a simple model, and use it to estimate (i) the optimal pool size, and (ii) the magnitude of the reduction in testing.</p></li>
+<li><p>Identify a puzzle: the CDC recommends abandoning pooling when the positivity rate hits double digits, whereas the model predicts that pooling could still offer significant benefits.</p></li>
+<li><p>Discuss several ways to make the model more realistic, and note that all of them suggest that the simple model actually <strong>understates</strong> the benefits from pooling.</p></li>
+<li><p>Study one downside of pooling: it creates additional work for lab technicians.</p></li>
+</ol>
+<div id="choosing-an-optimal-pool-size" class="section level1">
+<h1>Choosing an Optimal Pool Size</h1>
+<p>Although there are many possible pooling strategies, I will focus on the approach recommended by the CDC: mix <span class="math inline">\(n\)</span> samples together. If the mixture tests negative, report negative results for all samples. If it tests positive, test each sample individually.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+When setting the pool size <span class="math inline">\(n\)</span>, there is a tradeoff: combining many samples makes it possible to potentially &quot;clear&quot; many samples at once, but also increases the risk of a positive test (which then requires <span class="math inline">\(n\)</span> new tests). For a given positivity rate, what is the optimal pool size? If we assume that each sample is positive independently with probability <span class="math inline">\(p\)</span>, then a pool of <span class="math inline">\(n\)</span> samples tests negative with probability <span class="math inline">\((1 - p)^n\)</span>. If the pool tests positive, then each individual sample must be tested. Thus, expected number of tests <em>per sample</em> with positivity rate <span class="math inline">\(p\)</span> and pool size <span class="math inline">\(n\)</span> is
+<span class="math display">\[\begin{equation} 1 - (1-p)^n + 1/n. \label{eq:tests-per-sample} \end{equation}\]</span>
+<!--If the mixture tests negative, we require only a single test to return results from $n$ samples; if it tests positive, we require $n+1$ tests. Thus, the expected number of tests per sample is
+\[ \frac{1}{n}((1 - (1-p)^n)(n+1) + (1-p)^n) =  1 - (1-p)^n + 1/n. \]-->
+<p>We can use this to identify the optimal pool size, as a function of the positivity rate <span class="math inline">\(p\)</span>.</p>
+<pre class="r"><code>tests_per_sample = Vectorize(function(p,n){
+    if(n==1){return(1)}
+    return(1 - (1 - p)^n+1/n)
+})
+
+optimal_n = Vectorize(function(p){
+    tps = tests_per_sample(p,c(1:100))
+    return(which(tps==min(tps)))
+})
+
+par(mar=c(4,5,1,1), cex.axis = 1.5,cex.lab=2)
+plot(optimal_n,xlim=c(0.01,.4),xlab=&#39;Positivity Rate&#39;,ylim=c(1,11),ylab=&#39;Optimal Pool Size&#39;,las=1)</code></pre>
+<p><img src="/Blog/PoolingTests_files/figure-html/optimal-n-1.png" width="672" /> <!--In general, the optimal pool size is approximately $1/\sqrt{p}$, shown in blue.
+plot(function(p){return(ceiling(1/sqrt(p)))},add=TRUE,col='blue').--></p>
+<p>This shows that the optimal pool size decreases as <span class="math inline">\(p\)</span> rises. At a positivity rate of <span class="math inline">\(p = .02\)</span>, the optimal pool size is <span class="math inline">\(8\)</span> people. At <span class="math inline">\(p = .13\)</span>, it drops to three people, and for <span class="math inline">\(p &gt; .31\)</span>, it is optimal to abandon pooling altogether. In general, the optimal pool size is approximately the ceiling of <span class="math inline">\(1/\sqrt{p}\)</span>.</p>
+</div>
+<div id="how-many-fewer-tests-are-needed" class="section level1">
+<h1>How Many Fewer Tests are Needed?</h1>
+<p>The preceding section provided guidance on choosing the pool size, as a function of the positivity rate <span class="math inline">\(p\)</span>. Now we ask, if we choose the pool size optimally, how many fewer tests are needed? Clearly, the answer depends on the positivity rate. The following code plots the expected number of tests per sample, as a function of <span class="math inline">\(p\)</span>.</p>
+<pre class="r"><code>optimal_tps = Vectorize(function(p){
+    tps = tests_per_sample(p,c(1:100))
+    return(min(tps))
+})
+
+par(mar=c(4,5,1,1), cex.axis = 1.5,cex.lab=2)
+plot(optimal_tps,xlim=c(0,.4),xlab=&#39;Positivity Rate&#39;,ylab=&#39;Expected Tests Per Sample&#39;,las=1)</code></pre>
+<p><img src="/Blog/PoolingTests_files/figure-html/benefits-1.png" width="672" /> <!--
+plot(function(p){return(2*sqrt(p))},xlim=c(0,1/4),add=TRUE,col='blue')
+--></p>
+<p>This shows that when <span class="math inline">\(p = .01\)</span>, pooling can reduce the overall number of tests by approximately <span class="math inline">\(80\%\)</span>! As <span class="math inline">\(p\)</span> rises, the benefit from pooling falls -- a fact which is widely recognized. For example, the NYTimes Article <a href="https://www.nytimes.com/2020/08/18/health/coronavirus-pool-testing.html">Why Pooled Testing for the Coronavirus Isn’t Working in America</a> has the following subheadline:</p>
+<blockquote>
+<p>Combining samples for coronavirus testing, an approach once hailed by U.S. health officials, only works when the vast majority of tests are negative.</p>
+</blockquote>
+<p>Although the phrase &quot;vast majority&quot; is imprecise, the article goes on to make specific claims. For example, it writes</p>
+<blockquote>
+<p>Nebraska’s state public health laboratory, for example, was a pooling trailblazer when it began combining five samples a test in mid-March, cutting the number of necessary tests by about half.</p>
+</blockquote>
+<p>According to our simple model, pools of size <span class="math inline">\(n = 5\)</span> should cut testing in half when the positivity rate <span class="math inline">\(p = 0.07\)</span> (and indeed <span class="math inline">\(n = 5\)</span> is approximately optimal in this case). So far so good. But then, the article writes,</p>
+<blockquote>
+<p>The lab was forced to halt its streak on April 27, when local positivity rates — the proportion of tests that turn up positive — surged past 10 percent. With that many positives, there was little benefit in pooling. <br> [The CDC] stipulates that pooling shouldn’t be used when positivity rates exceed 10 percent. But at Mayo Clinic, “we’d have to start to question it once prevalence goes above 2 percent, definitely above 5 percent,” Dr. Pritt said.</p>
+</blockquote>
+<p>This guideline is mysterious to me. The simple model above predicts that pooling can reduce the number of tests by <span class="math inline">\(40\%\)</span> when <span class="math inline">\(p = .1\)</span>, and by <span class="math inline">\(28\%\)</span> when <span class="math inline">\(p = 0.15\)</span>. These still seem like significant gains!</p>
+</div>
+<div id="do-we-need-a-more-detailed-model" class="section level1">
+<h1>Do We Need a More Detailed Model?</h1>
+<p>The preceding section identified an apparent discrepancy between the CDC guideline that pooling be abandoned at a positivity rate of 10%, and the model prediction that at this positivity rate, pooling can reduce tests by 40%. Is the model missing something?</p>
+<p>Well, yes. It's missing many things. One obvious place to start is the assumption that samples are iid. In practice, we may have additional information about each sample. For example, some samples may be from people experiencing symptoms, while others may be from people who are periodically tested by their workplace. If labs were given this information, they could combine the latter samples (which are presumably lower risk) into large pools, while using smaller pools (or possibly no pools at all) for higher-risk samples. This suggests that the simple model above might actually <strong>underestimate</strong> the potential benefit of pooling at a given positivity rate. Indeed, the Times article writes</p>
+<blockquote>
+<p>in states, cities or even neighborhoods where coronavirus prevalence rates are high, less-hard-hit populations — “cold spots” — can still be plucked out and pooled.</p>
+</blockquote>
+<p>Another factor to consider is that certain test outcomes may be correlated. For example, if a romantic couple gets tested, it is likely that their samples are either both positive, or both negative. Fixing the overall number of positive samples, pooling is most effective when there are many positives in one pool, and none in others. Therefore, if samples in a pool are positively correlated (as might be expected from a couple or a workplace), then a model that assumes independence again <strong>underestimates</strong> the benefit of pooling.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> In other words, correlation could not explain the pessimistic conclusion that pooling is useless when the positivity rate is 10%.</p>
+<p>There are many other potential considerations. For example, pooling might reduce sensitivity of the test, resulting in more false negatives. I don't know how to model that quantitatively, but thankfully I don't have to: some researchers from Duke have already done it, and <a href="https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2773967">written about their model</a> in the Journal of the American Medical Association (JAMA). They offer a publicly available <a href="https://covid19pooltool.z13.web.core.windows.net/">online tool</a>, which allows you to put in all sorts of science-y parameters, and generates predictions about many measures of interest, including number of tests performed. I clicked &quot;symptomatic patients&quot; and left all other parameters at their default values. I then compared their predictions for the number of tests, against those of the extremely simple model. I then repeated the experiment, adjusting the positivity rate up from <span class="math inline">\(0.01\)</span> to <span class="math inline">\(0.1\)</span>. This resulted in the following graphs:</p>
+<div class="figure"><span id="fig:pooled-testing"></span>
+<img src="/Comparison1.jpg" alt="Comparing the predictions of this [online tool](https://covid19pooltool.z13.web.core.windows.net/) to those of my simple model, for positivity rate $p = 0.01$ (left) and $p = 0.1$ (right)." width="50%" /><img src="/Comparison10.jpg" alt="Comparing the predictions of this [online tool](https://covid19pooltool.z13.web.core.windows.net/) to those of my simple model, for positivity rate $p = 0.01$ (left) and $p = 0.1$ (right)." width="50%" />
+<p class="caption">
+Figure 1: Comparing the predictions of this <a href="https://covid19pooltool.z13.web.core.windows.net/">online tool</a> to those of my simple model, for positivity rate <span class="math inline">\(p = 0.01\)</span> (left) and <span class="math inline">\(p = 0.1\)</span> (right).
+</p>
+</div>
+<p>Two things to note. First, there is a remarkable level of agreement to the two models, considering all of the complexities that my model admits. Second, the more complex model actually predicts <strong>even fewer</strong> tests than the simple one does. When I repeated this exercise for asymptomatic patients, the curves don't match quite as closely, but again their model predicts fewer tests than mine. Overall, this seems to indicate that the numbers predicted by my simple model are reasonable (if imperfect).</p>
+</div>
+<div id="a-possible-downside" class="section level1">
+<h1>A Possible Downside</h1>
+<p>So, if pooling can reduce the number of tests even at positivity rates of 10-15%, why won't labs do it? The Times article points out that pooling creates additional operational challenges:</p>
+<blockquote>
+<p>Pooling can also be onerous for lab technicians. Though simple in theory, batching samples is tedious and time-consuming. <br> “Pooling could help us do more tests with fewer reagents... But if one of your issues is staffing, this doesn’t really help us at all.”</p>
+</blockquote>
+<p>If we do not use pooling, lab technicians only have to transfer material once per sample. Under our simple two-stage pooling strategy, they may have to do this twice. If we set <span class="math inline">\(n\)</span> to minimize the number of tests per sample, how much extra work have we created for our technicians? This, too, can be answered with our model.</p>
+<pre class="r"><code>extractions_per_sample = Vectorize(function(p,n){
+    if(n==1){return(1)}
+    return(2 - (1 - p)^n)
+})
+
+par(mar=c(4,5,1,1), cex.axis = 1.5,cex.lab=2)
+plot(function(p){return(extractions_per_sample(p,optimal_n(p)))},xlim=c(0,.4),xlab=&#39;Positivity Rate&#39;,ylab=&#39;Extractions Per Sample&#39;,las=1)</code></pre>
+<p><img src="/Blog/PoolingTests_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>This shows that when the test positivity rate is small, pooling doesn't increase technicians' workload by much, because most pools come back negative. However, when <span class="math inline">\(p = 0.1\)</span>, the <span class="math inline">\(40\%\)</span> reduction in PCR testing comes at the cost of a <span class="math inline">\(34\%\)</span> <strong>increase</strong> in workload for technicians. This could make it unpopular with the already overworked staff, and could potentially create a new bottleneck.</p>
+</div>
+<div id="summary" class="section level1">
+<h1>Summary</h1>
+<p>This post has used an extremely simple model to explore the potential benefits of pooling COVID tests. The model suggests that pool sizes should shrink as the positivity rate <span class="math inline">\(p\)</span> rises (with the optimal pool size approximately <span class="math inline">\(1/\sqrt{p}\)</span>). Although the benefits are most significant when <span class="math inline">\(p\)</span> is small, even when <span class="math inline">\(p = 0.1\)</span> or higher, pooling can significantly reduce the total number of tests. This finding is robust to the introduction of sample-specific information and positive correlation across samples. Furthermore, it agrees with the predictions of a far more detailed model published in JAMA.</p>
+<p>This leaves open the question of why the CDC recommends that labs stop using pooled testing when the positivity rate hits 10%. This post discusses one potential downside: additional work for lab techs. Another downside is reduced sensitivity of the test, leading to more false negatives.</p>
+<p>What are the important factors that this model is missing? Are the CDC and testing labs simply being too conservative with their pooling strategy? I'd love to hear your thoughts (about these or other questions) below.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>I recently discovered that this strategy was <a href="https://www.jstor.org/stable/2235930?seq=1#metadata_info_tab_contents">proposed by Robert Dorfman in 1943</a> (obviously, he was thinking about contexts other than COVID testing). This <a href="https://www.nature.com/articles/s41586-020-2885-5#ref-CR1">Nature article</a> proposes a more sophisticated pooling strategy, but I'll save a discussion of such strategies for a future post.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>One way to build intuition is to work through a simple example in which four couples get tested. To simplify, suppose that for each couple, either both members have COVID, or neither does, with the probability of having COVID equal to 10%. We intend to test these eight samples in two pools of four. If each pool includes one member of each couple, then samples within a pool are independent: each pool has approximately <span class="math inline">\(1 - (1-.1)^4 \approx 34\%\)</span> chance of being positive, and the expected number of tests needed for all 8 people is approximately 4.75. On the other hand, if we put two couples into the first pool and the other two couples into the second, then each pool has only a <span class="math inline">\(1 - (1 - .1)^2 = 19\%\)</span> chance of being positive, reducing the number of tests required to approximately <span class="math inline">\(3.5\)</span>. A similar idea applies even if couples' outcomes are not perfectly correlated.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>

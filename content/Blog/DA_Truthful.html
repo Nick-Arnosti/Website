@@ -1,0 +1,58 @@
+---
+title: 'A Short Proof of the Truthfulness of DA'
+date: "2023-10-01"
+author: Nick Arnosti
+---
+
+
+
+<p><strong>Note:</strong> this post assumes knowledge of the definition of stability in two-sided matching markets.</p>
+<ul>
+<li>If you <strong>aren’t</strong> familiar with this definition, you should first learn about that.</li>
+<li>If you <strong>are</strong> familiar with the definition of stability, please consider providing a public good by amending the Wikipedia page on the <a href="https://en.wikipedia.org/wiki/Stable_marriage_problem">stable marriage problem</a>. When writing this post, I noticed that this page assumes a balanced market in which all matches are acceptable, and does not mention the possibility of an individual blocking a match, or going unmatched (thus making it an unsuitable reference for someone trying to understand this post from first principles).</li>
+</ul>
+<p>A famous result, attributed to <a href="https://www.jstor.org/stable/2321753">Dubbins and Freedman (1981)</a> and <a href="https://pubsonline.informs.org/doi/10.1287/moor.7.4.617">Roth (1982)</a>, is that when using the Deferred Acceptance procedure in a one-to-one matching market, the proposing side has no incentive to misreport their preferences. However, these proofs are somewhat involved, to the point that I have never tried to teach these proofs to my students, nor have I felt confident that I could reproduce them on demand.</p>
+<p>While visiting the Simons-Laufer Math Institute at UC Berkeley last month, I was shown a beautifully short proof of this result. Although I have adapted the arguments to make them as clear as possible, a mostly equivalent proof was presented to me by Alex Teytelboym. Alex credits Ravi Jagadeesan for this proof, and Ravi claims that the kernel of these ideas are present in Hatfield and Milgrom’s “Matching with Contracts” paper. All I know is that I have never seen this result written so cleanly, so I thought it was worth sharing with you!</p>
+<p>I will assume a 1-to-1 matching market matching “men” to “women” for simplicity, though the proof immediately generalizes to many-to-one markets where the side with unit demand proposes.</p>
+<p><strong>Theorem 1.</strong> Suppose that mechanism M always selects a stable matching in a way that is best for individual <span class="math inline">\(i\)</span>. Then <span class="math inline">\(i\)</span> can never benefit from misreporting.</p>
+<p>The proof of this result will use the well-known “Rural Hospital Theorem” or “Lone Wolf Theorem” (Alex insists that these terms refer to two separate theorems, but I have always used them interchangeably).</p>
+<p><strong>Lone Wolf Theorem.</strong> The set of matched men is the same in any stable matching.</p>
+<p>This is fairly easy to prove, and (crucially) does not rely on any results on incentives. I like to provide a “proof by picture” to my class. To focus on the main result, I defer the proof of the Lone Wolf Theorem to a future post.</p>
+<p>Suppose that Theorem 1 is false. That is, there exist preferences for all other agents such that when <span class="math inline">\(i\)</span> reports <span class="math inline">\(\succ\)</span>, the resulting matching <span class="math inline">\(\mu\)</span> gives <span class="math inline">\(\mu(i) = w\)</span>, and when <span class="math inline">\(i\)</span> reports <span class="math inline">\(\succ&#39; \ne \succ\)</span>, the resulting matching <span class="math inline">\(\mu&#39;\)</span> gives <span class="math inline">\(\mu&#39;(i) = w&#39; \succ w\)</span>.</p>
+<p>Consider the market in which <span class="math inline">\(i\)</span> lists <span class="math inline">\(w&#39;\)</span> as the only acceptable woman. I claim that in this market, there must exist a stable matching in which <span class="math inline">\(i\)</span> matches to <span class="math inline">\(w&#39;\)</span>, and another stable matching in which <span class="math inline">\(i\)</span> goes unmatched. This clearly contradicts the Rural Hospital Theorem (Lone Wolf Theorem).</p>
+<p>Thus, we only need to establish my claim, which can be seen as follows. I say that a matching is <span class="math inline">\(\tilde{\succ}\)</span>-stable if it is stable in the market where <span class="math inline">\(i\)</span> reports <span class="math inline">\(\tilde{\succ}\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p>The matching <span class="math inline">\(\mu&#39;\)</span> assigns <span class="math inline">\(i\)</span> to <span class="math inline">\(w&#39;\)</span>. Because it is <span class="math inline">\(\succ&#39;\)</span>-stable, it must also be <span class="math inline">\(\{w&#39;\}\)</span>-stable: the only difference is that we have removed women from <span class="math inline">\(i\)</span>’s list, which clearly does not create any new blocking pairs.<br />
+<em>Note: this step uses only the definition of stability.</em></p></li>
+<li><p>Let <span class="math inline">\(\succ&#39;&#39;\)</span> be the deviation in which <span class="math inline">\(i\)</span> truncates <span class="math inline">\(\succ\)</span> below <span class="math inline">\(w&#39;\)</span> (<span class="math inline">\(i\)</span> leaves everyone below <span class="math inline">\(w&#39;\)</span> off of his list), and let <span class="math inline">\(\mu&#39;&#39;\)</span> be the resulting matching.</p>
+<ol style="list-style-type: lower-alpha">
+<li>The matching <span class="math inline">\(\mu&#39;&#39;\)</span> leaves <span class="math inline">\(i\)</span> unassigned: if it matched <span class="math inline">\(i\)</span>, then <span class="math inline">\(\mu&#39;&#39;\)</span> would be <span class="math inline">\(\succ\)</span>-stable. This cannot be, as <span class="math inline">\(w\)</span> is <span class="math inline">\(i\)</span>’s best <span class="math inline">\(\succ\)</span>-stable partner by assumption, and is worse than all women listed in <span class="math inline">\(\succ&#39;&#39;\)</span>.<br />
+<em>Note: this step uses the definition of stability and fact that <span class="math inline">\(\mu\)</span> is optimal for <span class="math inline">\(i\)</span>.</em></li>
+<li>Because <span class="math inline">\(\mu&#39;&#39;\)</span> is <span class="math inline">\(\succ&#39;&#39;\)</span>-stable, it is also <span class="math inline">\(\{w&#39;\}\)</span>-stable: the only difference between <span class="math inline">\(\succ&#39;&#39;\)</span> and <span class="math inline">\(\{w&#39;\}\)</span> is that we have removed women from <span class="math inline">\(i\)</span>’s list, which clearly does not create any new blocking pairs.<br />
+<em>Note: this step uses only the definition of stability.</em></li>
+</ol></li>
+</ol>
+<p>To recap: <span class="math inline">\(\mu&#39;\)</span> and <span class="math inline">\(\mu&#39;&#39;\)</span> must both be <span class="math inline">\(\{w&#39;\}\)</span>-stable, but <span class="math inline">\(i\)</span> is matched to <span class="math inline">\(w&#39;\)</span> by <span class="math inline">\(\mu&#39;\)</span> and unmatched by <span class="math inline">\(\mu&#39;&#39;\)</span> (a contradiction).</p>
+<!--
+
+# Proof of Lone Wolf Theorem
+
+It is actually fairly easy to see. Suppose that there are two stable matchings, $\mu$ and $\mu'$. Take any man $i$ who gets a different outcome in these matchings. We will create an alternating chain of men and women by asking $i$ to point to his favorite partner between $\mu(i)$ and $\mu'(i)$, asking whoever he points to ($w$) to point to her favorite partner between $\mu(w)$ and $\mu'(w)$, asking whoever she points to ($j$) to point to his favorite partner between $\mu(j)$ and $\mu'(j)$, and so on.
+
+* Nobody in this chain can ever point to themselves, as this would imply that they block the matching in which they match to someone else.
+* If $i$ prefers $\mu$, then every woman identified in this chain must prefer $\mu'$ and every man identified in this chain must prefer $\mu$. If this were not the case, then stability of either $\mu$ or $\mu'$ would be violated (for example, if $\mu(i)$ agrees that $\mu$ is better than $\mu'$, then $(i,\mu(i))$ block $\mu'$).
+* The chain must eventually return to $i$. This is because each woman must point to a new (previously not-pointed-to) man. 
+
+and ask him which he prefers. Suppose he says that he prefers $\mu$. Then $\mu(i)$ must prefer $\mu'$ (otherwise, this pair would block $\mu'$). 
+
+Must eventually come back to me: 
+1. If they pointed back at person that pointed to them, contradicts stability.
+2. If they pointed to nobody (themselves), contradicts stability (IR).
+3. If they pointed to someone else that we have seen so far, contradicts a matching.
+
+This gives us two things: if I was matched in blue, I must also be matched in yellow. And two, we can give everyone in this cycle their favorite partner (still a matching -- must argue why still stable).
+
+We will use two facts, which hold for any profile $P$ and can be proven independently.
+
+**Fact 2** There exists one stable matching which all men weakly prefer to any other.
+-->

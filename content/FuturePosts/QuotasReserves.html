@@ -1,0 +1,32 @@
+---
+title: 'Quotas and Reserves'
+date: ''
+author: Nick Arnosti
+draft: true
+tags:
+  
+categories:
+  Math and Statistics
+---
+
+
+
+<p><strong>Conjecture 1</strong> Given a reserve graph G, there exist a set of upper quotas <span class="math inline">\(Q\)</span> such that the feasible sets associated with <span class="math inline">\(Q\)</span> are exactly <span class="math inline">\(F^{hard}(G)\)</span>.</p>
+<p><em>Proof Sketch.</em> For each set of applicants <span class="math inline">\(S \subseteq A\)</span>, define a quota category to be <span class="math inline">\(S\)</span>, and define the associated upper quota to be <span class="math inline">\(|N(S)|\)</span>.</p>
+<p>Suppose we have a feasible selection <span class="math inline">\(S\)</span>. This means that there is a matching of <span class="math inline">\(G\)</span> that matches everyone in <span class="math inline">\(S\)</span>. But any matching in <span class="math inline">\(G\)</span> must satisfy the constraints above.</p>
+<p>Conversely, suppose we have a selection <span class="math inline">\(S\)</span> that complies with all quotas. We must show that there is a matching of <span class="math inline">\(G\)</span> that matches all of <span class="math inline">\(S\)</span>.</p>
+<p>Something interesting about this is that hard reserves always induce a matroid, so this quota structure must also induce a matroid (even though categories are not nested).</p>
+<p>The following example shows that we can’t do the reverse: reserves are less expressive than quotas.</p>
+<p><strong>Example 1</strong> There are three disjoint traits, and an upper quota of 1 on each, as well as a global upper quota of 2 on all applicants. There are two applicants with each of the disjoint traits. Then we can take any of the <span class="math inline">\(6\)</span> choose <span class="math inline">\(2\)</span> = 15 pairs of applicants, <em>except</em> the three pairs where the applicants share a trait. This cannot be replicated with two reserved positions.</p>
+<p><strong>Example 2.</strong> There is a lower quota of 1 on traits <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and a gloabl upper quota of 2. Applicant 0 has neither trait, applicant 1 has trait <span class="math inline">\(A\)</span>, applicant 2 has trait <span class="math inline">\(B\)</span>, and applicant 3 has traits <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. Then the feasible selections are <span class="math inline">\(\{0,3\}, \{1,2\}, \{1,3\}, \{2,3\}\)</span>. This cannot be replicated with two reserved positions: because <span class="math inline">\(\{1,2\}\)</span> is feasible, we must have that 1 is eligible for <span class="math inline">\(p_1\)</span> and 2 is eligible for <span class="math inline">\(p_2\)</span>. Because <span class="math inline">\(\{0,3\}\)</span> is feasible, we must have that <span class="math inline">\(0\)</span> is eligible for some trait. Thus, either <span class="math inline">\(\{0,1\}\)</span> or <span class="math inline">\(\{0,2\}\)</span> must be feasible.</p>
+<p><strong>Conjecture 2</strong> Suppose that (i) quota categories form a hierarchy, and (ii) the only upper quota is a global quota. Then there exists a reserve graph G such that the feasible sets under quotas are exactly the same as the <span class="math inline">\(F^{hard}(G)\)</span>.</p>
+<p>This is <strong>FALSE</strong>. <span class="math inline">\(F^{hard}(G)\)</span> includes the empty set, which may not be feasible. I think I mean that the maximal elements of the feasible sets are equal (or equivalently, the downward closure of the feasible sets).</p>
+<p>This is still not true, as the feasible sets under quotas may be empty, while for reserves it will not be. Perhaps I want to assume that there is a feasible selection?</p>
+<p><em>Proof Sketch.</em> For each category <span class="math inline">\(c\)</span>, let <span class="math inline">\(SUB_c\)</span> be the set of categories contained in <span class="math inline">\(c\)</span>. For each category <span class="math inline">\(c\)</span>, create a number of positions equal to <span class="math inline">\(\max(l_c - \sum_{c&#39; \in SUB_c} l_{c&#39;},0)\)</span>, and make applicants in <span class="math inline">\(c\)</span> eligible for these positions.</p>
+<p>Suppose we have a selection that satisfies all lower quotas. Then we should be able to match them to positions appropriately by starting with the most specific categories.</p>
+<p>Suppose we have a selection that is maximal in the resulting reserve graph…</p>
+<p><strong>Other Thoughts.</strong></p>
+<p>What guarantees do reserves give you? For a set of applicants <span class="math inline">\(A\)</span>, if you have reserved <span class="math inline">\(R_A\)</span> positions for this set, your final selection <span class="math inline">\(S\)</span> will satisfy <span class="math inline">\(|S \cap A| \ge \min(R_A,|A|)\)</span>.</p>
+<p>Precedence order effects:
+* With minimum quotas, want algorithm to take you early
+* With reserves, want algorithm to take you late</p>

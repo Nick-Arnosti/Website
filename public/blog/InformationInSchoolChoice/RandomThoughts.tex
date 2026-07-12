@@ -1,0 +1,48 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{Brief Article}
+\author{The Author}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+Despite the progress offered by this work, it leaves many questions unanswered. Two such questions are,
+\begin{itemize}
+\item Is a stable matching algorithm a good way to assign students to schools?
+\item Would such a system be appropriate in other markets?
+\end{itemize}
+%Costly to use only empirics - want theory. Need a theory that actually explains what is going on. ``Bring Theory Closer to Practice"
+
+In order to answer these questions, it becomes important to consider the {\em reasons} that participants in these marketplaces submit short preference lists. One possibility is that they truly find all but a small number of potential matches to be unacceptable. In many cases, however, short lists are a byproduct of agents being uncertain about their preferences, or unable to accurately report them. For example, parents in cities with many high schools may not be aware of all of their options, and might be unwilling to list schools about which they know very little.\footnote{Many cities try to rectify this by providing information about each school. Some go further by providing interactive tools that allow parents to search for schools by geography, availability of specific academic programs, and other criteria. For one example, see  \url{https://www.noodle.com/nyc-choice}.} 
+
+Even if students are certain about their preferences, they may be unable to report them accurately. For example, many cities, including New York, New Orleans, and Chicago, limit the number of schools that each student can list. In this case, students may have an incentive to drop very competitive schools from their list. School districts often provide students with information about the competition at various schools,\footnote{See, for example, information from New Orleans at \url{http://enrollnola.org/enrollnola-annual-report/}, and from New York at \url{http://schools.nyc.gov/ChoicesEnrollment/High/Resources/default.htm}.} but despite this fact, many students incorrectly estimate their enrollment chances and list the ``wrong" schools.\footnote{\cite{calsamiglia-haeringer-klijn_2010}  use a lab experiment to further explore this topic.}
+%\cite{haeringer-klijn_2009} study the full-information equilibria of such a game. In practice, students are generally uncertain about which schools will admit them, and school districts may provide  Despite this information, students g
+
+Similar frictions cause many real-world matching settings to differ from the idealized cases considered in most models. For example, prior to submitting their preferences, participants in the National Residency Matching Program conduct a series of interviews, which are both costly and time-consuming. Short lists arise because hospitals only rank candidates whom they have interviewed. Furthermore, because interview slots are limited, both sides have an incentive to target interview partners strategically (for one theoretical analysis of this phenomenon, see \cite{kadam_2015}). Such targeting is imperfect, and as a result, agents who (in hindsight) should have interviewed one another go unmatched.\footnote{In 2015, of the 1,306 residency positions that did not fill, 1,193 participated in a supplemental matching procedure, and 1,129 (94.6\%) were filled in this manner. This indicates that these positions were initially unfilled due to miscoordination, rather than because nobody was willing to take them.} While it may be possible to centrally coordinate interviews (see \citet{lee-schwarz_2012}), there are also less heavy-handed approaches to this problem.
+
+Markets that use the deferred acceptance algorithm separate information acquisition and match formation into two distinct phases. This has the (well-studied) benefit of resolving miscoordination in the offer stage, but also converts the process of information acquisition into a simultaneous-move game, thereby \emph{increasing} miscoordination in this stage. In particular, assking participants to simultaneously rank many options forces them to either (wastefully) research more possibilities than necessary, or to economize on screening and guess about their own preferences.
+
+In some settings, wasteful information acquisition is minimized by interleaving information acquisition and matching. In most labor markets, both sides start with limited information (such as a resume or job description), and proceed through a series of increasingly costly screening stages.  This reduces the time that agents spend investigating possibilities that are unlikely to lead to a successful match. A similar story applies to dating and romantic relationships.
+
+Another interesting case is the market for federal law clerks, in which judges often make take-it-or-leave-it ``exploding" offers upon completion of the interview. While this has several obvious drawbacks, it also allows judges to close their search as soon as they've found a suitable candidate. This, in turn, allows law students who might otherwise have interviewed for these positions to direct their search to openings that are more likely to be available. One open and very interesting research direction is to more formally characterize the tradeoff between simultaneous and sequential mechanisms in a setting where preferences are initially unknown.
+
+Any analysis of this tradeoff, however, requires a model of centralized matching that incorporates the friction of miscoordinated interviews. I believe that the model presented here, with student lists reinterpreted as the set of positions for which they interview, provides an excellent starting point for this investigation.
+
+
+
+\end{document}  

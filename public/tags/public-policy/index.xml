@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Public Policy on b</title>
+    <link>/tags/public-policy/</link>
+    <description>Recent content in Public Policy on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 19 Apr 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/public-policy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Should Grants be Awarded by Lottery?</title>
+      <link>/blog/grantfunding/</link>
+      <pubDate>Sun, 19 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/grantfunding/</guid>
+      <description>Motivation Many researchers rely on grants to fund their work. Typically, they write a proposal for a future project. Proposals are scored and ranked by a panel, and the top-ranking proposals are funded. The percentage of proposals that receive funding is referred to as the &amp;quot;payline,&amp;quot; and has fallen dramatically over time.
+Recent papers in mBio and PLOS Biology have called for a change to this process. They propose using a lottery, rather than a ranking system, to select proposals for funding.</description>
+    </item>
+    
+    <item>
+      <title>What do Toilet Paper and License Plates Have in Common?</title>
+      <link>/blog/rationingcreatesscarcity/</link>
+      <pubDate>Sun, 12 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/rationingcreatesscarcity/</guid>
+      <description>My research usually starts from the premise that there is a shortage of some item, which triggers the need for an allocation policy. However, sometimes the allocation policy can cause a shortage – especially in the presence of uncertainty. This, in turn, results in an inefficient allocation.
+For one topical example, consider toilet paper. In normal times, people have confidence that they will be able to buy toilet paper whenever they need it.</description>
+    </item>
+    
+  </channel>
+</rss>

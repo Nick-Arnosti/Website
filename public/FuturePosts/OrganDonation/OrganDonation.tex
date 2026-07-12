@@ -1,0 +1,64 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{xcolor}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{Brief Article}
+\author{The Author}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+
+
+\section{$V$ Known in Advance}
+
+
+
+\section{$V$ Realized with Outcomes}
+
+Assume: $V$ and $c$ are independent, cost paid by all people listed (not just those who actually donate).
+
+Death rate $\beta$; number of organs per death $\alpha$; rate of need $\theta$.
+
+Assume undersupply (overdemand): $\alpha \beta < \theta$. This implies that under both donor and donor + value, only donors will receive organs.
+
+
+\subsection{Donor Only}
+
+I donate at cost $c$, and benefit with probability $\theta \left( \frac{\alpha \beta}{\theta} \right)$, with average benefit $E[V] = \int_0^\infty \overline{G}(v) dv$. Threshold will be $c_{d}^* = \alpha \beta E[V]$. 
+
+Welfare gain from transplantation is number of transplants times average benefit of a transplant, which is $\alpha \beta E[V] F(\alpha \beta E[V])$. {\color{red} Comes at donation cost...} %$\int_{-\infty}^{c_d^*} F(c) dc$.
+
+Cost to marginal donor, $c^*$, is smaller than benefit to average recipient, $E[V]$.
+
+
+\subsection{Donor + Value}
+
+Define $v^*$ to be solution to $\overline{G}(v^*) = \alpha \beta/\theta$. 
+
+I donate at cost $c$, and benefit with probability $\theta \overline{G}(v^*) = \theta \left( \frac{\alpha \beta}{\theta} \right)$, with average benefit $E[v \vert v \geq v^*] = v^* + \frac{1}{\overline{G}(v^*)} \int_{v^*}^\infty \overline{G}(v) dv$. Threshold will be $c_{dv}^* = \theta \left(v^* \overline{G}(v^*) + \int_{v^*}^\infty \overline{G}(v) dv \right)$, which can be shown to be higher than before, so more donate.
+
+Welfare is number of transplants, $\alpha \beta F(c_{dv}^*)$, times benefit per transplant $E[v \vert v \geq v^*]$.  {\color{red} Comes at donation cost...}%$\int_{-\infty}^{c_{dv}^*} F(c) dc$.
+
+
+
+
+
+
+
+
+\end{document}  

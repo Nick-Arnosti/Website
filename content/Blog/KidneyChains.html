@@ -1,0 +1,48 @@
+---
+title: 'Kidney Chain Matching'
+date: '2022-04-17'
+author: Nick Arnosti
+draft: true
+---
+
+
+
+<div id="setting" class="section level1">
+<h1>Setting</h1>
+<p>We want to get LOWER BOUNDS on average waiting time. Seems natural to ask, how quickly could we match if optimizing only for that one person? Certainly, when adding matching constraints, we can’t expect to do significantly better.</p>
+<p>Directed ER random graph. There is one altruistic donor, and one “favored” recipient. Each pair can donate to each other pair independently with probability <span class="math inline">\(p\)</span>. Two related questions:</p>
+<ol style="list-style-type: decimal">
+<li>If there are a total of <span class="math inline">\(n\)</span> incompatible pairs (including the favored recipient), what is the probability that there exists a chain from the donor to the favored recipient?</li>
+<li>If we add incompatible pairs one at a time, on average how large does the pool grow before we can match the favored recipient through a chain?</li>
+</ol>
+<p>Note that if we let <span class="math inline">\(q_n\)</span> be the answer to the first question (with <span class="math inline">\(q_0 = 1\)</span> for convenience), then the answer to the second question is <span class="math inline">\(\sum_{n \ge 0} (1 - q_n)\)</span>.</p>
+</div>
+<div id="undirected-er-random-graphs" class="section level1">
+<h1>Undirected ER Random Graphs</h1>
+<p>Note that the problem is equivalent to one with undirected ER random graphs. The reason is that we only care about the result of the “first” flip between two vertices (the one from the first of these to be reached to the second). This is not true when analyzing 2-way and 3-way exchanges.</p>
+<p>So our questions can be rephrased as follows. If we have an ER random graph with each edge present with probability <span class="math inline">\(p\)</span>, how likely is it that a specific source vertex is connected to a specific sink vertex? On average, many vertices are needed before these vertices are connected?</p>
+</div>
+<div id="exact-dp-solution" class="section level1">
+<h1>Exact DP Solution</h1>
+<p>Let <span class="math inline">\(P[k,n]\)</span> denote the probability that exactly <span class="math inline">\(k\)</span> nodes can be reached from node 1 in an ER graph of size <span class="math inline">\(n\)</span>. (Include node 1 both in the count of <span class="math inline">\(n\)</span> and the set of reachable nodes.)</p>
+<p>Then we have the following equation:
+<span class="math display">\[ P[k,n+1] = P[k,n]\times (1-p)^k+\sum_{j = 1}^{k-1} P[j,n] \times (1 - (1-p)^j)\times P[k-j,n-k+1].  \]</span>
+This is because for there to be <span class="math inline">\(k\)</span> reachable nodes, we either need to already have had <span class="math inline">\(k\)</span> and have the newcomer not connect to anyone, or to have had <span class="math inline">\(j &lt; k\)</span> reachable, have the newcomer be reachable, and then connect from them to <span class="math inline">\(k-j-1\)</span> others.</p>
+<p>This can be used to write a DP that solves this problem in <span class="math inline">\(O(n^3)\)</span> time – see “Kidney Exchange Probabilities” R document.</p>
+</div>
+<div id="approximate-solution" class="section level1">
+<h1>Approximate Solution</h1>
+<p>The DP is nifty, but not very illumating. We can consider asymptotics of <span class="math inline">\(p\)</span> times our expected graph size, as <span class="math inline">\(p \rightarrow 0\)</span>.</p>
+<p>Well-known results on ER random graphs say that if <span class="math inline">\(np&lt;1\)</span>, then all components have size <span class="math inline">\(O(\log(n))\)</span>, so the probability of reaching a particular node is vanishingly small. If <span class="math inline">\(np \rightarrow \lambda &gt; 1\)</span>, then it is known that there is one large connected component involving a constant fraction of all nodes (and all other connected components are of size <span class="math inline">\(O(\log(n))\)</span>). But we want to actually analyze the size of this large component!</p>
+<p>Use the following heuristic reasoning. Suppose that our target node is reachable with probability <span class="math inline">\(q(\lambda)\)</span>. The number of nodes connected to our target is approximately Poisson with mean <span class="math inline">\(\lambda\)</span>. Each of these nodes is identical to our target node, so each must also be reachable with probability <span class="math inline">\(q(\lambda)\)</span>. Our target node is reachable if and only if one of its neighbors is reachable. If we assume independence of reachability across these nodes, we get the following equation for <span class="math inline">\(q(\lambda)\)</span>:</p>
+<p><span class="math display">\[ 1- q(\lambda) = e^{-\lambda q(\lambda)}.\]</span></p>
+<p>Note that for <span class="math inline">\(\lambda \le 1\)</span>, the only solution is <span class="math inline">\(q = 0\)</span>, and for <span class="math inline">\(\lambda &gt; 0\)</span>, there is exactly one non-zero solution <span class="math inline">\(q \in (0,1)\)</span>. This is our approximation of the answer to our first question. The answer to our second question is then</p>
+<p><span class="math display">\[\int_0^\infty (1 - q(\lambda))d\lambda = 1 + \int_1^\infty (1 - q(\lambda))d\lambda \]</span></p>
+<p>Note that
+<span class="math display">\[ \int_1^\infty (1 - q(\lambda))d\lambda \int_1^\infty \int_{q(\lambda)}^{1} dq d\lambda = \int_0^1 \int_{1}^{-\log(1-q)/q} d\lambda dq = \int_0^1 (-\log(1-q)/q - 1) dq. \]</span>
+The taylor expansion for <span class="math inline">\(-\log(1-q)/q-1\)</span> is <span class="math inline">\(\sum_{k = 1}^{\infty} q^k/(k+1)\)</span>. Integrate this and you get <span class="math inline">\(\sum_{k = 1}^\infty q^{k+1}/(k+1)^2\)</span>. Evaluate at <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> to get
+<span class="math display">\[\int_1^\infty (1 - q(\lambda))d\lambda = \sum_{k = 2}^\infty 1/k^2 = \pi^2/6-1.\]</span>
+This implies that
+<span class="math display">\[\int_0^\infty (1 - q(\lambda))d\lambda  = \pi^2/6.\]</span>
+In other words, on average we need <span class="math inline">\(np \approx \pi^2/6\)</span> before we can match our target recipient.</p>
+</div>

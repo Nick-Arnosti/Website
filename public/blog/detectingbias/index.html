@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EAAMO 2024 Best Paper: A Simple, Statistically Robust Test of Discrimination | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>EAAMO 2024 Best Paper: A Simple, Statistically Robust Test of Discrimination</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/10/07</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>Introduce setting: you have data on decisions on outcomes (but not necessarily a view into the exact process, or the data that they had available to them.) How would you detect bias?</p>
+<p>Two widely used tests. Problems with each.</p>
+<p>Formalizing model. Defining what “unbiased” decision-making looks like. Show how these two tests could each (incorrectly) identify bias. Note that they point in opposite directions.</p>
+<div id="model-and-result" class="section level1">
+<h1>Model and Result</h1>
+<p>A decision-maker is presented with a set of applicants. For each applicant, the decision-maker observes their group label (i.e. minority or non-minority), as well as their ‘score.’ Based on this information, the decision-maker makes a binary decision (i.e. whether to give a loan, or whether to stop the vehicle). For individuals selected by the decision-maker, we eventually observe an outcome (whether the borrower repaid the loan, whether the vehicle contained contraband).</p>
+<p>Think of the score as an estimate of the outcome: in the bank example, it could be the probability of full repayment, or the expected amount of the loan that is repaid. Formally, we are going to assume that for each group, the scores are calibrated: among those from group <span class="math inline">\(X\)</span> given score <span class="math inline">\(s\)</span>, the true average outcome is <span class="math inline">\(s\)</span>. (Without some constraint like this, the decision-maker could simply assign scores arbitrarily. For example, it could assign low “personality” scores to Asian applicants and then claim it was letting in everyone with sufficiently high personality scores.)</p>
+<p>A natural policy to follow is to select all individuals whose scores are sufficiently high. A ‘biased’ policy uses different score thresholds for different groups. <strong>Could also not use a threshold – what if we have randomized thresholds? Presumably, results go through?</strong></p>
+<p>For example,</p>
+<p>Is it better to look at pdfs or cdfs? In some sense, can see MLRP from pdfs – is ratio of pdf height increasing (or deacreasing) in score? If so, implies stochastic dominance of cdfs (one always above the other), but stochastic dominance of cdfs is not enough to get the result.</p>
+<!--The assumption is that outcomes are conditionally independent of group, given the score. (That is)-->
+<pre class="r"><code>library(ggplot2)
+plot_pdfs_with_threshold &lt;- function(pdf1, pdf2, threshold, xmin, xmax, 
+                                     color1 = &quot;red&quot;, color2 = &quot;blue&quot;, 
+                                     name1 = &quot;Distribution 1&quot;, name2 = &quot;Distribution 2&quot;) {
+  # Create a data frame for plotting
+  x &lt;- seq(xmin, xmax, length.out = 1000)
+  df &lt;- data.frame(
+    x = x,
+    density1 = pdf1(x),
+    density2 = pdf2(x)
+  )
+  
+  # Calculate conditional expectations
+  conditional_expectation &lt;- function(pdf, threshold, xmax) {
+    integrate(function(x) x * pdf(x), threshold, xmax)$value / 
+      integrate(pdf, threshold, xmax)$value
+  }
+  
+  ce1 &lt;- conditional_expectation(pdf1, threshold, xmax)
+  ce2 &lt;- conditional_expectation(pdf2, threshold, xmax)
+  
+  # Create the plot
+  p &lt;- ggplot(df) +
+    geom_line(aes(x = x, y = density1, color = name1)) +
+    geom_line(aes(x = x, y = density2, color = name2)) +
+    geom_area(data = subset(df, x &gt;= threshold), aes(x = x, y = density1, fill = name1), alpha = 0.3) +
+    geom_area(data = subset(df, x &gt;= threshold), aes(x = x, y = density2, fill = name2), alpha = 0.3) +
+    scale_color_manual(values = c(color1, color2), name = &quot;Distribution&quot;) +
+    scale_fill_manual(values = c(color1, color2), name = &quot;Distribution&quot;) +
+    geom_vline(xintercept = threshold, color = &quot;black&quot;, size = 1) +
+    geom_vline(xintercept = ce1, color = color1, linetype = &quot;dashed&quot;) +
+    geom_vline(xintercept = ce2, color = color2, linetype = &quot;dashed&quot;) +
+    labs(title = &quot;PDFs with Threshold and Conditional Expectations&quot;,
+         x = &quot;Value&quot;, y = &quot;Density&quot;) +
+    theme_minimal() +
+    coord_cartesian(ylim = c(0, NA))  # Set y-axis minimum to 0
+  
+  return(p)
+}
+
+
+# Example usage with normal distributions
+pdf1 &lt;- function(x) dnorm(x, mean = 4, sd = 1)
+pdf2 &lt;- function(x) dnorm(x, mean = 5, sd = 1)
+threshold &lt;- 4
+
+plot &lt;- plot_pdfs_with_threshold(pdf1, pdf2, threshold, 0, 9)</code></pre>
+<pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## ℹ Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<pre class="r"><code>print(plot)</code></pre>
+<p><img src="/Blog/DetectingBias_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>State main result. Work through examples: normal (beta) with different means, same mean but different variance, etc.</p>
+<p>Discussion: what I like is clean message, and test that could actually be used (i.e. data is available, and administrators could understand what questions are being asked). Main concerns are (i) difficulty verifying the assumption, and (ii) other definitions of bias beyond calibrated predictions. Also (iii) multiple groups. Is this as simple as turning into many binary problems and adjusting for multiple corrections?</p>
+<p><strong>Where do these scores come from? How are they generated?</strong></p>
+<p>Calibration is fairly weak: could simply pool groups to get more accepted (i.e. Columbia business school). Example: employer has applicants from CUNY and Columbia. If you estimate scores based on grades and school, employer will take more from Columbia, but some from each. If you choose not to include grades, result could be to hire nobody from CUNY and everybody from Columbia. What information you are using makes a big difference!</p>
+<p>For example, suppose that you have a data set which consists of two variables – age and race. You try building a model with just age, and find that including race predicts better. That is, log probability of repayment is estimated to be a function of the two, and race helps to explain. From a statistical/information perspective, this could be justified. But quite literally, what this means is that some applicants receive lower scores just because they are black, and these lower scores are the reason their loan application is denied.</p>
+<p>Eliminating the ability to use race doesn’t fully fix the issue. What if we look at something very correlated with race – i.e. neighborhood? Should we be allowed to use this? It’s hard for me to say ‘no’ (I’m inclined to say yes), but I understand why some people would find this problematic.</p>
+<p>Example from medicine – KDPI score is lower for kidneys from black donors. (This is an aside, but an interesting one.) In what sense are KDPI scores calibrated? They are not – explicitly normalized. What is KDRI supposed to measure? Why not use KDRI instead of KDPI?</p>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a> 2023
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

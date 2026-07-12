@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ex Ante vs Ex Post Guarantees (&#43; Open Problem) | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Ex Ante vs Ex Post Guarantees (+ Open Problem)</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/01/28</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+
+<p><strong>Note:</strong> this post is closely related to my video <a href="https://nickarnosti.com/blog/randompriority/">The Virtues of Random Priority</a> and blog post <a href="https://nickarnosti.com/blog/rp_resolved/">Famous Open Question Resolved… since 2014?!?!</a>, although it is written to be self-contained.</p>
+<div id="motivation" class="section level1">
+<h1>Motivation</h1>
+<p>When giving away resources, two natural goals are to allocate these resources <em>efficiently</em> and <em>fairly</em>. Achieving these goals requires asking people about their preferences, so a third goal is to allocate in a way that is <em>truthful</em> (incentivizes people to tell us their true preferences).</p>
+<p>Can we achieve all three goals simultaneously? The answer depends on how exactly we define efficiency, fairness and truthfulness. For the most commonly-used definitions, the answer is ‘yes.’ We can use the random serial dictatorship mechanism (also called ‘random priority’): place people in a random order, and one at a time, allow them to choose their favorite object from those that remain.</p>
+<p>Are there other ways to achieve these three goals? Many algorithms are known, but surprisingly, almost all of them have been shown to be equivalent to random serial dictatorship. That is, they are different algorithms, but they produce the <strong>same</strong> distribution over outcomes! This fall, I learned of the paper <a href="https://www.sciencedirect.com/science/article/abs/pii/S0022053113001828">Strategyproof Stochastic Assignment</a> by Aytek Erdil, which constructs a mechanism which is efficient, fair, truthful, and not equivalent to random serial dictatorship. You can read about the details of this construction in my <a href="https://nickarnosti.com/blog/rp_resolved/">earlier blog post</a>.</p>
+</div>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p>This post argues that perhaps the research community has been using the wrong definition of truthfulness.</p>
+<p>There are two natural approaches to defining what it means for a random mechanism <span class="math inline">\(M\)</span> to satisfy property <span class="math inline">\(P\)</span>: it can satisfy this property ex post (after the randomness of the mechanism is resolved), or ex ante (before the randomness is resolved). See <a href="https://www.sciencedirect.com/science/article/abs/pii/S0304406815000579">Decomposing Random Mechanisms</a> by Marek Pycia and Utku Unver for a more general treatment of the relationship between ex ante and ex post properties.</p>
+<p>Depending on the property <span class="math inline">\(P\)</span>, the ex ante requirement can be either stronger or weaker than its ex post counterpart. In particular, as I explain below, we have the following relationship.</p>
+<!--
+<div class="figure">
+<img src="/Blog/ExAnteExPost_files/figure-html/unnamed-chunk-1-1.png" alt="Test 123" width="672" />
+<p class="caption">(\#fig:unnamed-chunk-1)Test 123</p>
+</div>
+-->
+<p><img src="../../../../../../_index_files/ExAnteExPost.png" /><!-- --></p>
+<p>Erdil’s work proves that there are multiple mechanisms which are <em>ex post</em> efficient, <em>ex ante</em> truthful, and symmetric.</p>
+<p>The choice to use ex post efficiency is necessitated by the fact that ex ante efficiency (also named ‘ordinal efficiency’) cannot be achieved at all if we also want truthfulness (either ex ante or ex post) and a weak fairness criteria (equal treatment of equals) – see Theorem 2 of <a href="https://www.sciencedirect.com/science/article/abs/pii/S0022053100927108">A new solution to the random assignment problem</a> by Bogomolnaia and Moulin.</p>
+<p>The choice to use ex ante truthfulness is very standard, going back at least to Bogomolnaia and Moulin (Definition 5). On its own, this definition is very natural, and until recently, I hadn’t questioned it. The more I think about it, however, the more it seems unnatural to use <em>ex ante</em> truthfulness in conjunction with <em>ex post</em> efficiency. This inspires the following question, which to my knowledge is open! Someone should solve it.</p>
+<blockquote>
+<p><strong>Open Problem</strong> Is every mechanism that is ex post Pareto efficient, ex post truthful, and symmetric equivalent to random serial dictatorship?</p>
+</blockquote>
+<p>I think this problem hasn’t gotten much attention in part because most papers present only a single definition of efficiency and truthfulness (without labeling these definitions ‘ex post’ or ‘ex ante.’) This makes it unclear that other natural or interesting definitions exist. One goal of this post is to present definitions side by side, to make the choices made by past researchers more apparent.</p>
+</div>
+<div id="definitions" class="section level1">
+<h1>Definitions</h1>
+<p>There is a set of agents <span class="math inline">\(\mathcal{A}\)</span> and a set of objects <span class="math inline">\(\mathcal{O}\)</span>, with <span class="math inline">\(|\mathcal{O}| \ge |\mathcal{A}|\)</span>. (This last assumption isn’t necessary, but slightly simplifies the definitions below.)</p>
+<div id="deterministic-allocations-and-mechanisms" class="section level2">
+<h2>Deterministic Allocations and Mechanisms</h2>
+<ul>
+<li><p>An <strong>allocation</strong> is a one-to-one function from <span class="math inline">\(\mathcal{A}\)</span> to <span class="math inline">\(\mathcal{O}\)</span>.</p></li>
+<li><p>A <strong>preference profile</strong> <span class="math inline">\(\succ\)</span> specifies for each agent <span class="math inline">\(i\)</span>, a strict ordering <span class="math inline">\(\succ_i\)</span> over objects.</p></li>
+<li><p>A <strong>deterministic mechanism</strong> is a function from preference profiles to allocations.</p></li>
+<li><p>Deterministic mechanism <span class="math inline">\(M\)</span> is said to be <strong>Pareto efficient</strong> if for every preference profile <span class="math inline">\(\succ\)</span>, there is no allocation that is as good (according to <span class="math inline">\(\succ\)</span>) as <span class="math inline">\(M(\succ)\)</span> for every agent, and strictly better for some agent.</p></li>
+<li><p>A deterministic mechanism is <strong>truthful</strong> if, for any preference profile <span class="math inline">\(\succ\)</span> and agent <span class="math inline">\(i\)</span>, the object that <span class="math inline">\(i\)</span> receives from reporting <span class="math inline">\(\succ_i\)</span> is at least as good (according to <span class="math inline">\(\succ_i\)</span>) as the object that <span class="math inline">\(i\)</span> receives from reporting any other preference.</p></li>
+</ul>
+<!--An allocation is **Pareto efficient** for profile $\succ$ if any other allocation is worse (according to $\succ$) for at least agent.
+
+Deterministic mechanism $M$ is said to be **Pareto efficient** if for every preference profile $\succ$, it recommends an allocation that is Pareto efficient for $\succ$.
+-->
+</div>
+<div id="ex-post-efficiency-and-truthfulness" class="section level2">
+<h2>Ex Post Efficiency and Truthfulness</h2>
+<p>In order to achieve fairness, we often use random mechanisms. A <strong>random mechanism</strong> is a function that maps each preference profile to a distribution over allocations.</p>
+<p>One way to construct a random mechanism is to use a lottery over deterministic mechanisms. This suggests the following definitions of efficiency and truthfulness for random mechanisms.</p>
+<ul>
+<li>Random mechanism <span class="math inline">\(M\)</span> is <strong>ex post Pareto efficient</strong> if it can be expressed as a lottery over deterministic mechanisms, each of which is Pareto efficient.</li>
+<li>Random mechanism <span class="math inline">\(M\)</span> is <strong>ex post truthful</strong> if it can be expressed as a lottery over deterministic mechanisms, each of which is truthful.</li>
+</ul>
+<p>These are the definitions that I provide to students who take my class IE 5285, in part because of their simplicity. My use of the phrase “ex post” aligns with the usage in <a href="https://www.sciencedirect.com/science/article/abs/pii/S0304406815000579">Pycia and Unver</a>, and is intended to reflect the fact that the properties above hold <strong>after</strong> uncertainty about the mechanism is resolved.</p>
+<!--
+> When a property is transferable through decomposition, it holds both ex ante, i.e., before the uncertainty regarding the mechanismis resolved, and ex post, i.e., after this uncertainty is resolved. 
+-->
+</div>
+<div id="ex-ante-efficiency-and-truthfulness" class="section level2">
+<h2>Ex Ante Efficiency and Truthfulness</h2>
+<p>An alternative approach is to come up with definitions of efficiency and truthfulness that hold <em>ex ante</em> – that is, before resolving the randomness of the mechanism. To define these formally takes a little bit of work. Our definition will borrow from the concept of stochastic dominance of random variables.</p>
+<p>Each distribution over allocations induces a (random) outcome for each agent, which specifies the probability with which the agent gets each object. Let <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> be two distributions over outcomes, and <span class="math inline">\(\succ\)</span> a preference profile. Say that agent <span class="math inline">\(i\)</span> <strong>weakly <span class="math inline">\(\succ\)</span>-prefers</strong> <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span> if for each position <span class="math inline">\(k\)</span>, the probability that agent <span class="math inline">\(i\)</span> receives a top-<span class="math inline">\(k\)</span> object (according to <span class="math inline">\(\succ_i\)</span>) under <span class="math inline">\(x\)</span> is at least as high the corresponding probability under <span class="math inline">\(y\)</span>. If in addition the probability of receiving a top <span class="math inline">\(k\)</span> choice is <em>strictly</em> higher under <span class="math inline">\(x\)</span> for some <span class="math inline">\(k\)</span>, then we say that agent <span class="math inline">\(i\)</span> <strong>strictly <span class="math inline">\(\succ\)</span>-prefers</strong> <span class="math inline">\(x\)</span> to <span class="math inline">\(y\)</span>.</p>
+<ul>
+<li>Random mechanism <span class="math inline">\(M\)</span> is <strong>ex ante Pareto efficient</strong> if for every preference profile <span class="math inline">\(\succ\)</span>, there is no distribution over allocations that is weakly <span class="math inline">\(\succ\)</span>-preferred by every agent to <span class="math inline">\(M(\succ)\)</span>, and strictly <span class="math inline">\(\succ\)</span>-preferred by some agent.</li>
+<li>Random mechanism <span class="math inline">\(M\)</span> is <strong>ex ante truthful</strong> if for any preference profile <span class="math inline">\(\succ\)</span>, each agent <span class="math inline">\(i\)</span> weakly <span class="math inline">\(\succ\)</span>-prefers <span class="math inline">\(M(\succ)\)</span> to the distribution over outcomes that would result if <span class="math inline">\(i\)</span> reported any other preference.</li>
+</ul>
+<p>These definitions clearly parallel the corresponding definitions for deterministic mechanisms, with stochastic dominance providing the means of comparing two distributions over allocations. They go at least as far back as Bogomolnaia and Moulin (2001), who refer to ex ante efficiency as ‘ordinal efficiency.’ (While they had good reasons for their choice of terminology, I use the phrase ex ante efficiency in this post to highlight the parallel with ex ante truthfulness. Somewhat confusingly, Bogomolnaia and Moulin use ‘ex ante efficiency’ to refer to an even stronger notion considered by <a href="https://www.sciencedirect.com/science/article/abs/pii/002205319090070Z">Zhou (1990)</a>.)</p>
+<!--Each distribution over allocations induces a (random) outcome for each agent, which specifies the probability with which the agent gets each object. Given a preference profile $\succ$, say that a distribution over allocations $x$ **$\succ$-stochastically dominates** distribution over allocation $y$ if for each agent $i$ and each position $k$, the probability that agent $i$ receives a top-$k$ object (according to $\succ_i$) under $x$ is weakly higher than the corresponding probability under $y$, and for some $i$ and $k$, the inequality is strict.
+
+
+* Random mechanism $M$ is *ex ante Pareto efficient* if, for each preference profile $\succ$, no allocation $\succ$-stochastically dominates $M(\succ)$.
+* Random mechanism $M$ is *ex ante truthful* if...
+-->
+</div>
+</div>
+<div id="relationship-between-ex-post-and-ex-ante-definitions" class="section level1">
+<h1>Relationship Between Ex Post and Ex Ante Definitions</h1>
+<p>It is not a priori clear how these definitions relate to each other. Are they equivalent? Is one stronger than the other?</p>
+<div id="ex-post-truthfulness-is-stronger-than-ex-ante-truthfulness" class="section level2">
+<h2>Ex Post Truthfulness is Stronger than Ex Ante Truthfulness</h2>
+<p>A brief consideration shows that ex post truthfulness implies ex ante truthfulness. Instead of giving a formal proof, I will note that intuitively, if someone can never benefit from lying even if they know the random seed used by the mechanism, then they certainly cannot benefit if they don’t know that seed. However, the converse does not hold: some ex ante truthful mechanisms cannot be expressed as a lottery over truthful deterministic mechanisms.</p>
+<p>The simplest example illustrating this fact comes from Pycia and Unver (2015), Theorem 4. There are three objects, one agent. Mechanism <span class="math inline">\(M\)</span> gives the agent their first choice half of the time, and their second choice the other half of the time. It is easy to see that this is ex ante truthful: any lie gives the agent a worse lottery over outcomes. However, <span class="math inline">\(M\)</span> cannot be expressed as a lottery over deterministic truthful mechanisms.</p>
+<p>To prove this, suppose that agent reports <span class="math inline">\(a \succ b \succ c\)</span>. Let <span class="math inline">\(\mathcal{M}_1\)</span> be the set of deterministic mechanisms in the support of <span class="math inline">\(M\)</span> that give the agent <span class="math inline">\(a\)</span>, and <span class="math inline">\(M_2\)</span> the set of deterministic mechanisms in the support of <span class="math inline">\(M\)</span> that give the agent <span class="math inline">\(b\)</span>. We know that <span class="math inline">\(M\)</span> must choose a mechanism in <span class="math inline">\(M_1\)</span> half the time, and a mechanism in <span class="math inline">\(M_2\)</span> the other half of the time.</p>
+<p>Now suppose the agent reports <span class="math inline">\(b \succ c \succ a\)</span>. Mechanisms in <span class="math inline">\(M_2\)</span> must give the agent <span class="math inline">\(b\)</span>, as they are truthful. Since <span class="math inline">\(M\)</span> gives the agent <span class="math inline">\(b\)</span> and <span class="math inline">\(c\)</span> with equal probability, it follows that each mechanism in <span class="math inline">\(M_1\)</span> must give the agent <span class="math inline">\(c\)</span>.</p>
+<p>Now suppose the agent reports <span class="math inline">\(c \succ a \succ b\)</span>. Mechanisms in <span class="math inline">\(M_1\)</span> must give the agent <span class="math inline">\(c\)</span>, as they are truthful. Since <span class="math inline">\(M\)</span> gives the agent <span class="math inline">\(c\)</span> and <span class="math inline">\(a\)</span> with equal probability, it follows that each mechanism in <span class="math inline">\(M_2\)</span> must give the agent <span class="math inline">\(a\)</span>. But then mechanisms in <span class="math inline">\(M_2\)</span> award <span class="math inline">\(a\)</span> on report <span class="math inline">\(c \succ a \succ b\)</span> and <span class="math inline">\(b\)</span> on report <span class="math inline">\(a \succ b \succ c\)</span>, implying that they are not truthful.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="ex-post-pareto-efficiency-is-weaker-than-ex-ante-pareto-efficiency" class="section level2">
+<h2>Ex Post Pareto Efficiency is Weaker than Ex Ante Pareto Efficiency</h2>
+<p>It is easy to see that ex ante efficiency implies ex post efficiency. In particular, a mechanism which is not ex post Pareto efficient cannot be ex ante Pareto efficient: if <span class="math inline">\(M(\succ)\)</span> places positive probability on an allocation that is not Pareto efficient, then we can <span class="math inline">\(\succ\)</span>-stochastically dominate <span class="math inline">\(M(\succ)\)</span> by, for example, running Top Trading Cycles starting from the allocation <span class="math inline">\(M(\succ)\)</span>.</p>
+<p>However, it is possible that a mechanism that randomizes over Pareto efficient assignments does not produce a random allocation that is ex ante efficient. This fact was demonstrated by Bogomolnaia and Moulin (2001) using an example with four objects and four agents. Agents 1 and 2 rank <span class="math inline">\(a \succ b \succ c \succ d\)</span>. Agents 3 and 4 rank <span class="math inline">\(b \succ a \succ d \succ c\)</span>.</p>
+<p>Intuitively, we should give <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> to agents who rank them first, and <span class="math inline">\(c\)</span> and <span class="math inline">\(d\)</span> to agents who rank them third. However, random serial dictatorship (which is ex post Pareto efficient) sometimes gives <span class="math inline">\(a\)</span> or <span class="math inline">\(b\)</span> to agents who rank them second (and <span class="math inline">\(c\)</span> or <span class="math inline">\(d\)</span> to agents who rank them fourth). Specifically, it produces these assignment probabilities:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>5/12</td>
+<td>1/12</td>
+<td>5/12</td>
+<td>1/12</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>5/12</td>
+<td>1/12</td>
+<td>5/12</td>
+<td>1/12</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1/12</td>
+<td>5/12</td>
+<td>1/12</td>
+<td>5/12</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>1/12</td>
+<td>5/12</td>
+<td>1/12</td>
+<td>5/12</td>
+</tr>
+</tbody>
+</table>
+<p>This is dominated by the following assignment probabilities.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>a</th>
+<th>b</th>
+<th>c</th>
+<th>d</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1/2</td>
+<td>0</td>
+<td>1/2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1/2</td>
+<td>0</td>
+<td>1/2</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>0</td>
+<td>1/2</td>
+<td>0</td>
+<td>1/2</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>0</td>
+<td>1/2</td>
+<td>0</td>
+<td>1/2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="closing-thoughts" class="section level1">
+<h1>Closing Thoughts</h1>
+<p>Which definitions are the “right” ones? The answer to this question is often driven by the domain, which can dictate, for example, which notions of fairness are most salient. Other times, the choice between several similar definitions is driven by mathematics. For example, while ex ante efficiency seems appealing, choosing this definition encounters impossibility results that are not encountered if we are willing to accept ex post efficiency.</p>
+<p>In this post, I argue for the use of ex post definitions, rather than ex ante. This argument is partly driven a desire for beauty: I really <em>want</em> it to be the case that random serial dictatorship is the only efficient, truthful, and fair mechanism, for suitable definitions of these concepts.</p>
+<p>But I also think that ex post definitions are compelling in practice. I’ll let
+Pycia and Unver make that case for me. They argue that describing random mechanisms as a lottery over deterministic mechanisms can make them more transparent:</p>
+<blockquote>
+<p><em>Many market design situations require transparency of the mechanism. Randomness of a mechanism is often a source of additional complexity in explaining and educating the agents who will participate in its implementation. Although simple tie-breakers can easily be explained to the participants in certain situations (e.g., in school choice), more complex random mechanism implementation often hinges on the condition that we can implement a deterministic mechanism to represent the random mechanism. For this reason, the market designer may want to resolve the uncertainty regarding the mechanism as soon as possible, before the participants’ private information is collected. Thus, the representability of a random mechanism as a randomization over deterministic mechanisms that also have the same properties could be crucial to the success of the design.                             -Pycia and Unver (2015)</em></p>
+</blockquote>
+<p>They also point out the advantage of being able to offer both guarantees:</p>
+<blockquote>
+<p><em>When a property… holds both ex ante, i.e., before the uncertainty regarding the mechanismis resolved, and ex post, i.e., after this uncertainty is resolved…, the mechanism is more robust and is not affected by the market participants’ access to information regarding the resolution of the uncertainty in the mechanism. For example, if dominant-strategy incentive-compatibility (or strategy-proofness) is decomposable, then it is best for an agent to reveal his preferences truthfully regardless of if all he knows is that a stochastically strategy-proofmechanism will be implemented or if he knows exactly, after the lottery is resolved, which strategyproof deterministic mechanism will be implemented. If such a decomposition goes through, this deterministic mechanism,in many cases,can be explained more transparently to the participants.     -Pycia and Unver (2015)</em></p>
+</blockquote>
+<p>If you’ve made it all the way to the bottom of this post, thank you for your interest! Let me know by leaving a short comment below.</p>
+<!--
+
+> Some random mechanisms are designed directly to use a lottery over predetermined deterministic mechanisms, as in school choice. Another approach in random mecha- nism design uses probabilistic assignment over outcomes for each situation rather than deterministic mechanisms in the support of the random mechanism.
+
+> many market design situations require transparency of the mechanism. Randomness of a mechanism is often a source of additional complexity in explaining and educating the agents who will participate in its implementation. Although simple tie-breakers can easily be explained to the participants in certain situations (e.g., in school choice), more complex random mechanism implementation often hinges on the condition that we can implement a deterministic mechanism to represent the random mechanism. For this reason, the market designer may want to resolve the uncertainty regarding the mechanism as soon as possible, before the participants’ private information is collected. Thus, the representability of a random mechanism as a randomization over deterministic mechanisms that also have the same properties could be crucial to the success of the design.
+
+-->
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>One might be tempted to try a shorter argument along the lines of “giving an agent their second choice cannot be made truthful”, but this is an oversimplification. In fact, the mechanism <span class="math inline">\(M_p\)</span> that gives the agent their first choice with probability <span class="math inline">\(p\)</span> and their second choice with probability <span class="math inline">\(1-p\)</span> is expressible as a lottery over deterministic truthful mechanisms whenever <span class="math inline">\(p \ge 2/3\)</span>. (Can you see how to do it?)<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

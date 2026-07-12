@@ -1,0 +1,106 @@
+---
+title: "Introduction to Reserves"
+output: html_document
+date: "2024-05-31"
+draft: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Learning Objectives
+
+Students will be able to discuss differences between reserves and minimum quotas, and between different reserve algorithms. (Reserves quite different from maximum quotas...)
+
+*Concepts and Definitions*
+
+* Non-wasteful (= maximal matching in reserve graph).
+* No justified envy 
+* Priority domination
+
+*Algorithms*
+
+* Minimum Guarantee, Exemptions First, (do all as hard reserves)
+* Over and Above
+* Reserved-Unreserved
+* Unreserved-Reserved
+
+
+*Applications*
+* Discuss consequences of policy changes for H1B visa allocation
+* Discuss relationship to school choice in Boston
+
+
+
+Accommodate reserve policies = Feasibility. 
+
+Priority domination implies non-wasteful, respecting priorities. (Converse is not true. Non-wasteful might not maximize selected applicants, and thus might be non-wasteful and respect priorities but still be priority dominated.)
+
+# General Graphs
+
+Often, positions are reserved for multiple different groups. For example, in Chile, spots in schools are reserved for low-income students, high-achieving students, and students with disabilities. In India, civil service positions are reserved for members of disadvantaged castes, women, and people with disabilities.
+
+We can model this as follows. There is a set of individuals $\mathcal{I}$ and a set of positions $\mathcal{P}$. For each position $p \in P$, there is a set of eligible individuals $\mathcal{I}_p \subseteq \mathcal{I}$. This general reserve structure can be captured by a bipartite graph $G = (\mathcal{I},\mathcal{P}, \mathcal{E})$, which has an edge from individual $i$ to position $p$ if $i$ is eligible for $p$. We seek a *matching* $\mathcal{M}$, which is a subset of edges in $\mathcal{E}$ such that each individual and position is involved in at most one edge of $\mathcal{M}$. Each matching $\mathcal{M}$ determines an associated *selection* $\mathcal{S} \subseteq \mathcal{I}$, which is the set of individuals who are included in some edge of $\mathcal{M}$.
+
+We assume that positions are indistinguishable to applicants. That is, a reserve-eligible applicant does not care whether they receive an open or reserved visa (although this choice may have consequences for other applicants). The positions are created by the system operator, to determine a selection procedure and ensure adequate representation of different groups.
+
+Thus, when analyzing applicant welfare, the selection $\mathcal{S}$ is all that matters. However, the matching $M$ explains how each selected individual was "counted" by the designer.
+
+**Remark.** The H1B setting above is one with two types of positions, "open" and "reserved": for each open position, $\mathcal{I}_p = \mathcal{I}$, and for each "reserved" position $\mathcal{I}_p = \mathcal{R}$ is the set of reserve-eligible candidates. A reserve-eligible applicant can be assigned either an open position or a reserved one. The matching $\mathcal{M}$ specifies how each individual is being "counted" (i.e. which type of position they get).
+
+
+Do we talk about feasible *matchings* or feasible *selections*. 
+
+
+For each position $p$, define the set of individuals that are eligible for $p$ to be $E_p$. If the $E_p$ are nested, then either of the following algorithms should find a priority dominating feasible assignment:
+
+1. Start at top of list, always match people to most specific position for which they are eligible. (Well defined because of nested.)
+2. Start with most specific positions, choose highest priority applicants. 
+
+Can see either as DA between positions and applicants, where applicants always rank more selective positions higher, and positions rank only eligible applicants, but among these rank them in priority order. In this case, there is a unique stable matching, and you can find it with student proposing or school proposing.
+
+(So far this is sounding like Quotas -- when nested, simple greedy algorithms work well.)
+
+However, now even if there are not nested categories, we can find a priority dominating selection in poly time! 
+
+In particular, imagine doing a max weight matching. For *any* weights consistent with the priority order, we will find the same selection of applicants!
+
+**Mention matroids and top down algorithm.**
+
+
+# Bonus Material: Soft Reserves
+
+Reference Aygun-Turhan, Arnosti-Bonet-Sethuraman, possibly others? Presumably, soft reserves are pretty common.
+
+
+# Reserves vs Quotas
+
+
+
+
+**Proposition.* There exist maximum quotas that induce feasible sets that cannot be reproduced by any reserve system.
+
+Let there be 6 individuals, 2 from each of 3 countries. There is a maximum quota of 1 on each country, and of 2 individuals overall. Thus, there are 12 feasible selections with two applicants (any except those that take two from the same country).
+
+No reserve can reproduce this. Suppose we have two positions. Fix the two individuals from country A. Both must be eligible for a position (since there are feasible selections involving each individual), but they must not be eligible for different positions (or else we could take both). So they both must be eligible for the same position. Same for countries $B$ and $C$. But then by the pigeonhole principle, there must be two countries that overlap in "their" position, implying that it is not possible to take people from both countries.
+
+**Theorem** For any graph $G$, there is a set of quotas that leads to an equivalent set of feasible collections. 
+
+*Proof.* For each $S \subseteq \mathcal{I}$, define the upper quota $u_S = |N_G(S)|$. It is clear that any collection that is feasible in $\mathcal{F}^{hard}(G)$ must comply with all of these upper quotas. We will prove the reverse: given a set of individuals $I$ that complies with all upper quotas, there must be a matching of $G$ that includes all of these individuals.
+
+This follows from the extension of Hall's marriage theorem below. By definition, if a set of individuals $I$ satisfies all upper quotas, then $|S| <= |N_G(S)|$ for all $S \subseteq I$, so by Hall's extension, there is a matching of $G$ that matches the individuals in $I$.
+
+*This shows that we can reproduce reserves using only (a very large number of) maximum quotas. Under some reasonable conditions, can we do the same with minimum quotas?*
+
+
+**Hall's Marriage Generalization (simple).** Suppose that for each $S \subseteq I$, $|S| <= |N_G(S)$. Then there is a matching of $G$ matches all of $I$. 
+
+Clearly, this implies that $|I|$ is at most the number of positions. If it is strictly fewer, add dummy individuals that are connected to all positions. Clearly, Hall's condition is satisfied in the new graph if and only if it is satisfied for subsets of $I$. Thus, we have a perfect matching in the extended graph, which implies a matching of all individuals in $I$ in the original graph.
+
+
+**Definition** For reserves, define $\mathcal{P}$ quota categories to be $N_G(p)$ for each $p \in \mathcal{P}$. Say that reserves are *nested* if for each $p_1$ and $p_2$, either $N_G(p_1)$ and $N_G(p_2)$ are disjoint, or one contains the other.
+
+**Proposition.** A nested reserve system can be reproduced using only minimum quotas and one global maximum quota. A nested quota system can be reproduced by reserves.
+
+*Idea of proof:* Should be fairly straightforward, but I haven't developed the language to describe.

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Engineering the Allocation of Public Resources on b</title>
+    <link>/teaching/</link>
+    <description>Recent content in Engineering the Allocation of Public Resources on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="/teaching/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Session 1: Efficiency</title>
+      <link>/teaching/session1_paretoefficient/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/teaching/session1_paretoefficient/</guid>
+      <description>Hello World</description>
+    </item>
+    
+    <item>
+      <title>Session 1: Efficiency</title>
+      <link>/teaching/session2_incentives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/teaching/session2_incentives/</guid>
+      <description>Hello World</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Queueing Theory on b</title>
+    <link>/tags/queueing-theory/</link>
+    <description>Recent content in Queueing Theory on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 14 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/queueing-theory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why Are Waits So Long At High Utilization?</title>
+      <link>/blog/longwaits/</link>
+      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/longwaits/</guid>
+      <description>One of the units in my operations management course is on variability and waiting time. I really enjoy this unit, for several reasons. First, we all have experience waiting in lines, so the topic feels personally relevant. Second, despite our experience waiting in lines, we don&#39;t have experience thinking about them systematically, and our intuition is actually quite poor.
+One of the most important insights from queueuing theory is that as utilization rises, average waiting time &amp;quot;blows up.</description>
+    </item>
+    
+  </channel>
+</rss>

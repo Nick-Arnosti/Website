@@ -1,0 +1,145 @@
+---
+title: 'Do Target Date Funds Make Sense?'
+date: '2019-11-18'
+author: Nick Arnosti
+tags:
+  Information Acquisition
+categories:
+  Miscellaneous
+---
+
+
+
+<div id="motivation" class="section level2">
+<h2>Motivation</h2>
+<p>A common piece of investing advice goes as follows:<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<blockquote>
+<p>Stock-based funds have higher long-term return potential but also have relatively high volatility. On the other hand, bond funds are more stable, especially in terms of income, but don’t have the long-term growth potential of stocks. Therefore, it’s generally suggested that younger investors put most of their money into stocks and gradually shift their investments into bonds as they get closer to retirement.</p>
+</blockquote>
+<p>For investors that don’t want to actively manage their retirement portfolio, companies such as Vanguard have introduced “Target Date Funds” (TDFs), which are marketed as a “one stop shop” for retirement investing. <a href="https://investor.vanguard.com/mutual-funds/target-retirement/#/">Vanguard’s explanation</a> states, “managers gradually shift each fund’s asset allocation to fewer stocks and more bonds so the fund becomes more conservative the closer you get to retirement” (see Figure <a href="#fig:glidepath">1</a>). My employer plan goes straight to a TDF, and I am not alone: according to this <a href="https://www.forbes.com/sites/markavallone/2018/06/30/why-target-date-funds-dominate-the-401k-market/#8081c8758687">Forbes article</a>, most employer-sponsored retirement funds default to TDFs, and it is predicted that 88% of retirement plan contributions will flow into TDFs by 2019.</p>
+<p>TDFs are popular, but does their approach actually make sense? In this post, I investigate that question, taking as given the assertion that stocks are riskier than bonds, but have a higher expected return. I start by introducing a simple model that will frame my thinking. In the end, I conclude that (1) starting with much of your money in stocks likely makes sense for many investors, but (2) the “set it and forget it” strategy of letting your TDF automatically shift this money to bonds likely does not.</p>
+<div class="figure"><span id="fig:glidepath"></span>
+<img src="/Glidepath-Sample-1.jpg" alt="Mix of stocks and bonds in a Target Date Fund over time. Source: US Department of Labor [investment bulletin](https://www.dol.gov/sites/default/files/ebsa/about-ebsa/our-activities/resource-center/fact-sheets/investor-bulletin-target-date-retirement-funds.pdf) on TDFs."  />
+<p class="caption">
+Figure 1: Mix of stocks and bonds in a Target Date Fund over time. Source: US Department of Labor <a href="https://www.dol.gov/sites/default/files/ebsa/about-ebsa/our-activities/resource-center/fact-sheets/investor-bulletin-target-date-retirement-funds.pdf">investment bulletin</a> on TDFs.
+</p>
+</div>
+</div>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<p>An investor starts with $1. In each period <span class="math inline">\(t\)</span>, she may place a fraction <span class="math inline">\(\alpha_t\)</span> of her wealth in a risky asset, with (unknown) return <span class="math inline">\(r_t\)</span>; the remaining <span class="math inline">\(1 - \alpha_t\)</span> fraction of her wealth goes into a safe asset with known return <span class="math inline">\(s\)</span>. Given returns <span class="math inline">\(r_t\)</span> and investment decisions <span class="math inline">\(\alpha_t\)</span>, her per-period wealth <span class="math inline">\(W_t\)</span> evolves as follows:</p>
+<p><span class="math display">\[W_{t+1} = (\alpha_t r_t + (1 - \alpha_t) s) W_t.\]</span></p>
+<p>Assume that <span class="math inline">\(s \geq 1\)</span> and <span class="math inline">\(r_t\)</span> are iid draws from a known distribution <span class="math inline">\(G\)</span>, with <span class="math inline">\(E[r_t] &gt; s\)</span> and <span class="math inline">\(P(r_t &lt; s) &gt; 0\)</span>: that is, the risky asset has higher average return, but is sometimes worse than the safe one. Our investor plans to retire in period <span class="math inline">\(T\)</span>. Her final utility is given by <span class="math inline">\(U(W_T)\)</span> for some known and weakly increasing function <span class="math inline">\(U\)</span>, and she invests to maximize her expected utility.</p>
+</div>
+<div id="being-contrarian" class="section level2">
+<h2>Being Contrarian</h2>
+<p>I start by presenting evidence <em>against</em> the conventional wisdom that investors should gradually shift from stocks to bonds.</p>
+<blockquote>
+<p><strong>Proposition.</strong> If investors maximize expected wealth <span class="math inline">\((U(x) = x)\)</span>, then it is optimal to select <span class="math inline">\(\alpha_t = 1\)</span> for all <span class="math inline">\(t\)</span>.</p>
+</blockquote>
+<p>Of course, most investors don’t aim to maximize expected wealth. Generally, money is assumed to have diminishing marginal returns. One standard assumption that captures this effect is to take <span class="math inline">\(U(x) = \log(x)\)</span>, implying that in order to increase the utility of two different investors by equal amounts, it is necessary to increase their wealth by equal <em>percentages</em>. In this case, it may make sense to invest in a mix of bonds and stocks, but the optimal mix does not depend on one’s wealth level or the time until retirement.</p>
+<blockquote>
+<p><strong>Proposition.</strong> If investors maximize the expected logarithm of wealth <span class="math inline">\((U(x) = \log(x))\)</span>, then there exists <span class="math inline">\(\alpha \in [0,1]\)</span> such that it is optimal to select <span class="math inline">\(\alpha_t = \alpha\)</span> for all <span class="math inline">\(t\)</span>.</p>
+</blockquote>
+<p>Of course, <span class="math inline">\(U(x) = \log(x)\)</span> is still one particular functional form. However, it turns out that for <em>any</em> utility function <span class="math inline">\(U\)</span>, committing to any particular trajectory of the stock-bond mix is no better than committing to the reverse.</p>
+<blockquote>
+<p><strong>Proposition.</strong> If investors follow a non-adaptive policy<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> <span class="math inline">\(\alpha = (\alpha_1, \ldots, \alpha_{T-1})\)</span>, then the distribution of <span class="math inline">\(W_T\)</span> is invariant to a permutation in <span class="math inline">\(\alpha\)</span>.</p>
+</blockquote>
+</div>
+<div id="section" class="section level1">
+<h1></h1>
+<p>To put this in plain English, let’s compare two simple strategies:</p>
+<p><strong>A.</strong> 25 years with 80% stocks, followed by 10 years with 80% bonds.</p>
+<p><strong>B.</strong> 10 years with 80% bonds, followed by 25 years with 80% stocks.</p>
+<p>While traditionalists will tell you that strategy A is less risky than B, this is not true! The probability of having less than <span class="math inline">\(D\)</span> dollars in savings upon retirement is identical under these strategies, for any <span class="math inline">\(D\)</span>.</p>
+<div id="adaptive-investment" class="section level2">
+<h2>Adaptive Investment</h2>
+<p>The preceding section establishes that among non-adaptive (“set it and forget it”) investment policies, there is no reason that the investment in stocks should decrease over time. Why, then, is this advice so prevalent?</p>
+<p>One important observation is that I can <em>adjust my behavior</em> based on how my portfolio is doing. For example, I might initially invest in stocks, and then check my portfolio’s value several years later. If the portfolio has done well, I will shift my money to bonds, to lock in my savings. If the portfolio has tanked, shifting it to bonds will still leave me too poor to retire, so I keep my money in stocks and hope for good returns.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<p>This suggests that the optimal strategy will start with risky assets, to resolve uncertainty early and be able to respond accordingly. We can test this intuition numerically using dynamic programming. The following code is for a two-period example.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> In this example, <em>on average</em>, the investor shifts money from stocks to bonds in the second period, but in some cases she actually does the reverse.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<pre class="r"><code>#Given vectors X,Y such that X is increasing and Y = g(X), returns a discretized function approximating g
+approximate = function(X,Y){
+    return(Vectorize(function(x){
+        i = max(c(which(X &lt; x),1))
+        return(Y[i]) #Could also do an average of Y[i] and Y[i+1], or linear interpolation  
+    }))
+}
+
+#Given current wealth w, return from safe asset s, value function V and return from risky asset (r,p), computes expected utility from any given portfolio mix alpha
+# p is a probability vector of the same length as r, and s and w are scalars.  
+expectedUtility = function(w,s,r,p,V){
+    return(Vectorize(function(alpha){
+         return(sum(V((alpha*r+(1-alpha)*s)*w)*p))
+    })) 
+}
+
+s = 1  #return from safe asset
+r = .6 + c(0:10)/10  #possible returns from risky asset
+p = rep(1/length(r),length(r)) #p[i] is probability of return r[i]
+
+
+#Utility of wealth function
+
+#U for plot 1
+U = Vectorize(function(x){return(1/(1+exp(-a*(x-b))))})   
+
+#Other possible utility functions
+#U = Vectorize(function(x){return(sqrt(x/b)/2)})
+#Target of 650
+#U = Vectorize(function(x){if(x&gt;=650) return(1); return(0)})
+
+a = 0.02; b= 650;
+N = 250
+W = b+6*rep(-N:N)/(a*N)   #Different levels of wealth, in a range relevant to U
+
+#Solving a two-period problem
+T = 2
+
+V = matrix(0,nrow = T+1,ncol=length(W)) #V[t+1,i] gives value of having W[i] dollars with t periods remaining
+Alpha = matrix(0,nrow = T+1,ncol=length(W)) #Alpha[t+1,i] gives optimal portfolio wit W[i] dollars and t periods remaining
+V[1,] = U(W)
+for(t in 1:T){
+    for(i in 1:length(W)){
+        EU = expectedUtility(W[i],s,r,p,approximate(W,V[t,]))(c(0:N)/N)  #Taking this approach because the optimize function works poorly for locally flat functions
+        V[t+1,i] = max(EU)
+        Alpha[t+1,i] = which(EU==max(EU))[1]/N
+        #soln = optimize(expectedUtility(W[i],s,r,p,approximate(W,V[t,])),interval=c(0,1),maximum=TRUE)
+        #Alpha[t+1,i] = soln$maximum  #What is optimal alpha, given t remaining periods and wealth level W[i]?
+        #V[t+1,i] = soln$objective #What is expected value, given t remaining periods and wealth level W[i]?
+    }
+}
+#Two period model -- compare alpha in first period to average alpha in second period
+AlphaSecondPdAvg = rep(0,length(W))  #AlphaSecondPdAvg[i] gives average alpha in second period, when investor has W[i] with two periods to go and behaves optimally
+alphafn = approximate(W,Alpha[2,])  #alphafn(w) says what alpha to choose given wealth of w and one period remaining
+for(i in 1:length(W)){
+    AlphaSecondPdAvg[i] = sum(alphafn((Alpha[3,i]*r+(1-Alpha[3,i])*s)*W[i])*p)  #Alpha[3,i] is optimal alpha, given wealth W[i] with two periods remaining
+}
+plot(NULL,xlab=&#39;Initial Wealth&#39;,xlim=c(W[1],W[length(W)]),ylab=&#39;Fraction Invested in Stocks&#39;,ylim=c(0,1))
+lines(W,predict(loess(Alpha[3,]~W,span=0.1)),col=&#39;black&#39;)
+lines(W,predict(loess(AlphaSecondPdAvg~W,span=0.1)),col=&#39;red&#39;)
+legend(x=W[N*1.3],y=0.9,legend = c(&#39;First Period&#39;,&#39;Second Period&#39;),col=c(&#39;black&#39;,&#39;red&#39;),lty=c(1,1))</code></pre>
+<p><img src="/Blog/InvestmentAdvice_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<p>So, does it make sense to gradually shift assets from stocks to bonds as retirement approaches?</p>
+<p>My answer is a qualified yes. An investor who actively manages her portfolio to prepare for retirement might reasonably expect to see the percentage of stocks decline over the years. The reason for this is that investing in stocks early <em>provides information</em> which can be used to make future decisions. In the model, the only decision is the mix of stocks and bonds, but in reality an investor may make other adjustments in response to early returns, such as changing consumption behavior or deciding to work for a few extra years.</p>
+<p>However, the shift to bonds only happens <em>on average</em>, and only makes sense if the investor is looking at her retirement account and adjusting her behavior accordingly. This suggests that sales pitch for Target Date Funds doesn’t really make sense – they cater to investors who want to set aside money and forget about it until retirement, but adopt a “glide” strategy that can’t easily be justified for these investors.</p>
+<p>As one <a href="https://www.investopedia.com/articles/retirement/07/life_cycle.asp#ixzz5NBlgpyaP%7D">Investopedia article</a> states,</p>
+<blockquote>
+<p>One retiree may have enough money on hand to invest strictly in bonds and other fixed-income securities. Another, requiring both growth and income, may need an equity component to keep the portfolio on track. A fund that meets the needs of one of these investors is unlikely to meet the needs of the other.</p>
+</blockquote>
+<p>Will I redirect my contributions away from the Target Date Fund? Not right away – it’s mostly stocks right now, as it likely should be. But don’t be surprised if I end up shifting the money more actively at some point in the future.</p>
+<p><strong>Questions for readers:</strong> Is your money in a TDF? Why do you think these are so common? And what is the best counter-argument to the ideas above?</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Quote taken from <a href="https://www.fool.com/retirement/2016/07/04/why-vanguard-target-date-funds-are-the-best-in-the.aspx">the Motley Fool</a>.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>I say that a policy is non-adaptive if <span class="math inline">\(\alpha_t\)</span> is independent of the vector of returns <span class="math inline">\({\bf r}\)</span>.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>This relates to my post on <a href="/Blog/nfl-2pt">2-point Conversions in the NFL</a>. There, the best strategy is to go for two after the first touchdown. If that succeeds, the team takes the “safe” strategy (an extra point) on its second touchdown. If the first two-point try fails, the team gambles on another two-pointer to try to catch up. Thus, in both settings, it pays to take the riskier decision first, but only if you are going to use the information that you get to inform future decisions!<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>No apologies for the limitations of my code, as writing non-robust code is one of the joys of being an academic.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>I would be curious establish conditions under which the investor expects to hold a higher percentage of stocks in the first period than the second. One tricky aspect is that while the value function is unique, the optimal policy may not be. There sometimes exist optimal strategies under which the expected fraction of the portfolio invested in stocks increases over time, but it is conceivable to me that there always <em>exists</em> an optimal strategy under which the investor expects to gradually shift to bonds.<a href="#fnref5">↩</a></p></li>
+</ol>
+</div>

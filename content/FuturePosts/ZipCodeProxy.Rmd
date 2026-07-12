@@ -1,0 +1,69 @@
+---
+title: 'Using Zip Code as a Proxy for Race and Income'
+date: "2024-10-17"
+author: Nick Arnosti
+draft: true
+---
+
+
+In many empirical papers, we have data on a set of users, and want to break outcomes down by variables such as race and income. But what if the race and/or income of users is not in our data set? A common approach is to use geographic information such as a zip code, and replace the user with the "average" income or race from that geographic area.
+
+The code below is my start thinking about this practice. There are so many obvious ways it could fail; when does it succeed?
+
+The context in which I started thinking about this was reading "Are Buying Frenzies Equitable? Disributional Effects of Congested Online Markets" by Jonathan Hughes. There, he observed who successfully got permits through two channels: permit lotteries and a FCFS reservation "frenzy". He has data on all applicants for the lottery, but only for successful applicants in the frenzy. He has zip code data for each applicant, but not income data.
+
+He uses the zip code trick to try to estimate how avg income of people who are successful through each channel compare. He claims that successful buying frenzy applicants are wealthier than successful lottery applicants. The effect is statistically significant, but fairly modest. I think it's possible that the zip code trick causes systematic underestimates of the difference.
+
+I think the following are true, but haven't thought very carefully:
+
+* If Pi is constant, his estimates are correct
+* If Pi depends only on income and is increasing in income, he consistently underestimates income of successful applicants?
+* If each zip code has identical demographics, and success probability depends only on income and not zip code, then his approach just predicts avg income in population (no matter what Pi is)
+
+Together, the first and second bullet points would suggest that he gets good estimates for income of lottery winners, but underestimates income of scramble winners. Thus effect may be much larger than his estimates suggest.
+
+In general, I want to focus on setting with one type of permit (i.e. one entry date), since I am not an expert on discrete choice estimation.
+
+In this setting, it seems reasonable to assume that while interest might differ by both geography and income, success probability should not depend on geography (zip code) -- only income. However, in other applications, where zip is used as a proxy for race, seems very plausible that true outcomes depend on both zip and race.
+
+```
+{r}
+
+#Population[z,l] indicates number of people from zip code z, income level l
+#Interest[z,l] indicates level of interest among people from zip code z, income level l
+#Pi[z,l] indicates chance of "success" for people of zip code z, income level l
+#Income[l] = income of people at level l
+true_avg_successful_income = function(Population,Interest,Pi,Income){
+	successful_applicant_income = apply(Population*Interest*Pi,2,sum) #Number of successful applicants by income
+	avg_successful_income = sum(successful_applicant_income*Income)/sum(successful_applicant_income) #Avg income of successful applicants
+	return(avg_successful_income)
+}
+
+estimate_avg_successful_income = function(Population,Interest,Pi,Income){
+	avg_income_by_zip = Population%*%Income/apply(Population,1,sum) #Gives average income of each zip code (observed); do NOT control for interest which can cause bias
+	successful_applicant_zip = apply(Population*Interest*Pi,1,sum) #Number of successful applicants by zip code (observed)
+	avg_successful_estimated_income = sum(successful_applicant_zip*avg_income_by_zip)/sum(successful_applicant_zip) #Zip-code based estimate of average income of successful applicants
+	return(avg_successful_estimated_income)
+}
+
+
+#If Pi is increasing in income, then our estimate is below truth
+#We don't observe individual income, don't know Pi. We do know Q and I
+
+n_zip_codes = 2
+n_income_levels = 3
+Income = 1:n_income_levels 
+PiR = matrix(c(1,1,2,2,3,3)/4,n_zip_codes,n_income_levels) #Reservation: high income more likely to win 
+PiL = matrix(1/2,n_zip_codes,n_income_levels) #Lottery: all equally likely to win
+Pop = matrix(1,n_zip_codes,n_income_levels) #No income discrepancy by zip code
+#Pop = matrix(c(3,1,2,2,1,3),n_zip_codes,n_income_levels) #Zip code 2 is significantly more affluent
+#Pop = matrix(c(1,0,0,0,0,1),n_zip_codes,n_income_levels) #Zip code is a perfect proxy for income
+Interest = matrix(1,n_zip_codes,n_income_levels) #Everyone is interested
+Interest = matrix(c(1,1,2,2,3,3)/4,n_zip_codes,n_income_levels) #Interest is higher among more affluent people
+
+estimate_avg_successful_income(Pop,Interest,PiL,Income)
+true_avg_successful_income(Pop,Interest,PiL,Income)
+
+estimate_avg_successful_income(Pop,Interest,PiR,Income)
+true_avg_successful_income(Pop,Interest,PiR,Income) 
+```

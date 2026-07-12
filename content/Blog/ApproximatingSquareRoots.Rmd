@@ -1,0 +1,55 @@
+---
+title: 'A Simple Method to Approximate Square Roots'
+date: '2025-09-16'
+author: Nick Arnosti
+---
+
+
+The number $\sqrt{2}$ is famously irrational: it cannot be expressed as a fraction (ratio of two integers). However, we can use fractions to *approximate* it.
+
+Here is one simple algorithm to do so, which uses only elementary operations. Let our initial estimate be $x_0 = 1$. From there, we generate the next estimate using the following procedure:
+
+* Add one to the current estimate.
+* Invert the result.
+* Add one again.
+
+More algebraically, we define $x_{i+1} = 1 + 1/(1+x_{i})$. Then our estimates are as follows...
+
+| $x_0$ | $x_1$ | $x_2$ | $x_3$ | $x_4$ | $x_5$ |
+|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+| 1     | 3/2   | 7/5   | 17/12 | 41/29 | 99/70 | 
+| 1     | 1.5   | 1.4   | 1.4166 | 1.4138 | 1.41428 | 
+
+The decimal expansion of $\sqrt{2}$ is $1.41421...$, so this is pretty good! The estimate $x_2$ only misses by 0.014 (1\%), and $x_4$ misses by .0004 (0.03\%)! Furthermore, every even iteration under-estimates the true value, and every odd iteration is an over-estimate. This means that even if we didn't know the true value, we could know approximately how close we were by looking at the difference between consecutive iterations.
+
+# Why does it work?
+
+In short, this works because $\sqrt{2}$ is the positive solution $x$ to the equation $$x = 1 + \frac{1}{1+x}.$$ This can be easily verified by multiplying both sides by $x+1$ and rearranging this equation to get $x^2 = 2$. If we define the function $f_2(x) = 1 + \frac{1}{1+x}$, then $\sqrt{2}$ is a fixed point of $f_2(x)$ (that is, it solves $f_2(x) = x$). 
+
+**Finding a Fixed Point.** How do we find (or approximate) a fixed point of $f_2$? The process above is to repeatedly apply $f_2$ starting from an initial guess $x_0$. But why does this work? It doesn't work for just any function. For example, take $g(x) = x^2 + 1/4$, which has a unique fixed point $x = 1/2$. However, if I start with any initial guess $x_0 \ne 1/2$, then my iterates will get bigger and bigger forever, and tend to infinity. For another example, take $h(x) = 1/x$. This has a unique positive fixed point $x = 1$, but if I start with any other guess $x_0 \ne 1$, I just oscillate forever: if $x_0 = 2$, then $x_1 = h(x_0) = 1/2$, $x_2 = h(x_1) = 2$, $x_3 = h(x_2) = 1/2$, and so on.
+
+The process of repeatedly applying $f_2$ works for a couple of reasons. First, because $f_2$ is decreasing in $x$, if $x < \sqrt{2}$, then $f_2(x) > \sqrt{2}$ (and vice versa). This explains the pattern noticed above, where iterates alternated between over-estimating and under-estimating the true value. However, this is not enough to guarantee convergence to the correct value, as the example with $h(x) = 1/x$ above shows.
+
+Second, note that $x_{i+2} = f_2(f_2(x_i)) = \frac{4 + 3 x_i}{3 + 2x_i}$. This means that 
+\[ x_{i+2} - x_i = \frac{2(2-x_i^2)}{3 + 2x_i}.\]
+The sign of the expression on the right depends on whether $x_i$ is bigger or less than $\sqrt{2}$. If $x_i$ is less than $\sqrt{2}$, then this says that $x_{i+2}$ will be bigger than $x_i$. We already know (from the alternating pattern noted above) that $x_{i+2}$ will still be less than $\sqrt{2}$, so it has gotten closer to our true value. The same logic applies to the other case: if $x_i$ is bigger than $\sqrt{2}$, then $x_{i+2}$ will be a smaller value that is still bigger than $\sqrt{2}$. This ensures that if we just look at the even iterates, they converge to a fixed point, and if we look at the odd iterates, they also converge to a fixed point. Since the function $f_2$ has only one positive fixed point, the even and odd iterates must converge to the same thing (get closer and closer together). Note that this holds for *any* positive initial guess $x_0$ (we didn't need $x_0 = 1$). Furthermore, the convergence is fast even if our guess is bad: from any $x_0$, we have $x_1 \in (1,2)$, $x_2 \in (4/3,3/2)$, and $x_3 \in (7/5,10/7) \approx (1.4,1.428)$.
+
+# General square roots
+
+This still seems a bit like black magic. Where did the function $f_2(x)$ come from, and how could we do this for other square roots?
+
+Suppose that we want to calculate $\sqrt{n}$, which we know to be in the interval $(k,k+1)$. Then we can write
+\begin{align*}
+\sqrt{n} & = k + (\sqrt{n} - k) \\
+ & = k + (\sqrt{n} - k) \frac{\sqrt{n} + k}{\sqrt{n} + k} \\
+ & = k + \frac{n-k^2}{k + \sqrt{n}}.
+\end{align*}
+In other words, if we define $f_n(x) = k + \frac{n-k^2}{k + x}$, where $k = \lfloor \sqrt{n} \rfloor$, then $\sqrt{n}$ is the positive solution to $f_n(x) = x$. We can approximate $\sqrt{n}$ by defining $x_0 = k$, and $x_{i+1} = f_n(x_i)$. Trying this with $n = 7$, we get $f_7(x) = 2 + 3/(2+x)$, which results in the following approximations:
+
+| $x_0$ | $x_1$  | $x_2$    | $x_3$   | $x_4$    | 
+|:-----:|:-----:|:-----:|:-----:|:-----:|
+| 2     | 11/4   | 50/19    | 233/88  | 1082/409 | 
+| 2     | 2.75    | 2.6315   | 2.6477 | 2.6454   |
+
+Compare this to the decimal expansion $\sqrt{7} = 2.64575...$ pretty good!
+

@@ -1,0 +1,162 @@
+---
+title: 'Annotated Reading List: Diversity and Affirmative Action'
+date: "2024-03-15"
+author: Nick Arnosti
+tags:
+draft: true
+---
+
+
+In recent years, there has been an explosion of academic work on matching with diversity and affirmative action considerations. While some of this work has been purely theoretical, much of it has been directly inspired by applications where institutions want to boost outcomes for particular groups of applicants, or ensure adequate representation of members of these groups. This body of literature has seen significant contributions from computer scientists, economists, and operations researchers, making it ideally suited to the EC audience.
+
+To an outsider, it is challenging to get a comprehensive view of this literature. Many of the papers do not build off of each other, but rather use different terminology, or slightly different definitions. It can be difficult to understand the relationship between papers whose topics seem similar. 
+
+One goal of these reading list is to provide a curated introduction to the topic, using language that -- while it does not always align with the language used in the papers themselves -- is at least general enough to apply to many different papers. For example, affirmative action policies can be classified into two categories: 'quotas', in which an applicant who is, say, a woman and a minority counts separately towards both groups, and 'reserves', in which this applicant could take a spot reserved for a woman or a spot reserved for a minority, but not both.
+
+The first five papers (really, four papers and a blog post) highlighted below are chosen because they illustrate real-world settings in which both quotas and reserves are used. They can be used to teach key concepts such as matroids and greedy algorithms, and cover the most common reserve algorithms, 'minimum guarantee' and 'over and above.' These are all topics that I cover in my masters-level course on allocating public resources.
+
+Future iterations of this reading list could go into more depth on theoretical underpinnings. A list of additional relevant papers appears at the end of the document.
+
+
+1. *Immigration Lottery Design: Engineered and Coincidental Consequences of H-1B Reforms* (Pathak, Rees-Jones, Sonmez). NBER 2020.
+
+> This paper studies the simplest setting of interest for reserves (a single reserve category), using a real-world application (the allocation of H1B visas). As it documents, although the law itself has not changed since 2005, the law has been implemented using four different selection algorithms (which lead to systematically different outcomes). Two of these ("exemptions first"/"minimum guarantee" and "over and above") arise in many other applications.
+
+2. *Reserve Design: Unintended Consequences and the Demise of Boston’s Walk Zones* (Dur, Kominers, Pathak, Sonmez). JPE 2018.
+
+> This paper gives a very tangible application where the distinction between minimum guarantee and over and above reserves was important but overlooked. In Boston, a compromise to offer students from within the walk zone priority for 50% of seats at each school was found to produce similar outcomes as ignoring walk zones entirely! This was discovered after the policy had been in place for approximately a decade. After the discovery, the policy was abandoned. 
+
+3. *Affirmative Action in India via Vertical, Horizontal, and Overlapping Reservations* (Sonmez and Yenmez). Econometrica 2022.
+
+> The allocation of Indian Civil Service positions incorporates a longstanding, widespread, and highly formalized affirmative action programs. I include this paper because (i) it is an important application, and (ii) it addresses the simultaneous presence of 'over and above' and 'minimum guarantee' reserves. Reservations for different groups have different statuses. 'Vertical' reservations for Scheduled Tribes, Scheduled Castes, and Other Backwards Classes are intended to operate on an 'over and above' basis, while 'Horizontal' reservations for people with disabilities and women are intended to operate as 'minimum guarantees.' Confusion about how to implement this intent algorithmically has resulted in many lawsuits heard by the Supreme Court of India. This paper shows how to properly implement horizontal and vertical reservations side-by-side. It also provides a novel algorithm for the case of overlapping horizontal reservations.
+
+4. *The Diversity Visa Lottery* (Arnosti). Blog Post -- TBD.
+
+> This is a simple yet important illustration of selection with upper quotas. Each year, 50,000 applicants receive visas through the Diversity Visa lottery. In this lottery, no more than 7% of all visas can go to applicants from a single country, and there are also upper quotas on the number that go to applicants from particular regions. These categories are laminar, implying that a greedy algorithm identifies an optimal feasible selection.
+
+5. *Matching for the Israeli “Mechinot” Gap-Year Programs: Handling Rich Diversity Requirements* (Gonczarowski, Kovalio, Nisan, and Romm). EC 2019
+
+> This paper gives a clear motivating application in which both lower and upper quotas are used. Although selection with quotas only has a "nice" solution when categories are laminar, that does not apply in this situation. The paper describes the algorithm used in practice, the reasons for its use, and its shortcomings.
+
+6. *Explainable Affirmative Action* (Arnosti, Bonet, Sethuraman). Working Paper.
+
+> This paper argues that many algorithms for selection with affirmative action are poorly understood and lead to unintended consequences. It presents axioms for 'explainable' selection rules which preclude 'over and above' reserves, but permit 'minimum guarantee' reserves. It shows that many existing affirmative action policies are equivalent to defining feasibility constraints and then applying a greedy selection rule.
+
+7. *School choice: Impossibilities for Affirmative Action* (Kojima). GEB 2012.
+
+> This paper provides negative examples illustrating how policies intended to help one group can easily backfire -- especially in environments with multiple institutions.
+
+**Other Applications**
+
+
+
+* *Fair algorithms for selecting citizens’ assemblies* (Flanigan, Golz, Gupta, Hennig, Procaccia). Nature 2021.
+* Electoral gender quotas. *Gender Quotas Database* [https://www.idea.int/data-tools/data/gender-quotas-database](https://www.idea.int/data-tools/data/gender-quotas-database)
+* Affordable Housing Allocation. *Do “Community Preference” Policies Violate the Fair Housing Act? (Part 3)* (Arnosti). Blog Post, 2022
+* Fringe Festival Selection. *The Minnesota Fringe Festival* (Arnosti). Blog Post, 2021.
+* Vaccine Scheduling. *A Better Way to Schedule Vaccinations* (Arnosti). Blog Post, 2021.
+* *College Admission with Multidimensional Privileges: The Brazilian Affirmative Action Case* (Aygun and Bo). AEJ: Micro 2021.
+* Chilean Constitutional Assembly. *Apportionment with Parity Constraints* (Mathieu and Verdugo). Mathematical Programming 2022.
+
+**Theory of Matching with Lower Quotas**
+
+* *Classified Stable Matching* (Huang). SODA 2010.
+* *A Matroid Approach to Stable Matchings with Lower Quotas* (Fleiner and Kamiyama) MOR 2016.
+* *A Generalized Polymatroid Approach to Stable Matchings with Lower Quotas* (Yokoi). MOR 2017.
+
+**Multi-Priority Systems**
+
+* *Fair Allocation of Vaccines, Ventilators and Antiviral Treatments: Leaving No Ethical Value Behind in Health Care Rationing* (Pathak, Sonmez, Unver, Yenmez). Management Science, Forthcoming.
+* *School Choice in Chile* (Correa, Epstein, Epstein, Escobar, Rios, Aramayo, Bahamondes, Bonet, Castillo, Cristi, Epstein, Subiabre). OR 2021.
+* *Matching with slot-specific priorities: Theory* (Kominers and Sonmez). TE 2016.
+* *Processing Reserves Simultaneously* (Delacretaz). EC 2021.
+
+
+**Other Papers (Not Comprehensive)**
+
+
+* *Effective affirmative action in school choice* (Hafalir, Yenmez, Yildirim). TE 2013.
+* *Design on Matroids* (Hafalir, Kojima, Yenmez, Yokote). Working Paper.
+* *Adaptive Priority Mechanisms* (Celebi and Flynn). Working Paper.
+* *How to De-Reserve Reserves: Admissions to Technical Colleges in India* (Aygun and Turhan). Management Science 2022.
+* *Reversing Reserves* (Pathak, Rees-Jones, Sonmez). Management Science 2023. 
+* *Market Design for Distributional Objectives in Allocation Problems: An Axiomatic Approach* (Abdulkadiroglu and Grigoryan). Working Paper.
+* *Choice with Affirmative Action* (Dogan and Yildiz). Management Science 2022.
+* *Centralized Admissions for Engineering Colleges in India* (Baswana, Chakrabarti, Chandran, Kanoria, Patange). Informs Applied Analytics 2019.
+
+<!--
+* Other Fleiner papers?
+* Lots by Kojima and Co-Authors
+-->
+
+
+
+
+
+Currently, we reference work by Huang [2010], Fleiner and Kamiyama [2016], Yokoi [2017], and Gonczarowski et al. [2019]. Of these, only Gonczarowski et al. [2019] comes from the economics literature. We plan to expand our discussion of the relationship to this work.
+
+Kamada and Kojima have a number of results on matching with constraints. In our revision, we plan to go through their papers to find results related to Proposition 5 (but if the reviewer knows of a paper by these authors that is especially related, we would be happy to be pointed to it).
+
+Sonmez and Yenmez discussed "nested" (laminar/hierarchical) structure in an earlier version of their paper on Affirmative Action in India, but since the published version focuses on the "one-to-one" convention (what we call reserves), I believe it no longer discusses this condition.
+
+
+1. Affirmative action in India: Restricted strategy space, complex constraints, and direct mechanism design by Aygün and Turhan (2023) (currently R&R in Journal of Economic Theory). Link:https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4592036
+2. Designing Direct Matching Mechanisms for India with Comprehensive Affirmative Action by Aygün and Turhan (2020). Link: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3582669
+3. Design on Matroids: Diversity vs. Meritocracy by Hafalir, Kojima, Yenmez, and Yokote (2022). Link:https://arxiv.org/pdf/2301.00237
+4. Informed Neutrality in Minimalist Market Design: A Case Study on a Constitutional Crisis in India (Sonmez and Unver) Link:https://arxiv.org/html/2210.10166v4
+5. Forward-looking recruitment by Gezer (2025). Link https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5137177
+
+6. Huang (2010)
+7. Old versions of Sonmez-Yenmez
+8. Gonczarowski Theorem 2: stable and strategyproof mechanism exists if max quota categories are laminar, and min quota categories are union of pairwise disjoint chains. (But I suspect result should be true just for laminar categories.) Not clear how "stable and strategyproof" corresponds to "exists priority dominant selection" They use language of "maximum quotas" and "minimum targets"
+9. Aygun-Turhan 2026
+
+
+Paper 1 says it subsumes paper 2.
+
+Kamada and Kojima (2018) also reference hierarchies (necessary and sufficient). But their goals are different. In particular, they assume doctors care which type of position is allocated, and look for mechanism that is stable and strategy-proof. We assume applicant outcomes are dichotomous (selected or not selected), and focus on existence of a priority dominant selection.
+
+I think proper mapping is that our individuals are sort of like their hospital positions. Quotas are on maximum number of certain positions that can be filled. 
+
+Aygun-Turhan (2023) JET -- their "merit-based domination" is our "priority domination". Their Section 3.1 uses "one to all" convention. Their Theorem 2 doesn't state that it assumes a hierarchy, but I think it does. Then the result is that there is only one undominated feasible selection (i.e. this selection actually dominates every other). So they are claiming sufficiency (not necessity).
+
+Paper 3: Hafalir eta al (2022) (Diversity vs Meritocracy) call priority domination "merit domination". Main result: Ordinal Concavity -> their rule maximizes diversity and priority dominates. Not obvious how to define "diversity index" f. One natural choice (1 if feasible, 0 otherwise) is not ordinally concave. Suspect that if we define f = - (total # max quota violations), then it will work. But essentially, one needs to explicitly show that their condition is met.
+
+Paper 4: doesn't seem related to Proposition 5. More about reserves (one to one).
+
+Paper 5: universal ranking of diplomats, different capabilities/traits. But each diplomat can serve only one mission at a time, so not really a quota problem. More of a reserve problem. Plus, focus is very different: they are doing multi-period matching, fairness across time horizon, etc.
+
+Paper 6: Huang mentions importance of "laminar families". Assumes upper quotas but no lower quotas. I haven't looked in detail at results.
+
+Aygun-Turhan (2023) JET talk about Sonmez-Yenmez, who introduce "meritorious horizontal choice rule". Basically, they are pointing out that priority dominant selection exists in soft maximum matching with reserves.
+
+Aygun Turhan 2026: also use term "merit dominates"
+
+Their Theorem 1 says undominated (very similar to 2023 JET)
+
+We assume that individuals do not have preferences over horizontal types, since there is no evidence that they care about the horizontal types under which they are admitted. All discussions of reservation policy in India focus on vertical reservations. Perhaps more importantly, the matching outcomes do not specify the horizontal categories under which individuals are assigned.
+
+
+Aziz (2019) uses language of "lower quotas". Says "hey, finding feasible is hard, so let's develop algorithm that treats them as soft, and may not find feasible". Does not say anything about laminar/nested.
+
+Aziz Gaspers Sun (2020) also refer to minimum quotas.
+
+Papers on Sortition/Citizen's Assemblies also assume quotas (and Flanigan Golz et al call them "upper and lower quotas")
+
+
+Ehlers et al use quotas to refer to maximums (suggest treating minimums as soft)
+
+Other papers:
+
+Biro et al (2010): refer to "lower and common quotas"
+
+Fragiadakis, Iwasaki, Troyan, Ueda, Yokoo (2015/2016) also use language of "minimum quotas".
+
+Hamada et al. (2017), “Strategy-proof school choice mechanisms with minimum quotas and initial endowments.”
+This is again school-level minimum quotas
+
+In these cases, the only minimum quota is on the full set (i.e. total number of students).
+
+
+Tomoeda (2018) talks about type-specific minimum quotas, but each student has a single type.
+

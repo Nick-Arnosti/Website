@@ -1,0 +1,69 @@
+---
+title: 'NFL Strategy: Going for 2'
+date: '2019-11-18'
+author: Nick Arnosti
+tags:
+  Information Acquisition
+categories:
+  Sports
+---
+
+
+
+<div id="setting-the-scene" class="section level2">
+<h2>Setting the Scene</h2>
+<p>Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? This was the decision that the <a href="https://www.catscratchreader.com/2019/11/11/20959145/nfl-week-10-panthers-16-packers-24-ron-rivera-made-the-right-decision-to-go-for-two-in-4th-quarter">Panthers faced</a> against the Packers earlier this year.</p>
+<p>Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two. <a href="http://www.espn.com/blog/nflnation/post/_/id/283846/doug-pederson-does-it-again-why-two-point-decision-was-easy-call">This ESPN article</a> does a good job of working through an example. I will attempt to summarize and simplify.</p>
+<p>Let’s start by assuming that our opponents will not score again in regulation, and that we will score another touchdown. This is really the only case where our decision matters: if our opponents score again (or if we fail to score), then we will lose the game regardless of our two-point strategy.</p>
+</div>
+<div id="possible-strategies" class="section level2">
+<h2>Possible Strategies</h2>
+<p>Let us now analyze possibile strategies. The <strong>Traditional</strong> approach is to kick two extra points, and go to overtime. A more <strong>Aggressive</strong> approach is to go for two on the second touchdown, thereby winning or losing the game on a single play. When coaches make this decision, they frequently get second-guessed. As we will see, both of these strategies are generally inferior to the <strong>Analytics</strong> approach, which goes for 2 after the first touchdown, and then either goes for 2 again (if the first conversion failed) or kicks an extra point (if the first conversion succeeded).</p>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p>Let’s study the problem using a simple model. Suppose that each two-point conversion succeeds independently with probability <em>TwoPtSuccess</em>, while extra points succeed with probability <em>XPSuccess</em>. If you get to overtime, your chance of winning is <em>OTWin</em>.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>To gain intuition, let’s take simple numbers: two point conversions succeed half of the time, extra points always succeed, and overtime is a coin flip. Then the Traditional approach sends the game to overtime, giving a 50% win probability. The Aggressive approach decides the game in regulation, but also gives a 50% probability of winning (since you win if and only if the final conversion succeeds).</p>
+<p>Under the Analytics approach, you win whenever your first two point conversion succeeds (you kick the extra point on your second TD and win by one point). This already gives a 50% chance of winning (like the other strategies), but it gets better! Unlike the Aggressive strategy, even if your first two point conversion fails, you have hope: you can go for two on the second touchdown, and if you succeed, you head to overtime. As a result, your overall probability of winning under this strategy is 62.5%.</p>
+<p>What’s going on here? The key is that going for two on the first touchdown gives information that you can use to make a more informed decision on the second touchdown. In technical terms, the Analytics approach is <em>adaptive</em> (adjusts to circumstances), whereas the Traditional and Aggressive approaches are non-adaptive (they make each decision in advance). In the simple example above, <em>any</em> non-adaptive strategy results in a 50% win probability, which is notably lower than the 62.5% offered by the Analytics approach.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<p>Of course, you might have especially clever two point plays, or a shaky kicker, or be facing an especially strong defense. These factors change the numbers above, but not the underlying idea: the advantage of the Analytics strategy is large enough that it persists for most “reasonable” parameter values. For example, the code below implies that if you have a 45% chance of making each 2-point conversion, the Analytics approach still gives a 57% chance of winning. This approach continues to be the best option even if your chance of converting is only 40%!<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p>
+<pre class="r"><code>#Win Probability of Traditional Approach
+WinProbTraditional = function(XPSuccess, TwoPtSuccess, OTWin){
+  return(XPSuccess^2*OTWin)
+}
+
+#Win Probability of Aggressive Approach
+WinProbAggressive = function(XPSuccess, TwoPtSuccess, OTWin){
+  return(XPSuccess*TwoPtSuccess + (1-XPSuccess)*TwoPtSuccess*OTWin)
+}
+
+#Win Probability of Aggressive Approach
+WinProbAnalytics = function(XPSuccess, TwoPtSuccess, OTWin){
+  return(TwoPtSuccess*XPSuccess + TwoPtSuccess*(1-XPSuccess)*OTWin + (1-TwoPtSuccess)*TwoPtSuccess*OTWin)
+}
+
+
+TwoPtSuccess = 0.45
+XPSuccess = 1
+OTWin = 0.5
+rbind(c(&quot;Traditional&quot;,&quot;Aggressive&quot;,&quot;Analytics&quot;),
+      c(WinProbTraditional(XPSuccess,TwoPtSuccess,OTWin),
+        WinProbAggressive(XPSuccess,TwoPtSuccess,OTWin),
+        WinProbAnalytics(XPSuccess,TwoPtSuccess,OTWin)))</code></pre>
+<pre><code>##      [,1]          [,2]         [,3]       
+## [1,] &quot;Traditional&quot; &quot;Aggressive&quot; &quot;Analytics&quot;
+## [2,] &quot;0.5&quot;         &quot;0.45&quot;       &quot;0.57375&quot;</code></pre>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>The benefit of going for two in this situation comes from the fact that it gives you information early, which can be used to make better decisions. Conditioned on the event that you manage to score again, this strategy might increase your chance of winning by 10% or so.</p>
+<p>Does this logic imply that you should go for two in the first quarter? Not really, for several reasons. First, it’s not clear how to use this information: late in the game, you know how many points you will need to win, but the same isn’t true at the beginning. Second, you’re also giving information to your opponent. In the example above, they couldn’t really use this information, but if you open the game with a successful two point conversion, they might well try to do the same after their first touchdown.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>For simplicity, we’ll ignore the possibility of a tie in overtime.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>For an example of the value of adaptivity in a different context, see my post on <a href="/Blog/investmentadvice">Target Date Funds</a>.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Taking missed extra points into account only makes the Analytics approach look better.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>

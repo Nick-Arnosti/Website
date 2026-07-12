@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exact Weighted Lottery | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Exact Weighted Lottery</b></span></h1>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2025/12/20</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>In my <a href="https://nickarnosti.com/blog/westernstates/">previous post</a>, I described the lottery for the Western States Endurance Run, which uses a weighted lottery to allocate <span class="math inline">\(m\)</span> identical prizes among <span class="math inline">\(n\)</span> participants. Each participant <span class="math inline">\(i\)</span> has <span class="math inline">\(t_i\)</span> tickets, and tickets are drawn in a uniformly random order until <span class="math inline">\(m\)</span> distinct participants have been selected.</p>
+<p>The point of the previous post was that it’s not so easy to calculate the probability of selection for a given applicant (even if you know all of the <span class="math inline">\(t_i\)</span> and are good at math). I came up with some exact methods that are intractable with a large number of contestants and prizes, and some approximations.</p>
+<p>The thought that inspired this post is as follows:</p>
+<blockquote>
+<p>Instead of fixing a procedure and analyzing the resulting selection probabilities, we could fix desired <em>selection probabilities</em> and design a procedure to achieve them.</p>
+</blockquote>
+<p>A good way to visualize this is to imagine that we are dividing our <span class="math inline">\(m\)</span> prizes among <span class="math inline">\(n\)</span> applicants. We can divide our <span class="math inline">\(m\)</span> prizes into “slices” and give each applicant as big or small of a slice as we wish. To simplify exposition, assume that the size of each slice is a rational number. In other words, we can divide each prize into <span class="math inline">\(k\)</span> equal-sized pieces (called “tickets” below), and then allocate the resulting <span class="math inline">\(k\cdot m\)</span> pieces arbitrarily among applicants.</p>
+<p>Let’s make this concrete. Suppose that there are <span class="math inline">\(m = 2\)</span> prizes, and <span class="math inline">\(n = 4\)</span> applicants, and <span class="math inline">\(k = 10\)</span>. We want to select applicant <span class="math inline">\(A\)</span> with probability <span class="math inline">\(0.2\)</span>, applicant <span class="math inline">\(B\)</span> with probability <span class="math inline">\(0.3\)</span>, applicant <span class="math inline">\(C\)</span> with probability <span class="math inline">\(0.6\)</span>, and applicant <span class="math inline">\(D\)</span> with probability <span class="math inline">\(0.9\)</span>. How could we do this?</p>
+<p>If you’re mathematically inclined and have never thought about this before, I encourage you to pause here. How would you do this? How would you program a computer to do this? The answer was not obvious to me.</p>
+<p>One approach is to explicitly define a probability distribution over possible outcomes (sets of <span class="math inline">\(m\)</span> applicants) with the right marginals. For example, we could select <span class="math inline">\(\{A,B\}\)</span> with probability <span class="math inline">\(0.1\)</span>, <span class="math inline">\(\{A,D\}\)</span> with probability <span class="math inline">\(0.1\)</span>, <span class="math inline">\(\{B,D\}\)</span> with probability <span class="math inline">\(0.2\)</span> and <span class="math inline">\(\{C,D\}\)</span> with probability <span class="math inline">\(0.6\)</span>. These outcomes are disjoint, so it is easy to write code to sample one of them. It’s also easy to verify that for every individual applicant, their selection probability is correct. However, there are <span class="math inline">\({n \choose m}\)</span> possible outcomes, so it’s not obvious how to come up with an appropriate distribution over these outcomes for larger instances.</p>
+<div id="a-clever-sampling-procedure" class="section level1">
+<h1>A Clever Sampling Procedure</h1>
+<p>Here’s a procedure that samples from an appropriate distribution over outcomes (without explicitly enumerating this distribution). I didn’t come up with it myself – ChatGPT told me about it (and of course, ChatGPT is just copying from previous literature). However, the exact description is my own, and is intended to be accessible to non-mathematicians.</p>
+<p>To start, give each applicant an appropriate number of lottery tickets. In our concrete example above, we have a total of <span class="math inline">\(k\cdot m = 20\)</span> tickets, each representing a <span class="math inline">\(1/10\)</span> chance of being selected. Two of these go to A, three to B, six to C and 9 to D. Our goal is to have each applicant’s chance of being selected be exactly proportional to the number of tickets that they receive initially.</p>
+<p>From here, procede with a series of “faceoffs” between two applicants. In each faceoff, either one applicant will be eliminated, or one will be selected for sure (or both). The rules of a faceoff are as follows.</p>
+<ol style="list-style-type: decimal">
+<li><p>If the sum of the applicants’ probabilities is less than or equal to <span class="math inline">\(1\)</span> (combined number of tickets is less than or equal to <span class="math inline">\(k\)</span>), the faceoff results in elimination. The applicants put all of their tickets into a bowl, and one is drawn. The winner keeps all tickets from both applicants; the loser is eliminated.</p></li>
+<li><p>If the sum of the applicants’ probabilities is greater than <span class="math inline">\(1\)</span> (combined number of tickets is greater than <span class="math inline">\(k\)</span>), the faceoff results in one applicant being selected. Calculate the “excess tickets” <span class="math inline">\(t_i + t_j - k\)</span>. Each applicant sets aside that many tickets. All of their remaining tickets are placed into a bowl. One ticket is drawn, and the winner receives all tickets from the bowl. When combined with tickets set aside, they now have <span class="math inline">\(k\)</span> tickets, which represent being selected for sure. The loser keeps only the tickets that they set aside.</p></li>
+</ol>
+<p>That’s a bit abstract, so let’s apply this procedure to our example.</p>
+<ul>
+<li>First, <span class="math inline">\(A\)</span> faces off with <span class="math inline">\(B\)</span>. In total, they have only 5 tickets (representing a combined 50% probability of being selected), so this is an elimination round. All five tickets are placed into a bowl. Suppose that <span class="math inline">\(A\)</span>’s ticket is drawn. <span class="math inline">\(A\)</span> keeps all <span class="math inline">\(5\)</span> tickets, and <span class="math inline">\(B\)</span> is eliminated.</li>
+<li>Now <span class="math inline">\(A\)</span> faces off with <span class="math inline">\(C\)</span>. Since <span class="math inline">\(A\)</span> now has 5 tickets, they have 11 in total, so this is a selection round. There is one excess ticket, so <em>each candidate</em> sets aside a ticket. The remaining 9 tickets go into the bowl (4 from <span class="math inline">\(A\)</span> and 5 from <span class="math inline">\(C\)</span>). Suppose that a ticket from <span class="math inline">\(A\)</span> is drawn: <span class="math inline">\(A\)</span> keeps the 9 tickets in the bowl, to go with the one they set aside. They have been selected! <span class="math inline">\(C\)</span> still has the one ticket they set aside.</li>
+<li>Finally, <span class="math inline">\(C\)</span> faces off with <span class="math inline">\(D\)</span>. They have exactly 10 tickets between them (1 for <span class="math inline">\(C\)</span> and 9 for <span class="math inline">\(D\)</span>), so this functions both as a selection and an elimination round. All 10 tickets are placed in the bowl. Suppose that one of <span class="math inline">\(D\)</span>’s tickets is drawn. <span class="math inline">\(D\)</span> keeps the 10 tickets and has been selected; <span class="math inline">\(C\)</span> is eliminated.</li>
+</ul>
+</div>
+<div id="why-does-this-work" class="section level1">
+<h1>Why Does This Work?</h1>
+<p>A natural question is, why does this procedure select each applicant with the desired probability? Note that at each stage, we are simply reallocating tickets (not creating or destroying them). The key properties are as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>Each drawing keeps the <em>expected</em> number of tickets held by an applicant the same. This is ensured by having the winner keep all tickets entered into the drawing: if you put in <span class="math inline">\(s\)</span> tickets and I put in <span class="math inline">\(t\)</span> tickets, then I will either win <span class="math inline">\(s+t\)</span> tickets (with probability <span class="math inline">\(t/(s+t)\)</span>) or zero tickets. Therefore, my expected tickets won is exactly <span class="math inline">\(t/(s+t)\cdot (s+t) = t\)</span>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p></li>
+<li><p>Every applicant eventually ends up with either <span class="math inline">\(0\)</span> or <span class="math inline">\(k\)</span> tickets. Setting tickets aside during selection rounds ensures that no applicant ends with more than <span class="math inline">\(k\)</span> tickets.</p></li>
+</ol>
+<p>The first property ensures that if I start with <span class="math inline">\(t\)</span> tickets, then <em>on average</em>, I end with <span class="math inline">\(t\)</span> tickets. But the second property ensures that on any given instance, I end with either <span class="math inline">\(k\)</span> or <span class="math inline">\(0\)</span> tickets (corresponding to being selected or not). Therefore, my chance <span class="math inline">\(p\)</span> of ending with <span class="math inline">\(k\)</span> tickets must satisfy <span class="math inline">\(p \cdot k = t\)</span>, or <span class="math inline">\(p = t/k\)</span>, as desired.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+</div>
+<div id="is-this-practical" class="section level1">
+<h1>Is this Practical?</h1>
+<p>It is not surprising to me that organizations don’t come up with this procedure “on their own”, and instead use sequential sampling procedures where the probability of success rises sublinearly with the number of tickets. This procedure is more complex than sequential sampling! But is it practical?</p>
+<p>The word practical can mean many things.</p>
+<p>First, <em>can this procedure be explained to participants?</em> The description of the procedure is explicit, and fairly concise. The explanation of why it works requires some math, but nothing too complex (and most applicants probably won’t ask for it anyway).</p>
+<p>Second, <em>can the procedure be conducted transparently?</em> This is important to many organizations, who want to show applicants that there is no funny business or favoritism. This is why, for example, the Minnesota Fringe Festival runs their lottery as a televised and in-person event, with ping-pong balls being physically drawn one after another. I actually feel that this could be a good “made for TV” event. In each face off, some outcome is finalized (an acceptance or a rejection). Individual contestants can see their chances go up (as <span class="math inline">\(A\)</span>’s did after taking <span class="math inline">\(B\)</span>’s tickets) or down (as <span class="math inline">\(C\)</span>’s did after losing to <span class="math inline">\(A\)</span>) before their fate is decided. This makes it quite dramatic! Furthermore, faceoffs can occur any order you want, and the procedure will still give the correct probabilities. This allows for all sorts of possibilities: the remaining player from the previous round could choose their next opponent, audience members could vote on who gets paired next, there could be a predefined “bracket”, etc.</p>
+<p>Third, <em>can the procedure be completed in a practical amount of time?</em> This of course depends on <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span>. In general, with <span class="math inline">\(n\)</span> applicants, we need up to <span class="math inline">\(n-1\)</span> faceoffs (since the last faceoff always results in both a selection and an elimination). For the Western States Lottery, <span class="math inline">\(n\)</span> is approximately <span class="math inline">\(11,000\)</span> while <span class="math inline">\(m\)</span> was less than <span class="math inline">\(300\)</span>, so we might need to speed things up. Fortunately, this is possible! Instead of each elimination round eliminating a single applicant, we can put tickets from many applicants into a single bowl (so long as in total they have at most <span class="math inline">\(k\)</span> tickets) and draw one name, who gets to keep all tickets. Partition applicants into separate bowls, such that no two bowls can be combined without exceeding <span class="math inline">\(k\)</span> tickets. This implies that we have at most <span class="math inline">\(2m-1\)</span> bowls.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Thus, after at most <span class="math inline">\(2m-1\)</span> elimination faceoffs, we are down to at most <span class="math inline">\(2m-1\)</span> remaining contenders, and can use the “standard” procedure from here to select our final set. In total, this requires fewer than <span class="math inline">\(4m\)</span> faceoffs.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> Current procedures must draw at least <span class="math inline">\(m\)</span> names (and often more, since some names will be drawn multiple times), so this procedure would not require many more draws than current practice.</p>
+<p>So, would I recommend this procedure for real applications? <strong>Not yet.</strong> My main hesitation is that in all of these applications, some winners withdraw. As a result, organizations typically don’t just draw <span class="math inline">\(m\)</span> names, but also generate an ordered waitlist (indicating who will receive invitations when withdrawals occur). Existing sequential sampling procedures naturally produce this (just keep drawing until you have the desired length of waitlist). I don’t yet know of a way to generate this list for the procedure described above – could be a fun research question!</p>
+<!--
+Western States: could go even further! Those with 512 tickets selected for sure. Have lotteries within categories. So for example, calculate expected number of winners within each category. Then have a simple unweighted lottery among all people in that category. (Expected number of winners will not be an integer, so draw one more name that has a chance to move on...)
+
+For simplicity, add 48 more singles (to make math nice; not needed). Then each ticket represents 1/365 chance. Draw names, selecting level one applicants, then one more name and give "extra" tickets to them. Then play this game only among remaining tiered applicants. So if there are $k$ tiers, this requires fewer than $m+k$ names drawn. (But how would we generate a waitlist? Not so clear... In some sense, $m$ is unknown, so truly do want an ordered list.)
+
+TODO: mention sortition? (That's likely a future post -- less a weighted lottery and more lottery with constraints.)
+
+TODO: mention other literature/chatGPT (not my procedure, but my description).
+
+In particular, it is not true that someone with $3$ tickets has three times the chance as someone with one ticket.
+-->
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>For those with more formal training in probability, the number of tickets held by each individual is a martingale.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>In fact, this argument shows that there is substantial flexibility in how many tickets go into the bowl for each faceoff. For example, a faceoff could be divided into multiple “rounds” where each contestant enters a single ticket. Instead of resolving the uncertainty at once, their odds would go up or down gradually until someone loses their last ticket (or receives their <span class="math inline">\(k^{th}\)</span>). We could even allow applicants to choose how many tickets to put in (up to a maximum limit for selection rounds). This choice won’t affect their final selection probability, but that won’t stop people from over-analyzing it. However, all of these variants could take longer (because you might have a drawing that neither selects or eliminates an applicant) and are arguably less dramatic (for the same reason).<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>For this footnote only, let <span class="math inline">\(t_i\)</span> be the number of tickets in bowl <span class="math inline">\(i\)</span> (rather than the number held by applicant <span class="math inline">\(i\)</span>), and let <span class="math inline">\(b\)</span> the number of bowls. The basic idea is that all but one bowl must have at least <span class="math inline">\(k/2\)</span> tickets in it, so there can only be approximately <span class="math inline">\(2m\)</span> bowls. Being more precise, let <span class="math inline">\(t_{min} = \min_i t_i\)</span>. If <span class="math inline">\(t_{min} &gt; k/2\)</span>, we immediately get <span class="math inline">\(b &lt; 2m-1\)</span>, since <span class="math inline">\(\sum t_i = km\)</span>. If <span class="math inline">\(t_{min} \le k/2\)</span>, then note that any bowl but the one with the fewest tickets must have at least <span class="math inline">\(k - t_{min}+1 \ge k/2 + 1\)</span> tickets in it (since any two bowls together have at least <span class="math inline">\(k+1\)</span> tickets). Take any <span class="math inline">\(b-2\)</span> of the bowls other than the smallest one. Collectively, these have fewer than <span class="math inline">\(k(m-1)\)</span> tickets (since the two remaining bowls have more than <span class="math inline">\(k\)</span> tickets), but each one has at least <span class="math inline">\(k/2 + 1\)</span> tickets. Rearrange <span class="math inline">\((b-2)(k/2+1) \le k(m-1)\)</span> to get <span class="math inline">\(b \le 2 + \frac{2k}{k+2}(m-1) &lt; 2 + 2(m-1) = 2m\)</span>, implying <span class="math inline">\(b \le 2m-1\)</span>.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>In practice, most selection probabilities are small, so we should be able to get away with approximately <span class="math inline">\(m\)</span> buckets and <span class="math inline">\(2m\)</span> faceoffs.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

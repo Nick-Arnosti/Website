@@ -1,0 +1,24 @@
+---
+title: 'Teaching Note Template'
+date: ""
+author: Nick Arnosti
+draft: TRUE
+---
+
+*Note:* Educators are welcome and encouraged to use and/or adapt these materials for their own classes. I ask only that if you do this, please let me know at arnosti@umn.edu.Solutions to practice problems are available upon request. 
+
+Please let me know if you identify any mistakes that I should correct, if you have suggestions for additional topics to cover, or if you know of other materials that I might be interested to learn about!
+
+# Learning Objectives
+
+# Key Concepts and Algorithms
+
+# Materials
+
+[Lecture Slides]()
+[Practice Problems]()
+
+# Lesson Plan and Commentary
+
+# Common Mistakes and Misconceptions
+

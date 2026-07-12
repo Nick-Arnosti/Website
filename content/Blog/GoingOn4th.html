@@ -1,0 +1,84 @@
+---
+title: 'Should the Lions Have Gone For It?'
+date: '2024-12-07'
+author: Nick Arnosti
+categories:
+  Sports
+---
+
+
+
+<p>Although I am not as invested in professional sports as I used to be, I still enjoy following along, and sometimes get a chance to put some math skills to use. This post will analyze a high-profile decision by Lions coach Dan Campbell at the end of their game against the Packers.</p>
+<p><strong>The situation:</strong> tie game, Lions have the ball on the Packers’ 22 yard line. It’s 4th and inches with 43 seconds left, and the Packers have no timeouts.</p>
+<p>Conventional wisdom says, kick the field goal to go up 3! With around 35 seconds and no timeouts, the Packers are unlikely to score. Instead, Dan Campbell decided to go for it. The Lions converted, allowing them to run the clock down before kicking, and preventing Green Bay from getting the ball back.</p>
+<p>I often favor going for it on 4th and short, but in this situation it seemed like a pretty big risk to me! Instinctively, I would have kicked the field goal. But is that actually the right choice?</p>
+<div id="model-assumptions" class="section level1">
+<h1>Model (Assumptions)</h1>
+<p>To analyze the situation without introducing too much complexity, I will make several assumptions.</p>
+<ul>
+<li>The Lions’ chance of kicking the field goal doesn’t depend on where the ball is spotted.</li>
+<li>The Packers’ chance of scoring in the final minute don’t depend on the exact place their drive starts.</li>
+</ul>
+<p>I think these are both very reasonable assumptions, given that a 4th and inches play is likely to move the spot of the ball by at most a few yards. From here, I made a few more assumptions:</p>
+<ul>
+<li>The Lions will make the field goal.</li>
+<li>The Packers have no chance of scoring a touchdown in regulation (only a field goal).</li>
+<li>If the game goes to overtime, each team has a 50% chance of winning.</li>
+<li>The Lions’ probability of converting on 4th down is <span class="math inline">\(p_c\)</span>.</li>
+<li>The Packers’ probability of scoring a field goal if they get the ball back is <span class="math inline">\(p_s\)</span>.</li>
+</ul>
+<p>All of the first three assumptions feel pretty reasonable to me.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> In the code at the end of the post, I will allow for the possibility that the Lions miss the field goal.</p>
+</div>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
+<p>If the Lions kick the field goal, they win <em>unless</em> the Packers tie it and win in overtime. Thus, the Lions’ chances of winning if they choose to kick are <span class="math inline">\(1 - p_s/2\)</span>.</p>
+<p>If the Lions go for it and make it, they will win: they run down the clock and kick the field goal as time expires. If they go for it and fail, then they need the Packers not to score in regulation, and to hope for an overtime win. Averaging these two scenarios, the Lions’ chance of winning if they go for it is <span class="math inline">\(p_c + (1-p_c)(1-p_s)/2\)</span>.</p>
+<p>The right decision obviously depends on <span class="math inline">\(p_c\)</span>. If the Lions know they will convert, they should of course go for it. If they know they won’t convert, they should kick. For any value of <span class="math inline">\(p_s\)</span>, we can solve for the probability of converting that makes the two options equally good. This yields the equation
+<span class="math display">\[p_c = 1/(1+p_s).\]</span></p>
+<p>Putting this to work, if the Lions think the Packers have a <span class="math inline">\(p_s = 1/3\)</span> chance of scoring, then they should go for 4th down so long as they think their chance of converting is at least <span class="math inline">\(1/(1+1/3) = 75\%\)</span>. If the Lions think the Packers’s chance of scoring is 50%, then they should go for 4th down as long as their chance of converting is at lest <span class="math inline">\(1/(1+1/2) = 2/3\)</span>.</p>
+<p>We can visualize this using the following graph, which tells us what to do as a function of <span class="math inline">\(p_s\)</span> and <span class="math inline">\(p_c\)</span>.</p>
+<pre class="r"><code>#f = probability that Lions make the field goal
+#ps = probability that Packers score if they get the ball
+#pc = probability that Lions convert on 4th down
+win_prob_kick = function(ps,f){ return(f*(1-ps/2)+(1-f)*(1-ps)/2)}
+win_prob_go = function(pc,ps,f){pc*f+pc*(1-f)/2+(1-pc)*(1-ps)/2}
+
+#Function to create colorful graphs!
+#h = function of x and y to be plotted
+plot_heatmap = function(h, level_breaks,custom_palette){
+  
+  x_vals = y_vals = seq(0, 1, length.out = 100)
+  filled.contour(
+    x = x_vals,
+    y = y_vals,
+    z = outer(x_vals, y_vals,h),
+    color.palette = function(n) custom_palette(n),
+    levels = level_breaks,
+    xlab = &quot;P(Packers Score)&quot;, ylab = &quot;P(Lions Convert 4th)&quot;, main = &quot;Advantage From Going For It&quot;,
+    key.axes = {
+      axis(4, at = level_breaks, labels = format(level_breaks, digits = 2))
+    }
+  )
+}
+
+palette = colorRampPalette(c(&quot;limegreen&quot;, &quot;white&quot;, &quot;skyblue&quot;))
+f = 1 #Probability of making the field goal
+#delta = gain in win probability from going for it
+delta = function(ps,pc){win_prob_go(pc,ps,f)-win_prob_kick(ps,f)}
+
+plot_heatmap(delta,level_breaks=c(-.5,0,.5),custom_palette=palette)
+text(0.2, 0.4, &quot;Kick It!&quot;, cex = 1.5, font = 2)
+text(0.5, 0.8, &quot;Go For It!&quot;,cex = 1.5, font = 2)</code></pre>
+<p><img src="/Blog/GoingOn4th_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>This graph tells us when to go for it, but not how much it matters. When is this a consequential decision? We can see this using the following graph. Dark blue means that it’s a much better decision to go for it (probability of winning increases by at least 25%), while dark green means that it’s much better to kick (going for it <em>decreases</em> probability of winning by at least 25%).</p>
+<pre class="r"><code>plot_heatmap(delta,level_breaks = c(-.5,-.25,-.15,-.05,.05,.15,.25,.5),custom_palette=palette)</code></pre>
+<p><img src="/Blog/GoingOn4th_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>So, what should the Lions have done? I would probably guestimate the Lions’ chance of converting at 75-80%. This means that going for it was the right call so long as the Packers’ chance of scoring a field goal was at least 25-30%. That sounds about right, suggesting to me that this was actually a fairly close call.</p>
+<p>You might (reasonably) disagree with my ballpark estimates of <span class="math inline">\(p_s\)</span> and <span class="math inline">\(p_c\)</span>. Based on your own estimates, use the chart above to see what the Lions should have done, and how much it mattered! By changing the value <span class="math inline">\(f\)</span> in the code, you can produce analogous charts for cases where the Lions might miss the field goal.</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>A 39 yard field goal is pretty easy! This year, NFL kickers have made 208 out of 221 kicks between 30 and 39 yards (94%) (Source: <a href="https://www.pro-football-reference.com/years/2024/kicking.htm">Pro Football Reference</a>. Furthermore, the Lions actually have a better than average kicker, who has missed only once all year, and has the highest field goal percentage in the league among kickers with at least 8 attempts.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

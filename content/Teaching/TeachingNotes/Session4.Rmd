@@ -1,0 +1,25 @@
+---
+title: 'Session 4: Introduction to School Choice'
+date: "2022-01-31"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Lesson Recap
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "xxx")
+```
+
+# Materials
+
+[Lecture Slides](/IE5080/Session4/Session4.pdf) (pptx version available to instructors upon request).
+
+
+[Homework](/IE5080/Session4/Session4_Homework.pdf) (solutions available to instructors upon request).
+
+
+**References**:
+
+[An Exact Analysis of Stable Allocation](/IE5080/Session4/XXX.pdf)

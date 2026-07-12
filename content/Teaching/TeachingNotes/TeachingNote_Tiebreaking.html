@@ -1,0 +1,22 @@
+---
+title: 'Breaking Ties in School Choice'
+date: ""
+author: Nick Arnosti
+draft: TRUE
+---
+
+
+
+<p><em>Note:</em> Educators are welcome and encouraged to use and/or adapt these materials for their own classes. I ask only that if you do this, please let me know at <a href="mailto:arnosti@umn.edu.Solutions" class="email">arnosti@umn.edu.Solutions</a> to practice problems are available upon request.</p>
+<p>Please let me know if you identify any mistakes that I should correct, if you have suggestions for additional topics to cover, or if you know of other materials that I might be interested to learn about!</p>
+<p>Weakly stable matchings can be found by breaking ties arbitrarily, and then running student-proposing DA on the resulting instance (which has strict priorities). So long as ties are broken in a manner that does not depend on student’s submitted preferences, this procedure is truthful. Typically, ties are broken using some form of lottery. The two most common approaches are to hold independent lotteries at each school (“Independent Lotteries” or “Multiple Tie-Breaking (MTB)”), or to hold a single district-wide lottery used to break ties at all schools (“Common Lottery” or “Single Tie-Breaking (STB)”). Both approaches produce outcomes that could be Pareto dominated (from the perspective of students) by another weakly stable matching (which would have resulted from a different tie-breaking outcome).</p>
+<p><em>Strategy-proofness versus Efficiency in Matching with Indifferences: Redesigning the NYC High School Match</em> by Abdulkadiroglu, Pathak, and Roth (2009).</p>
+<p>One of the questions I consistently get when presenting this table is, “how can the third column correspond to a student optimal stable matching if it leaves more students unassigned than MTB does?”</p>
+<p>Imagine the following. Each allocation is a “candidate”. Only certain candidates are “eligible” to run. For example, we could restrict the set of candidates to those that are “fair” (respect priorities).</p>
+<p>Given any two candidate allocations, imagine we allowed students to “vote” on which they prefer: students who get the same allocation in both will abstain from the election, and otherwise students vote for the allocation that they prefer.</p>
+<p>What should it mean for one eligible candidate to be “optimal”?
+* In the traditional setting (without ties in priority), it means that in an election against any other eligible candidate, it wins <em>unanimously</em>.
+* With ties in priority, Abdulkadiroglu Pathak and Roth (2009) say that a weakly stable matching is student optimal if, in an election against any other eligible candidate, it wins <em>at least one vote</em>.</p>
+<p>This framing makes clear how big of a difference this is! Ask any politician the difference between winning an election unanimously and getting at least one vote.</p>
+<p>I would prefer to say that a student-optimal stable matching no longer exists with ties in priority, and call a candidate that always gets at least one vote “undominated”. This would make it clear that there are potentially many many undominated weakly stable matchings.</p>
+<p>In addition, Abdulkadiroglu Pathak and Roth (2009) make a particular choice about which “student optimal” stable match to consider, by starting from the outcome of DA-STB and then trying to Pareto improve it. There could potentially be a weakly stable matching with summary metrics that look much better than the weakly stable matching that they find. So it’s hard to argue that their paper gives a very conclusive answer to the question of “how much better could we make the matching if we abandoned truthfulness?”</p>

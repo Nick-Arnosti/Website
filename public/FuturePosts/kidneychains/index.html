@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kidney Chain Matching | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Kidney Chain Matching</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2022/04/17</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>A <a href="">recent post</a> noted that approximate solutions to a problem can offer more insights than their more complex exact alternatives. This post will explore this idea in a very different setting.</p>
+<p><strong>The problem is as follows.</strong> There is a directed graph Erdos Renyi graph on <span class="math inline">\(n\)</span> nodes: each of the possible <span class="math inline">\(n(n-1)\)</span> edges is present with some probability <span class="math inline">\(p \in (0,1)\)</span>, independently of all other edges.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<ol style="list-style-type: decimal">
+<li>Given a fixed starting node <span class="math inline">\(s\)</span> and target node <span class="math inline">\(t\)</span>, what is the probability that there exists a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span>?</li>
+<li>If we start with only <span class="math inline">\(s\)</span> and <span class="math inline">\(t\)</span> and add nodes (and their associated edges) one at a time, on average how many nodes must be added before a path between <span class="math inline">\(s\)</span> and <span class="math inline">\(t\)</span> appears?</li>
+</ol>
+<p>The answer to the second question follows immediately from the first: if we let <span class="math inline">\(q(n,p)\)</span> be the answer to the first question, then the expected size of the graph when a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span> first emerges is <span class="math inline">\(\sum_{n \ge 0} (1 - q(n,p))\)</span>.</p>
+<p>In this post, I will first present an exact solution using dynamic programming, and then present a simple and insightful approximation. In particular, I demonstrate that the answer to the second question is approximately <span class="math inline">\(2/p\)</span>.</p>
+<div id="dynamic-programming-solution" class="section level1">
+<h1>Dynamic Programming Solution</h1>
+<p>One challenge to answering these questions is that there are a huge number of possible graphs. However, we can solve this problem using dynamic programming. That is, solve for small values of <span class="math inline">\(n\)</span> first, and then use that solution to solve for larger values of <span class="math inline">\(n\)</span>.</p>
+<p>For any integers <span class="math inline">\(k \le n\)</span>, let <span class="math inline">\(P[n,k]\)</span> denote the probability that in a random graph with <span class="math inline">\(n\)</span> nodes, the number of nodes that can be reached from <span class="math inline">\(s\)</span> (including <span class="math inline">\(s\)</span> itself) is equal to <span class="math inline">\(k\)</span>. It is clear that <span class="math inline">\(P[1,1] = 1\)</span>, and that <span class="math inline">\(P[2,2] = p = 1- P[2,1]\)</span>. In general, I claim that we can calculate entries in <span class="math inline">\(P\)</span> according to the following recursive formula:</p>
+<p><span class="math display">\[P[n,k] = P[n-1,k]\times (1-p)^{k}+\sum_{j = 1}^{k-1}P[n-1,j]\times(1-(1-p)^{j})\times P[n-j,k-j].\]</span></p>
+<p>To see this, imagine growing the graph one node at a time. We wish to calculate <span class="math inline">\(P[n,k]\)</span> – the probability that when we have <span class="math inline">\(n\)</span> nodes, <span class="math inline">\(k\)</span> are reachable. This can only occur if, at <span class="math inline">\(n-1\)</span> nodes, some number <span class="math inline">\(j \le k\)</span> are reachable. The above expression sums, across possible values of <span class="math inline">\(j\)</span>, the probability of having <span class="math inline">\(j\)</span> reachable nodes in a graph of size <span class="math inline">\(n-1\)</span>, times the probability that adding a new node increases the size of the reachable set by exactly <span class="math inline">\(k-j\)</span>.</p>
+<p>The first term in the sum represents the <span class="math inline">\(j = k\)</span> case. In this case, the newly-added node <span class="math inline">\(w\)</span> must not have an incoming edge from any of the previously reachable nodes (this occurs with probability <span class="math inline">\((1-p)^k\)</span>). If <span class="math inline">\(j &lt; k\)</span>, then <span class="math inline">\(w\)</span> must have an incoming edge from at least one reachable node, and in addition, reach the correct number of previously unreachable nodes. The first of these events occurs with probability <span class="math inline">\((1 - (1-p)^j)\)</span>, while the second occurs with probability <span class="math inline">\(P[n-j,k-j]\)</span>. This latter claim holds because learning that the set of unreachable nodes is <span class="math inline">\(U\)</span> does not tell us anything about edges <em>within</em> <span class="math inline">\(U\)</span>, so we can treat <span class="math inline">\(U \cup {w}\)</span> as a “fresh” graph, with <span class="math inline">\(w\)</span> playing the role of <span class="math inline">\(s\)</span>.</p>
+<p>The following code plots the distribution of the number of reachable nodes, when <span class="math inline">\(n = 100\)</span> and <span class="math inline">\(p = 0.02\)</span>. One interesting observation is that this distribution is bimodal: it is likely that <span class="math inline">\(s\)</span> is either connected to few nodes, or a majority of them.</p>
+<pre class="r"><code>probability_table = function(N,p){
+	P = matrix(0,N,N) #P[n,k] = probability that in a network with a total of n nodes (including s), k are connected (including s)
+	P[1,1] = 1
+	for(n in 2:N) for(k in 1:n){
+		P[n,k] = P[n-1,k]*(1-p)^k
+		if(k &gt; 1) for(j in 1:(k-1)) P[n,k] = P[n,k]+P[n-1,j]*(1-(1-p)^j)*P[n-j,k-j]
+	}
+	return(P)
+}
+N = 100
+p = .02
+plot(c(1:N),probability_table(N,p)[N,],las=1,xlab=&#39;Reachable Vertices&#39;,ylab=&#39;Probability&#39;)</code></pre>
+<p><img src="/FuturePosts/KidneyChains_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Once we know the values of <span class="math inline">\(P\)</span>, we can easily answer our original questions. Since nothing distinguishes our target node <span class="math inline">\(t\)</span> from any other, if from <span class="math inline">\(s\)</span> we can reach <span class="math inline">\(k-1\)</span> of the other <span class="math inline">\(n-1\)</span> nodes, the probability that <span class="math inline">\(t\)</span> is one of these nodes is <span class="math inline">\((k-1)/(n-1)\)</span>. Summing across values of <span class="math inline">\(k\)</span>, we get that the probability of a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span> is <span class="math inline">\(\sum_{k = 1}^{n} P[n,k]\times (k-1)/(n-1)\)</span>. The following code uses this fact to plot the probability of a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span> as a function of the number of nodes, fixing <span class="math inline">\(p = 0.1\)</span>.</p>
+<pre><code>path_probability = function(N,p){
+  P = probability_table(N,p)
+  return((P[,]%*%(1:N)-1)/(1:N-1))
+}
+plot(1:50,path_probability(50,.1),xlim=c(0,50),ylim=c(0,1),xlab=&#39;n x p&#39;,ylab=&#39;Probability of path from s to t&#39;,las=1)</code></pre>
+<pre><code>p = 0.1
+points(2:50,1 - (1-p)^(2:50-1),pch=&#39;x&#39;)
+points(2:50,p+(1-p)*(1 - (1-p^2)^(2:50-2)),pch=&#39;x&#39;)</code></pre>
+<p>We can also add lines for other values of <span class="math inline">\(p\)</span>. Of course, the smaller <span class="math inline">\(p\)</span> is, the larger <span class="math inline">\(n\)</span> needs to be to have a reasonable chance of success. To put curves for different values of <span class="math inline">\(p\)</span> on a similar scale, I normalize the <span class="math inline">\(x\)</span>-axis to be <span class="math inline">\(n \times p\)</span> (which is approximately the average degree of each node), rather than simply <span class="math inline">\(n\)</span>. Let’s add a line in green for <span class="math inline">\(p = 2.5\%\)</span>, and a line in red for <span class="math inline">\(p = 1\%\)</span>.</p>
+<pre><code>plot_probability = function(N,p,color){
+  points(1:N*p,path_probability(N,p),pch=&#39;.&#39;,cex=3,col=color)
+}
+plot(NULL,cex=3,xlim=c(0,5),ylim=c(0,1),xlab=&#39;n x p&#39;,ylab=&#39;Probability of path from s to t&#39;,las=1)
+plot_probability(5/.1,.1,&#39;blue&#39;)
+plot_probability(5/.025,.025,&#39;green&#39;)
+plot_probability(5/.01,.01,&#39;red&#39;)</code></pre>
+</div>
+<div id="simpler-approximations" class="section level1">
+<h1>Simpler Approximations</h1>
+<p>The dynamic programming formulation above is somewhat clever (and certainly more involved than the example in my previous post). However, like other dynamic programming solutions, it does not necessarily lend a lot of qualitative insight about how the probability of a path depends on <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>. Additionally, it gets slow for small values of <span class="math inline">\(p\)</span>, since we need to study ever-larger values of <span class="math inline">\(n\)</span>, and it runs in <span class="math inline">\(\mathcal{O}(n^3)\)</span> time.</p>
+<p>I claim that for small <span class="math inline">\(p\)</span>, the number of nodes required to have a success probability of <span class="math inline">\(y\)</span> is approximately <span class="math inline">\(\frac{-log(1-\sqrt{y})}{p\sqrt{y}}\)</span>. We can add this approximation to our graph.</p>
+<pre><code>y = c(1:100)/101
+lines(-log(1-sqrt(y))/sqrt(y),y,lwd=3)</code></pre>
+<p>We can use simple arguments to get upper bounds on the probability of a path (and lower bounds on the expected waiting time). For example, the probability of such a path is at most the probability that there is an outgoing edge from <span class="math inline">\(s\)</span>, which is <span class="math inline">\(1 - (1-p)^(n-1)\)</span>. We can get a better bound by noting that for there to be a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span>, <span class="math inline">\(s\)</span> must have an outgoing edge <em>and</em> <span class="math inline">\(t\)</span> must have an incoming edge. The probability of both of these events occurring in a graph of total size <span class="math inline">\(n\)</span> is
+<span class="math display">\[\mathbb{P}(\text{path from } s \text{ to } t) \le  \mathbb{P}(s \text{ has an outgoing edge } {and} \, t \text{ has an incoming edge}) =   p + (1-p)\times(1-(1-p)^{n-2})^2.\]</span></p>
+<p>The expected size of the graph when <span class="math inline">\(s\)</span> gains its first outgoing edge is <span class="math inline">\(1/p+1\)</span>. Similarly, the expected size of the graph when <span class="math inline">\(t\)</span> contains its first incoming edge is <span class="math inline">\(1/p+1\)</span>. Thus, this is a clear lower bound on the answer to our second question.</p>
+<pre><code>expected_size = Vectorize(function(p){
+  N = ceiling(6/p)
+  return(2+sum(1-path_probability(N,p)[-1]))
+})
+plot(expected_size,xlim=c(.01,0.5),xlab=&#39;p&#39;,ylab=&#39;&#39;,las=1)</code></pre>
+<p>After a little work, this tells us that the expected time until both of these conditions are met is approximately <span class="math inline">\(1.5/p\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Meanwhile, we can get a simple lower bound on the probability of a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span> by considering paths of length two. With each new node <span class="math inline">\(w\)</span>, the chance of a path of length two through <span class="math inline">\(w\)</span> is <span class="math inline">\(p^2\)</span>. Therefore, the probability of a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span> is at least <span class="math inline">\(1-(1-p^2)^(n-2)\)</span> and the expected number of nodes before such a path emerges is at most <span class="math inline">\(1/p^2 + 2\)</span>.</p>
+</div>
+<div id="approximate-solution" class="section level1">
+<h1>Approximate Solution</h1>
+<p>The aforementioned upper and lower bounds are simple, but there is a big gap between them! Another approach to getting approximate answers is to consider a limiting regime where <span class="math inline">\(p \rightarrow 0\)</span>.</p>
+<p>Although our problem involves a directed graph, we can actually simplify slightly by considering an undirected graph. This is because we wish to calculate the number of nodes that can be reached from <span class="math inline">\(s\)</span>. For any other nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, imagine waiting to reveal whether there are edges between them until one of them can be reached from <span class="math inline">\(s\)</span>. At this point, we only care whether there is an edge from the reachable node to the previously unreachable one; the reverse edge will never affect the reachable set. In other words, only the result of the “first” coin flip between each pair of nodes is relevant.</p>
+<p>So our questions can be rephrased as follows. If we have an ER random graph with each edge present with probability <span class="math inline">\(p\)</span>, how likely is it that a specific source vertex is connected to a specific sink vertex? On average, many vertices are needed before these vertices are connected?</p>
+<p>Well-known results on asymptotic Erdos-Renyi random graphs say that if <span class="math inline">\(np&lt;1\)</span>, then all components have size <span class="math inline">\(O(\log(n))\)</span>, so the probability that any two specific nodes are connected is vanishingly small. If <span class="math inline">\(np = \lambda &gt; 1\)</span>, then it is known that there is one large connected component involving a constant fraction of all nodes (and all other connected components are of size <span class="math inline">\(O(\log(n))\)</span>). We want to analyze the size of this large component.</p>
+<p>Suppose that this component involves a fraction <span class="math inline">\(q(\lambda)\)</span> of all nodes. We can estimate the probability that a particular node <span class="math inline">\(t\)</span> is not part of this component in two ways. First, this probability should equal <span class="math inline">\(1-q\)</span>, because there is nothing special about <span class="math inline">\(t\)</span>. Second, it should equal the probability none of the nodes with edges into <span class="math inline">\(t\)</span> are in this component. If <span class="math inline">\(p\)</span> is small, then the number of nodes with edges into <span class="math inline">\(t\)</span> is well-approximated by a Poisson random variable with mean <span class="math inline">\(\lambda = np\)</span>. Each of these nodes is in the large component with probability <span class="math inline">\(q\)</span>, and in a large graph, these events are approximately independent. Thus, the probability that none of the nodes with edges into <span class="math inline">\(t\)</span> are in the large component is approximately <span class="math inline">\(e^{-\lambda q}\)</span>. This gives us the equation
+<span class="math display">\[1 - q(\lambda) = e^{-\lambda q(\lambda)}.\]</span>
+If <span class="math inline">\(\lambda \le 1\)</span>, the only solution is <span class="math inline">\(q(\lambda) = 0\)</span>. If <span class="math inline">\(\lambda &gt; 1\)</span>, there is a</p>
+<p>Suppose that we add <span class="math inline">\(t\)</span> last. The number of nodes with incoming edges to <span class="math inline">\(t\)</span> follows a binomial distribution. The node <span class="math inline">\(t\)</span> is reachable from <span class="math inline">\(s\)</span> if and only if one of these nodes with incoming edges is reachable from <span class="math inline">\(s\)</span>.</p>
+<p>Use the following heuristic reasoning. Suppose that our target node is reachable with probability <span class="math inline">\(q(\lambda)\)</span>. The number of nodes connected to our target is approximately Poisson with mean <span class="math inline">\(\lambda\)</span>. Each of these nodes is identical to our target node, so each must also be reachable with probability <span class="math inline">\(q(\lambda)\)</span>. Our target node is reachable if and only if one of its neighbors is reachable. If we assume independence of reachability across these nodes, we get the following equation for <span class="math inline">\(q(\lambda)\)</span>:</p>
+<p>Let <span class="math inline">\(X\)</span> be a non-negative random variable with CDF <span class="math inline">\(F\)</span>. Then
+<span class="math display">\[\mathbb{E}[X] = \int_0^\infty (1 - F(x))dx\]</span>
+If <span class="math inline">\(F\)</span> is invertable, then
+<span class="math display">\[\int_0^\infty (1 - F(x))dx = \int_{x = 0}^\infty \int_{y = F(x)}^1 dy dx = \int_{y = 0}^1 \int_{x = 0}^{F^{-1}(y)} dx dy = \int_{0}^1 F^{-1}(y) dy.\]</span></p>
+<p><span class="math display">\[\hat{F}^{-1}(y) = \frac{-\log(1 - \sqrt{y})}{\sqrt{y}}\]</span>
+<span class="math display">\[\int_0^1 -\log(1 - \sqrt{y})/\sqrt{y} \,\, dy = 2.\]</span></p>
+<p>Note that for <span class="math inline">\(\lambda \le 1\)</span>, the only solution is <span class="math inline">\(q = 0\)</span>, and for <span class="math inline">\(\lambda &gt; 0\)</span>, there is exactly one non-zero solution <span class="math inline">\(q \in (0,1)\)</span>. This is our approximation of the answer to our first question. The answer to our second question is then</p>
+<p><span class="math display">\[\int_0^\infty (1 - q(\lambda)^2)d\lambda = 1 + \int_1^\infty (1 - q(\lambda)^2)d\lambda. \]</span></p>
+<p>The taylor expansion for <span class="math inline">\(-\log(1-x)/x\)</span> is <span class="math inline">\(\sum_{k = 0}^{\infty} x^k/(k+1)\)</span>, so
+<span class="math display">\[-\int_0^1 \log(1-\sqrt{y})/\sqrt{y}\,\, dy = \int_0^1 \sum_{k = 0}^{\infty} \frac{y^{k/2}}{k+1} dy = \sum_{k = 0}^\infty \frac{2}{(k+1)(k+2)} = 2,\]</span>
+where the final equality follows from noting that <span class="math inline">\(\frac{2}{(k+1)(k+2)} = \frac{2}{k+1}-\frac{2}{k+2}\)</span> and therefore we have a telescoping sum. This suggests that on average we need <span class="math inline">\(np \approx 2\)</span> before there is a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span>.</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>This random graph model has been used to model many settings. Most relevantly to my work, it has been used to model kidney exchange. In this context, each node represents a pair of people: a patient in need of a kidney, and a donor who is willing to give up a kidney but is medically incompatible with their patient. An edge between nodes <span class="math inline">\(i\)</span> and <span class="math inline">\(i&#39;\)</span> indicates that the donor of <span class="math inline">\(i\)</span> can give to the patient of <span class="math inline">\(i&#39;\)</span>, and a path from <span class="math inline">\(s\)</span> to <span class="math inline">\(t\)</span> indicates that if <span class="math inline">\(s\)</span> is an “altruistic donor” with no intended recipient, a chain can be started from <span class="math inline">\(s\)</span> that will result in the patient of <span class="math inline">\(t\)</span> receiving a kidney. But this point is purely about math, so I will leave it at that. <a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>For those familiar with exponential random variables, one intuition for this is as follows. Let <span class="math inline">\(V\)</span> be the set of nodes other than <span class="math inline">\(s\)</span> and <span class="math inline">\(t\)</span>. Then the time until there is an edge from <span class="math inline">\(s\)</span> to some node in <span class="math inline">\(V\)</span> and the time until there is an edge from some node in <span class="math inline">\(V\)</span> to <span class="math inline">\(t\)</span> are independent geometric random variables. If <span class="math inline">\(p\)</span> is small, these random variables can be well-approximated by continuous-valued exponential random variables. The expected maximum of two independent exponential random variables, each with mean <span class="math inline">\(1/p\)</span>, is well-known to be <span class="math inline">\(1.5/p\)</span>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

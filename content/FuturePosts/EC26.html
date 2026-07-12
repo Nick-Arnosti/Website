@@ -1,0 +1,54 @@
+---
+title: "Notes from EC 2026"
+date: "2026-07-05"
+output: html_document
+---
+
+
+
+<p><strong>Best Paper</strong></p>
+<p>Stochastic optimization and coupling.</p>
+<p><strong>Best Paper with a student lead author:</strong></p>
+<p>Personalized Recommendations without Inducing Congestion: Mitigating Disparities in the NYC High School Match.</p>
+<p>Presenter (Erica) was <em>employed</em> at NYCPS over the last year (insider access).</p>
+<p>Goal is personalized recommendations of students to high-performing schools where they are likely to be admitted.</p>
+<p><strong>Exemplary Papers</strong></p>
+<ul>
+<li><p>Competition and Welfare in Airport Slot Allocation, Sebastian Bauer (Stanford)</p></li>
+<li><p>Calibrated Coarsening</p></li>
+<li><p>Proportional Representation in Rank Aggregation (Lederer)</p></li>
+<li><p>Strategy-Proof Information Aggregating in Voting</p></li>
+<li><p>Random Serial Dictatorship is <span class="math inline">\(\sqrt{2}\)</span> Envy Free</p></li>
+<li><p>Automated Social Science: Language Models as Scientist and Subjects</p></li>
+</ul>
+<p><strong>Ravi and Itai, Organ Allocation and Congestion</strong></p>
+<p>Model is reasonable, highly stylized (two types of organs – risky and safe; assumes FCFS allocation only; patients heterogeneous in two parameters – value of risky organs and rate of departure; exogenous discard policy – can’t offer below certain mass of waiting list).</p>
+<p>Main results:</p>
+<ul>
+<li>Congestion (<span class="math inline">\(T_{risky}&gt;0\)</span> while risky organs are discarded) can occur when <span class="math inline">\(\epsilon\)</span> (offer limit) is positive.</li>
+<li>With congestion, it’s possible that increasing the supply of safe organs results in worse outcomes for all patients</li>
+</ul>
+<p>Second result is somewhat interesting/unexpected. But overall, not sure how interesting this paper is.</p>
+<p><strong>Sid, Ram, and Bobby</strong></p>
+<p>Fix schur-convex or schur-concave utility function <span class="math inline">\(f\)</span>. Fix parameter <span class="math inline">\(\alpha\)</span>, as well as <span class="math inline">\(n\)</span> and <span class="math inline">\(m\)</span> (number of offline and online nodes).</p>
+<p>Player chooses algorithm. Adversary chooses instance. Payoff to adversary is <span class="math inline">\(f(OMN) - \alpha f(ALG)\)</span>. Equilbrium (optimal) play for player is to use Water Filling, for <em>any</em> <span class="math inline">\(f\)</span> and <span class="math inline">\(\alpha\)</span>.</p>
+<p>Really nice finding! Implies optimal competitive ratio, optimal (minimax) regret, and more. Generality of objective would be nice to incorporate into work on fairness of FCFS (with Peng)?</p>
+<p><strong>Daniel Freund</strong> Mentioned that he has connection to Boston analytics team. Could be helpful if I want to work with Boston Public Housing. Should I pursue it?</p>
+<p><strong>Neel Patel</strong> Talk to him somewhat extensively (his work, ideas for generalizations).</p>
+<blockquote>
+<p>To overcome this challenge, rather having buyers get proposals from available items, we let them get proposals from present items – i.e., items that have not perished, but may have been sold. This then gives us independent distributions (as presence is independent across goods), and allows us to use an optimal CRS for the constraint family in a black-box manner.</p>
+</blockquote>
+<p>(Should we adopt this same terminology, and credit them? We already have something like it. Could make describing OMN easier, explaining upper bound <span class="math inline">\(LP^{OMN}\)</span>, etc.)</p>
+<p>Their eq (5) in Lemma 2.6 says (in our terms) x_ij &lt;= lambda_j n_i. (Holds for any online algorithm; set version unnecessary, as all additive.)</p>
+<p><strong>Distributional Preferences for Market Design, Federico Echenique et al</strong> Take a look at this, understand relationship to work with Jay and Carlos</p>
+<p><strong>Thoughts for Selling work with Felipe, Rad, Pranav</strong></p>
+<p>Chain of inequalities.</p>
+<p>Example showing why both approaches, applies to TxT, can fail.</p>
+<p>Sell novel Lemma, proof strategy. (Are there other applications of Lemma?)</p>
+<p>Compare to prophet inequality literature. Bad example is similar. Prophet inequality allows non-staionary arrivals of one side, but in many other ways seems easier: assumes bipartite, with one side known in advance and infinitely patient.</p>
+<p>Compare to prior literature without departures (i.e. Ashlagi work). Same LP doesn’t work.</p>
+<p>Put LP^OMN and LP^ALG side by side, explain the differences (motivate our LP).</p>
+<p><strong>Bobby</strong></p>
+<p>Matroid secretary problem: can you get constant factor approximation? Best known factor: log(log(rank of matroid)).</p>
+<p>Matroid prophet inequality solved by Matt Weinberg and Bobby.</p>
+<p>Correa 2019 won EC best paper award – check it out! (Bobby tried to do this and failed 15 years earlier).</p>

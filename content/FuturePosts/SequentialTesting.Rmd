@@ -1,0 +1,22 @@
+---
+title: 'Sequential Testing'
+date: "2021-03-01"
+author: Nick Arnosti
+draft: true
+---
+
+Suppose that we wish to learn a state $Z \in \mathcal{Z} = {0,1}^n$. At each time step $t$, we can choose $X^t \in \mathcal{X} = \{0,1\}^n$, and observe 
+\begin{equation} Y^t = {\bf 1}(X^t \cdot Z > 0) \label{eq:feedback} \end{equation} 
+\@ref(eq:feedback)
+
+A history is a sequence of $(X^t, Y^t)$ pairs. A policy $\pi$ is a map from histories to $\mathcal{X}$. Given history $H$, let $\mathcal{F}(H)$ be the set of $Z$ that are consistent with $H$. Define $T(\pi,Z)$ to be the number of tests run under policy $\pi$ when the state is $Z$.
+
+
+
+
+##Extensions
+
+* Feedback -- for example, could be $X^t \cdot Z$ itself.
+* Decision space -- for example, could choose weights to apply.
+* Error tolerance -- cost of incorrect label.
+* Noise -- could incorporate false positives or negatives.

@@ -1,0 +1,87 @@
+---
+title: 'Bottleneck Analysis through Laundry'
+date: '2021-01-27'
+author: Nick Arnosti
+tags:
+  
+categories:
+  Operations Management
+---
+
+
+"Find the bottleneck, and address it!" This is the advice that many MBAs receive in their Operations Management class. It's good advice, but distilled to the point that it's more of a platitude than anything actionable.
+
+I'm a firm believer that people often have to struggle with a concept before they can really understand it. This post will discuss an in-class exercise that I use to introduce bottleneck analysis.
+
+
+#A Simple Process
+
+Let's start with a simple example, where our intuition serves us well. A nurse takes an average of 3 minutes to vaccinate a patient. How long does it take to vaccinate 10 patients? How many nurses are needed to vaccinate 60 patients per hour? 
+
+Most students quickly calculate that we can vaccinate 10 patients in 30 minutes, or 20 patients in an hour. Therefore, if we want to vaccinate 60 patients per hour, we need three nurses.
+
+#A Slightly Less Simple Process
+
+Now, let's consider a more complicated process. You decide to start a (very small scale) laundry business. You have one washing machine, which takes 40 minutes per load, and one drying machine, which takes 50 minutes per load. After a load is dried, you fold it, which takes 10 minutes. You plan to work for 15 hours (from 7 am to 10 pm), and your goal is to complete as many loads as possible.
+
+At this point, I poll the students: which of the following changes (made in isolation) would allow you to complete more loads per day? 
+
+* A faster washing machine.
+* A faster drying machine.
+* Either of the above.
+* None of the above.
+
+I then ask them to split into small groups, and answer the following.
+
+1. How long does it take to complete 1 load of laundry?
+2. How long does it take to complete 2 loads of laundry?
+3. How many loads of laundry can you complete in your 15-hour workday?
+4. How do the answers above change if you 
+    i. Reduce wash time by 10 minutes. 
+    ii. Reduce dry time by 10 minutes. 
+    iii. Bought a second dryer.
+    
+If you're reading this, I encourage you to spend a few minutes thinking about these questions before continuing!
+
+#Finding The Answer
+
+Clearly, it takes 40+50+10=100 minutes to complete the first load. Some students may conclude that 2 loads take 200 minutes. Certainly, it is possible to complete two loads in this time, but if we operate this way, our company will go out of business!
+
+The key is that we can start the second load as soon as the first load is out of the washer (i.e. at minute 40). Some students conclude from this that we will complete the second load 40 minutes after the first (i.e. after a total of 140 minutes). Unfortunately, this is not correct: if you map it out, you'll see that after the second load is washed, the dryer won't be ready for another ten minutes. Therefore, the correct answer is 150 minutes.
+
+The third load can be loaded into the washing machine after 80 minutes, but will have to wait 20 minutes after being washed before the dryer is ready. It will finish after 200 minutes. From there on, each additional load takes an extra 50 minutes, so we can complete a total of 17 loads in our 900-minute day.
+
+
+#A Simpler Approach
+
+Walking through a process step-by-step is a natural starting point, but it has several disadvantages:
+
+* It's cumbersome (hard to do for all but the simplest processes).
+* It's error-prone (easy to make a mistake somewhere along the way)
+* It's not very insightful (to analyze new scenarios, you need to start from scratch).
+
+There is a better way to find these answers, which leverages our intuition from the simple vaccination example. Imagine that each step in the process exists in isolation. 
+
+* How many loads could we wash in one day? 900 minutes/day $\times$ 1 load/40 minutes = **22.5 loads/day.**
+* How many loads could we dry in one day? 900 minutes/day $\times$ 1 load/50 minutes = **18 loads/day.**
+* How many loads could we fold in one day? 900 minutes/day $\times$ 1 load/10 minutes = **90 loads/day.**
+
+We call these numbers the **capacity** of each resource. From this, we immediately conclude that the dryer is our **bottleneck.** Clearly, our answer to the original problem cannot be higher than 18 loads per day. If we think a bit more, we realize that the dryer can't work for the first 40 minutes of the day, nor can it work during the last 10 minutes. Thus, dryer can work at most 850 minutes/day, adjusting our answer downward to 17 loads/day. I comment to class that for most of the course, we will ignore this effect, and simply say that we can complete 18 loads/day. This is a little optimistic, but what we lose in accuracy, we gain in simplicity and insight.
+
+To illustrate the advantage of this approach, let's consider the counter-factuals considered above. Reducing wash time by 10 minutes causes the first load to finish ten minutes sooner, but doesn't address our bottleneck: the dryer can only dry 18 loads per day. If we reduce dry time by 10 minutes, then each step can complete at least 22.5 loads/day. If we get another dryer, then we can dry 36 loads/day. The new bottleneck becomes the washing machine, with a capacity of 22.5 loads per day. (For those determined to do things more carefully, the "true" number of loads we can complete in each scenario is 17, 21, and 21.)
+
+#Why I Like This Example
+
+Although single-step processes are easy to analyze, most business projects have multiple employees involved, each assigned to their own set of tasks. One takeaway from class is that things get complicated (and our intuition less sound) when analyzing processes with multiple steps which can be done simultaneously. Fortunately, (and somewhat magically), the simple approach of analyzing each step in isolation yields a reasonable answer.
+
+This example is complex enough to cause confusion and illustrate the challenges of parallel processing, but simple enough that students can visualize it and understand the final answers. If students truly understand the laundry example, they can use it as a reference point throughout the rest of the course. 
+
+This example can also serve as a launching point to discuss other topics. For example, students have a tendency to infer flow time by inverting flow rate. In the example above, we are completing one load of laundry every 50 minutes. However, that does NOT mean that it only takes 50 minutes for a load to go through the process. We know that it takes at least 100 minutes. By Little's Law, if we want to use flow rate to determine flow time, we also need to know the average amount of work-in-progress.
+
+This can also be used to introduce the concept of utilization. In this example, we don't want to wash as many loads as possible -- we'll just end up with many loads of undried laundry at the end of the day! Instead, we want to ensure that the flow rate is identical for all steps in the process. The laundry machine should only wash 17 loads (i.e. should be working approximately 80% of the time). 
+
+One fun conversation to have relates to push vs pull inventory. Note that there are several ways to organize our work. We could choose to start each load as soon as the washer becomes available, or we could wait to start the washer until 40 minutes before the dryer will be ready. Ask students, which should we prefer? Some may argue that leaving loads of wet laundry out for hours is undesirable, and therefore washing "just in time" is best. Others may point out that this is risky: if a load takes more than 40 minutes to wash (or less than 50 minutes to dry), we end up leaving the dryer idle, wasting precious time on our bottleneck resource. In reality, the best approach is likely somewhere in between these two extremes. For example, we could always have one wet load ready to go into the dryer. 
+
+For those with more experience teaching Operations Management, how do you introduce bottleneck analysis? What do you think makes it "sticky" for students?
+
+

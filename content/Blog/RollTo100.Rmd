@@ -1,0 +1,49 @@
+---
+title: 'Rolling to Reach 100'
+date: '2022-06-28'
+author: Nick Arnosti
+---
+
+
+One of the delights of being married to a teacher is vacationing together over the summer. One of the delights of being married to an *adventurous* teacher is vacationing in Albania. And one of the delights of being married to an adventurous *math* teacher is talking about math while vacationing in Albania. This post is inspired by discussions during our recent trip. It uses dynamic programming and martingale theory to study a simple question about rolling dice.
+
+**The question is as follows.** You repeatedly roll a six-sided die, and track the cumulative sum of all rolls. You stop once this sum reaches (or exceeds) 100. On average, how many rolls are needed before stopping?
+
+# Exact Solution via Dynamic Programming
+
+In some sense, this question can be addressed with brute force. We know that at most 100 rolls are needed (if we rolled all ones). We could therefore enumerate over all sequences of length 100, see how long it takes to reach a sum of 100 in each case, and from this calculate an average (or any other statistic of interest). Of course, even with modern computing, this approach is infeasible: there are simply too many sequences of length 100! Of course, we don't need to go all the way to 100 rolls for each sequence, but even if we truncate as soon as we reach a sum of 100, this approach will not be viable.
+
+We can use dynamic programming to get around this challenge and calculate an exact answer to our question. Basically, we will solve for what can happen after a small number of die rolls, and use this solution to determine possible outcomes after a larger number of die rolls. More specifically, let $N$ be a matrix whose $(i,j)^{th}$ entry reports the number of sequences of $i$ rolls that sum to exactly $j$. Then it is clear that $N[1,j] = 1$ for $1 \le j \le 6$, and $N[1,j] = 0$ otherwise. Calculating other entries directly is possible but non-trivial: for example, $N[3,6] = 10$, because we could roll 1+2+3 in six different orders, or 1+1+4 in three different orders, or 2+2+2.
+
+Instead of this direct calculation, we can use information for $i$ rolls to determine possible outcomes for $i+1$. Specifically, in order to reach $j$ after $i+1$ rolls, we must have reached a number between $j-6$ and $j-1$ after $i$ rolls, and then rolled the appropriate value to land exactly on $j$. In other words, we have the following recursion: $$N[i+1,j] = \sum_{k = 1}^6 N[i,j-k].$$ This observation allows us to very efficiently fill out the values of $N$, and we can easily go up to the hundred rows needed to answer our question. 
+
+It can be more convenient to work with probabilities, rather than counts, so define $P[i,j] = N[i,j]/6^i$. Thus, $P[i,j]$ represents the probability of reaching a sum of exactly $j$ after $i$ rolls. Once we have $P$, we can calculate all sorts of fun things. For example, the sum of the $j^{th}$ column gives the probability that we exactly land on a sum of $j$ at some point. Meanwhile, the sum of the $i^{th}$ row for values up to $99$ gives the probability that after $i$ rolls, we have not yet reached a sum of 100. If we sum entries of $P$ for $i$ and $j$ ranging from 1 to 99, we get the expected number of rolls needed to reach a sum of 100, minus 1.^[This realization produced a very satisfying "mind blown" reaction from Amanda.] This can be seen either by using the previously mentioned fact about the sum of columns of $P$ (summing column sums 1...99 gives the expected number of values less than 100 that we exactly land on, which is one less than the total number of rolls), or the fact about the sum of rows of $P$ (if $R$ is the number of rolls needed, then summing the $i^{th}$ row from 1 to 99 gives $\mathbb{P}(R > i)$, and for any non-negative integer-valued random variable $R$, $\mathbb{E}[R] = \sum_{i = 0}^\infty \mathbb{P}(R > i)$).
+
+The following code calculates, for any given target, the expected number of rolls required to reach it.^[An elegant variation includes $i=0$ and $j = 0$ rows, with $N[0,0] = 1$; then no $+1$ is needed in the final step, but I decided the resulting code is slightly less readable.]
+```{r, echo=TRUE}
+#Roll a 6-sided die. How many rolls to reach or surpass target?
+Target = 100
+N = matrix(0,nrow=Target-1,ncol=Target-1)
+N[1,1:6] = 1
+for(i in 2:(Target-1)){ 
+	for(j in 2:(Target-1)){
+		if(j>6) N[i,j] = sum(N[i-1,(j-6):(j-1)])
+		else N[i,j] = sum(N[i-1,1:(j-1)])
+	}
+}
+1+(1/6^(1:(Target-1)))%*%N%*%rep(1,Target-1)
+```
+
+# Approximate Solution via Martingales
+
+Dynamic programming gave us an answer of 29.047..., but is unsatisfying in several ways. Although it was easy to make a computer do the necessary calculations, doing them by hand would be quite tedious. Furthermore, the calculations are not *illuminating*: they do not explain *why* the answer is approximately 29, or how this answer would change for different targets, or different values on the faces of the die. This is where martingale theory can come in.
+
+Martingales are often described as gambling games, so let's take that approach. Imagine a game between person $A$ and person $B$. Each time $A$ rolls, $B$ pays $A$ the value of the roll (so \$1 for rolling a 1, and \$6 for rolling a 6). To make the game fair, before each roll, $A$ must pay $B$ the expected value of the roll, \$3.50. They agree to play until $B$ has paid $A$ at least 100 dollars in total.
+
+We know that $B$ will pay out between \$100 and \$105 (depending on the exact sequence of rolls), and will collect \$3.50 times the number of rolls. Because the game is fair, $B$ expects to make a profit of $0$.^[As anyone who has studied martingale theory knows, this conclusion requires that the conditions of the [optional stopping theorem](https://en.wikipedia.org/wiki/Optional_stopping_theorem) hold, but this is easy to see in our case.] Therefore, it must be that the expected number of rolls required is somewhere between $100/3.5 = 28.6$ and $105/3.5 = 30$.
+
+# Final Thoughts
+
+Both approaches discussed above have their advantages. Martingales allow for quick back-of-the-envelope calculations: if rolling a die whose sides have an average value of $\mu$ until reaching a target of $T$, the expected number of rolls is approximately equal to (and slightly higher than) $T/\mu$. As long as we can't shoot ``too far'' past $T$, this will give a fairly good approximation. If an exact answer is needed, or if large jumps that significantly overshoot $T$ are likely, then dynamic programming can come to the rescue. Another advantage of dynamic programming is that it gives the full distribution of the number of rolls needed (not just the mean).
+
+The tradeoff between complex but exact answers and more insightful approximate answers arises frequently. I hope to write another post soon illustrating this tradeoff with a simple problem about random graphs which is loosely inspired by kidney exchange -- stay tuned!

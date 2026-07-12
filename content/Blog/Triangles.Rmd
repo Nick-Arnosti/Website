@@ -1,0 +1,104 @@
+---
+title: 'Where is the Center of a Triangle?'
+date: '2025-03-09'
+author: Nick Arnosti
+---
+
+My wife is a middle-school math teacher, and this spring, she is teaching geometry to some of her students. This gave me a chance to learn some geometry! Her upcoming unit is different notions of the center of a triangle. She gave me a quick primer on a few definitions, and then I went to think about things on my own. This post is what resulted from that thinking, and is not endorsed for use on middle-schoolers. 
+
+In particular, I have managed to write a post about geometry that includes no pictures! This is truly a shameful thing to do. But including pictures would take more time, and I have decided that it's not worth it in this case. But if you read on, please draw your own pictures! Start by drawing a triangle, and labeling its three corners A, B, and C.
+
+**The Prompt.** We are given a triangle, and we want to find its "center". How should we define this?
+
+This is not so clear. The center of a circle is obvious. The center of a square is also fairly clear. But the center of a triangle? 
+
+After further consideration, several possible definitions come to mind:
+
+* A point that is equally far from all vertices (corners) of the triangle. 
+* A point that is equally far from all three *sides* of the triangle. 
+* A point that, when lines are drawn from it to the three vertices, divides the triangle into three smaller triangles of *equal area*.
+
+In all three cases, a natural question is whether such a point exists, and if it does, whether it is unique. Furthermore, we might wonder how to find these points procedurally, and whether the definitions above turn out to identify the same point, or three different points.
+
+It turns out that for each of the above definitions, there is a unique point that satisfies it: these points are called the **circumcenter**, the **incenter** and the **centroid** respectively. Each of these points can be found at the intersection of three special lines, and in general they are all different (though of course they coincide in special cases, such as for an equilateral triangle).
+
+# Circumcenter
+
+How would we go about finding a circumcenter? Well, we could start by looking for points that are equally far from A and B. One such point is easy to find: the midpoint of AB! But from this, we can find others! Draw a line through this midpoint, that is perpendicular to AB. (That is, draw the perpendicular bisector of AB). 
+
+**Claim** Any point on the perpendicular bisector of AB is equally far from A and B. 
+
+*Proof*. Let M be the midpoint of AB and let P be a point on the perpendicular bisector. Then AMP and BMP are congruent right triangles, so their hypotenuses have the same length (which can be found using the Pythagorean theorem).
+
+**Claim** Any point that is *not* on the perpendicular bisector of AB is *not* equally far from A and B. 
+
+*Proof*. Pick a point P, which necessarily is either on "side A" of the perpendicular bisector, or on "side B". Suppose without loss of generality that it is on "side A". We will show that this point P is closer to A than to B. (Middleschoolers would likely look at a drawing and say this is obvious, but I find the explanation that follows elegant and satisfying.) Draw the line from P to B. Necessarily, this line will cross the perpendicular bisector at some point X. Draw the line from X to A. Because X is on the perpendicular bisector, XA and XB have equal length. It follows that the distance from P to B (which is PX + XB) is the same as the distance traveled when going from P to A *by way of X* (PX + XA). This is of course (by the triangle inequality) longer than the distance from P to A directly.
+
+Thus, we have found all points that are equally far from A and B. If there is a circumcenter, it must lie on this line. However, it also must lie on the perpendicular bisector of BC. Because these perpendicular bisectors are not parallel, they intersect at exactly one candidate point -- call this M. (This establishes that we cannot have more than one circumcenter.) Note that the distance from M to A is the same as the distance from M to B, which is the same as the distance from M to C. Therefore, we have found the circumcenter!
+
+By the second claim above, M must also lie on the perpendicular bisector of AC, so we have also proven that the three perpendicular bisectors intersect at a single point.
+
+**Fun Facts:**
+
+* This is called the circumcenter because it is the center of the circle that circumscribes ABC.
+* The circumcenter can lie *outside* of the boundaries of the triangle! It's kind of fun to think about when this occurs. (It turns out, this occurs whenever the triangle has an obtuse angle. If the triangle has a right angle, then the circumcenter is the midpoint of the hypotenuse.)
+* The previous fun fact is closely related to the (fairly magical) inscribed angle theorem: if I fix two points A and C on a circle and slide point B along the circumference of the circle, the angle ABC does not change as B moves. (And this angle is half the angle AMC, where M is the middle of the circle.)
+* The previous fun fact was relevant to navigation without compass or GPS. Suppose I am at sea. I see two landmarks that are on my map, and can calculate the angle between them. However, I cannot tell my distance from these landmarks, nor do I have a compass. Where could I be? (The answer is that the set of possible points forms a circle, which is the circle circumscribing the triangle involving the two landmarks and my true location. I should further be easily able to determine which *side* of the chord AC I lie on by determining which of the landmarks is to the left and which to the right.)
+
+# Incenter
+
+What about finding a point that is equally far from all three sides? To do this, we need to revisit what we mean by the distance from a point to a line. We mean the distance to the *closest* point on the line, which can be found by drawing a perpendicular to the line that passes through the point.
+
+As before, looking for a point that is equally far from three lines seems hard, but finding a point that is equally far from the lines AB and AC is easy! Just choose the point A (distance zero from each line). More generally, it is easy to see that any point P along the angle bisector of A will be equidistant from AB and AC: drawing the perpendicular from P to each of these lines results in two congruent right triangles.
+
+We can apply the same logic to conclude that any point along the bisector of angle B is equidistant from AB and BC. But these bisectors are not parallel, and thus will meet at exactly one point. This point is equidistant from AB, AC, and BC. Furthermore, this is the only point with this property (like for the circumcenter, it is not hard to see that the bisector of A contains *all* points that are equidistant from AB and AC, from which this claim follows).
+
+**Fun Fact** 
+
+* This is called the "incenter" because it is the center of the largest circle that can be inscribed in ABC.
+* This is the point in the interior of the triangle that is "as far as possible" from the exterior of the triangle.
+
+# Centroid
+
+Now, let's look for a point $P$ that, when line segments are drawn from $P$ to $A, B, C$, divides the triangle into three smaller triangles of equal area. 
+
+It is easy to see that if such a point exists, it must be unique. Suppose that we have such a point $P$. Any other point $M$ inside of the triangle must lie within at least one of ABP, ACP, or BCP (if M is on segment AP, say that it lies in both ABP and ACP). But if $M \ne P$ lies within ABP, then ABM has strictly smaller area than ABP, and thus M does not divide ABC into three triangles of equal area.
+
+But how do we find such a point? Well, dividing ABC into three equal areas seems tricky, but dividing it into two equal areas doesn't seem so bad -- just draw a line from A to the midpoint of BC (call this $M$). By definition, the two resulting triangles have the same base, and the same height (the perpendicular from A to BC), so they have the same area. Furthermore, for any point $P$ on $AM$, the triangles ABP and ACP have the same area. This is because 
+$$Area(ABP) + Area(BPM) = Area(ABM) = Area(ACM) = Area(ACP) + Area(CPM)$$
+It is easy to see that BPM and CPM have the same area (again -- same base, and same height). Therefore, the above equation implies $Area(ABP) = Area(ACP)$.
+
+From this, we can now slide $P$ from $M$ to $P$: BCP starts with area zero, and eventually becomes the whole triangle ABC, so somewhere along the line, it must have area equal to $1/3$ the area of ABC. 
+
+This makes sense, but *where* along line AM is the centroid? One way to find this is to draw the line from B to the midpoint of AC. By the same argument as above, the centroid must lie along this line, so it must be the point where this line intersects with AM. (This shows that all three medians intersect at a common point.) 
+
+**Fun Facts**:
+
+* It turns out that the centroid always lies 1/3 of the way from $M$ to $A$. The reason is that the area of BCP is proportional to the height of BCP, which is proportional to the distance traveled along $MA$. Since we want the area of BCP to be 1/3 the total area of the triangle, we must travel 1/3 the distance from $M$ to $A$.
+* If we represent ABC on a coordinate plane, the centroid can be found by simply averaging the coordinates of A, B, and C. This is easy to see from the previous fun fact: $M = \frac{1}{2}B + \frac{1}{2}C$, and the centroid is $\frac{2}{3}M + \frac{1}{3}A = \frac{1}{3}A + \frac{1}{3}B + \frac{1}{3}C$.
+* The centroid is also the "center of mass" of the triangle (assuming uniform density).
+
+# Summary and Closing Thoughts
+
+This point has discussed three classical definitions of the center of a triangle, as well as methods for finding them.
+
+**Circumcenter**: a point equidistant from all three vertices. Can be found as the intersection of the perpendicular bisectors of each side.
+
+**Incenter**: a point equidistant from all three sides. Can be found as the intersection of the angle bisectors.
+
+**Centroid** a point that divides the triangle into three equal-sized smaller regions. Can be found as the intersection of medians (lines from a corner to the midpoint of the opposite side).
+
+There's also a point called the **orthocenter**, which lies at the intersection of the three "perpendiculars" dropped from each corner to the opposite line segment. Note that if the triangle is obtuse, you will need to extend this line, and the orthocenter (like the circumcenter) will lie outside of the triangle. There's a fun fact that says the circumcenter, centroid, and orthocenter are colinear (lie along the "Euler line"), and that the centroid is 1/3 of the way from the circumcenter to the orthocenter. But I haven't easily been able to motivate for myself why the orthocenter is independently interesting (i.e. in what sense can it be considered the "center" of ABC). So I de-emphasized it in this post. 
+
+As I thought about this, it seemed pretty magical that we kept having three lines intersecting at the same point! (For the circumcenter, the three perpendicular bisectors; for the incenter, the three angle bisectors; for the centroid the three medians; and for the orthocenter, the three altitudes.) It turns out there's something called [Ceva's Theorem](https://en.wikipedia.org/wiki/Ceva%27s_theorem) which explains this.
+
+In the sheet my wife showed me, the points of center were *defined* as the intersection of three lines of interest. However, it's not clear a priori why these lines should intersect in a common point, or why this point should be considered a "center", To me, it makes more sense to define the center in terms of distances and/or areas, and then to conclude that this point lies at the intersection of lines of interest (as I did in this post).
+
+
+
+<!--
+# Other Fun Triangle Facts
+
+Imagine taking a triangle, cutting out the corners, and putting them all together. You always get 180 degrees! This is actually somewhat surprising (though I didn't appreciate it when I was younger), but easy to prove by considering a line parallel to AB through C.
+-->
+

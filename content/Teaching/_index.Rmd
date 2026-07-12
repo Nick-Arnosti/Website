@@ -1,0 +1,50 @@
+---
+title: 'Engineering the Allocation of Public Resources'
+date: ''
+---
+
+
+
+**Unit 1: Foundations**
+
+
+* Session 1: Efficiency [Lecture Slides](Session1_ParetoEfficient.pptx)
+  - Rank Efficiency; Pareto Efficiency; Serial Dictatorship; First Choices First
+* Session 2: Incentives [Lecture Slides](Session2_Incentives.pptx)
+  - Truthful; Individually Rational; the Core; "Math Trades" for Board Games
+* Session 3: TTC + Fairness [Lecture Slides](Session3_TopTradingCycles.pptx)
+  - Top Trading Cycles; Random Mechanism; Symmetry
+* Session 4: A Striking Equivalence [Lecture Slides](Session4_RSDvsTTCRE.pptx)
+  - Random Serial Dictatorship; Top Trading Cycles from Random Endowments
+* Session 5: Intro to School Choice <!--[Lecture Slides](Session5-SchoolChoice.pptx)-->
+  - First Choices First (Boston); Generalized Top Trading Cycles; Justified Envy; Respecting Priorities
+* Session 6: The Deferred Acceptance Algorithm <!--[Lecture Slides](Session6-DA.pptx)-->
+  - School/Student Proposing Deferred Acceptance; Lone Wolf Theorem; Student Optimal Stable Match
+* Session 7: Intro to Residency Matching <!--[Lecture Slides](Session7-DA+Residencies.pptx)-->
+  - Truthfulness of Deferred Acceptance; Unraveling; Stability
+* Session 8: Matching with Couples <!--[Lecture Slides](Session8-Couples.pptx)-->
+  - Non-Existence of Stable Matching; Small Core; 
+* Session 9: Tiebreaking <!--[Lecture Slides](Session9-Tiebreaking.pptx)-->
+  - Weak Stability; Strong Stability; Single Tiebreaking; Multiple Tiebreaking
+* Session 10: University Admissions + Midterm Study Guide <!--[Lecture Slides](Session10-CollegeAdmissions+StudyGuide.pptx)-->
+
+**Unit 2: Diversity and Affirmative Action**
+
+
+* Session 11: Maximum Quotas <!--[Lecture Slides](11-12_Quotas.pptx)-->
+  - Diversity Visa Lottery; Maximum Quota; Priority Domination; Nested; 
+* Session 12: Minimum Quotas <!--[Lecture Slides](11-12_Quotas.pptx)-->
+  - Mechinot Gap Year Matching; Minimum Quota; Top Down Processing
+* Session 13: Intro To Reserves <!--[Lecture Slides](13-14_Reserves.pptx)-->
+  - H1B Visa Lottery; Minimum Guarantee; Over and Above; Sequential Lotteries
+* Session 14: Affirmative Action in India <!--[Lecture Slides](AffirmativeAction_India.pptx)-->
+  - Vertical Reservations; Horizontal Reservations; Overlapping Reservations
+* Session 15: Chilean Constitutional Assembly <!--[Lecture Slides](ConstitutionalAssembly_Chile.pptx)-->
+  - [Chilean Election Data](https://docs.google.com/spreadsheets/d/1vMa7RjvdQ5CuT-u01REDmeW7msJ9s6-IAOLK6vonBJc/edit?usp=sharing)
+* Session 16: Affirmative Action in Brazil <!--[Lecture Slides](AffirmativeAction_Brazil.pptx)-->
+* Session 17: Matching with Complex Preferences <!--[Lecture Slides](17-18_Substitutability+Contracts.pptx)-->
+  - Substitutability; Law of Aggregate Demand; Irrelevance of Rejected Contracts; Generalized Deferred Acceptance (Cumulative Offers)
+* Session 18: Matching with Contracts <!--[Lecture Slides](17-18_Substitutability+Contracts.pptx)-->
+  - Kelso-Crawford; Cadet Branch Matching; University Admission with Financial Aid
+
+**Unit 3: Dynamic Matching**

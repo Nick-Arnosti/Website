@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Best Paper of EC 2024 | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Best Paper of EC 2024</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/08/08</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>The EC 2024 best paper award went to <a href="">When Geography Shapes Preferences: Redesigning Teacher Assignment in Italy</a>, by Mariagrazia Cavallo and Battal Doğan. This paper is up my alley, but I had a hard time understanding it from the talk, so I decided to take a closer look.</p>
+<div id="the-setting" class="section level1">
+<h1>The Setting</h1>
+<p>Like a number of other countries, Italy has a centralized assignment of school teachers to public schools. Like these other countries, the key inputs used in this assignment algorithm are (i) capacities of schools, (ii) each school’s priority ranking of teachers, and (iii) teachers’ preferences over schools. The key novelty is that each teacher’s list is not simply a ranking of schools. Rather, teachers can list schools or <em>geographic regions</em>, so for example a list might look like <span class="math inline">\(S1 \succ R1 \succ S2\)</span>, where <span class="math inline">\(S1\)</span> and <span class="math inline">\(S2\)</span> are individual schools and <span class="math inline">\(R1\)</span> is a region containing several schools. The interpretation of such a list is that the teacher prefers S1 to any other option, is indifferent among schools in R1 and prefers any of these to any school other than S1, and then prefers S2 to any other school, or to going unassigned.</p>
+<p>The question is, what should be done with this information? How should “ties” in teacher preference rankings be treated?</p>
+<p>One obvious solution is to simply break these ties arbitrarily, and then run teacher-proposing deferred acceptance. This is essentially what is done in most school districts, when there are ties in school priorities.</p>
+<p>The downside of this approach is that it may lead to inefficient outcomes. For example, suppose that there are two schools <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>, and two teachers <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span>. Teacher <span class="math inline">\(t_1\)</span> has the highest priority at both schools, and lists the region <span class="math inline">\(\{s_1, s_2\}\)</span> first, while teacher <span class="math inline">\(t_2\)</span> lists only <span class="math inline">\(s_1\)</span>. If ties are broken in the order <span class="math inline">\(s_1 \succ s_2\)</span>, then we end up assigning teacher <span class="math inline">\(t_1\)</span> to <span class="math inline">\(s_1\)</span>, and leaving <span class="math inline">\(t_2\)</span> unassigned. It would be just as good for <span class="math inline">\(t_1\)</span>, and better for <span class="math inline">\(t_2\)</span>, to assign <span class="math inline">\(t_2\)</span> to <span class="math inline">\(s_1\)</span>, and <span class="math inline">\(t_1\)</span> to <span class="math inline">\(s_2\)</span>.</p>
+<p>If teachers are telling us that they are indifferent between a set of schools, we would ideally like to take advantage of this indifference to assign them to schools that are less popular with other teachers. The Italian system has the following feature</p>
+<blockquote>
+<p>Whenever several teachers are considered for the same school, any teacher who ranks this school as part of a finer region is given priority over any other teacher who ranks this school as part of a coarser region (overriding the original priority rights), provided that the coarser region has at least one school with an available vacancy at that step of the algorithm.</p>
+</blockquote>
+<p>The motivation for this choice is that people who list a school as part of a region have chances to match at other equivalent schools, and thus it may be less costly to reject them from a single school in the region. The downside of this choice is that it can create justified envy, if a candidate who lost priority due to listing the school as part of a region fails to match to any school in that reason.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</div>
+<div id="high-level-thoughts" class="section level1">
+<h1>High Level Thoughts</h1>
+<p>Ties in DA-like procedures have already been extensively studied. Usually, the literature has assumed strict student preferences, ties in school priorities, and sought to find a weakly stable matching that optimizes student welfare. It has been shown that finding such a matching is incompatible with strategy-proofness for students (reference?).</p>
+<p>The innovation in this work is that the ties are now on the side (teachers) for whom welfare is being optimized.</p>
+<p>My intuition is that</p>
+<p><strong>Different types of teachers, schools need some of each?</strong></p>
+<p>Start from any maximum-cardinality feasible assignment. Anyone with justified envy in this assignment must be unassigned (because by assumption, teachers are indifferent between all schools in the region that they list). Thus, take any case of justified envy, and swap them in for the lowest-priority teacher who was previously assigned to a school. This maintains the number of assigned teachers, and increases school satisfaction (the priority of assigned teachers). Because school satisfaction increases monotonically, this process must eventually terminate. Thus, imposing respecting priorities (no justified envy) does not come at the cost of a maximum matching (when teachers are indifferent between all feasible options).</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>A more nuanced point that is likely of interest only to true DA nerds is the “provided that” clause, which suggests that priority depends not only on candidate lists, but also on the order in which proposals occur (which is known not to matter in standard deferred acceptance). To illustrate, consider a setting with two schools <span class="math inline">\(s_1\)</span> and <span class="math inline">\(s_2\)</span>, and three teachers: <span class="math inline">\(t_1\)</span> lists only <span class="math inline">\(s_1\)</span>, <span class="math inline">\(t_2\)</span> lists only <span class="math inline">\(s_2\)</span>, and <span class="math inline">\(t_3\)</span> lists the region <span class="math inline">\(\{s_1, s_2\}\)</span>, with the index of schools causing <span class="math inline">\(t_3\)</span> to apply first to <span class="math inline">\(s_2\)</span>. Suppose that baseline priorities rank <span class="math inline">\(t_1 &gt; t_3 &gt; t_2\)</span> at both schools. If the proposal order is <span class="math inline">\(t_1, t_2, t_3\)</span>, then when <span class="math inline">\(t_3\)</span> applies to <span class="math inline">\(s_2\)</span>, there is no vacancy in the region <span class="math inline">\(\{s_1, s_2\}\)</span>, and thus <span class="math inline">\(t_3\)</span> should be chosen over <span class="math inline">\(t_2\)</span> (according to baseline priorities). On the other hand, if the proposal order is <span class="math inline">\(t_3, t_2, t_1\)</span>, then when <span class="math inline">\(t_2\)</span> applies to <span class="math inline">\(s_2\)</span>, there is a vacancy in <span class="math inline">\(s_1\)</span>, so <span class="math inline">\(t_3\)</span> is rejected from <span class="math inline">\(s_2\)</span>. Later <span class="math inline">\(t_3\)</span> will be rejected from <span class="math inline">\(s_1\)</span>, resulting in the allocation <span class="math inline">\(\{s_1, t_1\}, \{s_2, t_2\}\)</span>, and causing justified envy.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

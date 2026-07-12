@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Probability and Statistics on b</title>
+    <link>/categories/probability-and-statistics/</link>
+    <description>Recent content in Probability and Statistics on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 08 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="/categories/probability-and-statistics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Will HH appear before TH?</title>
+      <link>/blog/probabilitypuzzles/</link>
+      <pubDate>Sun, 08 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/probabilitypuzzles/</guid>
+      <description>I recently wrote about a flawed analysis of the hot hand in shooting data, which revealed some potentially counter-intuitive phenomena involving coin flips. Continuing in that vein, here are some more fun facts about fair coin flips!
+Let’s start with an exercise for the reader. Suppose we repeatedly flip a fair coin. Which of the following statements are correct?
+There is a 50% chance that the sequence HH appears before the sequence HT There is a 50% chance that the sequence HH appears before the sequence TH The expected number of flips until HH appears is the same as the expected number of flips until HT appears.</description>
+    </item>
+    
+    <item>
+      <title>The Fallacy of the Hot Hand Fallacy</title>
+      <link>/blog/hothand/</link>
+      <pubDate>Fri, 06 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/hothand/</guid>
+      <description>Harry and Tom decide to play a game. They flip a fair coin \(n\) times. Each time the coin comes up heads, there is an opportunity to score. Harry scores a point if the next flip is heads, and Tom scores if the next flip is tails. A player wins if after all \(n\) tosses, their score is higher than their opponents. Who is more likely to win?
+A natural instinct is that because each flip is fair (and independent of the past), both players are equally likely to win.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>School Choice on b</title>
+    <link>/tags/school-choice/</link>
+    <description>Recent content in School Choice on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/school-choice/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lottery Glitch in NYC Public Schools</title>
+      <link>/blog/lotteryglitch/</link>
+      <pubDate>Tue, 19 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/lotteryglitch/</guid>
+      <description>The New York Post recently reported on a “lottery glitch” in the application process for New York City Public Schools. Basically, parents could see their child’s lottery number, and could get a new lottery number by cancelling and re-starting their application. This creates an obvious issue, as applications can be repeatedly canceled until the child receives a good lottery number.
+What I want to focus on, however, is the line in the article, where a Manhattan mom learned that her daughter had a good lottery number, and “decided her daughter should re-do her list by putting more desirable schools at the top.</description>
+    </item>
+    
+    <item>
+      <title>How Can You Move Back on a Waiting List?</title>
+      <link>/blog/movingbackonawaitlist/</link>
+      <pubDate>Mon, 18 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/movingbackonawaitlist/</guid>
+      <description>Changes to School Admissions in NYC New York has made some recent changes to their middle and high school admissions process. Previously, all students would submit preference lists, which were processed using a variant of the Deferred Acceptance algorithm. Students who were not admitted to any school on their list1 could apply to schools with vacancies in a second round. In addition, those who were unhappy with their assignment could participate in an opaque appeals process.</description>
+    </item>
+    
+    <item>
+      <title>School Choice Lotteries</title>
+      <link>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

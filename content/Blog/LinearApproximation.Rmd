@@ -1,0 +1,58 @@
+---
+title: 'The Surprising Effectiveness of Linear Approximation'
+date: '2025-09-18'
+author: Nick Arnosti
+---
+
+
+A key idea from calculus -- used frequently in optimization -- is that we can use linear functions to locally approximate complicated non-linear functions. This post will illustrate the effectiveness of this approach for a very specific function, the square root (maintaining some continuity with my [previous post](https://nickarnosti.com/blog/approximatingsquareroots/)).
+
+# Estimating Square Roots to the Nearest Integer
+
+Let's start with the following goal: find the integer closest to $\sqrt{28}$. This is the type of problem that my wife gives to her middle school students. The answer is clearly either 5 or 6, since $5^2 = 25 < 28 < 36 = 6^2$. But is $\sqrt{28}$ closer to $5$ or to $6$?
+
+We are asking whether $\sqrt{28}$ is bigger or less than $5.5$, or equivalently, whether $28$ is bigger or less than $5.5^2$. We can solve this by calculating $5.5^2 = 121/4 = 30.25 > 28$, so therefore $5.5 > \sqrt{28}$, and thus $\sqrt{28}$ is closer to $5$ than to $6$. This method works, but requires squaring a fraction (which middle schoolers hate).
+
+When my wife teaches methods for estimating square roots, she gives her students the following shortcut: Since $28$ is closer to $5^2 = 25$ than $6^2 =36$, conclude that $\sqrt{28}$ is closer to $5$ than to $6$.
+
+The shortcut gets the right answer in this case, but when I heard about it, I was suspicious. Asking whether $\sqrt{n}$ is closer to $5$ than $6$ is *not* the same as asking whether $n$ is closer to $5^2$ than $6^2$. Or is it?
+
+It turns out that for any integer $n$, the shortcut will get the right answer! We can see this algebraically. Let's say that $n$ is in between $k^2$ and $(k+1)^2$. The shortcut says to compare $n$ to the average of $k^2$ and $(k+1)^2$, which is $k^2 + k + 1/2$. The correct approach is to compare $n$ to $(k+1/2)^2 = k^2 + k + 1/4$. While these two thresholds are not identical, there are no integers between them, so they yield the same answer for any integer $n$.^[This trick sadly does not work for cube roots: $4$ is closer to $1^3 = 1$ than to $2^3 = 8$, but $\sqrt[3]{4} \approx 1.59$ is closer to $2$ than to $1$. Many other counter-examples exist as well.]
+
+# Estimating Square Roots by Linear Interpolation
+
+What if we want an even better estimate of $\sqrt{28}$? Linear interpolation is our friend again! Since $28$ is $3/11$ of the way from $5^2 = 25$ to $6^2 = 36$, we will estimate $\sqrt{28} \approx 5 + 3/11$. 
+
+<!--
+approximate something like $S = \sqrt{5} + \sqrt{6} + \sqrt{7} + \sqrt{8}$? We already know (from before) that $\sqrt{5}, \sqrt{6}$ are less than $2.5$ and $\sqrt{7}, \sqrt{8}$ are more. Therefore, we have that
+\[ 9 = 2 + 2 + 2.5 + 2.5 < S < 2.5 + 2.5 + 3 + 3 = 11.\]
+But is the sum $S$ bigger or less than $10$?
+
+
+Here again, linear interpolation is our friend. Since $5$ is one-fifth of the way from $2^2$ to $3^2$, we will approximate $\sqrt{5}$ by $2 + 1/5$. Similarly, we will approximate $\sqrt{6} \approx 2 + 2/5$, $\sqrt{7} \approx 2 + 3/5$, $\sqrt{8} \approx 2 + 4/5$. Therefore, $S \approx 8 + 1/5 + 2/5 + 3/5 + 4/5 = 10$. Furthermore, because $f(x) = \sqrt{x}$ is concave, we know that this linear interpolation gives an *under-estimate* of each term, so $S$ must be bigger than $10$. (In fact, it is approximately 10.16.)
+-->
+
+More generally, if we know that $n = k^2 +j < (k+1)^2$, then the linear interpolation estimates that
+\[\sqrt{n} \approx k + \frac{j}{2k+1}.\]
+In the previous example with $n = 28$, we have $k = 5$ and $j = 3$. 
+
+That's our estimate, but how good is it? First of all, because $f(x) = \sqrt{x}$ is concave, we know that this method always gives an **under-estimate**. To see how much we miss by, we need to do some more algebra. Let $\sqrt{n} = k+\delta$ for some $\delta \in (0,1)$. Then 
+\[k^2 + j = n = (k+\delta)^2 = k^2 + 2k\delta + \delta^2,\]
+so we have $j = 2k\delta + \delta^2$. This means that our error is 
+\begin{align*}
+\sqrt{n} - (k + \frac{j}{2k+1})  & = (k+\delta) - (k + \frac{j}{2k+1}) \\
+& = \delta - \frac{j}{2k+1} \\
+& = \delta - \frac{2k\delta + \delta^2}{2k+1} \\
+& = \frac{\delta(1-\delta)}{2k+1} \\
+& \le \frac{1}{8k+4},
+\end{align*}
+where the final inequality uses the fact that for any $\delta$ we have $\delta(1-\delta) \le 1/4$.^[Credit to ChatGPT for helping to come up with this clean argument.]
+
+This approximation method can be used on all sorts of problems involving square roots, but it is especially nice for estimating sums of consecutive square roots. Suppose that we want to estimate 
+\[S = \sqrt{100} + \sqrt{101} + ... + \sqrt{121}.\]
+The linear interpolation approach says, "There are 22 terms here. The first is 10, the last is 11, so on average they are about $10.5$. Multiply $22 \times 10.5$ to get $S \approx 231$."
+
+This logic (and the associated calculation) are extremely simple, yet also very accurate! The analysis we just did tells us that (i) this is an under-estimate, and (ii) the error in estimating each term is at most $1/(8k+4)$ (in this example, $k = 10$). We have only $2k$ terms with any error (we get the first and last terms exactly). Therefore, the *total* error in our estimate is at most $2k/(8k+4) < 1/4$. In other words, we know that $S$ must be between $231$ and $231.25$. Woah! That's a very tight range. 
+<!--(For those too lazy to get their calculator, $S = 231.166...$)-->
+
+

@@ -1,0 +1,33 @@
+---
+title: 'Lottery Glitch in NYC Public Schools'
+date: "2022-04-19"
+author: Nick Arnosti
+tags:
+  School Choice
+categories:
+  Market Design
+---
+
+The New York Post recently [reported on a "lottery glitch"](https://nypost.com/2022/04/16/parents-uncover-major-glitch-in-nyc-school-lottery-system/) in the application process for New York City Public Schools. Basically, parents could see their child's lottery number, and could get a new lottery number by cancelling and re-starting their application. This creates an obvious issue, as applications can be repeatedly canceled until the child receives a good lottery number.
+
+What I want to focus on, however, is the line in the article, where a Manhattan mom learned that her daughter had a good lottery number, and "decided her daughter should re-do her list by putting more desirable schools at the top." In other words, learning the lottery number actually *changed which schools her daughter listed.*
+
+### Why Does Learning Your Lottery Number Matter?
+
+In the "classic" theory, this shouldn't happen, as the Deferred Acceptance algorithm used by New York City is "strategy-proof" for students: no matter their priority at each school, they should truthfully report their preferences. In practice, students are often allowed to apply to only a limited number of schools, and must strategize about which to include. Arguably more importantly, students and parents often don't know their own preferences! With over 700 high school programs in New York City, parents often complain about the daunting process of researching and ranking them. Learning their lottery number could help them direct their attention: those with bad lottery numbers could ignore schools known to be highly competitive, while those with better lottery numbers could spend time determining their preferences among these schools.
+
+A similar phenomenon arose for the room draw at Williams College. Williams used a Dynamic Serial Dictatorship: when your turn came, you went to a building with large printed floor plans of each dorm, and claimed the room of your choice. The draw order was published weeks in advance. Senior year, my group got a very high lottery number. This allowed us to focus our attention on visiting a handful of very desirable options. Those with worse numbers were obviously less happy, but at least knew that they could skip visiting these desirable dorms. 
+
+For years, I've been thinking about this story and its implications for school choice. One important difference is that in school choice, schools typically have different rankings of students, and the lottery is used only as a tiebreaker. Therefore, in contrast to my dorm experience, it may be difficult to infer which schools will admit you from your lottery number. Still, the number does give some useful information. 
+
+I hadn't realized until reading this article that New York actually does show parents their number! At first, I thought this might be unintentional, but the photos show that it is clearly labeled as "Random Number", and accompanied by text saying "To learn more about your random number, click [here](https://www.schools.nyc.gov/enrollment/enroll-grade-by-grade/how-students-get-offers-to-doe-public-schools/random-numbers-in-admissions)." Following the link leads to a page which explains how you can see your random number, how to compare random numbers (i.e. which are better), and discusses whether this number should inform your decision of where to apply. The latter discussion is mostly a disclaimer that it can be difficult to know whether your number is good enough to get you in to a particular school. Thus, it seems that showing parents their child's lottery number is not a mistake: rather, the mistake was allowing this number to be reset. 
+
+### Closing Thoughts
+
+I think I am in favor of showing parents their number. Not only does this potentially help to guide their search, it also increases transparency (makes the final outcome easier to audit and explain). However, I think the city could do more to make these numbers interpretable: the current alphanumeric strings are pretty scary-looking. In addition, I would want to see the city provide more useful information about admissions chances, and how the lottery number influences them. Most systems are hesitant to do this, worried that any information will be interpreted as a guarantee, leading to disappointed applicants. But it seems to me that with an appropriate disclaimer, the possible benefits of more information outweigh this concern.
+
+Do you know of other systems that use a lottery, but tell applicants their lottery number in advance? **If so, share them in the comments below!**
+
+
+
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why You Should Bet on Favorites | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Why You Should Bet on Favorites</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2019/12/03</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>Today’s post is about a topic that caught my eye during my first year of graduate school: inferring win probabilities from betting lines. It is an empirical fact that conventional betting line estimates systematically understate the favorite’s chance of winning. Traditional explainations argue that bettors are irrational. This post points out that the bias could appear even with rational bettors, due to the fact that bookies set the odds to minimize their exposure.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Because I attended the Packers-Giants football game on Sunday, I will use that game as a running example.</p>
+<div id="inferring-win-probabilities-from-betting-lines" class="section level2">
+<h2>Inferring Win Probabilities from Betting Lines</h2>
+<p>Suppose that someone offers you the following contract: you pay them <span class="math inline">\(p\)</span> up front, and they will pay you $1 if the Packers defeat the Giants. If you are risk neutral and believe the Packers’ chance of winning is <span class="math inline">\(q\)</span>, the contract is favorable if <span class="math inline">\(p &lt; q\)</span>, and fair if <span class="math inline">\(p = q\)</span>. Therefore, we might interpret the contract price <span class="math inline">\(p\)</span> as an estimate of the win probability <span class="math inline">\(q\)</span>. Last week it cost about $0.76 to place a bet that would pay $1 if the Packers defeated the Giants,<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> so we might estimate that the Packers had a 76% chance of winning.</p>
+</div>
+<div id="accounting-for-the-bookies-cut" class="section level2">
+<h2>Accounting for the Bookie’s Cut</h2>
+<p>This estimate can be refined by accounting for the fact that bookmakers are trying to make a profit. For example, it cost about $0.28 to place a bet that would pay $1 if the Giants won, and it clearly can’t be the case that the Packers have a 76% chance of winning and the Giants have a 28% chance. The apparent contradiction arises because the bookie wants a cut of the action. We can estimate the size of this cut by asking “How much would it cost to guarantee a $1 payout?” If the bookie took no cut, the answer would be $1. For the Packers-Giants game, you had to pay $0.76+$0.28 = $1.04.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> We can refine our estimated win probability by dividing the cost of the Packers bet by the total cost: <span class="math inline">\(0.76/1.04 \approx 0.73\)</span>.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+</div>
+<div id="the-favorite-longshot-bias" class="section level2">
+<h2>The Favorite Longshot Bias</h2>
+<p>The theory that betting odds provide unbiased win probability estimates can easily be tested. In cases where the favorite is predicted to win with probability 73%, how often do they actually win? Many such studies have been conducted, and they all find that the favorites win more often than predicted.</p>
+<p>This effect, dubbed the “favorite longshot bias”, was first observed in betting on horse races. In 1981, a <a href="https://pubsonline.informs.org/doi/10.1287/mnsc.27.12.1435">paper</a> in Management Science argued that it is possible to make money by betting on favorites, despite the track’s large cut. The claim that favorites are better bets than longshots has also been demonstrated in British <a href="https://www.jstor.org/stable/2235276?seq=1#metadata_info_tab_contents">running races</a> and <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1467-9485.00151">soccer matches</a>, American <a href="https://www.sciencedirect.com/science/article/pii/S1062976916000041">college basketball and football</a>, and <a href="https://www.tandfonline.com/doi/full/10.1080/13504851.2013.842628">tennis</a>.</p>
+</div>
+<div id="explanations" class="section level2">
+<h2>Explanations</h2>
+<p>People have spent a lot of time trying to explain <em>why</em> the favorite longshot bias exists: see <a href="https://www.sciencedirect.com/science/article/pii/B9780444507440500093">Ottaviani and Sorensen (2008)</a> for a survey. The most common explanations relate to bettor psychology: they argue that bettors underestimate small probabilities, or are seeking excitement and are therefore risk-seeking. In this post, I will focus on a different explanation, first offered by <a href="https://www.journals.uchicago.edu/doi/pdfplus/10.1086/260600">Ali (1977)</a>. This explanation focuses on how bookies set the odds, rather than how gamblers react to them.</p>
+<p>Let’s write down a model. Each bettor has a gambling budget, and a subjective belief about the chance that the Packers will win. Subjective beliefs are drawn from a distribution that is centered at the Packers’ true win probability, and are independent from the gambling budget. Bettors use their subjective win probabilities to decide which bets to place.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<p>For example, suppose the Packers had an 80% chance of beating the Giants on Sunday. If the bookie sets odds to reflect this probability, everyone who believes the Packers have a greater than 80% chance will bet on them, with the remainder betting on the Giants. Because beliefs are centered at 80%, similar volumes should be bet on both teams. This betting pattern turns the bookie into a Packers fan for the day. If the Packers win, Packers backers get a modest payoff, and the bookie makes money. If the Giants win, their backers get much more, and the bookie loses money.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a></p>
+<p>The bookie might not like being exposed to such risk. Instead of setting the odds so that the same amount of money is bet on each team, most bookies try to set the odds so that their <em>exposure</em> (the amount of money they have to pay out) is the same for each outcome.<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a> To achieve this, the bookie wants most people to bet on the Packers, and therefore must set the odds to make a bet on the Packers more attractive. As a result, implied win probabilities understate the Packers’ chance of winning.<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a></p>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>There appears to be a large bias in most betting markets, whereby bets on favorites are much more profitable than bets on longshots. In some cases, bets on favorites may be literally profitable, despite large cuts taken by the bookie. In part, this bias comes from the fact that bookies manage their exposure, and want fewer bets placed on longshots than on favorites.</p>
+<p>I’m not endorsing sports betting (in fact, I have only placed bets on the one night of my life that I visited Las Vegas), but if you’re determined to bet, go with the favorite.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There is a huge literature on the favorite longshot bias (this is one reason I decided to stop thinking about it). Several papers attempt to empirically distinguish between explanations. I believe that behavioral considerations may play a role, and therefore view this post as an introduction to an alternative explanation, rather than an attempt to “refute” other explanations.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>In this post, I translate all bets into the language of “bet <span class="math inline">\(p\)</span> for a $1 payout.” Betting lines are traditionally reported in more complex ways. For example, the Money Line for the Packers-Giants game was Packers -310, Giants +255. A negative number indicates that the team is favored: a line of -310 means that you must bet $310 to earn $100 in profit (a total payoff of $410) if the Packers win, implying a price of <span class="math inline">\(\frac{310}{310 + 100} \approx 0.76\)</span> to potentially win a dollar. Positive lines are used for underdogs: a line of +255 means that you earn $255 in profit for each $100 that you bet, implying that it costs <span class="math inline">\(\frac{100}{255+100} \approx 0.28\)</span> to potentially win a dollar. In other contexts (such as picking a team to win the Super Bowl) odds like 4-1 are used. This means that a $1 bet could earn $4 in profit ($5 total). In other words, it costs $0.20 to win $1.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>A cut of less than 4% is fairly modest, and many bets have much larger cuts. For example, at the current <a href="https://www.vegasinsider.com/nfl/odds/futures/">Super Bowl Odds</a>, it would cost $1.25 to guarantee a dollar (see code below). I’ve noticed that this holds generally: cuts are larger for binary outcomes than outcomes with many options. This might be because the bookie faces higher risk in the latter case. More cynically, it might be because when there are many possible outcomes, bettors have a harder time determining the cut. <code>odds=c(3,4,4,8,8,10,14,16,20,40,40,80,80,100,100,200,200,300,500,rep(5000,3),rep(10000,4)) sum(c(1/(1+odds))) #Cost of ensuring a $1 payout</code>.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>One way of thinking about this is that at the current prices, a bettor who is determined to spend their budget will prefer to bet on the Packers if their belief is <span class="math inline">\(q &gt; 0.73\)</span>, and on the Giants otherwise.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>Importantly, the model assumes that learning the odds doesn’t influence how people bet. This could mean that they don’t update at all, or could simply mean that a person with initial belief of 60% who sees a price of $0.80 never updates their beliefs to be above 80%.<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>To put numbers on this, assume that 100 bettors bet $1 each, with 50 betting on each team, and assume that the bookie takes no cut. This implies that Packers backers get $1.25 back if they win, whereas Giants backers will be paid $5 if correct. If the Packers win, the bookie pays out $62.50, earning $37.50 in profit. However, if the Giants win, the bookie pays out $250, incurring a net loss of $150.<a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p>In most betting markets, it isn’t possible to perfectly predict the price that will equalize bets on the two sides, and bookies gradually adjust prices as bets are placed. Bets on horse races run on a “parimutuel” system, in which the bookie’s profit is defined to be identical for all outcomes. In this system, bettors place bets without knowing the precise odds. After bets are placed, the bookie takes a cut (usually around 20%), and distributes the remainder to winning bettors. This system seems amazing for the bookies, and I’m honestly not sure how they get away with it.<a href="#fnref7">↩</a></p></li>
+<li id="fn8"><p>To be precise, if beliefs are drawn from distribution <span class="math inline">\(F\)</span> centered at <span class="math inline">\(p = F^{-1}(1/2)\)</span>, then the bookie sets price <span class="math inline">\(\hat{p}\)</span> satisfying <span class="math inline">\(\frac{1 - F(\hat{p})}{\hat{p}} = \frac{F(\hat{p})}{(1-\hat{p})}\)</span>. It is straightforward to show that this has a unique solution for any <span class="math inline">\(F\)</span>, and that <span class="math inline">\(\hat{p}\)</span> is in between <span class="math inline">\(p\)</span> and <span class="math inline">\(0.5\)</span>.<a href="#fnref8">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

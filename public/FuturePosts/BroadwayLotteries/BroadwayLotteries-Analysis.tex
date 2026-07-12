@@ -1,0 +1,102 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=1 in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+\usepackage{url}
+\usepackage{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+
+\usepackage{listings}
+\usepackage{setspace}
+%SetFonts
+
+%SetFonts
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\link}[2]{{ \color{blue} \tt{\href{#1}{#2}}}}
+\newcommand{\na}[1]{{\color{blue} #1}}
+
+\title{Broadway Lotteries}
+\author{Nick Arnosti}
+\date{}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+\onehalfspacing
+
+\section{Broad Motivation}
+
+Preferences over full allocation (i.e. peers) present in many settings. For the most part, ignored by academic literature (i.e. school choice) due to being too complicated.
+
+In practice, often necessary to accommodate in some way -- half dome, marathon group entry, broadway shows. But maybe not done in the best way.
+
+Describe one common practice: apply for at most two tickets. This is best for couples, worse for singles, and much worse for trios (can plot down the line). 
+
+
+\section{Notes for This Week's Conversation}
+
+Let $G_i$ be the group that individual $i$ is in. We will assume that $i \in G_j$ if and only if $j \in G_i$.
+
+Most natural to define a pre-allocation $y \in \mathbb{N}^n$, and say that an individual's utility for a pre-allocation is simply ${\bf 1}(\sum_{j \in G_i} y_j \geq |G_i|)$.
+
+Maybe can define two-stage game in which people can form larger groups. Or maybe define the core of the game in some way, point out that a coalitional equilibrium outcome may not be in the core (i.e. two groups of two banding together).
+
+\section{Future Work}
+
+Could consider a model with multiple tiers of tickets (i.e. different seating locations). Location $j$ has quality $q_j$ and price $p_j$. Agent $i$ has taste $t_i$, and utility of $i$ for seat of type $j$ is $t_i q_j - p_j$. {\color{blue} Be careful not to necessarily be utilitarian: large $t_i$ could be interpreted as high value for good seats or as low cost of money.} One special case is $q_j = 1$ for all $j$, in which case $t_i$ amounts to a maximum willingness to pay for $i$. 
+
+Now must decide both who wins and which type of seats they get. For example, someone who applies for nice seats may be willing to accept cheaper ones, or even a mix of expensive and cheap seats that allows the whole group to go.
+
+\section{Old Notes -- most useful for conjectured theorems \ref{thm:2} - \ref{thm:4}}
+There are $k$ identical tickets to be allocated. There are $M$ individuals. Individual $i$ requests $n_i$ tickets. Let $N = \max_i n_i$. 
+
+\begin{enumerate}
+\item Each individual can apply once, and can list the number of tickets requested. For each individual $i$, generate $l_i \sim Exp(1)$, and rank individuals 
+\item Each individual can apply once. Draw lotteries from $U[0,1]$ and scale appropriately.
+\item Each individual can apply once. Give $N!/n_i$ tickets.
+\item Each group can apply once. Hold uniform random lottery. 
+\end{enumerate}
+\na{Assume that we draw until number of remaining seats is less than $N$ (then can discuss non-wasteful version).}
+
+
+\begin{theorem}
+Methods 1, 3, 4 are equivalent. (But 4 is a pain to verify)
+\end{theorem}
+
+\na{Not quite -- under 4, groups cannot win multiple times, under the others they can.}
+
+\begin{theorem} \label{thm:2}
+For any profile of requests, let $p_i$ be the probability of winning for agent $i$.  Fix $k$. Under exponential draws, there exists $c$ (depends on $k$, or $N$?) such that $|p_i/p_j - n_j/n_i| \leq c/M$.
+\end{theorem}
+
+\begin{theorem}
+For any profile of requests, let $p_i$ be the probability of winning for agent $i$. Suppose that $k < \sum_i 1/n_i$. 
+
+Under uniform draws, there exists $c$ such that $|p_i/p_j - n_j/n_i| \leq c/M$. \na{Key here is that we allow $k = \mathcal{O}(1)$ or $k$ growing with $M$ -- linearly or otherwise.}
+\end{theorem}
+
+\begin{theorem} \label{thm:4}
+Under uniform draws, with $k$ constant and $M$ growing, things look like exponential. Could potentially get Theorem 2 as consequence of Theorems 3 and 4.
+\end{theorem}
+
+
+
+There are $m$ groups of people who want to go to the show together. Group $j$ consists of $n_j$ individuals. Let $N = \max_i n_i$. Consider the following proposals:
+
+
+\end{document}  

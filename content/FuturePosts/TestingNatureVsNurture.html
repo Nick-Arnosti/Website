@@ -1,0 +1,37 @@
+---
+title: 'Nature vs Nurture in Testing'
+date: "2023-01-10"
+author: Nick Arnosti
+draft: true
+---
+
+
+
+<div class="figure"><span style="display:block;" id="fig:concavity2"></span>
+<img src="../../../../../../_index_files/ACTscores.png" alt="Average ACT scores for students from Saint Paul Public High Schools. [Source.](https://www.spps.org/Page/28069)"  />
+<p class="caption">
+Figure 1: Average ACT scores for students from Saint Paul Public High Schools. <a href="https://www.spps.org/Page/28069">Source.</a>
+</p>
+</div>
+<p>If students were randomly assigned to schools,</p>
+<p>Without additional information, there’s no way to say.</p>
+<p>With additional (pre-admission) test scores, could try to tease out is value added: look at test scores of incoming class, and measure growth.</p>
+<p>With application data, can also do something clever!</p>
+<p>#Simple Example</p>
+<p>Low-achieving and high-achieving students, low-achieving students mostly apply to school B. School assignment has no effect on achievement. Low achieving get an average of 16, while high-achieving get an average of 24.</p>
+<p>Each high-achieving attends A with probability 90%, and B with probability 10%.</p>
+<p>Each low-achieving attends A with probability 10%, and B with probability 90%.</p>
+<p>Because school A mostly consists of high-achieving students, it’s average ACT score is
+<span class="math display">\[\frac{90 \times \color{red}{24} + 10 \times \color{red}{16}}{90+10} = 23.2\]</span></p>
+<p><span class="math display">\[\frac{10 \times \color{red}{24} + 90 \times \color{red}{16}}{10+90} = 16.8\]</span></p>
+<p>Where do these probabilities come from? And what if there are differences we don’t observe? For example, some low-income students are actually high-achieving, but those students are disproportionately likely to go to school A.</p>
+<p>#Slightly More General Example</p>
+<p>Suppose that there are two schools, A and B. Each can accept 100 students.</p>
+<p>There are 240 students in the district. 180 of them rank A ahead of B, while the remaining 60 rank B ahead of A. To decide who to admit, A and B use (independent) lotteries.</p>
+<p>School <span class="math inline">\(A\)</span> has a lottery cutoff of <span class="math inline">\(1/2\)</span>, and school <span class="math inline">\(B\)</span> has a lottery cutoff of <span class="math inline">\(1/3\)</span> (i.e. a <span class="math inline">\(2/3\)</span> chance of acceptance).</p>
+<p>For each student <span class="math inline">\(i\)</span>, we observe their school <span class="math inline">\(s_i \in {A,B}\)</span> and their test score <span class="math inline">\(t_i\)</span>.</p>
+<p>Assume that a student’s test score depends only on their characteristics and school assignment, and not on others’ assignment. (Ideally, could separate peer effects from school effects.)</p>
+<p>For school <span class="math inline">\(A\)</span>: each student who lists <span class="math inline">\(A \succ B\)</span> gets a weight of 2, while those who list <span class="math inline">\(B \succ A\)</span> get a weight of <span class="math inline">\(6\)</span> (3 times greater).</p>
+<p>$[_{i} {}(s_i = A) t_i/p_i] = $</p>
+<p>For school <span class="math inline">\(B\)</span>: each student who lists <span class="math inline">\(A \succ B\)</span> gets a weight of 3, while those who list <span class="math inline">\(B \succ A\)</span> get a weight of <span class="math inline">\(3/2\)</span> (half as large).</p>
+<p>Hypothesis 1: there is no relationship between where people apply and their achievement.</p>

@@ -1,0 +1,55 @@
+---
+title: 'Kidney Chain Matching'
+date: '2022-04-17'
+author: Nick Arnosti
+draft: true
+---
+
+# Setting
+
+We want to get LOWER BOUNDS on average waiting time. Seems natural to ask, how quickly could we match if optimizing only for that one person? Certainly, when adding matching constraints, we can't expect to do significantly better. 
+
+Directed ER random graph. There is one altruistic donor, and one "favored" recipient. Each pair can donate to each other pair independently with probability $p$. Two related questions:
+
+1. If there are a total of $n$ incompatible pairs (including the favored recipient), what is the probability that there exists a chain from the donor to the favored recipient?
+2. If we add incompatible pairs one at a time, on average how large does the pool grow before we can match the favored recipient through a chain?
+
+Note that if we let $q_n$ be the answer to the first question (with $q_0 = 1$ for convenience), then the answer to the second question is $\sum_{n \ge 0} (1 - q_n)$.
+
+# Undirected ER Random Graphs
+
+Note that the problem is equivalent to one with undirected ER random graphs. The reason is that we only care about the result of the "first" flip between two vertices (the one from the first of these to be reached to the second). This is not true when analyzing 2-way and 3-way exchanges.
+
+So our questions can be rephrased as follows. If we have an ER random graph with each edge present with probability $p$, how likely is it that a specific source vertex is connected to a specific sink vertex? On average, many vertices are needed before these vertices are connected?
+
+# Exact DP Solution
+
+Let $P[k,n]$ denote the probability that exactly $k$ nodes can be reached from node 1 in an ER graph of size $n$. (Include node 1 both in the count of $n$ and the set of reachable nodes.)
+
+Then we have the following equation:
+\[ P[k,n+1] = P[k,n]\times (1-p)^k+\sum_{j = 1}^{k-1} P[j,n] \times (1 - (1-p)^j)\times P[k-j,n-k+1].  \]
+This is because for there to be $k$ reachable nodes, we either need to already have had $k$ and have the newcomer not connect to anyone, or to have had $j < k$ reachable, have the newcomer be reachable, and then connect from them to $k-j-1$ others.
+
+This can be used to write a DP that solves this problem in $O(n^3)$ time -- see "Kidney Exchange Probabilities" R document.
+
+# Approximate Solution
+
+The DP is nifty, but not very illumating. We can consider asymptotics of $p$ times our expected graph size, as $p \rightarrow 0$.
+
+Well-known results on ER random graphs say that if $np<1$, then all components have size $O(\log(n))$, so the probability of reaching a particular node is vanishingly small. If $np \rightarrow \lambda > 1$, then it is known that there is one large connected component involving a constant fraction of all nodes (and all other connected components are of size $O(\log(n))$). But we want to actually analyze the size of this large component! 
+
+Use the following heuristic reasoning. Suppose that our target node is reachable with probability $q(\lambda)$. The number of nodes connected to our target is approximately Poisson with mean $\lambda$. Each of these nodes is identical to our target node, so each must also be reachable with probability $q(\lambda)$. Our target node is reachable if and only if one of its neighbors is reachable. If we assume independence of reachability across these nodes, we get the following equation for $q(\lambda)$:
+
+\[ 1- q(\lambda) = e^{-\lambda q(\lambda)}.\]
+
+Note that for $\lambda \le 1$, the only solution is $q = 0$, and for $\lambda > 0$, there is exactly one non-zero solution $q \in (0,1)$. This is our approximation of the answer to our first question. The answer to our second question is then
+
+\[\int_0^\infty (1 - q(\lambda))d\lambda = 1 + \int_1^\infty (1 - q(\lambda))d\lambda \]
+
+Note that 
+\[ \int_1^\infty (1 - q(\lambda))d\lambda \int_1^\infty \int_{q(\lambda)}^{1} dq d\lambda = \int_0^1 \int_{1}^{-\log(1-q)/q} d\lambda dq = \int_0^1 (-\log(1-q)/q - 1) dq. \]
+The taylor expansion for $-\log(1-q)/q-1$ is $\sum_{k = 1}^{\infty} q^k/(k+1)$. Integrate this and you get $\sum_{k = 1}^\infty q^{k+1}/(k+1)^2$. Evaluate at $0$ and $1$ to get 
+\[\int_1^\infty (1 - q(\lambda))d\lambda = \sum_{k = 2}^\infty 1/k^2 = \pi^2/6-1.\]
+This implies that 
+\[\int_0^\infty (1 - q(\lambda))d\lambda  = \pi^2/6.\]
+In other words, on average we need $np \approx \pi^2/6$ before we can match our target recipient.

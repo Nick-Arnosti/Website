@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Simple Method to Approximate Square Roots | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>A Simple Method to Approximate Square Roots</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2025/09/16</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>The number <span class="math inline">\(\sqrt{2}\)</span> is famously irrational: it cannot be expressed as a fraction (ratio of two integers). However, we can use fractions to <em>approximate</em> it.</p>
+<p>Here is one simple algorithm to do so, which uses only elementary operations. Let our initial estimate be <span class="math inline">\(x_0 = 1\)</span>. From there, we generate the next estimate using the following procedure:</p>
+<ul>
+<li>Add one to the current estimate.</li>
+<li>Invert the result.</li>
+<li>Add one again.</li>
+</ul>
+<p>More algebraically, we define <span class="math inline">\(x_{i+1} = 1 + 1/(1+x_{i})\)</span>. Then our estimates are as follows…</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(x_0\)</span></th>
+<th align="center"><span class="math inline">\(x_1\)</span></th>
+<th align="center"><span class="math inline">\(x_2\)</span></th>
+<th align="center"><span class="math inline">\(x_3\)</span></th>
+<th align="center"><span class="math inline">\(x_4\)</span></th>
+<th align="center"><span class="math inline">\(x_5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">3/2</td>
+<td align="center">7/5</td>
+<td align="center">17/12</td>
+<td align="center">41/29</td>
+<td align="center">99/70</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">1.5</td>
+<td align="center">1.4</td>
+<td align="center">1.4166</td>
+<td align="center">1.4138</td>
+<td align="center">1.41428</td>
+</tr>
+</tbody>
+</table>
+<p>The decimal expansion of <span class="math inline">\(\sqrt{2}\)</span> is <span class="math inline">\(1.41421...\)</span>, so this is pretty good! The estimate <span class="math inline">\(x_2\)</span> only misses by 0.014 (1%), and <span class="math inline">\(x_4\)</span> misses by .0004 (0.03%)! Furthermore, every even iteration under-estimates the true value, and every odd iteration is an over-estimate. This means that even if we didn’t know the true value, we could know approximately how close we were by looking at the difference between consecutive iterations.</p>
+<div id="why-does-it-work" class="section level1">
+<h1>Why does it work?</h1>
+<p>In short, this works because <span class="math inline">\(\sqrt{2}\)</span> is the positive solution <span class="math inline">\(x\)</span> to the equation <span class="math display">\[x = 1 + \frac{1}{1+x}.\]</span> This can be easily verified by multiplying both sides by <span class="math inline">\(x+1\)</span> and rearranging this equation to get <span class="math inline">\(x^2 = 2\)</span>. If we define the function <span class="math inline">\(f_2(x) = 1 + \frac{1}{1+x}\)</span>, then <span class="math inline">\(\sqrt{2}\)</span> is a fixed point of <span class="math inline">\(f_2(x)\)</span> (that is, it solves <span class="math inline">\(f_2(x) = x\)</span>).</p>
+<p><strong>Finding a Fixed Point.</strong> How do we find (or approximate) a fixed point of <span class="math inline">\(f_2\)</span>? The process above is to repeatedly apply <span class="math inline">\(f_2\)</span> starting from an initial guess <span class="math inline">\(x_0\)</span>. But why does this work? It doesn’t work for just any function. For example, take <span class="math inline">\(g(x) = x^2 + 1/4\)</span>, which has a unique fixed point <span class="math inline">\(x = 1/2\)</span>. However, if I start with any initial guess <span class="math inline">\(x_0 \ne 1/2\)</span>, then my iterates will get bigger and bigger forever, and tend to infinity. For another example, take <span class="math inline">\(h(x) = 1/x\)</span>. This has a unique positive fixed point <span class="math inline">\(x = 1\)</span>, but if I start with any other guess <span class="math inline">\(x_0 \ne 1\)</span>, I just oscillate forever: if <span class="math inline">\(x_0 = 2\)</span>, then <span class="math inline">\(x_1 = h(x_0) = 1/2\)</span>, <span class="math inline">\(x_2 = h(x_1) = 2\)</span>, <span class="math inline">\(x_3 = h(x_2) = 1/2\)</span>, and so on.</p>
+<p>The process of repeatedly applying <span class="math inline">\(f_2\)</span> works for a couple of reasons. First, because <span class="math inline">\(f_2\)</span> is decreasing in <span class="math inline">\(x\)</span>, if <span class="math inline">\(x &lt; \sqrt{2}\)</span>, then <span class="math inline">\(f_2(x) &gt; \sqrt{2}\)</span> (and vice versa). This explains the pattern noticed above, where iterates alternated between over-estimating and under-estimating the true value. However, this is not enough to guarantee convergence to the correct value, as the example with <span class="math inline">\(h(x) = 1/x\)</span> above shows.</p>
+<p>Second, note that <span class="math inline">\(x_{i+2} = f_2(f_2(x_i)) = \frac{4 + 3 x_i}{3 + 2x_i}\)</span>. This means that
+<span class="math display">\[ x_{i+2} - x_i = \frac{2(2-x_i^2)}{3 + 2x_i}.\]</span>
+The sign of the expression on the right depends on whether <span class="math inline">\(x_i\)</span> is bigger or less than <span class="math inline">\(\sqrt{2}\)</span>. If <span class="math inline">\(x_i\)</span> is less than <span class="math inline">\(\sqrt{2}\)</span>, then this says that <span class="math inline">\(x_{i+2}\)</span> will be bigger than <span class="math inline">\(x_i\)</span>. We already know (from the alternating pattern noted above) that <span class="math inline">\(x_{i+2}\)</span> will still be less than <span class="math inline">\(\sqrt{2}\)</span>, so it has gotten closer to our true value. The same logic applies to the other case: if <span class="math inline">\(x_i\)</span> is bigger than <span class="math inline">\(\sqrt{2}\)</span>, then <span class="math inline">\(x_{i+2}\)</span> will be a smaller value that is still bigger than <span class="math inline">\(\sqrt{2}\)</span>. This ensures that if we just look at the even iterates, they converge to a fixed point, and if we look at the odd iterates, they also converge to a fixed point. Since the function <span class="math inline">\(f_2\)</span> has only one positive fixed point, the even and odd iterates must converge to the same thing (get closer and closer together). Note that this holds for <em>any</em> positive initial guess <span class="math inline">\(x_0\)</span> (we didn’t need <span class="math inline">\(x_0 = 1\)</span>). Furthermore, the convergence is fast even if our guess is bad: from any <span class="math inline">\(x_0\)</span>, we have <span class="math inline">\(x_1 \in (1,2)\)</span>, <span class="math inline">\(x_2 \in (4/3,3/2)\)</span>, and <span class="math inline">\(x_3 \in (7/5,10/7) \approx (1.4,1.428)\)</span>.</p>
+</div>
+<div id="general-square-roots" class="section level1">
+<h1>General square roots</h1>
+<p>This still seems a bit like black magic. Where did the function <span class="math inline">\(f_2(x)\)</span> come from, and how could we do this for other square roots?</p>
+<p>Suppose that we want to calculate <span class="math inline">\(\sqrt{n}\)</span>, which we know to be in the interval <span class="math inline">\((k,k+1)\)</span>. Then we can write
+<span class="math display">\[\begin{align*}
+\sqrt{n} &amp; = k + (\sqrt{n} - k) \\
+&amp; = k + (\sqrt{n} - k) \frac{\sqrt{n} + k}{\sqrt{n} + k} \\
+&amp; = k + \frac{n-k^2}{k + \sqrt{n}}.
+\end{align*}\]</span>
+In other words, if we define <span class="math inline">\(f_n(x) = k + \frac{n-k^2}{k + x}\)</span>, where <span class="math inline">\(k = \lfloor \sqrt{n} \rfloor\)</span>, then <span class="math inline">\(\sqrt{n}\)</span> is the positive solution to <span class="math inline">\(f_n(x) = x\)</span>. We can approximate <span class="math inline">\(\sqrt{n}\)</span> by defining <span class="math inline">\(x_0 = k\)</span>, and <span class="math inline">\(x_{i+1} = f_n(x_i)\)</span>. Trying this with <span class="math inline">\(n = 7\)</span>, we get <span class="math inline">\(f_7(x) = 2 + 3/(2+x)\)</span>, which results in the following approximations:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(x_0\)</span></th>
+<th align="center"><span class="math inline">\(x_1\)</span></th>
+<th align="center"><span class="math inline">\(x_2\)</span></th>
+<th align="center"><span class="math inline">\(x_3\)</span></th>
+<th align="center"><span class="math inline">\(x_4\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">2</td>
+<td align="center">11/4</td>
+<td align="center">50/19</td>
+<td align="center">233/88</td>
+<td align="center">1082/409</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">2.75</td>
+<td align="center">2.6315</td>
+<td align="center">2.6477</td>
+<td align="center">2.6454</td>
+</tr>
+</tbody>
+</table>
+<p>Compare this to the decimal expansion <span class="math inline">\(\sqrt{7} = 2.64575...\)</span> pretty good!</p>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

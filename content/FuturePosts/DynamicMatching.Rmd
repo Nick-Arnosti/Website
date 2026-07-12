@@ -1,0 +1,38 @@
+---
+title: 'A Unifying Model of Dynamic Matching'
+date: "2024-05-29"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Introduction
+
+There is a finite set of item types $\mathcal{T}$. Items arrive according to a Poisson process of rate $\lambda$, and each item is of type $\tau$ with probability $p_\tau$ (so items of type $\tau$ arrive according to a Poisson process with rate $p_\tau \lambda$).
+
+While they remain in the system, agents of type $\tau$ incur linear waiting costs of $c_{\tau} \ge 0$. These agents also depart if unmatched by their critical time. We assume that maximum sojourn times are exponentially distributed with mean $\mu_\tau$.
+
+Let $A(t)$ denote the set of agents who have arrived up to time $t$. For each agent $i$, let $\tau(i)$ denote the type of $i$.
+For each pair of agents $i$ and $j$ that are present concurrently, there is a match value $v_{ij} \ge 0$. We assume that $v_{ij}$ is drawn from a distribution $F_{\tau(i)\tau(j)}$, independently from all other match values. That is, the distribution of $v_{ij}$ depends only on the types of $i$ and $j$.
+
+
+# Special Cases
+
+
+* Collina, Immorlica, Leyton-Brown, Lucier, Newman. This model with no waiting costs and deterministic match values (same as Arnosti Simon).
+* Auad Saritac: same model as above, but with costs when agents depart or are matched (cost minimization). Show arbitrary ratio between offline optimal and online optimal for some instances. When costs satisfy triangle inequality and abandonment rates are identical, they get a constant factor approximation to ONLINE optimal. They get constant factor for reward maximization (relative to ONLINE optimal), with better constants when graph is bipartite, and better still when one side must be matched immediately (in that case, get $1 - 1/e > 1/2$).
+
+Assume 0-1 values:
+
+* Akbarpour Li Gharan: one type of agent, no waiting cost, arrival rate $\lambda = m$, departure rate $\mu = 1$, $v_{ij} \in {0,1}$ is Bernoulli($d/m$).
+* Anderson et al: same as above, but with no departures. (Their main focus is on matches involving more than two agents -- i.e. 3-cycles or chains -- which is not captured by this model.)
+
+
+Assume Bipartite ("Agent-Item") matching:
+
+* Kessel Saberi Shameli Wajc (EC22). Bipartite matching: one type is an "item", the rest are "agents". Agents are all infinitely impatient $\mu = \infty$, items have some $\mu \in (0,\infty)$. There are no waiting costs. Matching two agents together is impossible (given infinite impatience), while the value of matching an agent of a given type to an item is deterministic.
+* Bloch Cantala: in their perfect correlation case, items have different types, and values are deterministic. In their independent case, there is one type of item. In both cases, one type of agent with $\mu = 0$ (so we don't have a proper steady state), but we focus on the head of the queue.
+* Leshno: items belong to two types, as do agents, values are deterministic. Agents are long-lived ($\mu = 0$), while items must be matched immediately $(\mu = \infty)$.
+* Schummer: one type of agent, multiple types of object. Values are deterministic, no agent departures, objects must be matched immediately.
+* Arnosti-Shi is not a special case of this, but is trying to capture a world with heterogeneous agent types and stochastic match values.
+* Ozkan Ward consider this as a model of ridesharing, with driver types denoting their location. (Seems like a bad model, as it doesn't capture that drivers appear in new location once ride is complete-- in other words, driver arrivals are exogenous). 

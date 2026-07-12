@@ -1,0 +1,73 @@
+---
+title: "Introduction to Quotas"
+output: html_document
+date: "2024-05-31"
+draft: true
+---
+
+
+
+<div id="learning-objectives" class="section level2">
+<h2>Learning Objectives</h2>
+<p>Students will be</p>
+<p><em>Concepts and Definitions</em></p>
+<ul>
+<li><strong>Maximum and Minimum Quotas.</strong> Students will be able to determine whether a given selection satisfies all specified quotas.</li>
+<li><strong>Maximize Selected Applicants.</strong> Students will be able to define what it means for a selection to maximize selected applicants.</li>
+<li><strong>Priority Domination.</strong> Given two sets of applicants <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> and a priority ordering <span class="math inline">\(\succ\)</span>, students will be able to determine whether <span class="math inline">\(A\)</span> priority dominates <span class="math inline">\(B\)</span>, <span class="math inline">\(B\)</span> priority dominates <span class="math inline">\(A\)</span>, or neither. Students will understand that if <span class="math inline">\(A\)</span> priority dominates <span class="math inline">\(B\)</span>, then <span class="math inline">\(A\)</span> must select weakly more applicants than <span class="math inline">\(B\)</span>.</li>
+<li><strong>Nested</strong> (Hierarchy, Laminar). Students will be able to define what it means for a set of quota categories to be nested. Given quota categories, they will be able to determine whether these categories are nested.</li>
+</ul>
+<p><em>Algorithms</em> Given example instances, students will be able to determine the selections made by the following algorithms:</p>
+<ul>
+<li>Top Down (“Greedy”) Algorithm</li>
+<li>Maximize Minimum Quotas (Mechinot Algorithm 2)</li>
+<li>Bottoms Up + Top Down</li>
+</ul>
+<p>Students will be able to come up with examples in which each algorithm fails to find a priority dominant feasible selection.</p>
+<p>They will also be able to identify conditions under which the algorithm is guaranteed to find a feasible selection that priority dominates all others.</p>
+<p><em>Applications</em>
+* Describe connection to Diversity Visa Lottery, Mechinot Gap Year</p>
+<p><em>Advanced</em>
+* Students will be able to define the properties of a Matroid, and the relationship between Matroids and the successes of Greedy algorithms.
+* NP Hard</p>
+</div>
+<div id="study-guide" class="section level2">
+<h2>Study Guide</h2>
+<p><em>Concepts and Definitions</em>
+* Maximum and Minimum Quotas
+* Maximize Selected Applicants
+* Priority Domination
+* Nested (Hierarchy, Laminar)</p>
+<p><em>Algorithms</em>
+* Top Down (“Greedy”) Algorithm
+* Maximize Minimum Quotas (Mechinot Algorithm 2)
+* Bottoms Up + Top Down</p>
+<p><em>Applications</em>
+* Describe connection to Diversity Visa Lottery, Mechinot Gap Year</p>
+<p><em>Advanced</em>
+* Matroid
+* NP Hard</p>
+</div>
+<div id="lesson-plans" class="section level2">
+<h2>Lesson Plans</h2>
+<p>Class 1: Maximum Quotas</p>
+<ol style="list-style-type: decimal">
+<li><p>Introduce the Diversity Visa Lottery. At most 50,000 applicants selected, at most 7% (3,500) from each country, and also caps on the number from each region. This is an example of <em>maximum quotas</em>.</p></li>
+<li><p><em>In Class Exercise</em> Who should be selected on the given example? Introduce the top down algorithm.</p></li>
+<li><p><em>Definitions:</em> Maximize Selected Applicants, Priority Domination</p></li>
+<li><p><em>In Class Exercise</em> Practice with Priority Domination. (This is not intuitive to students. Give practice, as well as interpretation: if A priority dominates B, any reasonable person should agree that A is better. If neither priority dominates the other, reasonable people can disagree.)</p></li>
+<li><p><em>In Class Exercise</em> Each student should generate their own priority order. For this order, does the top down algorithm maximize selected applicants? Does it priority dominate any other feasible selection? (Harder to verify) Would this still be true if we changed the (i) number of applicants in each category, (ii) quota values, (iii) quota categories? (This could be a good place to stop – ask students to come up with an example in which Top Down does not always work.)</p></li>
+<li><p><em>In Class Exercise.</em> Introduce example with countries and ages. Ask students to find a priority order for which the Top Down algorithm does not maximize selected applicants.</p></li>
+<li><p>Define Nested Quota Categories. Theorem: if categories are nested, then the Top Down Algorithm finds a priority dominant feasible selection. (Optional: connect to matroids.)</p></li>
+</ol>
+<p>Class 2: Minimum Quotas</p>
+<ol style="list-style-type: decimal">
+<li><p>Introduce Israeli Mechinot Matching setting, which has minimum and maximum quotas.</p></li>
+<li><p><em>In Class Exercise.</em> On the given example, find a feasible selection. Ask students to describe how they found it.</p></li>
+<li><p>Introduce Algorithms 1 and 2.</p></li>
+<li><p><em>In Class Exercise</em> Which applicants are selected by each algorithm? Does each algorithm find a feasible selection?</p></li>
+<li><p>Introduce NP Hardness. Finding a feasible selection is NP Hard.</p></li>
+<li><p><em>In Class Exercise.</em> Include example where categories are nested. Algorithm 1 fails to find a feasible selection, while Algorithm 2 is guaranteed to find a priority dominant feasible selection.</p></li>
+<li><p>Introduce Bottoms Up Minimums (Alternative for when categories are nested), Generalized Top Down Algorithm (In general, feasible, not priority dominated, but may not priority dominate, and algorithm may be slow.)</p></li>
+</ol>
+</div>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Statistics on b</title>
+    <link>/categories/statistics/</link>
+    <description>Recent content in Statistics on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why &#34;Margin of Error&#34; is a Misleading Statistic</title>
+      <link>/blog/marginoferror/</link>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/marginoferror/</guid>
+      <description>Many people have had their eyes on election polls recently. These polls typically report percentages supporting each candidate, alongside a &amp;quot;margin of error.&amp;quot;
+What does this number mean? If you read the fine print, you&#39;ll sometimes see that this margin of error is a &amp;quot;95% confidence interval.&amp;quot; Although this makes it sound like the election result should fall between these bounds 95% of the time, this interpretation is wrong.1</description>
+    </item>
+    
+    <item>
+      <title>Why Do Expensive Products Get Worse Ratings?</title>
+      <link>/blog/simpsonsparadox/</link>
+      <pubDate>Thu, 17 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/simpsonsparadox/</guid>
+      <description>Motivation Several years ago, I was looking for speakers on Amazon. Prices varied widely, from $25 to $250 or more. As I browsed, I noticed an interesting pattern: the most expensive speakers had the lowest average rating. More recently, I discovered the study “Expensive Running Shoes Are Not Better Than More Affordable Running Shoes.” The study finds that shoes with higher prices tended to get lower ratings. The 10 most expensive shoes in the study had an average cost of $191 and an average rating of 79, while the 10 cheapest had an average cost of $60 and an average rating of 86.</description>
+    </item>
+    
+  </channel>
+</rss>

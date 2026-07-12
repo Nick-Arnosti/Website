@@ -1,0 +1,33 @@
+---
+title: 'Session 5: Introduction to Deferred Acceptance'
+date: "2022-02-02"
+author: Nick Arnosti
+draft: true
+---
+
+
+# Lesson Recap
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "xxx")
+```
+
+# Materials
+
+[Lecture Slides](/IE5080/Session5/Session5.pdf) (pptx version available to instructors upon request).
+
+
+[Homework](/IE5080/Session5/Session5_Homework.pdf) (solutions available to instructors upon request).
+
+
+**References**:
+
+
+[Stable Marriage Assignment for Unequal Sets](/IE5080/Session5/McVitie-Wilson_1970.pdf). McVitie and Wilson, 1970. (The first paper to establish a version of the result now known as the Rural Hospital Theorem.)
+
+[The Evolution of the Labor Market for Medical Interns and Residents: A Case Study in Game Theory](/IE5080/Session5/Roth_1984.pdf). Roth, 1984. (Describes the process by which the NRMP was established.)
+
+[On the Allocation of Residents to Rural Hospitals: A General Property of Two-Sided Matching Markets](/IE5080/Session5/Roth_1986.pdf). Roth, 1986. (Proves a slightly stronger version of the Rural Hospital Theorem.)
+
+[Jumping the Gun: Imperfections and Institutions Related to the Timing of Market Transactions](/IE5080/Session5/Roth-Xing_1994.pdf). Roth and Xing, 1994. (Discusses the timing and centralization of matching processes in a variety of markets.)
+[]

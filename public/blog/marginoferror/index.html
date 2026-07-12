@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why &#34;Margin of Error&#34; is a Misleading Statistic | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Why &ldquo;Margin of Error&rdquo; is a Misleading Statistic</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2020/11/02</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>Many people have had their eyes on election polls recently. These polls typically report percentages supporting each candidate, alongside a &quot;margin of error.&quot;</p>
+<p>What does this number mean? If you read the fine print, you'll sometimes see that this margin of error is a &quot;95% confidence interval.&quot; Although this makes it sound like the election result should fall between these bounds 95% of the time, this interpretation is wrong.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<div id="multiple-sources-of-error" class="section level1">
+<h1>Multiple Sources of Error</h1>
+<p>Polls may be off for several reasons:</p>
+<ol style="list-style-type: decimal">
+<li>People may lie, or change their minds.</li>
+<li>Systematic errors due to a biased sample.</li>
+<li>Random errors due to a small sample.</li>
+</ol>
+<p>The reported margin of error addresses only the third concern. It tells you how much the findings might change if you re-ran the poll using the same methodology. It does <strong>not</strong> tell you whether your poll is capturing a representative sample of voters.</p>
+<p>In practice, survey respondents are never perfectly representative of the voting population: they tend to be older, whiter, and more educated. Pollsters tweak their survey methodology to try to minimize this bias, but will never eliminate it. For this reason, every reputable pollster reports a <strong>weighted</strong> average of responses. If you know that African Americans will make up 10% of the electorate but are only 6% of your poll respondents, then you can think of each African American respondent as speaking for 10/6 = 1.66 voters, and overweight their answers accordingly.</p>
+<p>Although the idea is simple, calculating appropriate weights is difficult in practice. One reason is that nobody knows what turnout will be among different demographics: pollsters are forced to make assumptions. A second more subtle point is that it's not even obvious what demographics to consider.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Finally, there are questions about how to deal with overlapping categories: how much weight should be given to a 23 year old white male, versus a 64 year old black female?</p>
+<p>Getting into the details of different methodologies is beyond the scope of this post (much to my chagrin). The main point to remember is that even <strong>after</strong> raw polling data has been collected, pollsters use difficulty-to-assess <strong>assumptions</strong> about turnout to convert this data into a final number. To highlight this point, in 2016 the New York Times gave different polling analysists access to the same raw data, and noted that <a href="https://www.nytimes.com/interactive/2016/09/20/upshot/the-error-the-polling-world-rarely-talks-about.html">the resulting predictions varied by 5%</a>.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> This variation is not captured by the reported margin of error, despite the fact that it (i) is often larger in magnitude and (ii) does not go away as more polls are conducted. It is also the reason why certain pollsters consistently produce results that are more favorable to one candidate or the other.</p>
+</div>
+<div id="take-home-message" class="section level1">
+<h1>Take-Home Message</h1>
+<p>Polls differ not only in who they survey, but also in their assumptions about who will vote. As we get more polling data, we learn how each group will vote, but we don't do any better at predicting how <strong>many</strong> people from each group will vote. The reported margin of error keeps shrinking, but the error in our assumptions remains. This error is unreported, making the margin of error a misleading statistic.</p>
+<p>To better predict election outcomes, what we really need is not more polls, but better models for who is going to vote. This seems hard in normal years, and especially so given that (i) we are in the middle of a global pandemic in which record numbers of people are voting early or by mail, and (ii) one of our major political parties is openly working to <a href="https://www.businessinsider.com/texas-ballots-harris-county-drive-thru-voting-election-2020-11">make</a> <a href="https://apnews.com/article/donald-trump-des-moines-iowa-city-elections-courts-b921d9d6416cde647e6e7fcb5be23c28">sure</a> <a href="https://www.cnn.com/2020/11/02/politics/nevada-las-vegas-signature-lawsuit/index.html">their</a> <a href="https://www.startribune.com/court-orders-minnesota-s-post-election-day-ballots-in-minn-be-separated/572917391/">votes</a> <a href="https://www.wsj.com/articles/supreme-court-won-t-hear-pennsylvania-ballot-case-before-election-11603920921">don't</a> <a href="https://www.nytimes.com/2020/09/11/us/florida-felon-voting-rights.html">count</a>.</p>
+<p>In the short term, we may not be able to eliminate polling errors, but we should at least try to communicate them more accurately. One step would be for pollsters to be more transparent about the assumptions that they use. Another approach (which might be easier for people to understand) would be to conduct analyses under different assumptions about turnout, and report results for each scenario. If you have other ideas for how to reduce polling error or communicate it more effectively, please post below!</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There is a subtle statistical reason that this is wrong, which is not the focus of this post. Even under ideal circumstances, the claim that the confidence interval contains the true outcome 95% of the time holds <em>ex ante</em>, and not for each <em>realization</em> of the confidence interval. In practice the more important point (discussed in this post) is that we are far from ideal circumstances, and there is no reason to believe that confidence intervals will contain the true outcome 95% of the time.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>For example, most pollsters in 2016 corrected for race, age, and gender, but did not account for level of education. College educated voters were more likely to vote for Clinton and more likely to respond to polls, causing some polls to overstate support for Clinton. Although most polls now take level of education into account, there are an endless number of other possible factors to consider.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>Sadly, the most accurate prediction in hindsight was one made by a team that included my classmate <a href="https://samcorbettdavies.com/">Sam Corbett-Davies</a>, which showed Trump with a 1 point lead.<a href="#fnref3">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Queueing Theory COVID-19 on b</title>
+    <link>/tags/queueing-theory-covid-19/</link>
+    <description>Recent content in Queueing Theory COVID-19 on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 24 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/queueing-theory-covid-19/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centralized Registration for COVID Vaccines</title>
+      <link>/blog/centralizedcovidvaccines/</link>
+      <pubDate>Wed, 24 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/centralizedcovidvaccines/</guid>
+      <description>The Power of Pooling One of the central lessons from the waiting time unit of my operations management course is &amp;quot;the power of pooling&amp;quot;1: a single centralized system can result in lower waiting times than many independent systems. The reason for this is that when you have separate systems, it&#39;s possible to have a backlog in one, while servers remain idle in the other. This is inefficient! A (properly designed) centralized system ensures that whenever there is a queue, all servers are busy.</description>
+    </item>
+    
+  </channel>
+</rss>

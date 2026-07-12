@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stable Matching on b</title>
+    <link>/tags/stable-matching/</link>
+    <description>Recent content in Stable Matching on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 26 Aug 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/stable-matching/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Optimizing for Students</title>
+      <link>/futureposts/funwithda/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/funwithda/</guid>
+      <description>Increasingly, priorities viewed as design lever. Only two problems: not clear what objective is, and not clear how to achieve it.
+This post will go through a very stylized set of results.
+Designing DA Priorities Consider a market with \(n\) students and \(n\) schools, each with a single seat. We are going to assign students using the student-proposing deferred acceptance algorithm. The student preference profile \(P\) is drawn from known distribution \(D\).</description>
+    </item>
+    
+    <item>
+      <title>An Analogy Between Matching and Queueing, Part I: Modeling Approaches</title>
+      <link>/blog/queueinganalogy1/</link>
+      <pubDate>Sun, 23 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/queueinganalogy1/</guid>
+      <description>I often find myself explaining stable matching to researchers who have little background in matching, but are familiar with queueing theory. Through these conversations, I have come to realize that there are a lot of parallels between queueing and matching!
+This is the first of several blog posts that will present an extended analogy between these fields. It describes the advantages and disadvantages of several several classes of models (deterministic, stochastic, and fluid limit) that have been used for both queueing and matching.</description>
+    </item>
+    
+    <item>
+      <title>Deferred Acceptance is Unpredictable</title>
+      <link>/blog/da-predictability/</link>
+      <pubDate>Tue, 18 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/da-predictability/</guid>
+      <description>In February 2019, the Brookings Institution published The Opportunities and Risks of K-12 Student Placement Algorithms, which includes the following quote:
+ Even if DA algorithms are relatively simple, predicting how student assignment policies will affect enrollment and outcomes is difficult.
+ In this post, I explore both parts of this claim: what makes the Deferred Acceptance (DA) algorithm simple, and why is it difficult to predict the effect of using it?</description>
+    </item>
+    
+  </channel>
+</rss>

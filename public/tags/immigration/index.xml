@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Immigration on b</title>
+    <link>/tags/immigration/</link>
+    <description>Recent content in Immigration on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/immigration/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Devilish Details of H2B Visa Lotteries</title>
+      <link>/blog/h2bvisas/</link>
+      <pubDate>Sat, 26 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/h2bvisas/</guid>
+      <description>Today I’m writing about the allocation of H2B visas. This can be thought of as a sister post to my previous writing on H1B visas, although the technical content is quite different. I describe how the H2B allocation procedure evolved from first-come first-served to a lottery. I examine the rules of the current lottery, and propose and analyze several alternative designs. I also look into recent data, which suggests that companies are finding loopholes in the application process.</description>
+    </item>
+    
+    <item>
+      <title>The Devilish Details of H1B Visa Lotteries</title>
+      <link>/blog/h1bvisas/</link>
+      <pubDate>Fri, 22 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/h1bvisas/</guid>
+      <description>Today I&#39;m writing about a process that many of my friends from graduate school have faced: the lottery for H1B visas. Earlier this year, the government announced a seemingly small change to the process. This post explains the change, which will have the effect of granting more visas to applicants with advanced degrees from US institutions (and fewer to applicants without such degrees).
+Background Each year, US Citizenship and Immigration Services (USCIS) offers a total of 85,000 H1B visas: 65,000 are available to anybody, and the remaining 20,000 are only available to applicants with an advanced degree from a US institution.</description>
+    </item>
+    
+  </channel>
+</rss>

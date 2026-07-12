@@ -1,0 +1,54 @@
+---
+title: 'Explainable Affirmative Action'
+date: '2022-10-10'
+author: Nick Arnosti
+draft: true
+---
+
+
+
+<div id="examples-of-selection-rules" class="section level1">
+<h1>Examples of Selection Rules</h1>
+<ul>
+<li><strong>Diversity Visa Lottery</strong>: Starting at the top of the priority list, accept applicants unless doing so violates a country quota, regional quota, or the global quota.</li>
+<li><strong>NYC Affordable Housing Developer Screening</strong>
+<ul>
+<li>Consider applicants eligible for disability preference in log order until 7% of units have been allocated.</li>
+<li>Consider applicants eligible for community preference in log order until 50% of units filled with people from community district.</li>
+<li>Consider applicants eligible for municipal employee preference in log order until 5% of units filled with municipal employees.</li>
+<li>Consider remaining applicants in log order until all units filled.</li>
+</ul></li>
+<li>Accept the top applicant, then accept the top remaining female applicant.</li>
+<li>Accept the top female applicant, then accept the top remaining applicant.</li>
+</ul>
+</div>
+<div id="axioms-of-explainability" class="section level1">
+<h1>Axioms of Explainability</h1>
+<p>A selection rule is</p>
+<ul>
+<li><strong>Monotonic</strong> if increasing priority of <span class="math inline">\(i\)</span> (fixing others’ priority) weakly helps <span class="math inline">\(i\)</span>.</li>
+<li><strong>Lower Invariant</strong> if <span class="math inline">\(i\)</span>’s outcome does not depend on the ranking of individuals with lower priority than <span class="math inline">\(i\)</span>.</li>
+<li><strong>Non-Bossy</strong> if any change to <span class="math inline">\(i\)</span>’s priority that does not affect <span class="math inline">\(i\)</span>’s outcome also does not affect others’ outcomes.</li>
+</ul>
+<div class="definition">
+<p><span id="def:unlabeled-div-1" class="definition"><strong>Definition 1  </strong></span>A selection rule <span class="math inline">\(\varphi\)</span> is <strong>monotonic</strong> if for any <span class="math inline">\(i \in \mathcal{I}\)</span>, and any priority orders <span class="math inline">\(\succ, \succ&#39;\)</span> such that (i) <span class="math inline">\(\succ_{-i}~=~\succ&#39;_{-i}\)</span> and (ii) the priority of <span class="math inline">\(i\)</span> is higher in <span class="math inline">\(\succ&#39;\)</span> than in <span class="math inline">\(\succ\)</span>, then
+<span class="math display">\[i \in \varphi(\succ) \Rightarrow i \in \varphi(\succ&#39;).\]</span></p>
+</div>
+<p><span style="color:red"> Has also been called “respecting unambiguous improvements.” </span></p>
+<div class="definition">
+<p><span id="def:unlabeled-div-2" class="definition"><strong>Definition 2  </strong></span>A selection rule <span class="math inline">\(\varphi\)</span> is <strong>lower invariant</strong> if for any applicant <span class="math inline">\(i \in \mathcal{I}\)</span>, and any priority orders <span class="math inline">\(\succ, \succ&#39;\)</span> such that <span class="math inline">\(\succ_{-\{j:i\succ j\}}~=~\succ&#39;_{-\{j:i\succ&#39; j\}}\)</span>, we have
+<span class="math display">\[\{i\} \cap \varphi(\succ) = \{i\} \cap \varphi(\succ&#39;). \]</span></p>
+</div>
+<div class="definition">
+<p><span id="def:unlabeled-div-3" class="definition"><strong>Definition 3  </strong></span>A selection rule <span class="math inline">\(\varphi\)</span> is <strong>non-bossy</strong> if for any applicant <span class="math inline">\(i \in \mathcal{I}\)</span>, and any priority orders <span class="math inline">\(\succ, \succ&#39;\)</span> such that <span class="math inline">\(\succ_{-i}~=~\succ&#39;_{-i}\)</span>,
+<span class="math display">\[\{i\} \cap \varphi(\succ) = \{i\} \cap \varphi(\succ&#39;) \Rightarrow \varphi(\succ) = \varphi(\succ&#39;).\]</span></p>
+</div>
+</div>
+<div id="outcome-based-selection-rules" class="section level1">
+<h1>Outcome-Based Selection Rules</h1>
+<div class="theorem">
+<p><span id="thm:characterization" class="theorem"><strong>Theorem 1  </strong></span><em>For any collection <span class="math inline">\(\mathcal{F}\subseteq 2^{\mathcal{I}}\)</span>, the selection rule <span class="math inline">\(OB_{\mathcal{F}}\)</span> is monotone, non-bossy and lower invariant.</em></p>
+<p><em>If <span class="math inline">\(\varphi\)</span> is a selection rule that is monotone, non-bossy and lower invariant, then there exists <span class="math inline">\(\mathcal{F}\subseteq 2^{\mathcal{I}}\)</span> such that <span class="math inline">\(\varphi(\succ) = OB_{\mathcal{F}}(\succ)\)</span> for every priority order <span class="math inline">\(\succ\)</span>.</em></p>
+</div>
+<p>@ref{thm:characterization}</p>
+</div>

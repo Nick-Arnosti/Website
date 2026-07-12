@@ -1,0 +1,115 @@
+---
+title: 'The 10th Mountain Division Hut Lottery'
+date: "2021-12-12"
+author: Nick Arnosti
+output:
+  blogdown::html_page:
+    toc: false
+    number_sections: false
+    css: columns.css
+---
+
+
+
+The [10th Mountain Division Huts](https://www.huts.org/) in Colorado are amazing. I've done two winter hut trips, which involve backcountry skiing through beautiful terrain, and arriving at lovely cabins stocked with lots of firewood and equipped with all the cooking gear you can imagine. These photos from three years ago make me want to return immediately:
+
+<img src="/./_index_files/HutTrip.png" style="max-width:48%;min-width:35%;float:left;margin-right:30px;margin:bottom:30px" alt=""/>
+<img src="/./_index_files/JackalHut.png" style="max-width:48%;min-width:35%;float:right;margin:bottom:30px" alt=""/> 
+.
+
+I know what you're wondering: **how do I book my own trip to this amazing place?** [This page](https://olb.huts.org/) has a map of the hut system, and allows you to search for available dates and huts. 
+
+In past years, I was able to make reservations with little notice (although in 2019 we had to book Skinner hut, which is less popular because the ski trail to reach it is very difficult). However, due to COVID, all huts are now restricted to "single-party" use. In other words, huts that were (mostly) built to accommodate 16 people are considered filled as soon as a single group claims them. This significantly lowers the capacity of the system, and as a result there is far less availability than before. Furthermore, even in the past, popular huts and dates filled quickly. In response, the 10th Mountain Division implemented an annual [reservation lottery](http://www.huts.org/Reservations/Lottery.php), which will be the subject of this post.
+
+# The Current Process
+
+While anyone can book a hut, in order to enter the reservation lottery you need to be a member. This costs \$35, and you can become a member as part of your lottery application. So you can think of it as a $35 application fee (which comes with a few other benefits).
+
+Each participant sends in preferred itineraries, either digitally or by mail or fax (!!). Then participants are placed in a random order, and processed sequentially. When processing an application, 10th Mountain Division employees assign participants to their favorite itinerary that is still available. Each applicant is given at most one itinerary during the lottery, although people may book additional itineraries once the lottery is complete. Academics call this straightforward approach a "Random Serial Dictatorship" (RSD).
+
+What makes this problem interesting is that there are so many possible itineraries! There are 38 huts, and over 100 dates. That's already thousands of possible hut-date combinations. However, each itinerary potentially consists of multiple huts and dates (i.e. three nights at Jackal hut, or a night at Uncle Bud's hut followed by a night at Skinner hut), so the number of possible itineraries is truly enormous. How do people express preferences over these itineraries? Let's look at the examples in their [lottery guide](http://www.huts.org/Reservations/documents/onlineLottoInstructions.pdf): 
+
+**Example 1.** Would like one night, entire hut, any of the following dates or huts. Preference is for date first, then hut.
+
+*Dates:*
+1. 2/25/2020
+2. 2/4/2020
+3. 2/18/2020
+4. 2/11/2020
+
+*Huts:*
+1. Peter Estin
+2. Margy's
+3. Uncle Bud's
+4. Betty Bear
+5. Section House
+6. Jackal
+
+**Example 2** 
+2/23 - 4 people at Fowler/Hilliard.
+2/24 - 4 people at Jackal (or the reverse)
+
+**Example 3** 12/24 and 12/25 at Eiseman, Skinner, Polar Star or Margy's.
+
+**Example 4** Any Sunday or Monday (one night) in February at Uncle Bud's, 10th Mountain, or Janet's.
+
+**Example 5** 
+We'd like to do the following itinerary with 7 people starting on 12/28, 12/14, or 12/7: 1 night at McNamara, 2 nights at Margy's, 1 night off the system (we'll make a reservation at Diamond J Ranch), and 1 night at Harry Gates.
+
+Two observations come immediately to mind: 
+
+**Observation 1** With the exception of the first example, itineraries are not ranked. Instead, these examples provide a (short) list of acceptable itineraries. This makes the algorithm followed by the 10th Mountain Division Staff ill-defined: if several of the named itineraries are available, which will the group receive? And will the decision be final? For example, if the group in Example 3 is initially assigned to Eiseman, and the next group in line only listed Eiseman, would the staff "go back" and change the first group to Skinner in order to accommodate both groups? 
+
+**Observation 2** There are many ways to describe itineraries! Some groups may care primarily about the hut, others primarily about the day of week, and others about the week of the year.^[I am in this last camp: I tend to visit family in Colorado over the holidays, and try to include a hut trip as part of that visit. While starting on a Tuesday is no problem, itineraries that would require me to visit Colorado outside of the December holiday season are far less viable.] The 10th Mountain division permits very flexible (not computer-readable) descriptions, which is user-friendly. However, it means that their staff must read and interpret each request. Given that they receive over 2,000 applications, this is no small feat!
+
+# Potential Change 1: Automated Matching
+
+One thought inspired by Observation 2 is that if applicants used a more structured (computer-readable) format, then the entire assignment could be completed by a computer, saving staff a lot of time. Of course, this change might force them to stop accepting applications by fax. More importantly, it would likely force applicants to spend more time entering their preferences into the system. Designing a user-friendly system would be an important but non-trivial task. 
+
+Moving to automated matching could also potentially allow for more sophisticated matching algorithms that exploit the indifferences noted in Observation 1. Greedily scheduling groups one at a time can result in inefficiencies, where a small change to one group could free up itineraries coveted by other groups. Finding such opportunities for improvement would be difficult for a team of people, but much easier for a computer. Thus, getting applicants to express preferences in a machine-readable format could enable not only a more efficient process, but also a more efficient final allocation. 
+
+Of course, this would in part depend on the matching algorithm in use. Most natural optimization-based algorithms would not be strategy-proof. That is, applicants might sometimes benefit from misrepresenting their preferences (i.e. not listing some acceptable itineraries, with the hope that the algorithm will be forced to match them to a preferable option). Although academics spend a lot of time worrying about incentives, I'm not convinced that they would be a big problem here. However, if the 10th Mountain Division wanted a computationally tractable, incentive compatible matching algorithm, it could use a version of random serial dictatorship that exploits indifferences to find more efficient assignments, as described in my [post on scheduling vaccine appointments](https://nickarnosti.com/blog/schedulingvaccines/).
+
+# Potential Change 2: Dynamic Matching
+
+The approach used by the 10th Mountain Division is sometimes called a "direct mechanism." Direct mechanisms begin by asking applicants for information about their preferences, and then simulate a process in which the staff act as proxies for the  applicants, choosing on their behalf based on the information provided.
+
+An alternative is to use a dynamic mechanism. In this case, that means contacting people one by one when it's their turn, and asking them to book whichever itinerary they want, among those that are still available. The main advantage of this approach is that applicants don't have to rank all possible itineraries in advance. Instead, they only have to choose their most preferred option, which is arguably an easier task. Another possible advantage is that the system for notifying applicants when it is their turn could be automated, again saving the 10th Mountain Division staff a lot of time.
+
+Of course, one downside of making the process dynamic is that it could take a long time! It might take a staffmember only a few minutes to read an applicant's preferences and book an available itinerary, but it would probably take the applicant much longer to receive the notification that it is their turn, look at which huts are available, consult with members of their group, and make a reservation. To keep the process moving, staff would have to give each goup a time window. But how long to make the window? A short window will cause groups to miss the deadline and/or feel rushed. A large window will significantly delay the process.
+
+One approach that might be workable in practice is to give each applicant a code to register, and an "earliest registration time" based on their lottery number. At any point after this time, they could log on, see what is available, and book using their code. This system is forgiving: anyone who can't register at the appointed time loses little by waiting until later in the day. However, it still might take a long time: if registration times are staggered by ten minutes, then even if they are scheduled over a 12-hour window, 7 days per week, it would take about four weeks to process 2,000 applications. If this timeline is not acceptable, it could be accelerated by giving several people the same registration time. While this creates a "race" among these people, so long as the number of people browsing and booking at any one time is small, the process should be smooth and not too stressful.
+
+
+# What would I do?
+
+Honestly, I am not sure. It's possible that the system works just fine as is! Before recommending any changes, I would want to understand (i) how big of a burden this process is to the 10th Mountain Division Staff, and (ii) how much it might be possible to improve upon the final assignment. The lottery page states that 85% of applicants are assigned an itinerary, but would this number be much higher if they could use software to optimize the assignment?
+
+While optimization software is always tempting, I am concerned that applicants would end up struggling with whatever preference reporting system accompanied it. The dynamic implementation, by contrast, should be fairly user-friendly: applicants would use the same booking system that already exists (with one additional step of entering their registration code). For this reason, this would probably be my leading alternative to the status quo.
+
+In general, the decision between dynamic and direct implementations might depend on many factors. One is the market imbalance: if 1000 contestants are entered into a drawing for three prizes, asking each contestant to rank all three prizes seems wasteful. Much better to just ask the three contestants selected as winners (or the two that will actually face a choice). However, if there are 300 copies of each prize, then asking entrants to rank them in advance seems quite reasonable. A second factor is the number of options that each applicant considers acceptable: direct implementations are most reasonable when this set is fairly small. A third factor is whether applicants care about coordinating with each other: if they do, this can be easier to accommodate with a dynamic mechanism. I illustrate this point in the next section, which connects the ideas from this post to other settings.
+
+# Connections to Other Markets
+
+### Dynamic Serial Dictatorship
+
+Dynamic implementations of Serial Dictatorship are fairly common. When I was in college, Williams ran a lottery to generate the housing draw order, and asked each student to show up at an appointed time to claim a room. We did this by writing our names on big paper blueprints of the dorms, which were laid out on large banquet tables. In this example, the set of acceptable options was massive, and ranking all of them would be extremely time-consuming. Furthermore, the dynamic approach allowed us to choose rooms close to our friends. It is almost impossible to imagine an alternative "direct" implementation that asked groups of friends to express preferences over all possible sets of dorm rooms.
+ 
+More recently, I was asked to select an office in the new building for Columbia Business School. In many departments, senior faculty would claim the best offices. By contrast, the DRO division placed faculty in a uniform random order, and had us each claim our office in a google doc.^[This is only one of several ways in which Columbia DRO was unusually egalitarian in its decision-making. I appreciated this, although I was amused that they insisted on including me in the process, given that I had already told them that I would be leaving at the end of the year and would not ever occupy "my" office.] The e-mail from my chair instructed us that "once someone has made a selection, she/he should notify her/his successor in the sequence, by email and phone." 
+
+With only 20 offices to choose from, a direct implementation would have been possible. However, the dynamic implementation resolved quickly enough for our purposes,^[Timestamp records indicate that the first selection was made at 10:45 am, and the second 6.5 hours later at 5:11 pm. From there, things picked up, with 9 more selections that night, culminating in my own choice at 11:56 pm. The 12th selection occurred at 12:53 am (faculty keep strange hours), with selections 13-20 happening over the subsequent day and a half.] and also allowed us to consider who we wanted to be close to (offices were spread over two floors). In addition, there are possible psychological benefits to a dynamic implementation: after taking the time to submit a ranked list, someone might be disappointed to learn that they got their 14th choice, even if the offices were nearly identical.
+
+
+### Dynamic Two-Sided Matching
+
+Dynamic implementations are not restricted to "one-sided" markets in which people choose objects. This [paper by Al Roth and Xiaolin Xing](https://www.journals.uchicago.edu/doi/abs/10.1086/262074) documents a fascinating example in the market for entry-level clinical psychology jobs. On "selection day", programs called applicants to make offers. Applicants could accept, reject or "hold" an offer. Held offers might later be rejected (if a better offer comes in), or accepted (if no such offer arrives). To keep the market moving, applicants were allowed to hold at most one offer at a time. 
+
+If everyone follows protocols and behaves straightforwardly, this procedure should lead to the program-optimal stable outcome. However, even with very quick communication between parties, there wasn't enough time for the market to clear. To avoid the risk of having an offer held all day only to be rejected at the last minute, programs started pressuring applicants to accept on the spot, and jumping down their list to make offers to applicants who they thought were likely to accept. One could try to fix the issue by holding "selection week", but this increases the burden on all participants. Furthermore, it would encourage multi-tasking and might increase the time required to make each offer. As a result, a direct implementation of Deferred Acceptance might be a better solution.
+
+### Group Members Submitting Separate Applications
+
+Another interesting feature of the 10th Mountain Division Hut Lottery is that each member of a group of friends could submit a separate application. By applying multiple times, the group increases the chance of getting its desired itinerary. While there is a cost to doing this (each applicant must pay the $35 membership fee), it seems potentially worthwhile. This could cause inefficiencies if a group is assigned to two reservations, but subsequently cancels one of them.^[Note that this concern would be mitigated by a dynamic mechanism: once a group has booked one itinerary, its members will only book the second if they truly want two trips.]
+
+This concern arises in many applications where groups of people want to share an experience, and the mechanism designer wants to accommodate this desire but doesn't know who is in each group. You can read about such settings (and several algorithms designed for them) in [my work with Carlos Bonet](https://nickarnosti.com/ResearchPapers/Arnosti-Bonet_SharedExperiences.pdf).
+
+

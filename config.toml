@@ -1,0 +1,35 @@
+baseurl = "/"
+languageCode = "en-us"
+title = "b"
+theme = "hugo-xmin"
+googleAnalytics = "UA-152747471-1"
+gtm_id = "GTM-5R23R3Z6"
+disqusShortname = ""
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+footnotereturnlinkcontents = "↩"
+
+[permalinks]
+    blogposts = "/Blog/:year/:month/:day/:slug/"
+[markup]
+    [markup.goldmark.renderer]
+      unsafe = true
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+[[menu.main]]
+    name = "Research"
+    url = "/Research/"
+    weight = 2
+[[menu.main]]
+    name = "Teaching"
+    url = "/Teaching/"
+    weight = 3
+[[menu.main]]
+    name = "Blog"
+    url = "/Blog/"
+    weight = 4
+
+
+[params]
+    footer = "&copy; [Nick Arnosti](https://nickarnosti.com)"

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Deferred Acceptance is Unpredictable | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Deferred Acceptance is Unpredictable</span></h1>
+<h2 class="author">Nick Arnosti</h2>
+<h2 class="date">2019/11/04</h2>
+</div>
+
+<main>
+
+
+
+<p>Is the Deferred Acceptance algorithm “simple”? I have encountered several different notions of simplicity:</p>
+<ul>
+<li><p><strong>Simplicity of Explanation</strong> Can the algorithm or its outcome be explained to participants?</p></li>
+<li><p><strong>Strategic Simplicity</strong> Does the algorithm offer participants a dominant strategy?</p></li>
+<li><p><strong>Computational Simplicity</strong> Does the algorithm run quickly?</p></li>
+<li><p><strong>Simplicity of Verification</strong> Can the output be verified quickly? (Also relevant in school choice.)</p></li>
+</ul>
+<p>Based on these notions, I would classify the Deferred Acceptance algorithm (DA) as simple. It has been independently discovered and deployed by practitioners in different contexts. Its output can be explained fairly easily (“if you didn’t get your first choice, that’s because it filled with students who have higher priority”). It offers students a dominant strategy. Its run time is linear in the size of the input.</p>
+<p>However, there is another sense in which DA is not simple: predictability. I’ll say (semi-formally) that an algorithm is <strong>predictable</strong> if small changes to the input result in small changes to the output. DA does not have this property.</p>
+<p>In fact, there is an example with <span class="math inline">\(n\)</span> students and <span class="math inline">\(n\)</span> schools where each student gets his or her first choice, but adding a new student results in each original student getting their <span class="math inline">\(n^{th}\)</span> choice (and the new student going unassigned).<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Here it is for <span class="math inline">\(n = 3\)</span>:</p>
+
+<p>While this relies on carefully constructed preferences, AKL show that (in some sense) dramatic changes from a single student are “typical.”</p>
+<p>By contrast, Boston is (i) non-bossy, and (ii) the total change in ranks across all students is at most the number of rounds, which is at most the length of the longest student list.</p>
+<div id="section" class="section level1">
+<h1></h1>
+<p>However, it is complex in a different sense: hard to predict how inputs affect outputs. Share stories from practice indicating this.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>While it is unsurprising that adding a student can hurt others, it is perhaps more surprising that this can happen <em>even if the new student goes unassigned</em>: one might expect some sort of “irrelevance of unmatched students” property. In the academic literature this property is called “non-bossiness.” Whereas Deferred Acceptance is bossy, commonly-studied mechanisms such as Random Serial Dictatorship, Top Trading Cycles, and the Boston Mechanism are all non-bossy.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+  
+  <hr/>
+  &copy; <a href="https://nickarnosti.com">Nick Arnosti</a> 2020
+  
+  </footer>
+  </body>
+</html>

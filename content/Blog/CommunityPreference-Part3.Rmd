@@ -1,0 +1,31 @@
+---
+title: 'Do "Community Preference" Policies Violate the Fair Housing Act? (Part 3)'
+date: '2022-06-03'
+author: Nick Arnosti
+---
+
+New York City faces a lawsuit alleging that its "Community Preference" policy creates a disparate racial impact. In previous videos on this topic, examined the [plaintiff's](https://nickarnosti.com/blog/communitypreference-part1/) and [defendant's](https://nickarnosti.com/blog/communitypreference-part2/) analysis. In this video, I conduct my own analysis. 
+
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "y-1BeK8fFcQ")
+```
+
+The slides accompanying this lecture are [available here](/CommunityPreference_Analysis.pdf).
+
+My main conclusion is that the current implementation of the Community Preference policy has large consequences for low-income units, and much smaller effects for middle-income units. In the video, I walk through an example where 20\% of applicants come from the community district, but there is a community preference for 50\% of seats. I show how this can result in an allocation where 90\% of low-income units go to community members, while only 20\% of middle-income units do. The final consequence? The policy may make it very difficult for low-income applicants to win lotteries for buildings outside of their current community district!
+
+This example highlights the complexities that arise from combining two separate policies: reserving units for people at different income levels, and setting minimum quotas on the number of community district residents. The following figure shows hypothetical outcomes when deploying each of these policies individually, as well as with neither and both policies. A key point to note is that the community district preference applies in aggregate across an entire building, and not for each type of unit within that building.
+
+
+```{r glidepath, echo = FALSE, fig.cap = 'Comparison of Outcomes Under Different Policies'}
+knitr::include_graphics("/_index_files/PolicyComparison.jpg",error=FALSE)
+```
+
+
+
+
+
+
+
+

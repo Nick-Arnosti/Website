@@ -1,0 +1,72 @@
+---
+title: 'Should Grants be Awarded by Lottery?'
+date: '2020-04-19'
+author: Nick Arnosti
+tags:
+  Public Policy
+categories:
+  Market Design
+---
+
+
+
+<div id="motivation" class="section level1">
+<h1>Motivation</h1>
+<p>Many researchers rely on grants to fund their work. Typically, they write a proposal for a future project. Proposals are scored and ranked by a panel, and the top-ranking proposals are funded. The percentage of proposals that receive funding is referred to as the &quot;payline,&quot; and has fallen dramatically over time.</p>
+<p>Recent papers in <a href="https://mbio.asm.org/content/7/2/e00422-16">mBio</a> and <a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000065">PLOS Biology</a> have called for a change to this process. They propose using a lottery, rather than a ranking system, to select proposals for funding. Although this idea may seem strange, they argue that the existing system</p>
+<ol style="list-style-type: decimal">
+<li>is already in essence a lottery,</li>
+<li>is biased,</li>
+<li>rewards incremental work that is nearly certain to succeed, and</li>
+<li>incentivizes researchers to spend most of their time writing proposals.</li>
+</ol>
+<p>The idea of using lotteries is gaining steam: it was <a href="https://www.vox.com/future-perfect/2019/1/18/18183939/science-funding-grant-lotteries-research">discussed in Vox</a>, and has been <a href="https://www.nature.com/articles/d41586-019-03572-7">adopted by several funding agencies</a>.</p>
+<p>In this post, we will explore whether a lottery might actually be better than a ranking system. Although I am sympathetic to all four concerns above,<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> I will focus on the last, as it benefits most from a model.</p>
+</div>
+<div id="model" class="section level1">
+<h1>Model</h1>
+<p>Let's sketch a simple model. There are <span class="math inline">\(n\)</span> researchers. Each researcher <span class="math inline">\(i\)</span> has an idea of quality <span class="math inline">\(q_i\)</span>, and chooses the fraction of time <span class="math inline">\(t_i \in [0,1]\)</span> to spend writing a grant proposal. Once all proposals have been received, they are scored and ranked: the payline <span class="math inline">\(p\)</span> determines what fraction receive funding. The score of a proposal depends on both the quality of the underlying idea and the time spent on the proposal. For simplicity, let's assume that the score of proposal <span class="math inline">\(i\)</span> is <span class="math inline">\(t_i q_i\)</span>. If researcher <span class="math inline">\(i\)</span> gets funded, they spend their remaining time conducting research. This advances science by <span class="math inline">\((1-t_i)q_i\)</span>, and gives this same benefit to the researcher. Researchers whose proposals are not funded get a payoff of zero.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></p>
+<div id="high-payline" class="section level3">
+<h3>High Payline</h3>
+<p>Let's suppose that we have 8 ideas, with qualities <span class="math inline">\(q_1 = 10, q_2 = 8, q_3 = 6, q_4 = q_5 = q_6 = 2, q_7 = q_8 = 1\)</span>, and that the payline is <span class="math inline">\(p = 3/8\)</span>, so three proposals will be funded. Researchers 1, 2, and 3 can assure themselves of funding by writing just enough to earn scores of two. Researcher 1 spends 20% of her time writing grants, and with the other 80% conducts research that advances science by 8. Researcher 2 spends 25% of her time writing grants, and advances science by 6. Researcher 3 spends 33% of her time writing grants, and advances science by 4. In total, science advances by 18.</p>
+<p>If we were to use a lottery instead, researchers would have no incentive to polish their proposals, and would have more time for research. However, most of the funds would be directed towards bad ideas. On average, science would advance by only 12.</p>
+</div>
+<div id="low-payline" class="section level3">
+<h3>Low Payline</h3>
+<p>Suppose that the payline falls to <span class="math inline">\(p = 1/8\)</span>, so that only one idea will be funded. We have the following result:</p>
+<blockquote>
+<p><strong>Proposition</strong> For any fixed qualities <span class="math inline">\(q\)</span>, as the payline <span class="math inline">\(p\)</span> decreases, winning researchers spend more time writing grant proposals.</p>
+</blockquote>
+<p>Now Researcher 1 must spend mosst of her time (80%) polishing her grant proposal to ensure that it beats out the proposal from Researcher 2. This leaves her only a 20% of her time for science, which advances by 2.</p>
+<p>Had we awarded the grant by lottery, then one randomly chosen researcher could spend all of her time pursuing her idea. On average, science would advance by 4.</p>
+</div>
+<div id="lessons-from-this-example" class="section level2">
+<h2>Lessons from This Example</h2>
+<p>This model illustrates that there is a tradeoff between these approaches. Ranking proposals ensures that the best ideas are funded, but forces researchers to waste time writing proposals. Using a lottery allows researchers to dedicate themselves to research, but may fund bad ideas.</p>
+<p>Ranking works well when the number of good ideas matches the number of proposals that can be funded: it identifies proposals that deserve funding, without requiring researchers to spend too much time writing. However, if there are more good ideas than funding, researchers with good ideas must spend most of their time competing with each other for funding. A lottery spares this effort, resulting in greater scientific progress.</p>
+<p>Can we improve on the lottery in the second scenario? Yes! One concern is that many ideas are of low quality. We can filter these out by deciding that only proposals with a score above two qualify for the lottery. Each of the first three researchers will now have to spend some time writing, but just enough to ensure that they qualify. One of them will get funded, and science advances by an average of 6.</p>
+<p>This last idea is essentially what is being proposed: have panels classify proposals as meritorious or non-meritorious, and hold a lottery within the former group.</p>
+</div>
+<div id="a-general-analysis" class="section level2">
+<h2>A General Analysis</h2>
+<p>The examples above illustrate how a lottery could outperform a ranking-based method, but also reveal that the reverse could be true. This isn't very helpful for policy guidance. Thankfully, the model above is equivalent to that studied by <a href="http://timroughgarden.org/papers/burning.pdf">Hartline and Roughgarden</a>.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> They find that a ranking outperforms the lottery if there are a few outlier ideas, which have far higher quality than the rest.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a> In such cases, it will be relatively easy for the researchers behind these ideas to convince the panel that they deserve funding. Conversely, if there are many ideas of similar quality, then the ranking approach forces researchers to compete fiercely with each other, leaving little time for the actual research. Furthermore, this problem is exacerbated as the payline falls.</p>
+</div>
+</div>
+<div id="conclusions" class="section level1">
+<h1>Conclusions</h1>
+<p>The model above illustrates that as funding becomes more scarce, researchers spend ever more time chasing it. My gut says that grant panelists are often splitting hairs between similar proposals. If that is the case, then the analysis above suggests that moving to a lottery could dramatically reduce time spent writing grants, and actually increase the rate of scientific advances. To prevent funding truly bad proposals, the panel could start by throwing these out. Furthermore, if there are a few ideas that really stand out, we could ensure that they receive funding by having panelists sort proposals into three categories: definitely in, definitely out, and lottery.</p>
+<p>Although I don't have much experience with grants, I do have a fair amount of experience with refereed conferences. These conferences are generally seeing an increase in the number of submissions. While there are always some easy accepts and easy rejects, many submissions lie in the gray zone, and their fate can come down to the taste and mood of the reviewers. Perhaps a three-tiered lottery would lead to a fairer and less time-consuming review process!<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a></p>
+<p>So readers, what do you think? Should grant funding (and conference acceptances) be partially dictated by lottery?</p>
+<!--One interesting direction for study would be to try to capture the dynamic nature of the problem. Researchers often re-submit rejected grant proposals. While individually rational, this creates a lot of work for grant panels. For a period, the NIH allowed researchers to submit each proposal only twice, but this policy has been abandoned. Other interesting questions related to dynamics include whether to bias allocations towards or against past grant recipients, and whether to directly incorporate past research output into funding decisions.
+-->
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>Admittedly, these concerns undermine each other to some extent. For example, if the existing system is essentially a lottery, then why would researchers spend so much time polishing their proposals?<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>This model is of course extremely stylized. It assumes that researchers know exactly how their proposals will be scored, and that time spent writing the proposal does not improve the quality of the idea. Furthermore, it ignores the fact that researchers with good ideas may nevertheless be bad writers, and assumes that each researcher's utility is exactly their contribution to scientific progress. Despite these limitations, it has several interesting implications, which we explore below. The <a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.3000065">PLOS biology</a> paper incorporates some of these complexities, although it does not provide a comprehensive analysis.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>In fact, there is a large literature on contests, which I will not cite here. <a href="https://www.cs.princeton.edu/~smattw/">Matt Weinberg</a> and I have a paper that uses this class of models to <a href="/ResearchPapers/Arnosti-Weinberg_BitcoinNaturalOligopoly.pdf">study bitcoin mining</a>.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>In a desire to maintain a conversational tone, I have abandoned mathematical precision. Formally, their results depend on whether the distribution of qualities has a heavy tail (decreasing hazard rate) or a light one (increasing hazard rate).<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>The model above suggests that it might also cause researchers to invest less time into writing. Anyone who has served as a program committee member will probably agree with me that this would not be desirable.<a href="#fnref5">↩</a></p></li>
+</ol>
+</div>

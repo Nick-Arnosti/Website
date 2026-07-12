@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on b</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 08 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Probability and Statistics</title>
+      <link>/categories/probability-and-statistics/</link>
+      <pubDate>Sun, 08 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/probability-and-statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sports</title>
+      <link>/categories/sports/</link>
+      <pubDate>Sat, 07 Dec 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/sports/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Market Design, Matching</title>
+      <link>/categories/market-design-matching/</link>
+      <pubDate>Sat, 07 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/market-design-matching/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Market Design</title>
+      <link>/categories/market-design/</link>
+      <pubDate>Tue, 19 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/market-design/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Operations</title>
+      <link>/categories/operations/</link>
+      <pubDate>Mon, 01 Mar 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/operations/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Operations Management</title>
+      <link>/categories/operations-management/</link>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/operations-management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Statistics</title>
+      <link>/categories/statistics/</link>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pseudo-Research</title>
+      <link>/categories/pseudo-research/</link>
+      <pubDate>Fri, 02 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/pseudo-research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Paper Discussions</title>
+      <link>/categories/paper-discussions/</link>
+      <pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/paper-discussions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Miscellaneous</title>
+      <link>/categories/miscellaneous/</link>
+      <pubDate>Sun, 17 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/miscellaneous/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

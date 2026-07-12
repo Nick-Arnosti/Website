@@ -1,0 +1,77 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=1 in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+\usepackage{url}
+\usepackage{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+
+\usepackage{listings}
+%SetFonts
+
+%SetFonts
+\usepackage{xcolor}
+\usepackage{float}
+
+\usepackage{hyperref}
+\newcommand{\link}[2]{{ \color{blue} \tt{\href{#1}{#2}}}}
+
+\title{\vspace{-.3 in} NFL Coaching Advice}
+\author{Nick Arnosti}
+\date{October 8, 2018}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+
+\section{Motivation}
+
+Your team is down 14 points, and scores a touchdown with four minutes left to pull within 8. Should you kick an extra point or go for two? Virtually all NFL coaches kick the extra point, but as we will see, the smart answer is to go for two.
+
+The opponents will get the next possession. If they manage to score or run out the clock, you lose no matter which decision you made. Similarly, if they punt it back but your team fails to score again, you will lose. Thus, our decision of whether to kick and extra point or go for two only matters in the case where the opponent fails to score, and we score another touchdown.
+
+\link{http://www.espn.com/blog/nflnation/post/_/id/283846/doug-pederson-does-it-again-why-two-point-decision-was-easy-call}{ESPN article}
+
+
+Dynamic programming: solve by working backwards from the end. 
+
+Traditional NFL coach:
+\begin{enumerate}
+\item[T1] Attempt XP. 
+\item[T2] If first XP succeeds, attempt XP again. If first XP fails, attempt 2PT.
+\end{enumerate}
+
+Aggressive NFL coach:
+\begin{enumerate}
+\item[A1] Attempt XP. 
+\item[A2] Attempt 2PT.
+\end{enumerate}
+
+Better decision:
+\begin{enumerate}
+\item[B1] Attempt 2PT. 
+\item[B2] If first 2PT succeeds, attempt XP. If first 2PT fails, attempt 2PT.
+\end{enumerate}
+
+{\color{blue} Points to mention:}
+\begin{enumerate}
+\item Simplest case: 50\% chance of making 2PT, 100\% of XP. The traditional coach ends up in OT, the aggressive coach wins or loses in regulation. By going for 2 earlier, you win half of the time, lose 1/4 of the time, and go to OT 1/4 of the time.
+\item Why the gain? You {\em acquire information early}. Note that in this example, if you use a non-adaptive strategy (one that doesn't take score into account) you end up with 50/50 win probabilities.
+\item Note relationship to investing advice: invest in stocks earlier, then {\em adjust} given the new information. Investing in a target date fund and then opening it up like a present on a particular date (without adjusting behavior) is like an NFL coach going for two, and then kicking the extra point regardless of the result (obviously stupid if the first 2-point conversion failed).
+\item So does this mean that we should go for 2 right away? After all, that's how we get most information. Not necessarily. Even in model where opponents' score is exogenous, may want to increase our expected score, or decrease its variance. (If they will score 20 and we will score 3 TDs, probably best to just kick extra points). More importantly, in this game, you are also giving more information to your opponent, who can adjust their strategy accordingly. The key to this example is that your opponent won't really adjust their strategy: in either case they just want to score/run out the clock. Thus, revealing more information is good for you, not your opponent.
+\item Suppose probability $p$ of successful 2PT, and $q$ of successful XP. Can show that if $p > (3 - \sqrt{5})/2 \approx 38.1\%$, then the optimal strategy goes for two after the first touchdown, regardless of $q$.
+\item Note that similar ideas apply if you're down by 15 late. Most coaches kick the extra point to make it a ``one-score game," then go for two on the second touchdown. This is obviously stupid: if your two point conversion will fail, you want to know that you will need two possessions to win!
+\end{enumerate}
+
+\end{document}  

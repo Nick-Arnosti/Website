@@ -1,0 +1,104 @@
+---
+author: Nick Arnosti
+title: Deferred Acceptance is Unpredictable
+tags:
+  Stable Matching
+categories:
+  Market Design
+date: "2020-08-18"
+---
+
+In February 2019, the Brookings Institution published [The Opportunities and Risks of K-12 Student Placement Algorithms](https://www.brookings.edu/research/the-opportunities-and-risks-of-k-12-student-placement-algorithms/), which includes the following quote: 
+
+> Even if DA algorithms are relatively simple, predicting how student assignment policies will affect enrollment and outcomes is difficult.
+
+In this post, I explore both parts of this claim: what makes the Deferred Acceptance (DA) algorithm simple, and why is it difficult to predict the effect of using it?
+
+#Is Deferred Acceptance Simple?
+
+I can think of several desirable ways in which Deferred Acceptance is simple:
+
+* **Strategic Simplicity** It is in applicants' best interest to list their true preferences, regardless of what others do.
+* **Computational Simplicity** The algorithm runs quickly, even on large data sets.
+* **Conceptual Simplicity** After the fact, decisions can be rationalized by "admissions cutoffs" for each school. Posting these cutoffs allows students to verify that they have been assigned to their favorite school where their priority exceeded the cutoff.
+
+
+Despite these advantages, DA is often characterized as a complicated and unintuitive "black box." This post offers one possible explanation for this: the outcome of DA is **unpredictable**. By this, I mean that small changes to the input can have a large effect on the output.
+
+```{r,echo=FALSE}
+#Based on these notions, I would classify the Deferred Acceptance algorithm (DA) as simple. It has been independently discovered and deployed by practitioners in different contexts. Its output can be explained fairly easily ("if you didn't get your first choice, that's because it filled with students who have higher priority").  It offers students a dominant strategy. Its run time is linear in the size of the input. 
+```
+
+```{r,echo=FALSE}
+#* **Predictability** How sensitive is the algorithm to changes in the input?
+#Ideally, perturbations to outcomes would be proportional to perturbations to inputs.
+#However, there is another sense in which DA is not simple: predictability. I'll say (semi-formally) that an algorithm is **predictable** if small changes to the input result in small changes to the output. DA does not have this property. 
+```
+
+
+#An Example
+
+Consider the example shown below. In a market consisting of only Schools A, B, C and students 1, 2, 3, each student gets their first choice -- pretty good! Unsurprisingly, adding a fourth student can harm the first three students. Perhaps more surprisingly, in this example, adding student 4 causes students 1, 2 and 3 to each be assigned to their _last_ choice. This occurs despite the fact that student 4 is not assigned to any school!^[The fact that adding a student can harm others _even if the new student goes unassigned_ may seem surprising: one might expect some sort of "irrelevance of unmatched students" property. In the academic literature this property is called "non-bossiness." Although Deferred Acceptance is bossy (not non-bossy), other commonly-studied mechanisms such as Random Serial Dictatorship, Top Trading Cycles, and the Boston Mechanism are all non-bossy.]
+
+
+```{r,echo=FALSE}
+library(knitr)
+kable(matrix(c(c("A:","B:","C:",""), c(2,3,1,""), c(3,4,2,""), c(4,1,3,""), c(1,2,4,""),rep(" ",4), c("1:","2:","3:","4:"),c("A","B","C","A"),c("B","C","A","B"), c("C","A","B","C")),ncol=10),caption="An example where adding student 4 dramatically affects the final assignment.")
+#kable(matrix(c(c("1:","2:","3:","4:"),c("A","B","C","A"),c("B","C","A","B"), c("C","A","B","C")),ncol=4))
+
+ # kable_styling(latex_options = "hold_position")
+#df <- data.frame(c("A","B","C"), c(2,3,1), c(3,4,2), c(4,1,3), c(1,2,4))
+#kable(df, escape = F, caption = "My caption") %>%
+ # kable_styling(latex_options = "hold_position")
+# Under student-proposing DA, student 4 goes unassigned and students 1, 2, 3 each get their third (last) choice. If student 4 is deleted from the market, then each of students 1, 2, 3 would get their first choice."
+```
+
+
+\begin{table}[]
+\centering
+\begin{tabular}{|l l l l l|}
+A: & 2 & 3 & 4 & 1 \\
+B: & 3 & 4 & 1 & 2 \\
+C: & 1 & 2 & 3 & 4 \\
+\end{tabular}
+\begin{tabular}{|l l l l|}
+1: & A & B & C \\ \hline
+2: & B & C & A \\
+3: & C & A & B \\
+4: & A & B & C \\
+\end{tabular}
+\caption{In this market, under student-proposing DA, student 4 goes unassigned and students 1, 2, 3 each get their third (last) choice. If student 4 is deleted from the market, then each of students 1, 2, 3 would get their first choice.}
+\label{example}
+\end{table}
+
+This example can be generalized: for any $n$, there is an example with $n$ students and $n$ schools where each student gets his or her first choice, but adding a new student results in each original student getting their $n^{th}$ choice, and the new student going unassigned.^[These examples rely on carefully constructed preferences. It is natural to wonder whether such large changes are "typical." A partial answer is given in [this paper](http://www.columbia.edu/~yk2577/Unequalmatch-JPE.pdf) by [Itai Ashlagi](https://web.stanford.edu/~iashlagi/), [Yash Kanoria](http://www.columbia.edu/~yk2577/) and [Jacob Leshno](https://jleshno.weebly.com/), which shows that adding one student to a balanced one-to-one market has a dramatic effect even when preferences and priorities are drawn uniformly at random.]
+
+
+#Defining Predictability
+
+In the preceding example, a "small" change (adding one student) had a "large" effect on the outcome (moving all other students from their first to their last choice). We could formalize this observation by defining the _externality_ of one student to be the sum of the improvement in ranks experienced by other students if this student is removed from the market. So if removing student x moves student y from their third choice to their first, moves student z from their fourth choice to their third, and leaves the assignment of all other students the same, the externality of student x is $(3-1) + (4-3) = 3$.
+
+The preceding example shows that in a market with $n$ students and $m$ schools, the externality of a student under DA can be as large as $n \times (m-1)$. By contrast, the following result states that other commonly-studied mechanisms result in much smaller externalities. 
+
+> **Proposition.** In a market with $n$ students and $m$ schools, when using Serial Dictatorship or the Boston Mechanism, the externality froma single student is at most $m$.
+
+
+```{r echo=FALSE}
+#can result in a matching that differs by $n \times (m-1)$ from the original.
+
+#change from adding one student as the sum of the difference in ranks that other students receive. difference between two matchings as sum the (absolute) difference in ranks across students. Examples like that above show that adding a single student to a market with $n$ students and $m$ schools can result in a matching that differs by $n \times (m-1)$ from the original.
+#In a serial dictatorship, adding one student could either (i) change outcomes for many others, or (ii) significantly change outcomes for some student, but not both. In particular, the 
+#By contrast, Boston is (i) non-bossy, and (ii) the total change in ranks across all students is at most the number of rounds, which is at most the length of the longest student list.
+```
+
+
+Informally, under these other mechanisms, adding one student could either (i) slightly harm many other students or (ii) significantly harm a few other students, but not both.
+
+
+#Why This Matters
+
+Participants in matching markets often want to know what to expect. This is especially important during preference formation. Parents have to decide which schools to research, and medical students have to decide where to interview. Without good information about what options will be available, they may waste a lot of time and money exploring irrelevant alternatives. Historical data can offer guidance, but the examples in this post suggest that even relatively small changes from year-to-year (i.e. slightly fewer residency positions, or slightly fewer students applying) can render this information fairly useless.
+
+The unpredictability of DA also matters to policymakers who must decide school priorities. It's possible to construct examples similar to those above, showing that seemingly small changes to priorities can have large effects on the final outcome. Meanwhile, large changes to priorities can have almost no effect (for one real-world example, see [this paper](http://www.tayfunsonmez.net/wp-content/uploads/2017/03/busing_jpe_final.pdf).) 
+
+Even academics whose full-time job is to study stable matching algorithms struggle to predict what outcomes will arise when they are deployed. For most practical questions, we resort to simulations, with theory following decades later, if at all. I've been working on a new model of stable matching, which makes accurate predictions while maintaining analytical tractability. Stay tuned for more!

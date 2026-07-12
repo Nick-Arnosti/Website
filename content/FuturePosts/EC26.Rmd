@@ -1,0 +1,93 @@
+---
+title: "Notes from EC 2026"
+date: "2026-07-05"
+output: html_document
+---
+
+**Best Paper**
+
+Stochastic optimization and coupling.
+
+
+
+**Best Paper with a student lead author:**
+
+Personalized Recommendations without Inducing Congestion: Mitigating Disparities in the NYC High School Match.
+
+Presenter (Erica) was *employed* at NYCPS over the last year (insider access).
+
+Goal is personalized recommendations of students to high-performing schools where they are likely to be admitted.
+
+**Exemplary Papers**
+
+* Competition and Welfare in Airport Slot Allocation, Sebastian Bauer (Stanford)
+
+* Calibrated Coarsening
+
+* Proportional Representation in Rank Aggregation (Lederer)
+
+* Strategy-Proof Information Aggregating in Voting
+
+* Random Serial Dictatorship is $\sqrt{2}$ Envy Free
+
+* Automated Social Science: Language Models as Scientist and Subjects
+
+
+
+**Ravi and Itai, Organ Allocation and Congestion**
+
+Model is reasonable, highly stylized (two types of organs -- risky and safe; assumes FCFS allocation only; patients heterogeneous in two parameters -- value of risky organs and rate of departure; exogenous discard policy -- can't offer below certain mass of waiting list).
+
+Main results:
+
+* Congestion ($T_{risky}>0$ while risky organs are discarded) can occur when $\epsilon$ (offer limit) is positive.
+* With congestion, it's possible that increasing the supply of safe organs results in worse outcomes for all patients
+
+Second result is somewhat interesting/unexpected. But overall, not sure how interesting this paper is.
+
+**Sid, Ram, and Bobby**
+
+Fix schur-convex or schur-concave utility function $f$. Fix parameter $\alpha$, as well as $n$ and $m$ (number of offline and online nodes).
+
+Player chooses algorithm. Adversary chooses instance. Payoff to adversary is $f(OMN) - \alpha f(ALG)$. Equilbrium (optimal) play for player is to use Water Filling, for *any* $f$ and $\alpha$.
+
+Really nice finding! Implies optimal competitive ratio, optimal (minimax) regret, and more. Generality of objective would be nice to incorporate into work on fairness of FCFS (with Peng)?
+
+
+**Daniel Freund** Mentioned that he has connection to Boston analytics team. Could be helpful if I want to work with Boston Public Housing. Should I pursue it?
+
+**Neel Patel** Talk to him somewhat extensively (his work, ideas for generalizations).
+
+> To overcome this challenge, rather having buyers get proposals from available items, we let them get proposals from present items – i.e., items that have not perished, but may have been sold. This then gives us independent distributions (as presence is independent across goods), and allows us to use an optimal CRS for the constraint family in a black-box manner.
+
+(Should we adopt this same terminology, and credit them? We already have something like it. Could make describing OMN easier, explaining upper bound $LP^{OMN}$, etc.)
+
+Their eq (5) in Lemma 2.6 says (in our terms) x_ij <= lambda_j n_i. (Holds for any online algorithm; set version unnecessary, as all additive.)
+
+
+**Distributional Preferences for Market Design, Federico Echenique et al** Take a look at this, understand relationship to work with Jay and Carlos
+
+
+**Thoughts for Selling work with Felipe, Rad, Pranav**
+
+Chain of inequalities.
+
+Example showing why both approaches, applies to TxT, can fail.
+
+Sell novel Lemma, proof strategy. (Are there other applications of Lemma?)
+
+Compare to prophet inequality literature. Bad example is similar. Prophet inequality allows non-staionary arrivals of one side, but in many other ways seems easier: assumes bipartite, with one side known in advance and infinitely patient.
+
+Compare to prior literature without departures (i.e. Ashlagi work). Same LP doesn't work.
+
+Put LP^OMN and LP^ALG side by side, explain the differences (motivate our LP).
+
+
+**Bobby**
+
+Matroid secretary problem: can you get constant factor approximation? Best known factor: log(log(rank of matroid)).
+
+Matroid prophet inequality solved by Matt Weinberg and Bobby.
+
+Correa 2019 won EC best paper award -- check it out! (Bobby tried to do this and failed 15 years earlier).
+

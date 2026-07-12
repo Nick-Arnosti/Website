@@ -1,0 +1,92 @@
+---
+title: "Kash Patel"
+author: "Nick Arnosti"
+date: '2026-04-23'
+output: html
+draft: true
+---
+
+
+Recently, FBI director Kash Patel was asked about an Atlantic article which portrayed him unfavorably. In his response, he said the following (you can see his full response [here](https://www.youtube.com/watch?v=UiKDGGgFZqE)):
+
+> This FBI director has been on the job twice as many days as every director before me. What that means is, I’ve taken half as many days off as those before me.
+
+In fact, these are not equivalent! Suppose that the previous director worked 230 days and took 30 days off (approximating the year as having 5 \times 52 = 260 work days). Taking "half as many days off" means a total of 15 vacation days (implying 245 work days). Meanwhile, being on the job "twice as many days" would require working 460 days in the year, which is clearly impossible.
+
+This is a somewhat obvious point, but actually is relevant to some of my research (and that of related papers). I explain how below.
+
+# Connection to Matching: Maximize Benefit, or Minimize Cost?
+
+Suppose you are matching patients to kidneys from deceased donors. Each patient is only medically compatible with a certain kidneys. For simplicity, let's assume that any compatible match is equally good (this can easily be relaxed). Consider the following goals:
+
+1. Find a matching that maximizes the total number of patients who get a transplant.
+2. Find a matching that minimizes the total number of patients who do *not* get a transplant.
+
+These goals are obviously equivalent. 
+
+It is rarely possible to find the best matching, because we don't have the necessary information: we must make decisions about one kidney before we know which kidneys (and patients) will arrive in the future. For this reason, many matching papers seek to find a matching policy which will be "almost as good" as what we could do if we knew everything in advance. For the rest of this post, I will just call the "what if we knew everything in advance" algorithm the *optimal* algorithm (the literature often differentiates between optimal and omniscient/optimal offline -- distraction)
+
+"Almost as good" often means "within a known multiplicative factor". So, for example you might make one of the following claims:
+
+1. My algorithm matches at least half as many patients as the optimal algorithm.
+2. My algorithm leaves at most twice as many patients unassigned as the optimal algorithm.
+
+These claims are **not** equivalent! That is, *approximately* maximizing the number of transplants is not equivalent to *approximately* minimizing the number of patients who go without. Which guarantee is stronger really depends on how well the optimal algorithm does. 
+
+To illustrate, suppose that we have 100 patients. 
+
+* If the optimal algorithm is able to match 98 of them, then the first guarantee implies that our algorithm matches at least 49, while the second implies that our algorithm matches at least 96. Clearly, the latter is much more impressive! 
+* If the optimal algorithm can only match 50 of the 100 patients, then the first guarantee implies an algorithm that matches at least 25 patients, while the second states that at most 100 (out of 100) patients will go without a transplant. In this case, the second guarantee is trivially satisfied by *any* algorithm.
+
+In the "unweighted" case (every transplant is equally good), it is easy to find an algorithm that guarantees at least half of optimal: match each arriving kidney to *any* patient who is compatible with it. However, the second guarantee is not so easy: it requires that in cases where optimal can match almost everyone, your algorithm does too. 
+
+In the weighted case, neither guarantee is easy to get. However, under some assumptions about arrivals and departures, Aouad and Saritac show that "approximately maximizing rewards" is possible, while "approximately minimizing costs" is not.
+
+
+\citet{aouad2022dynamic} consider both types of guarantee. They show that no algorithm can provide a constant-factor approximation of losses in general, but that a 3-approximation is possible if matching costs satisfy the triangle inequality and all types have identical departure rates.
+
+
+Mention other papers, that choose each objective:
+
+* Unpaired Kidney Exchange (many co-authors)
+* Akbarpour et al
+* Aouad Saritac
+* Angela Kohlenberg (Northwestern)
+* Felipe
+
+<!--
+
+Many papers assume that matching delivers a reward, and try to maximize total cumulative rewards. Other papers assume that matching (and unmatched departure) is costly, and try to minimize cumulative costs.
+
+One might think that results for maximizing rewards could be quickly translated to results for minimizing costs, and vice versa. For many results, this turns out not to be correct, and this post seeks to clearly explain why.
+
+For simplicity, I will focus on pairwise matching, described as follows. There is a graph $G = (V,E)$ with non-negative weighted edges, which can either represent costs or rewards (missing edges indicate that these vertices cannot be matched). Our goal is to choose a matching of this graph to either minimize or maximize total weight. To deal with unmatched vertices, we can assume that the set of vertices $V$ can be partitioned into two equal-sized sets $A$ and $U$,where $A$ represents a set of agents, and each element of $U$ is connected only to a single agent in $A$, and represents the outcome that this agent goes unmatched. Then we can restrict 
+
+Usually, we don't get to see the full graph up front: instead, it is gradually revealed to us over time, and we need to make commital decisions that may be sub-optimal.
+
+First, I want to present the argument for why reward maximization and cost minimization *should* be equivalent. Suppose you are doing reward maximization. Going unmatched earns zero reward, and every edge $e$ earns some reward $r_e \in [0, 1]$. We can transform this to cost minimization by defining $c_e = 1 - r_e$, and labeling edges with costs. That is, going unmatched has cost 1, and a match that had a reward of 0.9 has a cost of 0.1. It is easy to see that finding a matching $M$ that maximizes $\sum_{e \in M} r_e$ is equivalent to minimizing $\sum_{e \in M} c_e = \sum_{e \in M} 1-r_e$.
+
+
+
+
+
+
+
+
+
+
+
+
+There are many 
+
+
+Relevant but less closely related to our work are papers by \citet{akbarpour2020thickness} and \citet{kohlenberg_2025}. These papers make strong assumptions on the structure of match values: the former assumes iid Bernoulli match rewards, while the latter assumes bipartite matching with match rewards depending only on one side of the market. Here, however, we wish to highlight an important but somewhat subtle conceptual difference. Specifically, both of these papers assess algorithmic performance based on losses. Below, we provide a simple example to illustrate the difference between approximately minimizing losses and approximately maximizing rewards. 
+%Rather than precisely defining the ``cost of impatience'' studied by \citet{kohlenberg_2025}, 
+
+Suppose that we are performing unweighted matching, meaning that every compatible match is equally valuable. Let $M^{\textup{OMN}}$ denote the fraction of agents that are matched by the omniscient algorithm, and $M^{\textup{ALG}}$ denote the fraction matched by a particular algorithm ALG. Consider the following guarantees:
+\[ \frac{M^{\textup{ALG}}}{M^{\textup{OMN}}} \ge \frac{1}{2}, \hspace{2 in}  \frac{1-M^{\textup{OMN}}}{1 - M^{\textup{ALG}}} \ge \frac{1}{2}.\]
+The first guarantees that ALG approximately maximizes rewards (as we do in this work), while the second guarantees that ALG approximately minimizes losses (unmatched agents). Neither guarantee implies the other: if $M^{\textup{OMN}} = 0.98$ then the first guarantee implies $M^{\textup{ALG}} \ge 49\%$, while the second implies the much stronger guarantee $M^{\textup{ALG}} \ge 96\%$. However, on ``hard'' instances with $M^{\textup{OMN}} \le 1/2$, the second guarantee vacuously holds for {\em any} algorithm, while the first continues to be meaningful.
+
+\citet{aouad2022dynamic} consider both types of guarantee. They show that no algorithm can provide a constant-factor approximation of losses in general, but that a 3-approximation is possible if matching costs satisfy the triangle inequality and all types have identical departure rates.
+
+-->

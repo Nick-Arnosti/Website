@@ -1,0 +1,46 @@
+---
+author: Nick Arnosti
+title: Optimizing for Students
+tags:
+  Stable Matching
+categories:
+  Market Design
+date: "2020-08-26"
+output:
+  blogdown::html_page
+---
+
+
+
+<p>Increasingly, priorities viewed as design lever. Only two problems: not clear what objective is, and not clear how to achieve it.</p>
+<p>This post will go through a very stylized set of results.</p>
+<div id="designing-da-priorities" class="section level1">
+<h1>Designing DA Priorities</h1>
+<p>Consider a market with <span class="math inline">\(n\)</span> students and <span class="math inline">\(n\)</span> schools, each with a single seat. We are going to assign students using the student-proposing deferred acceptance algorithm. The student preference profile <span class="math inline">\(P\)</span> is drawn from known distribution <span class="math inline">\(D\)</span>. We get to design the priorities <span class="math inline">\(L\)</span> before observing <span class="math inline">\(P\)</span>. Our goal is to choose <span class="math inline">\(L\)</span> to minimize (or maximize) the expected sum of students' ranks for their assignment, which we denote <span class="math inline">\(R(P,L)\)</span>.</p>
+<span class="math display">\[\begin{equation} \overline{R}(L) = \mathbb{E}_{P \sim D} [R(P,L)] \end{equation}\]</span>
+<span class="math display">\[\begin{equation} \min_{L}\,\,\overline{R}(L) = \min_{L} \mathbb{E}_{P \sim D} [R(P,L)].\end{equation}\]</span>
+<p>Some possibilities:</p>
+<ul>
+<li>All schools share a common ranking of students.</li>
+<li>Schools hold independent lotteries.</li>
+<li>Each school has a different first choice, and school rankings are all cyclic permutations of each other. (One school ranks <span class="math inline">\(A &gt; B &gt; C ... &gt; Z\)</span>, another ranks <span class="math inline">\(B &gt; C &gt; ... &gt; Z &gt; A\)</span>, a third ranks <span class="math inline">\(C &gt; ... &gt; Z &gt; A &gt; B\)</span>, and so on).</li>
+<li>Half of schools share a ranking of students, and half reverse this ranking.</li>
+</ul>
+<p>We know student preferences are uniformly random. We want to design complete priorities to help students.</p>
+<p>With <span class="math inline">\(n\)</span> students and <span class="math inline">\(n\)</span> schools, Knuth (1976,1997) shows that for <strong>any</strong> priorities, students average at most <span class="math inline">\(H_n - 1 \leq \log(n)\)</span> rejections. He conjectures that average rank is minimized by having identical rankings across all schools. In this case, students still average more than <span class="math inline">\(H_n - 2\)</span> rejections. If identical priorities are optimal with fewer students than seats, then they are also optimal with more -- can always choose so that additional students don't hurt the existing ones. (Wait, I might be able to prove this by induction!)</p>
+<p>Knoblauch (2009) partially proves this -- in particular, for any</p>
+<p>In other words, carefully choosing priorities can change students' average rank by at most <span class="math inline">\(1\)</span> (priorities don't matter much).</p>
+</div>
+<div id="moving-to-other-mechanisms" class="section level1">
+<h1>Moving to Other Mechanisms</h1>
+<p>Equivalence between TTC and RSD. Holds for any symmetric preference profile. Suggests (oddly) that TTC weakly worse than DA, but also that RSD is optimal (in line with Knuth's conjecture).</p>
+</div>
+<div id="peeking-at-preferences" class="section level1">
+<h1>Peeking at Preferences</h1>
+<p>Mention Nikzad result, conjecture. Identify open question: can this be done in IC way?</p>
+<p>e #Varying Number of Students</p>
+<p>The preceding analysis assumed an equal number of students and schools (with one seat per school). Extending it to the case where schools exceed students is straightforward: we get that with <span class="math inline">\(m &lt; n\)</span> students with uniform random preferences, for any priority rule, the average rank is at most <span class="math display">\[\frac{1}{m}\sum_{i =0}^{m-1} \frac{n}{n-i} = \frac{n}{m}( H_n-H_{n-m}) \approx \frac{n}{m} \log\left(\frac{n}{n-m}\,\,\right).\]</span></p>
+<p>Meanwhile, for RSD, the total number of proposals is <span class="math display">\[\frac{1}{m}\sum_{i =0}^{m-1} \frac{n+1}{n-i+1} = \frac{n+1}{m}( H_{n+1}-H_{n-m+1}).\]</span> This looks like Bulow-Klemperer! Adding one school is better than optimizing priorities. Also implies difference is at most one.as</p>
+<p>More students (once we define) -- get some striking result!</p>
+<p>Then we can force our desired matching. This results in those who are matched getting (n+1)/2 rank on average: (n-1)/2 rejections, where n = number of schools.</p>
+</div>

@@ -1,0 +1,283 @@
+---
+title: 'Will HH appear before TH?'
+date: '2024-12-08'
+author: Nick Arnosti
+categories:
+  Probability and Statistics
+header-includes: |
+  \usepackage{tikz}
+  \usetikzlibrary{arrows}
+  \usetikzlibrary{decorations.pathreplacing}
+---
+
+
+I recently wrote about a flawed analysis of the [hot hand](https://nickarnosti.com/blog/hothand/) in shooting data, which revealed some potentially counter-intuitive phenomena involving coin flips. Continuing in that vein, here are some more fun facts about fair coin flips!
+
+Let's start with an exercise for the reader. Suppose we repeatedly flip a fair coin. Which of the following statements are correct?
+
+1. There is a 50% chance that the sequence HH appears before the sequence HT
+2. There is a 50% chance that the sequence HH appears before the sequence TH
+3. The expected number of flips until HH appears is the same as the expected number of flips until HT appears.
+4. The expected number of occurrences of HH in the first $n$ flips is the same as the expected number of occurrences of HT in the first $n$ flips.
+
+
+I encourage you to think (at least briefly!) about these questions before moving on. To add a little extra encouragement, I leave you with two inches of whitespace. 
+
+<div style="height: 2in;"></div>
+
+
+
+
+
+**Answers.** 
+
+The first statement is correct. Once the first H occurs, the next flip decides whether HH or HT appears first. This flip is fair by assumption.
+
+The second statement is incorrect. This seems surprising at first -- why is TH different from HT? But after some consideration it becomes clear. If the first two flips are heads (25\% chance), the sequence HH appears before TH. If one of the first two flips is tails, then we will have a sequence of tails followed eventually by a head, at which point TH has occurred. Thus TH has a 75\% chance of occurring before HH.
+
+The third statement is also incorrect. Even though HH and HT are equally likely to occur first, on average it takes longer for HH to appear. I provide a detailed analysis of why this is below.
+
+The fourth statement is correct. The expected number of occurences of HH and expected number of occurrences of HT are both $(n-1)/4$.
+
+If you don't trust me, it's easy enough to simulate this process and see for ourselves. To make it a little more interesting, I have lengthened the target strings to be $s_0 = HHHH$ and $s_1 = THHH$ (in the code, I interpret $T = 0$ and $H = 1$).
+
+```{r}
+#Helper function to find all times at which the subsequence s has appeared in the sequence x
+find_subsequence <- function(x, s) {
+  k <- length(s)
+  valid_indices <- seq_along(x)[k:length(x)] # Only check from the k-th position onward
+  matches <- sapply(valid_indices, function(j) all(x[(j-k+1):j] == s))
+  return(which(matches)+k-1)
+}
+
+#Generate 1000 binary sequences of length 300
+seq_length = 300
+n_seq = 1000
+data = matrix(as.numeric(runif(n_seq*seq_length)<0.5),nrow=n_seq)
+s0 = c(1,1,1,1)
+s1 = c(0,1,1,1)
+
+#Calculate the average time until s_0 appears
+mean(apply(data,1,function(x){return(find_subsequence(x,s0)[1])}))
+
+#Calculate the average time until s_1 appears
+mean(apply(data,1,function(x){return(find_subsequence(x,s1)[1])}))
+
+#Calculate the number of times that s_1 occurs before s_0
+mean(apply(data,1,function(x){return(find_subsequence(x,s1)[1]<find_subsequence(x,s0)[1])}))
+
+#Calculate the average number of times that s_0 appears
+mean(apply(data,1,function(x){return(length(find_subsequence(x,s0)))}))
+
+#Calculate the average number of times that s_1 appears
+mean(apply(data,1,function(x){return(length(find_subsequence(x,s1)))}))
+
+#Calculate the expected number of times that s_0 appears
+(seq_length-length(s0)+1)/2^(length(s0))
+```
+This shows that:
+
+* HHHH takes an average of 30 flips to occur, whereas THHH takes only 16.
+* 15 times out of 16 (over 93\% of the time), THHH occurs before HHHH
+* Both sequences occur equally often on average ($297/16 \approx 18.6$ times in a sequence of length 300).
+
+These examples show that precise wording and attention to detail are important! In everyday conversation, we often use imprecise language ("which sequence is more likely to come up?") with multiple possible interpretations. In probability (and more generally a lot of technical fields) seemingly subtle changes in wording can have major consequences.
+
+The rest of this post will focus on analysis related to the third claim. In other words, given a binary sequence $s$, we will calculate how long it takes for $s$ to first appear. We will notice that the answer is different for different sequences of the same length, and identify sequences with the longest and shortest expected wait.
+
+**Fair warning:** while this introduction was meant to be accessible to almost anyone, the rest of this post is written for people who already have a fair amount of background in probability theory (i.e. are at least familiar with Markov Chain analysis). I thought about trying to make it more accessible and clarifying some of my explanations, but I have spent enough time on it as is!
+
+
+# Analysis for $n = 2$
+
+Let's take a closer look at what's happening with the sequences $HH$ and $HT$. 
+
+Let's first consider the case of $HH$. We will use a Markov chain analysis. After any given flip there are three states we could be in: we have made no progress (HH has not yet appeared and most recent flip is T), we are one step towards winning (HH has not yet appeared and most recent flip is H), or we have already won. Let's label these states by the amount of progress so far (0,1, or 2). We then have the following transition diagram: 
+
+\begin{tikzpicture}[->, >=stealth', auto, node distance=3cm, semithick]
+
+\tikzstyle{state}=[circle, draw, minimum size=1.5cm]
+
+% Nodes
+\node[state] (s0) {$s_0 = \emptyset$};
+\node[state] (s1) [right of=s0, xshift=3cm] {$s_1 = H$};
+\node[state] (s2) [right of=s1, xshift=3cm] {$s_2 = HH$};
+
+% Edges
+\path (s0) edge[bend left=20] node {H} (s1)
+      (s0) edge[loop above] node {T} (s0);
+
+\path (s1) edge[bend left=20] node {H} (s2)
+      (s1) edge[bend left=20] node {T} (s0);
+\end{tikzpicture}
+
+We can use this to solve for the expected number of flips until we see $HH$. This is just the expected hitting time of the state $s_2 = HH$, starting from state $s_0 = \emptyset$. Define $t_k$ to be the expected number of flips to reach $HH$ from state $s_k$. Then the Markov chain gives us the following equations:
+\begin{align*}
+t_2 & = 0 \\ 
+t_1 & = 1 + \frac{1}{2} t_2 + \frac{1}{2}t_0 \\
+t_0 & = 1 + \frac{1}{2} t_1 + \frac{1}{2}t_0.
+\end{align*}
+We can solve this system to get that $t_1 = 4$ and $t_0 = 6$.
+
+We can repeat this analysis for the case of $HT$. Again we define $s_0$ to be the state where we have made no progress, $s_1$ to be the state where we have matched the first $H$, and $s_2$ to be the state where we have already won. Then our transition diagram looks as follows.
+
+\begin{tikzpicture}[->, >=stealth', auto, node distance=3cm, semithick]
+
+\tikzstyle{state}=[circle, draw, minimum size=1.5cm]
+
+% Nodes
+\node[state] (s0) {$s_0 = \emptyset$};
+\node[state] (s1) [right of=s0, xshift=3cm] {$s_1 = H$};
+\node[state] (s2) [right of=s1, xshift=3cm] {$s_2 = HT$};
+
+% Edges from s0
+\path (s0) edge[bend left=20] node {H} (s1)
+      (s0) edge[loop above] node {T} (s0);
+
+% Edges from s1
+\path (s1) edge[bend left=20] node {T} (s2)
+      (s1) edge[loop above] node {H} (s1);
+\end{tikzpicture}
+The system of equations corresponding to this diagram is 
+\begin{align*}
+t_2 & = 0 \\ 
+t_1 & = 1 + \frac{1}{2} t_2 + \frac{1}{2}t_1 \\
+t_0 & = 1 + \frac{1}{2} t_1 + \frac{1}{2}t_0.
+\end{align*}
+The solution to this system is $t_1 = 2$ and $t_0 = 4$. Thus, we expect that it will take four flips to see our first $HT$ (which is less than the six that we had to wait for $HH$). 
+
+These calculations are all well and good, but they don't give much intuition. If we compare the two diagrams, they are very similar, with one key difference: when we are in state $s_1$ and are seeking $HH$, a failure (T) sets us all the way back to the beginning. However, when we are in state $s_1$ and are seeking $HT$, a failure to win leaves us in the same place as before (with one head).
+
+# Extending to Longer Sequences
+
+For longer sequences, this idea generalizes. Given a sequence, we can draw the corresponding Markov Chain diagram, set up the associated linear system of equations and solve it. This is doable, but a bit cumbersome and not that insightful.
+
+A basic intuition to try to carry with you is as follows. In a sequence of length $m$, the *expected number of times* we see a subsequence $s$ of length $n$ does not depend on $s$: it is $(m-n+1)/2^n$. (This is because we could see $s$ from position $1... n$, from $2... (n+1)$, from $3... (n+2)$, all the way up to $(m-n+1)... n$. This is $m-n+1$ positions in which $s$ could occur, and for each in isolation, the chance that $s$ occurs there is $1/2^n$. Of course, the event that $s$ occurs in the first $n$ postions is not independent from the event that $s$ occurs in positions $2... n+1$, but by linearity of expectation, this doesn't matter when calculating the expected number of appearances of $s$.)
+
+Now take a sequence like $HHHH$. Whenever it occurs, there is a 50\% chance that it is followed by another occurrence (if we get another heads). There is a 25\% chance that $HHHH$ is immediately followed by at least two more occurrences of $HHHH$. In other words, the occurrences of $HHHH$ tend to be bunched together. If $HHHH$ occurs with the same average frequency as all other length-four sequences, but tends to be more bursty, then intuitively, we might expect to wait a long time to see it the first time. This reasoning can actually be made precise, as I discuss in the extension below.
+
+The next section addresses the following questions:
+
+
+1. Is there another way to calculate the expected waiting time until a sequence appears, that doesn't involve solving a system of $n$ equations?
+2. What sequences have the shortest expected time until they appear? What sequences have the longest?
+3. How big is the difference between the sequences mentioned above? Could one sequence take twice as long to appear as another? Three times?
+
+We will see that there is a general formula for the expected hitting time of a sequence (which does not require solving a system of equations). The shortest possible expected hitting time for a length $n$ sequence is $2^n$, while the longest expected hitting time is nearly double that ($2^{n+1}-2$).
+
+# Martingale Analysis
+
+One nice way of calculating the expected hitting time for any sequence is using "martingales" (the theory of fair betting games).
+
+Let's imagine I want to bet that flips $i, i+1, ... , i+n-1$ will be exactly the sequence $s$. The probability of this is $1/2^n$, so if I bet \$1, the bet is fair if I win $2^n$ dollars when I am correct.
+
+Unfortunately, I am only able to bet on single flips (not a sequence of them). Before each flip, I can wager any amount of money on the outcome of the next flip. If I am right, the money I bet doubles, and if I am wrong, I lose that money.
+
+Here is a simple strategy that effectively implements my desired sequence bet: 
+
+* Bet \$1 that flip $i$ will be the value $s[1]$
+* If I win that bet, take my \$2 winnings and use them to bet that flip $i+1$ will be the value $s[2]$. 
+* If I win that bet as well, take my now \$4 and bet it all that the next flip will be the value $s[3]$. 
+* Continue. At step $i+k-1$, bet all of my winnings on the next flip being $s[k]$.
+
+If I follow this strategy, then I will either end with $0$ dollars (if the sequence $s$ did not appear) or $2^n$ dollars (if it did). Let's call this strategy the "$s$ on $i$" strategy.
+
+Now let's suppose I want to go a step further. I want to bet \$1 that flips $1, 2, ... n$ will equal $s$, AND bet \$1 that flips $2, 3, ... , (n+1)$ will equal $s$, AND bet \$1 that flips $3, ... , (n+2)$ will equal $s$, and so on. In other words, I choose to follow the "$s$ on $i$" strategy for every $i$  in parallel. 
+
+If I do this, eventually one of my bets will win. When it does, I have several unresolved "$s$ on $i$" bets. To be concrete, suppose my sequence is $s = HTHHTH$. Let $N$ be the first time that this sequence occurs. This means that the bet I placed right before flip $N - 6$ has won and earned me $2^6 = 64$ dollars. My earlier bets have all lost by definition of $N$, but what about my more recent bets? The bet I placed before flip $N-5$
+
+
+\begin{tikzpicture}
+
+% Define styling for the letters
+\tikzstyle{letter}=[font=\Huge] % Make letters larger
+
+% Draw the letters with more horizontal spacing
+\node[letter] at (0,0) {$H$};
+\node[letter] at (2,0) {$T$};
+\node[letter] at (4,0) {$H$};
+\node[letter] at (6,0) {$H$};
+\node[letter] at (8,0) {$T$};
+\node[letter] at (10,0) {$H$};
+
+% Curly braces with labels
+\draw [decorate, decoration={brace, amplitude=8pt, mirror}, yshift=-0.7cm] 
+  (-0.5,0) -- (0.5,0) node [midway, below=8pt] {$N-5$};
+
+\draw [decorate, decoration={brace, amplitude=8pt, mirror}, yshift=-0.7cm] 
+  (1.5,0) -- (2.5,0) node [midway, below=8pt] {$N-4$};
+
+\draw [decorate, decoration={brace, amplitude=8pt, mirror}, yshift=-0.7cm] 
+  (3.5,0) -- (4.5,0) node [midway, below=8pt] {$N-3$};
+
+\draw [decorate, decoration={brace, amplitude=8pt, mirror}, yshift=-0.7cm] 
+  (5.5,0) -- (6.5,0) node [midway, below=8pt] {$N-2$};
+
+\draw [decorate, decoration={brace, amplitude=8pt, mirror}, yshift=-0.7cm] 
+  (7.5,0) -- (8.5,0) node [midway, below=8pt] {$N-1$};
+
+\draw [decorate, decoration={brace, amplitude=8pt, mirror}, yshift=-0.7cm] 
+  (9.5,0) -- (10.5,0) node [midway, below=8pt] {$N$};
+
+\end{tikzpicture}
+
+* From bet $N-5$, I now have $2^6 = 64$ dollars.
+* Bet $N-4$: lost immediately when $T$ was flipped.
+* Bet $N - 3$: I initially bet $H$ and won, but then bet $T$ and lost, so I have nothing.
+* Bet $N - 2$: I bet $HTH$ and won each of these bets, so I currently have $8$ that I am about to reinvest.
+* Bet $N-1$: I bet $H$ and lost immediately.
+* Bet $N$: I bet $H$ and won, so I have \$2 from this bet.
+
+In total, I have \$72 in winnings (\$64 from bet $N-5$, \$8 from bet $N-2$, and \$2 from bet $N$).
+
+How much have I paid? Well, just \$1 per period played, or a total of $\$N$.
+
+The key idea is that because each bet is fair, for *any* strategy I use, my expected profit must equal zero. (In reality, we need to place a few restrictions on my strategy. However, one restriction which is sufficient for our purposes is to assume that the maximium bet size is bounded.)
+
+If you believe that I can't be expected to make or lose money on average, then the amount of winnings that I am holding at the first occurrence of $S$ -- which is always $\$72$ -- must equal the expected amount that I pay in. In other words, we must have $\mathbb{E}[N] = 72$. 
+
+Let's try this again for another sequence, say $HHTHTT$:
+
+* Bet $N-5$: win \$64.
+* Bet $N-4$: lost on flip $T-3$.
+* Bet $N-3$: lost on flip $T-3$.
+* Bet $N-2$: lost on flip $T-1$.
+* Bet $N-1$: lost on flip $T-1$.
+* Bet $N$: lost in flip $T$.
+
+Total winnings = \$64, so must have $\mathbb{E}[N] = 64$.
+
+Observe that for any sequence of length 6, when it first appears you have at least \$64 in winnings. This implies that no sequence of length $6$ could be expected to appear in fewer than 64 flips (more generally, no sequence of length $n$ is expected to appear in fewer than $2^n$ flips).
+
+Meanwhile, the sequence that results in you holding the most money when it first occurs is the sequence of all heads (or equivalently, all tails). In this case, all of your previous $n-1$ bets are still "active", meaning that you are holding $2^n + 2^{n-1} + 2^{n-2} + \cdots + 2^1 = 2^{n+1}-2$. This implies that these sequences take almost twice as long to occur as $HHTHTT$ does.
+
+The following code calculates the expected time for every sequence of length $n$.
+```{r}
+calculate_hitting_time <- function(S) {
+  n = length(S)
+  # b[k] is 1 if the bet placed k periods before is still active after flip T
+  b = sapply(1:n,function(k){return(all(S[1:k]==S[(n-k+1):n]))})
+  return(sum(2^(1:n)*as.numeric(b)))
+}
+n = 5
+S = expand.grid(replicate(n, 0:1, simplify = FALSE))
+sort(apply(S,1,calculate_hitting_time),decreasing=TRUE)
+```
+
+# Extension
+
+I first saw this problem in graduate school, and found it very interesting. But here is a variant that I hadn't seen presented to me.
+
+Suppose that we now ask, how long on average does it take for the sequence $S$ to appear *twice*? We saw that $HHHH$ takes 30 flips to occur once and $THHH$ takes only 16, but does the first sequence "make up ground" if we are waiting for the sequence to appear twice? After all, there is a 50\% chance that the second occurrence of $HHHH$ occurs just one flip after the first!
+
+It turns out that for any sequence of length $n$, the expected time until its second appearance is simply $2^n$ plus the expected time until its first appearance. More generally, the expected time until its $k^{th}$ appearance is simply $(k-1)2^n$ plus the expected time until its first appearance. In other words, the expected time in between adjacent appearances of $s$ is $2^{length(s)}$, for any sequence $s$.
+
+There are several ways to see this. One is to try to use martingales again. Suppose now that instead of the game stopping when you hit your first jackpot, you pocket your $\$2^n$ from your first win and continue with your "bet $s$ on $i$" strategy. When you get your second win, you will have won exactly $2^n$ more dollars than you had won after your first win. Because all of your bets are fair, this must mean that it takes an average of an additional $2^n$ flips for this to occur.
+
+A second way to see this is to note that time between wins is iid. That is, the time between your first and second win has the same distribution as the time between your second and third, which has the same distribution as the time between your third and fourth, and so on. 
+
+Let $t$ be the expected time until your first win, and $\delta$ be the expected time between your first and second win. Let $N_k$ be the (random) number of flips required for your sequence to appear $k$ times. Then it follows that 
+$$\mathbb{E}[N_k] = t+(k-1)\delta.$$ 
+
+Furthermore, because $N_k$ can be decomposed into a sum of $k-1$ iid terms, for large $k$ it must be that $k/\mathbb{E}[N_k]$ approaches the expected frequency of your sequence, which is $1/2^n$. But our expression for $k/\mathbb{E}[N_k]$ approaches $1/\delta$ as $k \rightarrow \infty$, implying that $\delta = 2^n$.^[In fact, we can apply this logic to also solve for $t$, not just $\delta$. This is easiest to see for the sequences of all heads (or all tails). Take the sequence $HHHH$. Let $N$ be the number of flips until $HHHH$ first occurs (so $t = \mathbb{E}[N]$). Once we reach time $N$, let $X$ be the number of times $H$ appears before the next $T$. Then in total, we have $X+1$ occurrences of $HHHH$ in $N+X+1$ flips. After these flips, we are "back to square zero" (our most recent flip is a $T$). If we repeat this $k$ times, the total number of flips will be very close to $k\mathbb{E}[N+X+1]$, while the total occurrences of $HHHH$ will be close to $k\mathbb{E}[X+1]$. It is easy to see that $X$ is geometric with $E[X] = 1$, so the long-run frequency of $HHHH$ will be $2/\mathbb{E}[N+2]$. Since we know the long-run frequency of $HHHH$ must be $1/2^4$, we can solve to get $\mathbb{E}[N+2] = 32$, or $\mathbb{E}[N] = 30$.]
+

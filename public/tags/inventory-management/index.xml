@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Inventory Management on b</title>
+    <link>/tags/inventory-management/</link>
+    <description>Recent content in Inventory Management on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/inventory-management/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to Raise Money for Your Startup</title>
+      <link>/blog/icofunding/</link>
+      <pubDate>Mon, 18 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/icofunding/</guid>
+      <description>\(\newcommand{\fbar}{\overline{F}}\) \(\newcommand{\E}{\mathbb{E}}\)
+1 Motivation At INFORMS, I saw a talk by Jingxing (Rowena) Gan, about her paper Inventory, Speculators, and Initial Coin Offerings (joint with Gerry Tsoukalas and Serguei Netessine). I really liked the model, so I thought I&#39;d give my take on it. Although the paper is framed as pertaining to certain classes of ICOs, I think its applicability is much broader, and will describe it accordingly.
+Suppose you&#39;ve got an idea for a company, but no money on hand.</description>
+    </item>
+    
+  </channel>
+</rss>

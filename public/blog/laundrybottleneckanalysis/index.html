@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bottleneck Analysis through Laundry | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Bottleneck Analysis through Laundry</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2021/01/27</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>&quot;Find the bottleneck, and address it!&quot; This is the advice that many MBAs receive in their Operations Management class. It's good advice, but distilled to the point that it's more of a platitude than anything actionable.</p>
+<p>I'm a firm believer that people often have to struggle with a concept before they can really understand it. This post will discuss an in-class exercise that I use to introduce bottleneck analysis.</p>
+<div id="a-simple-process" class="section level1">
+<h1>A Simple Process</h1>
+<p>Let's start with a simple example, where our intuition serves us well. A nurse takes an average of 3 minutes to vaccinate a patient. How long does it take to vaccinate 10 patients? How many nurses are needed to vaccinate 60 patients per hour?</p>
+<p>Most students quickly calculate that we can vaccinate 10 patients in 30 minutes, or 20 patients in an hour. Therefore, if we want to vaccinate 60 patients per hour, we need three nurses.</p>
+</div>
+<div id="a-slightly-less-simple-process" class="section level1">
+<h1>A Slightly Less Simple Process</h1>
+<p>Now, let's consider a more complicated process. You decide to start a (very small scale) laundry business. You have one washing machine, which takes 40 minutes per load, and one drying machine, which takes 50 minutes per load. After a load is dried, you fold it, which takes 10 minutes. You plan to work for 15 hours (from 7 am to 10 pm), and your goal is to complete as many loads as possible.</p>
+<p>At this point, I poll the students: which of the following changes (made in isolation) would allow you to complete more loads per day?</p>
+<ul>
+<li>A faster washing machine.</li>
+<li>A faster drying machine.</li>
+<li>Either of the above.</li>
+<li>None of the above.</li>
+</ul>
+<p>I then ask them to split into small groups, and answer the following.</p>
+<ol style="list-style-type: decimal">
+<li>How long does it take to complete 1 load of laundry?</li>
+<li>How long does it take to complete 2 loads of laundry?</li>
+<li>How many loads of laundry can you complete in your 15-hour workday?</li>
+<li>How do the answers above change if you
+<ol style="list-style-type: lower-roman">
+<li>Reduce wash time by 10 minutes.</li>
+<li>Reduce dry time by 10 minutes.</li>
+<li>Bought a second dryer.</li>
+</ol></li>
+</ol>
+<p>If you're reading this, I encourage you to spend a few minutes thinking about these questions before continuing!</p>
+</div>
+<div id="finding-the-answer" class="section level1">
+<h1>Finding The Answer</h1>
+<p>Clearly, it takes 40+50+10=100 minutes to complete the first load. Some students may conclude that 2 loads take 200 minutes. Certainly, it is possible to complete two loads in this time, but if we operate this way, our company will go out of business!</p>
+<p>The key is that we can start the second load as soon as the first load is out of the washer (i.e. at minute 40). Some students conclude from this that we will complete the second load 40 minutes after the first (i.e. after a total of 140 minutes). Unfortunately, this is not correct: if you map it out, you'll see that after the second load is washed, the dryer won't be ready for another ten minutes. Therefore, the correct answer is 150 minutes.</p>
+<p>The third load can be loaded into the washing machine after 80 minutes, but will have to wait 20 minutes after being washed before the dryer is ready. It will finish after 200 minutes. From there on, each additional load takes an extra 50 minutes, so we can complete a total of 17 loads in our 900-minute day.</p>
+</div>
+<div id="a-simpler-approach" class="section level1">
+<h1>A Simpler Approach</h1>
+<p>Walking through a process step-by-step is a natural starting point, but it has several disadvantages:</p>
+<ul>
+<li>It's cumbersome (hard to do for all but the simplest processes).</li>
+<li>It's error-prone (easy to make a mistake somewhere along the way)</li>
+<li>It's not very insightful (to analyze new scenarios, you need to start from scratch).</li>
+</ul>
+<p>There is a better way to find these answers, which leverages our intuition from the simple vaccination example. Imagine that each step in the process exists in isolation.</p>
+<ul>
+<li>How many loads could we wash in one day? 900 minutes/day <span class="math inline">\(\times\)</span> 1 load/40 minutes = <strong>22.5 loads/day.</strong></li>
+<li>How many loads could we dry in one day? 900 minutes/day <span class="math inline">\(\times\)</span> 1 load/50 minutes = <strong>18 loads/day.</strong></li>
+<li>How many loads could we fold in one day? 900 minutes/day <span class="math inline">\(\times\)</span> 1 load/10 minutes = <strong>90 loads/day.</strong></li>
+</ul>
+<p>We call these numbers the <strong>capacity</strong> of each resource. From this, we immediately conclude that the dryer is our <strong>bottleneck.</strong> Clearly, our answer to the original problem cannot be higher than 18 loads per day. If we think a bit more, we realize that the dryer can't work for the first 40 minutes of the day, nor can it work during the last 10 minutes. Thus, dryer can work at most 850 minutes/day, adjusting our answer downward to 17 loads/day. I comment to class that for most of the course, we will ignore this effect, and simply say that we can complete 18 loads/day. This is a little optimistic, but what we lose in accuracy, we gain in simplicity and insight.</p>
+<p>To illustrate the advantage of this approach, let's consider the counter-factuals considered above. Reducing wash time by 10 minutes causes the first load to finish ten minutes sooner, but doesn't address our bottleneck: the dryer can only dry 18 loads per day. If we reduce dry time by 10 minutes, then each step can complete at least 22.5 loads/day. If we get another dryer, then we can dry 36 loads/day. The new bottleneck becomes the washing machine, with a capacity of 22.5 loads per day. (For those determined to do things more carefully, the &quot;true&quot; number of loads we can complete in each scenario is 17, 21, and 21.)</p>
+</div>
+<div id="why-i-like-this-example" class="section level1">
+<h1>Why I Like This Example</h1>
+<p>Although single-step processes are easy to analyze, most business projects have multiple employees involved, each assigned to their own set of tasks. One takeaway from class is that things get complicated (and our intuition less sound) when analyzing processes with multiple steps which can be done simultaneously. Fortunately, (and somewhat magically), the simple approach of analyzing each step in isolation yields a reasonable answer.</p>
+<p>This example is complex enough to cause confusion and illustrate the challenges of parallel processing, but simple enough that students can visualize it and understand the final answers. If students truly understand the laundry example, they can use it as a reference point throughout the rest of the course.</p>
+<p>This example can also serve as a launching point to discuss other topics. For example, students have a tendency to infer flow time by inverting flow rate. In the example above, we are completing one load of laundry every 50 minutes. However, that does NOT mean that it only takes 50 minutes for a load to go through the process. We know that it takes at least 100 minutes. By Little's Law, if we want to use flow rate to determine flow time, we also need to know the average amount of work-in-progress.</p>
+<p>This can also be used to introduce the concept of utilization. In this example, we don't want to wash as many loads as possible -- we'll just end up with many loads of undried laundry at the end of the day! Instead, we want to ensure that the flow rate is identical for all steps in the process. The laundry machine should only wash 17 loads (i.e. should be working approximately 80% of the time).</p>
+<p>One fun conversation to have relates to push vs pull inventory. Note that there are several ways to organize our work. We could choose to start each load as soon as the washer becomes available, or we could wait to start the washer until 40 minutes before the dryer will be ready. Ask students, which should we prefer? Some may argue that leaving loads of wet laundry out for hours is undesirable, and therefore washing &quot;just in time&quot; is best. Others may point out that this is risky: if a load takes more than 40 minutes to wash (or less than 50 minutes to dry), we end up leaving the dryer idle, wasting precious time on our bottleneck resource. In reality, the best approach is likely somewhere in between these two extremes. For example, we could always have one wet load ready to go into the dryer.</p>
+<p>For those with more experience teaching Operations Management, how do you introduce bottleneck analysis? What do you think makes it &quot;sticky&quot; for students?</p>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

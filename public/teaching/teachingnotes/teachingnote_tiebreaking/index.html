@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Breaking Ties in School Choice | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Breaking Ties in School Choice</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> <span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p><em>Note:</em> Educators are welcome and encouraged to use and/or adapt these materials for their own classes. I ask only that if you do this, please let me know at <a href="mailto:arnosti@umn.edu.Solutions" class="email">arnosti@umn.edu.Solutions</a> to practice problems are available upon request.</p>
+<p>Please let me know if you identify any mistakes that I should correct, if you have suggestions for additional topics to cover, or if you know of other materials that I might be interested to learn about!</p>
+<p>Weakly stable matchings can be found by breaking ties arbitrarily, and then running student-proposing DA on the resulting instance (which has strict priorities). So long as ties are broken in a manner that does not depend on student’s submitted preferences, this procedure is truthful. Typically, ties are broken using some form of lottery. The two most common approaches are to hold independent lotteries at each school (“Independent Lotteries” or “Multiple Tie-Breaking (MTB)”), or to hold a single district-wide lottery used to break ties at all schools (“Common Lottery” or “Single Tie-Breaking (STB)”). Both approaches produce outcomes that could be Pareto dominated (from the perspective of students) by another weakly stable matching (which would have resulted from a different tie-breaking outcome).</p>
+<p><em>Strategy-proofness versus Efficiency in Matching with Indifferences: Redesigning the NYC High School Match</em> by Abdulkadiroglu, Pathak, and Roth (2009).</p>
+<p>One of the questions I consistently get when presenting this table is, “how can the third column correspond to a student optimal stable matching if it leaves more students unassigned than MTB does?”</p>
+<p>Imagine the following. Each allocation is a “candidate”. Only certain candidates are “eligible” to run. For example, we could restrict the set of candidates to those that are “fair” (respect priorities).</p>
+<p>Given any two candidate allocations, imagine we allowed students to “vote” on which they prefer: students who get the same allocation in both will abstain from the election, and otherwise students vote for the allocation that they prefer.</p>
+<p>What should it mean for one eligible candidate to be “optimal”?
+* In the traditional setting (without ties in priority), it means that in an election against any other eligible candidate, it wins <em>unanimously</em>.
+* With ties in priority, Abdulkadiroglu Pathak and Roth (2009) say that a weakly stable matching is student optimal if, in an election against any other eligible candidate, it wins <em>at least one vote</em>.</p>
+<p>This framing makes clear how big of a difference this is! Ask any politician the difference between winning an election unanimously and getting at least one vote.</p>
+<p>I would prefer to say that a student-optimal stable matching no longer exists with ties in priority, and call a candidate that always gets at least one vote “undominated”. This would make it clear that there are potentially many many undominated weakly stable matchings.</p>
+<p>In addition, Abdulkadiroglu Pathak and Roth (2009) make a particular choice about which “student optimal” stable match to consider, by starting from the outcome of DA-STB and then trying to Pareto improve it. There could potentially be a weakly stable matching with summary metrics that look much better than the weakly stable matching that they find. So it’s hard to argue that their paper gives a very conclusive answer to the question of “how much better could we make the matching if we abandoned truthfulness?”</p>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

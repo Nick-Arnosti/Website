@@ -1,0 +1,284 @@
+---
+title: 'Experimenting with Dall-E3'
+date: '2023-10-19'
+author: Nick Arnosti
+tags:
+
+---
+
+```{r,echo=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.path = "static")
+```
+
+# Introduction
+
+There have been a number of attention-grabbing advancements in the AI space recently, including large language models (i.e. Chat GPT) and image generation (i.e. Dall-E). I think that these developments are going to end up being very significant. While I am not a very experienced user of these services, I am trying to give myself more practice with them, to better understand their capabilities and see how they could be useful to me. In this post, I show you results from using GPT-4 with Dall-E3 integration to produce two different types of image.
+
+The first task is to generate possible designs for Minnesota's state flag, which is in the process of being redesigned. The second task was to create fall foliage scenes, with a family walking through colorful woods. This was on my mind because (i) I love fall, and the foliage in the Twin Cities has just kicked into high gear, and (ii) my wife and I will welcome our first child into the world any day now, so I am enjoying imagining our future family life. While I chose these tasks for personal reasons, I realized that they are fairly different: for the flag, simple designs are best, while the fall scenes are much more complex. 
+
+After this experience, I have concluded that Dall-E3 is very good at generating beautiful images -- I can definitely imagine using it to create personalized artwork! However, it is surprisingly bad at following specific instructions for how to modify its images. Furthermore, while the descriptions that GPT-4 provided of the images were often initially accurate, the more rounds of iteration we went through, the more there emerged discrepancies between the image produced by Dall-E3 and the description of it by GPT-4. Perhaps with more experience, I would learn how to give prompts to generate specific output.
+
+Without further ado, let's get to showing you results from each task. I hope you enjoy!
+
+# Flag
+
+The Minnesota state flag is not the greatest:
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/MinnesotaFlag.png",error=FALSE)
+```
+
+Everyone agrees that it is cluttered, and not memorable: despite having grown up in Minnesota, all I could tell you about what is on it is "blue background, a circular seal, and some picture stuff in the middle." In addition, the "picture stuff" is controversial, for reasons explained in this [Minnpost article](https://www.minnpost.com/state-government/2023/06/formal-effort-begins-to-replace-cluttered-genocidal-mess-on-minnesota-state-flag-and-seal/?gad_source=1&gclid=CjwKCAjwp8OpBhAFEiwAG7NaEmQJ_-zb9V6fRXUoa24UCgTvYUrVkFuPJvh1IdaYz8443B0SMwRIRRoCNkQQAvD_BwE).
+
+As a result, Minnesota has decided to replace its state flag by next May, and is soliciting proposed designs. I decided to try using Dall-E to produce possible alternatives. Before starting this exercise, I had read a bit about the proposed North Star Flag, which looks like this: 
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/NorthstarFlag.jpg",error=FALSE)
+```
+
+You can read more about the [North Star Flag here](https://mnflag.tripod.com/). Compared to the current flag, it is much simpler (easier to draw and remember). It pays homage to rivers, snow, and our motto "L'Etoile du Nord" (the North Star). Aesthetically, however, I don't love the bright green, or the gold star, and it seems a bit weird to have the river be white.
+
+I decided to take the North Star design as my inspiration. I liked the idea of keeping the blue background, and of including natural colors such as green and white. I also wanted something simple enough that people can remember it, and children can readily learn to draw it. I decided to see whether Dall-E3 could help me with this task. 
+
+Before diving into my process, I will present to you my final output. My proposed flag is here:
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/FinalFlag1.png",error=FALSE)
+```
+
+I like the simplicity of this design, and the focus on nature (specifically, our many rivers, of which the Mississippi is the best known). I could imagine some people saying that the incorporation of pine trees places more focus on northern Minnesota, and ignores the more agrigultural southern part of the state. One alternative that includes agricultural motifs (including wild rice cultivation, which has been a staple for native tribes for centuries) is the following:
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/FinalFlag2.png",error=FALSE)
+```
+
+I don't like this quite as much (it would certainly be harder to draw), but it pays homage to more different parts and people in the state, so I think it could be worth considering.
+
+However, neither of these flags were produced directly by Dall-E3. Instead, I created them in Powerpoint, using images from Dall-E3 as inspiration. I did this because I found that Dall-E3 is great for generating beautiful and creative images, but not so great at following specific instructions attempting to modify these images. 
+
+You can see my "conversation" with GPT-4/Dall-E3 below: my prompts are in gray boxes starting with **N:**, and the images are generated by Dall-E3. I excluded some of the text that accompanied each image, although in some cases I included this text to highlight mismatches between the image and how GPT-4 described it. I include comments that were not part of the interaction with Dall-E3 in normal white text (like this paragraph).
+
+
+> **N:** I would like to design a new state flag for the state of Minnesota. It should have dark blue as its primary color, with some white and green. It should include the north star. It should not be too cluttered. And it should include something that evokes the Minnesota experience. Could you suggest several possible designs?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags1.png",error=FALSE)
+```
+
+> **N:** I like flags 2 and 4 the most -- the pine trees are beautiful. However, they would be hard for people to draw. I also like the idea of including something about the mississippi river on the flag. Could you try other designs that include the river?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags2.png",error=FALSE)
+```
+
+> **N:** I like the fourth flag for its simplicity! Could you change the river color to a light blue?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags3.png",error=FALSE)
+```
+
+At this point, I was pretty happy with the design, and just wanted to make a few minor modifications. As you will see, these modifications turned out to be more difficult to make than expected: what follows is a series of flags that don't really get any closer to the image I had in my mind, despite my efforts. 
+
+> **N:** I like that! Can you change the trees to green, and make slightly fewer of them to keep the design simple?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags4.png",error=FALSE)
+```
+
+> **N:** Pine trees look good, but the river and trees are the same color. I would like to make the trees green, and the river light blue. The river color from your previous design looked good, and the green from two designs ago for the trees.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags5.png",error=FALSE)
+```
+
+Notice that here, the description given by Chat GPT doesn't match the image produced by Dall-E3: the trees are not green! Also, Dall-E3 seemed to be unable to keep itself from tinkering with tree placement and river shape, although no such changes were requested.
+
+> **N:** The trees in this design look white to me. And the river is a very greenish blue. That's not as nice. Plus, I liked the trees in a line, like you had them before.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags6.png",error=FALSE)
+```
+
+> **N:** Those colors are good, but the design of the flag has gotten more complex. Please keep those colors, but go back to the simple design with a horizontal wavy river and a few trees right above it.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags7.png",error=FALSE)
+```
+
+As you can see, this is where things really went off the rails. The description offered by Chat GPT and the image produced by Dall-E3 do not really correspond: the river is white (not blue), and there are no pine trees!
+
+> **N:** You are hallucinating. there are no pine trees in that image! Put them back, and take out at least one of the wavy lines.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags8.png",error=FALSE)
+```
+
+> **N:** This design is almost identical to the previous one. Let's try again. I want a white north star, light blue wavy lines running horizontally to represent a river, and a few green pine trees above this river.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags9.png",error=FALSE)
+```
+
+> **N:** That's much closer. Could we reduce the number of wavy lines from 3 to 1 or 2, and color those blue?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags10.png",error=FALSE)
+```
+
+> **N:** In this design, there are still 3 wavy lines. I want fewer wavy lines.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags11.png",error=FALSE)
+```
+
+> **N:** Thanks! Can you now make the wavy lines light blue?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags12.png",error=FALSE)
+```
+
+At this point, I was getting frustrated, so I decided to take matters into my own hands. I spent some time in Powerpoint moving wavy lines and pine tree drawings around, and came up with the designs I showed you at the beginning of the post. When I returned to GPT 4/Dall-E3, I decided to stop trying to be overly prescriptive, and just see what ideas it could generate.
+
+> **N:** Sorry, it seems that this is going nowhere. You're better at creating new images than modifying existing ones according to instructions. So let's try that again. Can you give me several other possibilities for a new Minnesota State Flag, and for each, explain a little about what it means?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags13.png",error=FALSE)
+knitr::include_graphics("/_index_files/Flag/FlagDescriptions.png",error=FALSE)
+```
+
+> **N:** I don't think it makes sense to include the outline of Minnesota -- too difficult to draw. Could you try some more minnesota-themed flags that would be simpler to draw?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags14.png",error=FALSE)
+```
+
+> **N:** Let's get crazy. Suppose that we had a giant party of creative artists, who liked nature and natural tones, but had just taken some drugs. What might they come up with for a state flag for Minnesota?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags15.png",error=FALSE)
+```
+
+> **N:** I like the auroras in option 2! Could we take that, and remove some of the white foreground?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags16.png",error=FALSE)
+```
+
+I don't think this would make a good flag, but it is a very interesting image! 
+
+> **N:** That flag is cool, let's try a different take. What if I wanted to include the state bird (the loon) in the flag?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags17.png",error=FALSE)
+```
+
+> **N:** I like the first option you included. could you create several variants of that?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Flag/Flags18.png",error=FALSE)
+```
+
+
+
+
+# Fall Foliage Family
+
+> **N:** I would like to pivot away from flags, and just capture Minnesota up north scenery. Could you give me an image of a path through the woods with beautiful fall foliage?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage1.png",error=FALSE)
+knitr::include_graphics("/_index_files/Foliage/Foliage2.png",error=FALSE)
+```
+
+> **N:** I would like the pictures to be a bit more realistic, and zoomed in. Show some of the individual leaves.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage3.png",error=FALSE)
+```
+
+Here, Dall-E3 did a good job of zooming in and showing individual leaves. I had hoped to capture individual leaves on trees (rather than mostly focusing on fallen leaves on the path), but instead of specifying this, I decided to just add a family to the image. This decision was partly based on my flag experience: I decided that being overly prescriptive was not helpful, and figured that in the process of adding the family, Dall-E3 would probably refocus away from the ground. This turned out to be correct.
+
+> **N:** Can you add a family of three to the path? (A mother, a father, and a small girl, all with dark hair)
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage5.png",error=FALSE)
+```
+
+> **N:** I like the first one the most -- you did a very nice job with the trees! Could you try several variants in which the family is wearing different fall-appropriate clothing?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage6.png",error=FALSE)
+```
+
+These images were further from what I wanted, and in addition, we got an apparent violation of their "content policy." I have no idea what this policy is, or how the image Dall-E3 produced violated it.
+
+> **N:** The second image is nice, but can you make all three people have dark hair, and be facing away from us?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage7.png",error=FALSE)
+```
+
+> **N:** Good, but now the image looks sort of cartoonish. I would like the forest to be a bit more realistic-looking.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage8.png",error=FALSE)
+```
+
+> **N:** Better! Can you make the image a little brighter, as though it is a bright sunny and clear day?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage9.png",error=FALSE)
+```
+
+> **N:** That's a cool effect! Could you zoom in slightly, and add a few maple trees?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage10.png",error=FALSE)
+```
+
+> **N:** Here, the path is wide and straight. Can you make it more of a hiking trail? It should be made of dirt, a bit winding, and less wide.
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage12.png",error=FALSE)
+```
+
+Here, GPT-4 says there are three people, but in fact there are four. As you will see, this type of issue recurs several times in the subsequent iterations. This is similar to the issue I had with the flag, where GPT-4 described one or two wavy lines when there were actually three.
+
+> **N:** That looks great! But now there are four people in the picture -- could you go back to a mom, a dad, and a small girl?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage13.png",error=FALSE)
+```
+
+> **N:** Now it looks like a mother with two children, and no father. Could you make the father taller than the mother?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage14.png",error=FALSE)
+```
+
+> **N:** Great, thanks! I've noticed that you have included four people again: an older son and a younger daughter. Could you create two more images, one with just the daughter, and one with an older daughter and a younger son?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage15.png",error=FALSE)
+```
+
+> **N:** Thanks! For the second photo, with the family of four, could you add some aspen trees with yellow leaves?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage16.png",error=FALSE)
+```
+
+> **N:** The aspen are beautiful, but it's now a family of five. Can we go back to four?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage17.png",error=FALSE)
+```
+
+> **N:** Beautiful! Now it's almost all aspen and pine. These are good, but could we add in some red/orange maple?
+
+```{r, echo = FALSE}
+knitr::include_graphics("/_index_files/Foliage/Foliage18.png",error=FALSE)
+```
+
+
+

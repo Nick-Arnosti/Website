@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rolling to Reach 100 | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Rolling to Reach 100</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2022/06/28</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>One of the delights of being married to a teacher is vacationing together over the summer. One of the delights of being married to an <em>adventurous</em> teacher is vacationing in Albania. And one of the delights of being married to an adventurous <em>math</em> teacher is talking about math while vacationing in Albania. This post is inspired by discussions during our recent trip. It uses dynamic programming and martingale theory to study a simple question about rolling dice.</p>
+<p><strong>The question is as follows.</strong> You repeatedly roll a six-sided die, and track the cumulative sum of all rolls. You stop once this sum reaches (or exceeds) 100. On average, how many rolls are needed before stopping?</p>
+<div id="exact-solution-via-dynamic-programming" class="section level1">
+<h1>Exact Solution via Dynamic Programming</h1>
+<p>In some sense, this question can be addressed with brute force. We know that at most 100 rolls are needed (if we rolled all ones). We could therefore enumerate over all sequences of length 100, see how long it takes to reach a sum of 100 in each case, and from this calculate an average (or any other statistic of interest). Of course, even with modern computing, this approach is infeasible: there are simply too many sequences of length 100! Of course, we don’t need to go all the way to 100 rolls for each sequence, but even if we truncate as soon as we reach a sum of 100, this approach will not be viable.</p>
+<p>We can use dynamic programming to get around this challenge and calculate an exact answer to our question. Basically, we will solve for what can happen after a small number of die rolls, and use this solution to determine possible outcomes after a larger number of die rolls. More specifically, let <span class="math inline">\(N\)</span> be a matrix whose <span class="math inline">\((i,j)^{th}\)</span> entry reports the number of sequences of <span class="math inline">\(i\)</span> rolls that sum to exactly <span class="math inline">\(j\)</span>. Then it is clear that <span class="math inline">\(N[1,j] = 1\)</span> for <span class="math inline">\(1 \le j \le 6\)</span>, and <span class="math inline">\(N[1,j] = 0\)</span> otherwise. Calculating other entries directly is possible but non-trivial: for example, <span class="math inline">\(N[3,6] = 10\)</span>, because we could roll 1+2+3 in six different orders, or 1+1+4 in three different orders, or 2+2+2.</p>
+<p>Instead of this direct calculation, we can use information for <span class="math inline">\(i\)</span> rolls to determine possible outcomes for <span class="math inline">\(i+1\)</span>. Specifically, in order to reach <span class="math inline">\(j\)</span> after <span class="math inline">\(i+1\)</span> rolls, we must have reached a number between <span class="math inline">\(j-6\)</span> and <span class="math inline">\(j-1\)</span> after <span class="math inline">\(i\)</span> rolls, and then rolled the appropriate value to land exactly on <span class="math inline">\(j\)</span>. In other words, we have the following recursion: <span class="math display">\[N[i+1,j] = \sum_{k = 1}^6 N[i,j-k].\]</span> This observation allows us to very efficiently fill out the values of <span class="math inline">\(N\)</span>, and we can easily go up to the hundred rows needed to answer our question.</p>
+<p>It can be more convenient to work with probabilities, rather than counts, so define <span class="math inline">\(P[i,j] = N[i,j]/6^i\)</span>. Thus, <span class="math inline">\(P[i,j]\)</span> represents the probability of reaching a sum of exactly <span class="math inline">\(j\)</span> after <span class="math inline">\(i\)</span> rolls. Once we have <span class="math inline">\(P\)</span>, we can calculate all sorts of fun things. For example, the sum of the <span class="math inline">\(j^{th}\)</span> column gives the probability that we exactly land on a sum of <span class="math inline">\(j\)</span> at some point. Meanwhile, the sum of the <span class="math inline">\(i^{th}\)</span> row for values up to <span class="math inline">\(99\)</span> gives the probability that after <span class="math inline">\(i\)</span> rolls, we have not yet reached a sum of 100. If we sum entries of <span class="math inline">\(P\)</span> for <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> ranging from 1 to 99, we get the expected number of rolls needed to reach a sum of 100, minus 1.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This can be seen either by using the previously mentioned fact about the sum of columns of <span class="math inline">\(P\)</span> (summing column sums 1…99 gives the expected number of values less than 100 that we exactly land on, which is one less than the total number of rolls), or the fact about the sum of rows of <span class="math inline">\(P\)</span> (if <span class="math inline">\(R\)</span> is the number of rolls needed, then summing the <span class="math inline">\(i^{th}\)</span> row from 1 to 99 gives <span class="math inline">\(\mathbb{P}(R &gt; i)\)</span>, and for any non-negative integer-valued random variable <span class="math inline">\(R\)</span>, <span class="math inline">\(\mathbb{E}[R] = \sum_{i = 0}^\infty \mathbb{P}(R &gt; i)\)</span>).</p>
+<p>The following code calculates, for any given target, the expected number of rolls required to reach it.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<pre class="r"><code>#Roll a 6-sided die. How many rolls to reach or surpass target?
+Target = 100
+N = matrix(0,nrow=Target-1,ncol=Target-1)
+N[1,1:6] = 1
+for(i in 2:(Target-1)){ 
+    for(j in 2:(Target-1)){
+        if(j&gt;6) N[i,j] = sum(N[i-1,(j-6):(j-1)])
+        else N[i,j] = sum(N[i-1,1:(j-1)])
+    }
+}
+1+(1/6^(1:(Target-1)))%*%N%*%rep(1,Target-1)</code></pre>
+<pre><code>##          [,1]
+## [1,] 29.04762</code></pre>
+</div>
+<div id="approximate-solution-via-martingales" class="section level1">
+<h1>Approximate Solution via Martingales</h1>
+<p>Dynamic programming gave us an answer of 29.047…, but is unsatisfying in several ways. Although it was easy to make a computer do the necessary calculations, doing them by hand would be quite tedious. Furthermore, the calculations are not <em>illuminating</em>: they do not explain <em>why</em> the answer is approximately 29, or how this answer would change for different targets, or different values on the faces of the die. This is where martingale theory can come in.</p>
+<p>Martingales are often described as gambling games, so let’s take that approach. Imagine a game between person <span class="math inline">\(A\)</span> and person <span class="math inline">\(B\)</span>. Each time <span class="math inline">\(A\)</span> rolls, <span class="math inline">\(B\)</span> pays <span class="math inline">\(A\)</span> the value of the roll (so $1 for rolling a 1, and $6 for rolling a 6). To make the game fair, before each roll, <span class="math inline">\(A\)</span> must pay <span class="math inline">\(B\)</span> the expected value of the roll, $3.50. They agree to play until <span class="math inline">\(B\)</span> has paid <span class="math inline">\(A\)</span> at least 100 dollars in total.</p>
+<p>We know that <span class="math inline">\(B\)</span> will pay out between $100 and $105 (depending on the exact sequence of rolls), and will collect $3.50 times the number of rolls. Because the game is fair, <span class="math inline">\(B\)</span> expects to make a profit of <span class="math inline">\(0\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Therefore, it must be that the expected number of rolls required is somewhere between <span class="math inline">\(100/3.5 = 28.6\)</span> and <span class="math inline">\(105/3.5 = 30\)</span>.</p>
+</div>
+<div id="final-thoughts" class="section level1">
+<h1>Final Thoughts</h1>
+<p>Both approaches discussed above have their advantages. Martingales allow for quick back-of-the-envelope calculations: if rolling a die whose sides have an average value of <span class="math inline">\(\mu\)</span> until reaching a target of <span class="math inline">\(T\)</span>, the expected number of rolls is approximately equal to (and slightly higher than) <span class="math inline">\(T/\mu\)</span>. As long as we can’t shoot ``too far’’ past <span class="math inline">\(T\)</span>, this will give a fairly good approximation. If an exact answer is needed, or if large jumps that significantly overshoot <span class="math inline">\(T\)</span> are likely, then dynamic programming can come to the rescue. Another advantage of dynamic programming is that it gives the full distribution of the number of rolls needed (not just the mean).</p>
+<p>The tradeoff between complex but exact answers and more insightful approximate answers arises frequently. I hope to write another post soon illustrating this tradeoff with a simple problem about random graphs which is loosely inspired by kidney exchange – stay tuned!</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>This realization produced a very satisfying “mind blown” reaction from Amanda.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>An elegant variation includes <span class="math inline">\(i=0\)</span> and <span class="math inline">\(j = 0\)</span> rows, with <span class="math inline">\(N[0,0] = 1\)</span>; then no <span class="math inline">\(+1\)</span> is needed in the final step, but I decided the resulting code is slightly less readable.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>As anyone who has studied martingale theory knows, this conclusion requires that the conditions of the <a href="https://en.wikipedia.org/wiki/Optional_stopping_theorem">optional stopping theorem</a> hold, but this is easy to see in our case.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

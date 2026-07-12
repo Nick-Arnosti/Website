@@ -1,0 +1,32 @@
+---
+title: 'Estimating the Returns to New Housing'
+date: '2020-04-12'
+author: Nick Arnosti
+tags:
+  Public Policy
+categories:
+  Market Design
+draft: yes
+---
+
+Does provision of social goods exhibit increasing or decreasing marginal returns?
+
+In other words...
+
+
+[Dan Waldinger's]() [Job Market Paper]() estimates...
+
+Suppose we were to build additional units of comparable quality to existing stock. Does it follow that we would get the same value?
+
+
+
+
+## A Case for Decreasing Returns
+
+People differ in their need for housing. If we preferentially allocate to those with the greatest need, then later units do not deliver as much value as earlier ones.
+
+## A Case for Increasing Returns
+
+
+
+## A Solution

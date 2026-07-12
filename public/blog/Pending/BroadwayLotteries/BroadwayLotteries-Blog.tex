@@ -1,0 +1,81 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=1 in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+\usepackage{url}
+\usepackage{hyperref}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+
+\usepackage{listings}
+\usepackage{setspace}
+%SetFonts
+
+%SetFonts
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{enumitem}
+
+\newcommand{\link}[2]{{ \color{blue} \tt{\href{#1}{#2}}}}
+\newcommand{\na}[1]{{\color{blue} #1}}
+
+\title{Broadway Lotteries}
+\author{Nick Arnosti}
+\date{October 17, 2018}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+\onehalfspacing
+
+
+\section{Introduction}
+Many popular musicals offer a limited number of seats ($\approx$40) at each performance for discounted rates. Unsurprisingly, demand for these seats is high, so they are awarded by lottery.\footnote{Originally, lotteries were conducted in person, and some -- such as \link{https://wickedthemusical.com/faq/}{Wicked} -- still are. Increasingly, lotteries are digital. The market for conducting broadway lotteries is fragmented but concentrating. Currently Telecharge runs lotteries for \link{https://dearevanhansenlottery.com/}{Dear Evan Hansen} and  \link{https://beautifullottery.com/}{Beautiful}. \link{https://www.luckyseat.com/lottery.php}{Lucky Seat} runs lotteries for Hamilton, the Book of Mormon, Frozen, Kinky Boots and others. \link{https://lottery.broadwaydirect.com/\#_ga=2.69017361.1856233165.1539802119-1525586824.1539802119} {BroadwayDirect} runs lotteries for Aladdin, the Lion King, and Pretty Woman. Up-to-date information on discounted tickets is available from  \link{http://www.playbill.com/article/broadway-rush-lottery-and-standing-room-only-policies-com-116003}{Playbill} and  \link{http://broadwayforbrokepeople.com/}{Broadway for Broke People}.} People can apply for tickets each day. On the application, they list whether they are interested in buying one or two tickets. Then all applications are assigned a lottery number, and seats are awarded in lottery order until no more remain. 
+
+%\link{http://www.mydreamcametrue.com/broadwayticketlottery.html}{Personal Account} {\em There are multiple sites that run online Broadway ticket lotteries, including Telecharge, Lucky Seat, Broadway Direct, and TodayTix. At the time of this writing, Telecharge runs the lottery for Dear Evan Hansen, among other shows. Aladdin, SpongeBob SquarePants, The Lion King, Wicked, and others are with Broadway Direct. The Book of Mormon, Frozen, Kinky Boots, Mean Girls, and Hamilton are with Lucky Seat. TodayTix runs the Friday Forty lottery for Harry Potter and the Cursed Child. }
+\section{Concerns}
+In a \link{}{separate post}, I discuss some reasons that this approach seems reasonable to me. However, several features of the current system seem undesirable. In particular:
+\begin{enumerate}
+\item Groups of size three or more are essentially locked out of the system. If you want to go with two friends, your group has to win the lottery multiple times in the same night, which is extremely unlikely.\footnote{Let $p$ be the probability of winning on any given date, which has been estimated at \link{https://www.timeout.com/newyork/theater/hamilton-lottery}{one in four hundred}. Thus, for small $k$, the probability of winning at least $k$ times with $n$ friends is approximately ${n \choose k} p^k$ (in fact, it is less, because outcomes for different tickets are negatively correlated). For three friends trying to go together ($n = 3, k = 2$), this implies that they would expect to wait approximately 150 years before succeeding.}
+\item Single people have (almost) no incentive to request a single ticket.\footnote{The only disadvantage to requesting two tickets is if your position in the lottery happens to fall after exactly one ticket remains, but before the next single person in line. The chance of this depends on how many others apply for a single ticket, but in all cases should be fairly small. In particular, if nobody else requests a single ticket, this will never occur (as there are an even number of tickets offered for each performance), and the probability of this decision being pivotal can also be bounded above by one over the total number of people requesting single tickets.} Single people who win may bring a friend who is not especially excited about the musical.
+\item Couples have a higher chance of winning than single people, as each member of the couple can enter the lottery, and the couple gets to go if either one wins.
+\end{enumerate}
+
+\newpage
+\section{Proposal}
+The first of these points could be addressed by simply increasing the limit on the number of tickets that can be requested, but this exacerbates the next two problems. However, all three concerns can be simultaneously addressed by increasing the limit on the number of tickets that can be requested and suitably biasing the lottery against large groups. More specifically, here is my proposal:
+\begin{enumerate}[label=\Roman*.]
+\item Each applicant $i$ indicates a number $n_i$ of tickets that he or she would like to purchase.
+\item Draw independent lottery numbers $l_i$ for each application from an exponential distribution.
+\item Rank applications according to $l_i n_i$ (lowest numbers first).
+\end{enumerate}
+The effect of this is that an application for a single ticket is roughly $k$ times more likely to win than an application for $k$ tickets.\footnote{This is exactly correct if one winning ticket is selected for each performance. It will be approximately correct so long as the maximum number of tickets requested is small relative to the total number of tickets being allocated for each performance.} Therefore, this fixes all three of the concerns outlined above:
+\begin{enumerate}
+\item The group of three mentioned above only needs to win the lottery once in order to go together.\footnote{If the odds of winning for a group of two are currently $1/400$ and most people request two tickets, then the odds of winning for a group of 3 would be approximately $1/600$, implying an expected wait time of under 2 years, instead of 150 years.}
+\item A single person would cut their chance of winning in half by requesting a second ticket, and thus would be unlikely to do so.
+\item If every member of a group applies, then each group would have approximately the same chance of winning.
+\end{enumerate}
+Furthermore, while most people will not be familiar with the concept of an exponential distribution, the idea that ``groups that are twice as big are half as likely to win" is straightforward to communicate. 
+
+\section{Other Applications}
+This idea could also be used for allocating permits for popular hikes in National Parks. For example, the \link{https://www.nps.gov/yose/planyourvisit/hdpermits.htm}{Half Dome Lottery} grants permits for 225 day-hikers daily, but limits applications to groups of six. This has the effect of excluding groups larger than six, encouraging applicants to claim spots which they might not need, and biasing the selection against small groups (who can't enter as many times).\footnote{I am a beneficiary of the fact that the system is biased in favor of large groups. In my first year of graduate school, the Stanford Redwood Club solicited its members to each apply for Half Dome permits. The e-mail stated ``It costs nothing extra to apply for 6 spots. If you do win, you might as well win big!  Then you can bring along some very appreciative fellow Redwooders who will be more than happy to split the permit cost with you." With so many applicants, the group won multiple permits, and my introduction to Yosemite came with a midnight ascent, reaching the top in time to catch the sun rise over the valley.}
+
+
+%According to \link{https://lottery.broadwaydirect.com/faq/\#question-0-0}{this FAQ}, allocations are coupled across shows, but independent in time.
+
+%\na{Marty Lariviere might appreciate this one.}
+
+
+
+
+\end{document}  

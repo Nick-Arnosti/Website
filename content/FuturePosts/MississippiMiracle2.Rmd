@@ -1,0 +1,230 @@
+---
+title: "Looking for a serious critique of Mississippi's NAEP Scores"
+author: "Nick Arnosti"
+date: '2025-05-1'
+output: html
+---
+
+In a previous post, I highlight that 4th grade math and reading scores are 
+
+
+Some have called this the "Mississippi Miracle". Karen Vaites has termed it the "Southern Surge."
+
+People don't know it's happening. They question whether it is real. They claim -- in contrast to the data -- that Minnesota has some of the best educational outcomes in the country.
+
+A variety of skeptics have doubted the validity or relevance of Mississippi's gains. In recent weeks, I have read a lot of articles -- both admiring and skeptical -- about Mississippi. 
+
+While some of the skepticism about Mississippi's data could be warranted, the messengers are simply not credible. 
+
+# Sloppy and Politically Motivated Coverage by the LA Times
+
+Almost all of the skeptical articles showed incredibly sloppy thinking, accompanied by a lot of condescension towards the south. 
+
+As an example, consider [this LA Times article](https://www.latimes.com/business/story/2023-07-03/how-mississippi-gamed-national-reading-test-to-produce-miracle-gains), which states
+
+> First, it’s important to consider the social and political landscape in Mississippi. The state hasn’t been a black hole only in educational achievement but in many other respects.
+
+The article then goes on a long tirade about infant mortality and medicaid expansion. Clearly, the author has a political bone to pick.
+
+When the article finally gets to discussing education, it cites a [blog post by Kevin Drum](https://jabberwocking.com/update-mississippi-reading-isnt-so-miraculous-after-all/), which makes the claim that after accounting for students who were held back, “the 2013 reforms had all but no effect.”
+
+There are (at least) two problems with this:
+
+1. The blog post never explained how it accounted for held back students.
+2. The author of the post rescinded his conclusion less than two weeks after the LA Times article ran.
+
+
+
+
+
+
+>There is a lesson here, however. It’s not about how to effectively teach kids to read, but how difficult it is to teach journalists how to scrutinize statistical claims.
+
+
+
+
+> The statistical result of this policy should be obvious. If you throw the lowest-ranking 10% out of a statistical pool, the remaining pool inevitably looks better. Drum went so far as to add those dropped pupils back into the calculation. He found that the gains from 2013 to 2022 completely disappeared. “In other words,” he remarked, 
+
+
+
+
+
+But the focus on *achievement gaps* distracts from absolute *achievement levels*, which are a much better way to assess a policy. Over the past two decades, both white and black students in Mississippi have seen their reading scores rise significantly. This is a good thing! We should celebrate policies that raise performance of all groups, regardless of whether they close gaps between groups.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Articles I read
+
+
+
+<!--"No Child Left Behind" passed with wide margins in both houses, including a 381–41 vote in the House and an 87–10 vote in the Senate-->
+
+
+
+
+
+
+
+As an example, [this post](https://dailyhowler.blogspot.com/2023/07/mississippis-miracle-has-revolution.html) compares scores of *Black Mississippians* to those of *White and Asian students* nationwide.
+
+| | |
+|----------|----------|
+| Asian-American kids, U.S. public schools: |  238.49 |
+| White kids, U.S. public schools: |  226.03 |
+| White kids, Mississippi: |  229.53 | 
+| Black kids, Mississippi: | 204.41 | 
+| Lower-income black kids, Mississippi: |  202.76 | 
+ 
+ > It's on the basis of that Grade 4 reading test that people are claiming a huge success story. As we noted in our last report, it's astounding to see journalists and experts say such things about a state which is still producing the giant "race gap" reflected in those numbers... Does anyone care about black kids at all in these feel-good latter days?
+ 
+
+
+The authors of the article should be absolutely embarrassed to have produced such an unserious piece of slop.^[It includes a sophisticated-looking "technical appendix" filled with Greek letters, but the analysis (i) is not based on any real data, and (ii) does not make logical sense. In addition, some of the aggregage statistics they report are just flat out wrong, such as claiming that the 2024 NAEP math scores in Mississippi place the state 50th. I have no idea where they got that idea, but they snidely add "This is certainly consistent with the Mississippi that most of us know."]
+
+Okay, so a few people did a bad statistical analysis. So what? Happens all the time.
+
+In an ironic twist, the author of the LA Times article writes something I actually agree with:
+
+> There is a lesson here, however. It’s not about how to effectively teach kids to read, but how difficult it is to teach journalists how to scrutinize statistical claims.
+
+Meanwhile, I first saw the 2026 article because it was pointed to in this [post by Andrew Gelman](https://statmodeling.stat.columbia.edu/2025/12/01/how-much-of-mississippis-education-miracle-is-an-artifact-of-selection-bias/), a statistician at Columbia who frequently blogs about statistical errors in published papers. He's obviously a smart guy, and he wrote a lot of very credulous text about the paper! But the paper is self-evidently junk. This left me confused, until he acknowledged that one of the authors of the paper is "a friend, and he's a reasonable person." Blind spot alert!
+
+Gelman wrote a [follow-up post](https://statmodeling.stat.columbia.edu/2025/12/04/when-the-numbers-dont-look-right-check-them-mississippi-education-update/) where he acknowledged that the article got some statistics wrong, but he basically still tried to "both sides" it and say he didn't know what the truth was about Mississippi. Sure -- that's a hard thing to know. What is much easier to know is that the article he linked is absolutely uninformative. The whole incident definitely made me lose some respect for him.
+
+Okay, long aside about how a small number of very shoddy analyses are being quoted by sources that should know better. Back to the effects of retention.
+
+
+[Retention changes adult behavior](https://fordhaminstitute.org/national/commentary/student-retention-and-third-grade-reading-its-about-adults)
+
+
+# Freddie DeBoer
+
+[DeBoer](https://freddiedeboer.substack.com/p/there-are-no-miracles-in-education)
+
+No attempt to study what Mississippi did, to look at the data. Just a historical account, plus a lot of skepticism.
+
+> Supposedly, in defiance of a hundred years of experience in large-scale education policy in the developed world, some pedagogical tweaks have enabled educators in Mississippi and a couple other union-hating red states to ignore the conditions that have caused these interventions to fail again and again and again. 
+ 
+ > The odds are very, very strong that eventually it’ll turn out that students in Mississippi and other “miraculous” systems are being improperly offloaded from the books or out of the system altogether and this will prove to be the source of this supposed turnaround. That’s how educational miracles are manufactured: through artificially creating selection bias, which is the most powerful force in education. After all, there’s something very conspicuous in its absence in Piper’s piece: the so-called “Texas miracle,” a very, very similar scenario that played out some quarter-century before anyone was talking about a Mississippi miracle. The story was genuinely almost identical: George W. Bush won the governorship in Texas, made some “common sense” curricular changes, and began to demand ACCOUNTABILITY from public teachers and schools… and suddenly, a miracle happened. The schools got better! The test scores proved it!
+ 
+ > Later investigations revealed exactly what we should always expect to find in the face of supposed education miracles: the manufacture of selection bias through widespread underreporting of dropouts, “disappeared” struggling students, and data manipulation. 
+ 
+ > Early results were strong, but later studies revealed (you’ll never guess) a heavy role for attrition. Vast numbers of the hardest-to-teach students leave KIPP schools prior to graduation. (40% of Black students!) The model has never scaled effectively to entire districts; massive, well-funded, doggedly-pursued efforts to recreate the dubious performance gains of charter networks like KIPP have failed again and again, likely because the new efforts aren’t as shameless as getting rid of struggling students.
+ 
+ > Today, the all-charter New Orleans school system is a failure factory, with half of New Orleans schools still receiving Ds or Fs on their Louisiana state Department of Education report cards, and that is not a state with what we would call the highest of standards. And yet you still sometimes hear about a “New Orleans miracle”!
+ 
+ > what’s more likely to be true? That the Mississippi miracle has actually occurred, a sudden massive turnaround in outcomes in conveniently-bounded administrative units where there’s inherent and immense pressure to fudge the numbers? That we’ve seen real improvement in metrics, when such improvement has proven to be illusory again and again and again, all with exactly the kind of minor administrative and pedagogical changes that have failed to produce gains in so many contexts? OR, is it more likely that the Mississippi miracle will prove to be like every other educational miracle that’s come before it, a product of moving poorly-performing students off the books?
+
+> It is unfathomable to me that people still think accountability is some new, untried idea in education, when successive two-term presidential administrations pushed accountability as hard they possible could, to no positive effect at all
+
+> Here I must again point out the stark reality. Academic talent is normally distributed throughout the population, and so some degree of failure is literally inevitable. Not all students are equally talented, and this can never change. Differences in educational talent are real. Meanwhile, large-scale performance gaps between groups with profoundly different social and economic conditions cannot be closed on the school side; we have thrown an immense amount of money, effort, time, and manpower at those gaps at the school level for a half-century, with close to nothing to show for it.
+
+[DeBoer on Charter Lotteries and Selection](https://freddiedeboer.substack.com/p/charter-school-lotteries-are-a-black)
+
+
+# Piper's Examination
+
+One valid concern is that 
+
+
+By contrast, Kelsey Piper believes that [we should be trying to learn from Mississippi's example](https://www.theargumentmag.com/p/illiteracy-is-a-policy-choice). However, she also wrote the following:
+
+> I’m also annoyed that the skeptics are doing such a bad job of making their case, and I think I could write a better one. If I’m going to have to constantly interact with arguments that there’s nothing happening in Mississippi, I’d like them to be high-quality arguments.
+
+Based on this, she wrote [an article](https://www.theargumentmag.com/p/the-case-against-the-mississippi) that tried to make the case that Mississippi's improvements were a statistical artifact. Here are some excerpts: 
+
+* I looked carefully at the rate of students in Mississippi who, for whatever reason, don’t take the NAEP, and Mississippi doesn’t have more students skipping the test than other states.
+* I looked at test-taking rates for students with disabilities and special-education students, and whether Mississippi was claiming more students with disabilities and special-education needs than other states. (They are not.)
+* I looked into whether the pass rates to enter fourth grade varied between years with an NAEP test and years without it.
+* I looked at whether the share of the population in public versus private schools had shifted dramatically.
+* I looked at whether Mississippi had had an influx of higher-income, more-educated families.
+
+In other words, she did her homework! She considered lots of possibilities -- such as that Mississippi could hold back more students before NAEP years -- that I might not have thought of. And she still is convinced by the data. 
+
+
+# Final Thoughts
+
+There's obviously only so much that people like Kelsey and me can do, looking at spreadsheets from afar. We aren't witnessing what's going on in classrooms. We don't know all the details of how the data is recorded. We can't "prove" that these reforms work.
+
+But Kelsey seems to have gone in with curiosity, and made an earnest attempt to investigate. Curiosity is totally lacking from the critics.
+<!--
+
+[Third Blogger](https://plthomasedd.medium.com/mississippi-miracle-or-mirage-f116490f8257)
+
+>I recommend instead of all the scientific research needed to make any fair claim, we stop the testing, make teaching and learning conditions better, make the lives of children and their families in the U.S. better, and do the complicated daily work it requires to serve the needs of all students.
+
+
+[Another Article](https://radicalscholarship.com/2019/12/02/back-to-the-future-of-reading-instruction-1990s-edition/)
+
+>little to nothing is done about food and work security, healthcare, or class size—even though these conditions combined would dwarf any measurable impact of teacher quality or program/standards quality.
+
+[Some charts](https://radicalscholarship.com/2023/09/26/grade-retention-harms-children-corrupts-test-data-but-not-a-miracle-mississippi-edition/)
+
+
+[Article pointing out different skills -- decoding, comprehension, analysis](https://radicalscholarship.com/2015/05/24/beware-grade-level-reading-and-the-cult-of-proficiency/)
+
+Sure, reading can be more, but at least we want decoding and comprehension. Vague anti-test rhetoric
+
+
+
+[More junk](https://radicalscholarship.com/2023/06/03/understanding-and-reforming-the-reading-proficiency-trap/)
+
+And next, we must stop using proficiency levels to punish students:
+
+Grade retention, the practice of holding students back to repeat a grade, does more harm than good:
+
+• retaining students who have not met proficiency levels with the intent of repeating instruction is punitive, socially inappropriate, and educationally ineffective;
+
+• basing retention on high-stakes tests will disproportionately and negatively impact children of color, impoverished children, English Language Learners, and special needs students; and
+
+• retaining students is strongly correlated with behavior problems and increased drop-out rates.
+
+[Discussion of retention (and rejection as a driver)](https://fordhaminstitute.org/national/commentary/mississippi-rising-partial-explanation-its-naep-improvement-it-holds-students)
+
+
+
+
+[Duke paper on retention](https://eric.ed.gov/?id=ED492017)
+
+[NBER paper on retention](https://www.nber.org/papers/w21509)
+
+
+-->
+
+[Positive take](https://www.mississippifirst.org/the-truth-about-mississippis-naep-gains/)
+
+The above points out that 2022 4th graders did not face the 3rd grade gate (due to pandemic)
+
+[Mostly positive](https://www.chalkbeat.org/2023/7/18/23799124/mississippi-miracle-test-scores-naep-early-literacy-grade-retention-reading-phonics/)
+
+[Interview with mississippi leader](https://www.gse.harvard.edu/ideas/edcast/26/03/what-mississippi-got-right-about-reading)
+
+>Yeah, I think that the retention component, and it's been studied and cited by, I know, Marcus Winters out of Boston, the Wheelock Policy Center, that having that type of retention component in third grade changes adult behavior. And so, teachers now understand that there is this pivotal moment in third grade. And it gives more accountability to kindergarten, first, and second grade teachers as well. As you know, state assessments for our country begin in third grade. So, what's the measure? How do we know how are kids are doing in kindergarten or first grade or second grade, are being prepared for third grade?
+
+>So, it creates another level of accountability for what's happening in those earlier grades and the sense of urgency to ensure that they're identified early and provided with those interventions. Someone asked me before, too, about the retention component. And do you think the retention component is what has led to the success? And I said, well, if we think that retention is what did it, then we're not thinking the way that the law was intended, which is all of those other components, again, screening early, interventions early, training teachers, giving them the knowledge. Those are the components that change the instruction in the classroom.
+
+
+[Not sure what to say about this, but I read it](https://dianeravitch.net/2026/03/16/paul-thomas-more-about-the-mississippi-miracle/)
+
+[This one is also more positive](https://excelined.org/2023/08/11/four-reasons-why-mississippis-reading-gains-are-neither-myth-nor-miracle/)
+
+[Paper on effects of retention (Not yet read)](https://wheelockpolicycenter.org/high-quality-education/ms-read-by-grade-three/)
+
+
+
+

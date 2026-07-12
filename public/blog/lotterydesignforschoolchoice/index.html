@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lottery Design for School Choice | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Lottery Design for School Choice</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> <span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>My paper “Lottery Design for School Choice” recently appeared in Management Science. I first started working on this paper back in 2014, and an early version appeared in EC 2015 under the title “Short Lists in Centralized Clearinghouses.” Its publication was delayed by a combination of challenging proofs and my reticence to submit it until it was perfect: I did not submit it to <em>any</em> journal until November 2019! Sadly, I see many graduating PhD students fall into this trap with their job market papers.</p>
+<p>Despite the long delay, I think this is a really nice paper that more people should know about!<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>The paper contributes to a growing literature on stable matching in random matching markets. This literature is often motivated by school choice. In this post, I will (i) summarize how one can use heuristic arguments to approximate outcomes in random markets, (ii) summarize the contributions of the paper, and (iii) explain why I think my work is much more comprehensive than previous related papers.</p>
+<p><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Many papers on two-sided matching model preferences and/or priorities as random. This models uncertainty about individual preferences, and makes it possible to study what outcomes arise “on average.”</p>
+<p>In some cases, priorities are quite literally random. For example, school priority is often determined at least in part by lotteries. One well-studied question is whether schools should each use a separate lottery draw, or a single district-wide lottery.</p>
+<p>It’s natural to wonder how the outcomes</p>
+<p>Here’s a very stylized model in which we could try to answer that question. There are <span class="math inline">\(m\)</span> students, and <span class="math inline">\(n\)</span> schools. Each student lists <span class="math inline">\(l&lt;n\)</span> random schools (in a uniformly random order), and each school has a single seat.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> Schools generate priority lists either using independent uniform lotteries, or using a single lottery, and then the Deferred Acceptance algorithm is applied to the resulting market. Which lottery matches more students to some school on their list?</p>
+<p>The answer is not obvious. If we use the generalized Top Trading Cycles algorithm (rather than Deferred Acceptance), then it turns out that that the two lottery procedures produce an identical distribution of outcomes. However, this is not true of Deferred Acceptance. What we can do is simulate these markets, for particular values of <span class="math inline">\(m, n, l\)</span>.</p>
+<p>How could we analyze this model?</p>
+<div id="heuristic-reasoning" class="section level1">
+<h1>Heuristic Reasoning</h1>
+<div id="analyzing-independent-lotteries" class="section level2">
+<h2>Analyzing Independent Lotteries</h2>
+<p>By symmetry, each student should have an identical probability (call it <span class="math inline">\(p\)</span>) of being admitted to each school on her list. Furthermore, since the student receives independent lottery numbers at each school, learning her outcome for one school should not be very informative of the outcome at a different school.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> In other words, the probability that the student is rejected from all <span class="math inline">\(l\)</span> schools to which she applied should be approximately <span class="math inline">\((1-p)^l\)</span>. The question remains, what value should we expect for <span class="math inline">\(p\)</span>?</p>
+<p>To determine this, we can examine the market from two perspectives: that of students, and that of schools. From students’ perspective, if each school admits them with probability <span class="math inline">\(p\)</span>, then some algebra shows that the expected number of schools to which they must “propose” before either being accepted or reaching the end of their list is
+<span class="math display">\[\mu(p) = \frac{1 - (1-p)^l}{p}.\]</span>
+We now turn to schools’ perspective. What is the chance that a given school fails to fill its seat? This occurs only if it receives no proposals. Because schools are selected uniformly at random, the probability that a particular student proposes to a particular school should be <span class="math inline">\(\mu(p)/n\)</span>. Thus, the probability that <em>no</em> student proposes to a particular school should be
+<span class="math display">\[(1 - \mu(p)/n)^m \approx e^{-\mu(p)m/n},\]</span>
+with the approximation holding so long as <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are reasonably large. Thus, the expected number of schools that fill their seat (receive at least one proposal) is <span class="math inline">\(n(1 - e^{-\mu(p)m/n})\)</span>. Since the number of filled seats equals the number of assigned students, we can set this equal the expected number of students who are accepted to some school, which is <span class="math inline">\(m(1 - (1-p)^l)\)</span>. Substituting the expression for <span class="math inline">\(\mu(p)\)</span> from abive yields the following consistency condition for <span class="math inline">\(p\)</span>:
+<span class="math display">\[m(1 - (1-p)^l) = n(1 - e^{-\frac{1-(1-p)^l}{p}\frac{m}{n}}).\]</span>
+It can be shown that for any <span class="math inline">\(m, n, l\)</span>, this equation has a unique solution <span class="math inline">\(p \in (0,1)\)</span>, and that this value of <span class="math inline">\(p\)</span> depends on <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> only through the ratio <span class="math inline">\(\rho = m/n\)</span>. From <span class="math inline">\(p\)</span>, we predict that the fraction of students who match is <span class="math inline">\(F_I = 1 - (1-p)^l\)</span>.</p>
+</div>
+<div id="single-lottery" class="section level2">
+<h2>Single Lottery</h2>
+<p>With a single lottery, the Deferred Acceptance algorithm reduces to a serial dictatorship: the student with the best lottery number gets her first choice, the student with the next best lottery number gets her first choice from the remaining schools, and so on. We can analyze this process as follows.</p>
+<p>When it is my turn to choose, I will match so long as not all of the schools on my list are filled. If <span class="math inline">\(k\)</span> schools are filled, then the probability that all <span class="math inline">\(l\)</span> of the schools are on my list is <span class="math inline">\({k \choose l}/{n \choose l} \approx (k/n)^l\)</span> for large <span class="math inline">\(n\)</span>. Thus, if <span class="math inline">\(k_t\)</span> is the number of matches after <span class="math inline">\(t\)</span> students have selected, we have
+<span class="math display">\[\mathbb{E}[k_{t+1}-k_t \vert k_t] \approx 1 - (k_t/n)^l.\]</span>
+This motivates the following deterministic approximation of <span class="math inline">\(k\)</span>. Let <span class="math inline">\(\bar{k}_0 = 0\)</span>, and define <span class="math inline">\(\bar{k}_{t+1} = \bar{k}_t + (1-(\bar{k}_t/n)^l)\)</span>. Then <span class="math inline">\(\bar{k}_m\)</span> is our approximation of the final number of students who are assigned. As <span class="math inline">\(m, n\)</span> grow, we can use the following differential equation to produce a continuous approximation of <span class="math inline">\(k\)</span>:
+<span class="math display">\[x(0) = 0, \,\,\,\, x&#39;(s) = 1-x(s)^l.\]</span>
+The quantity <span class="math inline">\(x(s)\)</span> approximates <span class="math inline">\(k_{sn}/n\)</span>, so our prediction for the fraction of students who are assigned when using a single lottery is <span class="math inline">\(F_S = x(m/n)\times n/m\)</span>.</p>
+</div>
+</div>
+<div id="selling-the-work" class="section level1">
+<h1>Selling the Work</h1>
+<p>I’ve shown how to use heuristic reasoning to generate predictions <span class="math inline">\(F_I\)</span> and <span class="math inline">\(F_S\)</span> for the fraction of students who match under independent and single lotteries, respectively.</p>
+<p>Does this heuristic reasoning provide a good approximation? Are these expressions clean enough to compare? Can they be generalized to more realistic settings? The answer to all three questions is ‘yes.’</p>
+<p>In the paper,
+1. I prove that these expressions are asymptotically valid as the number of students <span class="math inline">\(m\)</span> and schools <span class="math inline">\(n\)</span> grow, with <span class="math inline">\(m/n\)</span> converging to a constant.
+2. I provide an analytical comparison between these two quantities, and show that independent lotteries produce more matches for any <span class="math inline">\(l\)</span> and any ratio <span class="math inline">\(m/n\)</span>.
+3. I generalize the model to allow schools to have different numbers of seats and different probabilities of appearing on student lists.
+4. I generalize the model to allow students to list different numbers of schools.
+5. In this more general model, I analyze not only the number of matches, but also the exact asymptotic fraction of students getting their first choice, second choice, third choice, and so on.</p>
+<p>Compared to prior work, this gives a much more complete picture, in a much more general model.</p>
+<p>Insights about comparison of matched agents: depends on list length distribution.</p>
+<p>Main limitation is that there are still restrictive assumptions on preferences and priorities: addressed in continuum model.</p>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>While I was still in graduate school, I remember telling my advisors that if I didn’t publish the paper in a “top 5” econ journal, it would be a personal failure. In the end, I never submitted the paper to an econ journal, but I still believe that its quality merits my earlier confidence. (I’ve never been much of one for false modesty.) <a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>A lot of people have gotten hung up on the question of whether lists are “short” or “long” in practice. What I know is that in practice, lists are always <em>finite</em>. <a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>Admittedly, this doesn’t sound like any school district I know. We’ll generalize later, but this is a good starting point.<a href="#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>In principle, learning that I was rejected from school <span class="math inline">\(A\)</span> gives me some information about the number of applicants to <span class="math inline">\(A\)</span>, which could also inform my beliefs about the number of applicants to another school <span class="math inline">\(B\)</span>. But in this model, this effect turns out to be very weak.<a href="#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

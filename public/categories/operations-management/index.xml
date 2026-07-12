@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Operations Management on b</title>
+    <link>/categories/operations-management/</link>
+    <description>Recent content in Operations Management on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 27 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/operations-management/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bottleneck Analysis through Laundry</title>
+      <link>/blog/laundrybottleneckanalysis/</link>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/laundrybottleneckanalysis/</guid>
+      <description>&amp;quot;Find the bottleneck, and address it!&amp;quot; This is the advice that many MBAs receive in their Operations Management class. It&#39;s good advice, but distilled to the point that it&#39;s more of a platitude than anything actionable.
+I&#39;m a firm believer that people often have to struggle with a concept before they can really understand it. This post will discuss an in-class exercise that I use to introduce bottleneck analysis.</description>
+    </item>
+    
+  </channel>
+</rss>

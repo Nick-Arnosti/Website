@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Matching Theory COVID-19 on b</title>
+    <link>/tags/matching-theory-covid-19/</link>
+    <description>Recent content in Matching Theory COVID-19 on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 21 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/matching-theory-covid-19/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Better Way to Schedule Vaccinations</title>
+      <link>/blog/schedulingvaccines/</link>
+      <pubDate>Wed, 21 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/schedulingvaccines/</guid>
+      <description>Over the past months, eligibility for COVID-19 vaccination has expanded, and it was recently announced that all Americans are now eligible. However, just because you are eligible doesn&#39;t mean you can schedule an appointment, and I know a lot of people who have spent hours refreshing webpages in an effort to book one.
+In a previous post, I expressed concerns that the system for scheduling vaccination appointments is (i) a challenging and frustrating process, and (ii) inequitable, as the challenges are likely most acute for elderly and low-income populations that have been hardest-hit by the virus.</description>
+    </item>
+    
+  </channel>
+</rss>

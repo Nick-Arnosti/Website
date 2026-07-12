@@ -1,0 +1,49 @@
+---
+title: A Classification Scheme for Matching Markets
+layout: single-nocomments
+categories: []
+tags: []
+---
+
+
+There is a growing literature on random matching markets. It can be difficult to keep track of which settings each paper studies. In queueing theory, Kendall's notation has been helpful for succinctly communicating stochastic assumptions. The goal of this note is to create an analog for matching theory.
+
+There are three key inputs to the Deferred Acceptance algorithm: student preferences, school priorities, and school capacities. Let's discuss several commonly studied cases for each.
+
+* Preferences: Can be drawn from a deterministic distribution and thus identical across students (D), uniformly distributed (U), drawn by sampling from a known distribution capturing the popularity of each school (P), or general (G).
+* Priorities: Same as for student preferences.
+* School Seats: Could assume single seat (1), identical number of seats (I), large capacity limits (L) or general (G). <p style="color:red">Should G mean fully general, or general but bounded as market grows?</p>
+
+Note that this classification scheme doesn't easily accommodate correlation between preferences and priorities. These might be prevalent in practice: learning that a student has applied to a selective school such as Stuyvesant also gives us information about their priority at other schools. However, such correlation is rarely captured in theoretical models, so it is omitted from the proposed scheme.
+
+Another factor to consider is the length of student lists. Many works assume a complete lists (or lists that are "as long as needed"), which could be the default assumption. Others assume a deterministic list length (D), a limited list length (L), or a general list length distribution (G).
+
+If we let $n$ be the number of students and $m$ be the number of schools, then several papers assume $n = m$, while others take $n, m \rightarrow \infty$ (with fixed ratio or absolute difference). I'm not sure how best to document these choices. 
+
+Let us review the literature, describing papers using this scheme.
+
+\begin{tabular}
+Paper         & Setting        & Main Result \\ \hline
+Knuth (1976)  & U/G/1 $(m=n)$  & Avg Rank $\leq H_n$\\
+              & U/U/1 $(m=n)$  & Avg Rank $= H_n + o(1)$ \\
+              & U/D/1 $(m=n)$  & Avg Rank $= H_n + H_n/n - 1$ \\
+Pittel (1989) & & \\
+Immorlica, Mahdian (2005) & P/G/1/L^[Results stated for deterministic list length, but they mention in footnote that they easily extend to limited list length.] & Small Core \\
+Kojima, Pathak (2009)     & P/G/G/L & Small Core \\
+Ashlagi, Kanoria, Leshno (2017) & U/U/1    &  \\
+                                & U/D/1    &  \\
+Ashlagi, Nikzad, Romm           &          &  \\
+Ashlagi, Nikzad                 &          & \\
+Min, Qian (2020)                & U/U/1/D  &  \\
+\end{tabular}
+
+
+Let's study a fluid model of an Erlang A queueing system. Agents arrive at rate $\lambda$, depart at rate $d$, and are serviced at rate $\mu$. The fluid model predicts a queue length $L$ satisfying $Ld + \mu \geq \lambda$ with equality if $L > 0$, implying $L = (\lambda - \mu)_+/d$. By Little's Law, average time in system is $L/\lambda$
+\[T = \frac{(1 - \mu/\lambda)_+}{d}. \]
+
+Now, let's study the Azevedo-Leshno fluid model with iid priorities. To match exponential departures, assuming that student list length follows a geometric distribution with mean $1/q$ (so the probability of listing more than $k$ schools is $(1-q)^k$). Suppose that $n$ students compete for $m$ seats. If $n \leq m$, then the model predicts that every school has a cutoff of zero ($p = 1$), so students experience no rejections. Otherwise, the success probability is set such that the expected number of students who match is $m$. After summing a geometric series, we get the following consistency condition for $p$: 
+\[\frac{p}{1 - (1-q)(1-p)} = \frac{m}{n}.\] The average number of applications sent by each student is $\frac{1}{1 - (1-q)(1-p)}$, and the average number of rejections experienced by students is $\frac{1-p}{1 - (1-q)(1-p)}$. Using the consistency condition, solving for $p$ and substituting, we see that the average number of rejections $R$ is
+\[R = \frac{(1 - m/n)_+}{q}. \]
+
+Note that the equations for average wait $W$ and average rank $R$ are exactly parallel, with number of students = arrival rate, number of seats = service rate, and average list length = average time to departure absent service.
+

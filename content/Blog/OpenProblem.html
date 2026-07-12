@@ -1,0 +1,30 @@
+---
+title: "An Open Problem on Sums of Independent Random Variables"
+author: Nick Arnosti
+date: "2024-07-10"
+---
+
+
+
+<p>I’m enjoying EC this week, and had two thoughts. First, interesting math problems are often buried deep in a paper that is nominally on another topic. Second, there are lots of bright people who might know how to solve these math problems, but never see them!</p>
+<p>Inspired by these thoughts, I am sharing one open problem from my work <a href="https://nickarnosti.com/ResearchPapers/Arnosti-Bonet_SharedExperiences.pdf">Lotteries for Shared Experiences</a> with Carlos Bonet, which involves sums of independent random variables. If you like the problem or its motivation, feel free to read the entire paper! And if you think you know how to solve it, please let me know!</p>
+<div id="background-motivation" class="section level1">
+<h1>Background Motivation</h1>
+<p>When you apply for a half dome permit, you can ask for up to six spots (so that you can go with your friends). But your chances of being selected are roughly independent of the number of spots you request. This is arguably unfair. One could consider alternative lottery mechanisms where your chance of success is a decreasing function of the number of spots that you request. For example, the chance of success could be inversely proportional to the number of spots you ask for.</p>
+<p>Now suppose that a group of <span class="math inline">\(n\)</span> people are applying together in such a lottery, and want to maximize their chance of getting enough spots for everyone in the group. A focal strategy is for each person to request <span class="math inline">\(n\)</span> spots, so that only one person needs to win in order for the entire group to go. But is this the best approach?</p>
+</div>
+<div id="formal-problem" class="section level1">
+<h1>Formal Problem</h1>
+<p>Let <span class="math inline">\(\{X_i\}_{i = 1}^n\)</span> be independent random variables, where <span class="math inline">\(X_i \in \{0,r_i\}\)</span> and each <span class="math inline">\(X_i\)</span> has mean <span class="math inline">\(t\)</span> (so the probability that <span class="math inline">\(X_i = r_i\)</span> is <span class="math inline">\(t/r_i\)</span>). Let <span class="math inline">\(S = \sum_{i = 1}^n X_i\)</span>.</p>
+<p>Suppose you can choose the <span class="math inline">\(r_i\)</span>, and your goal is to maximize the probability that <span class="math inline">\(S\)</span> is at least some target <span class="math inline">\(T\)</span>. Show that if <span class="math inline">\(E[S] = tn &lt; T\)</span>, then the optimal strategy is to set <span class="math inline">\(r_i = T\)</span> for all <span class="math inline">\(i\)</span>.</p>
+<p><strong>CORRECTION</strong> After writing this post, Cinar Ari (currently a master’s student in Industrial Engineering at Middle East Technical University, Turkey) notified me that the above conjecture is false. His very simple counter-example is to take <span class="math inline">\(n = T = 2\)</span>, and <span class="math inline">\(t = 0.9\)</span>. Then if both people set <span class="math inline">\(r_i = T = 2\)</span>, they each have a probability of success equal to <span class="math inline">\(0.45\)</span>, so the probability that at least one of them succeeds is <span class="math inline">\(1 − (1 − 0.45)^2 = 0.6925\)</span>. However, if they both set <span class="math inline">\(r_i = 1\)</span>, then the chance that both succeed is <span class="math inline">\(0.9^2 = 0.81\)</span>. Thus, setting <span class="math inline">\(r_i = 2\)</span> is not optimal. My colleague Bill Cooper also identified this error, and came with some work suggesting that this conjecture might be true for sufficiently small <span class="math inline">\(t\)</span> (with the definition of “sufficiently small” approaching <span class="math inline">\(T/n\)</span> as <span class="math inline">\(n\)</span> grows larger).</p>
+<p>While it is slightly embarrassing to label as a conjecture a statement that is so easily falsifiable, it is flattering to have gotten a careful reading from Cinar and Bill!</p>
+<p>The variant of the problem below (which is the main version I have spent time on, but which I did not lead with because it’s not as “natural” in a vacuum) remains open. We have numerically verified it for all integral <span class="math inline">\(r_i\)</span> with <span class="math inline">\(T = n \le 15\)</span>.</p>
+</div>
+<div id="our-variant" class="section level1">
+<h1>Our Variant</h1>
+<p>In our paper, Carlos and I consider a variant of the problem above in which the probability that <span class="math inline">\(X_i = r_i\)</span> is <span class="math inline">\(1 - e^{-t/r_i}\)</span>. As before, you want to choose the requests <span class="math inline">\(r_i\)</span> to maximize the probability that <span class="math inline">\(S\)</span> is at least <span class="math inline">\(T\)</span>, and we conjecture that you want to set <span class="math inline">\(r_i = T\)</span> so long as <span class="math inline">\(tn &lt; T\)</span>.</p>
+<p>(In our setting, the target <span class="math inline">\(T\)</span> is equal to the number of variables <span class="math inline">\(n\)</span>, and the <span class="math inline">\(r_i\)</span> are constrained to be integral, but I don’t think either of these assumptions is important.)</p>
+<p>Our version of the problem should be easier than the first version I introduced, because in our version, the expected number of spots won when requesting <span class="math inline">\(r\)</span> spots is <span class="math inline">\(r(1-exp(-t/r))\)</span>, which is increasing in <span class="math inline">\(r\)</span>. Thus, this gives an increased incentive to request more tickets.</p>
+<p>We’ve made some progress on this problem, but the full result remains elusive. Any thoughts you have are welcome!</p>
+</div>

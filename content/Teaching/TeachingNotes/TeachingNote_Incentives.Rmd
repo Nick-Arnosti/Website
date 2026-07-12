@@ -1,0 +1,28 @@
+---
+title: 'Incentives'
+date: ""
+author: Nick Arnosti
+draft: true
+---
+
+*Note:* Educators are welcome and encouraged to use and/or adapt these materials for their own classes. I ask only that if you do this, please let me know at arnosti@umn.edu.Solutions to practice problems are available upon request. 
+
+Please let me know if you identify any mistakes that I should correct, if you have suggestions for additional topics to cover, or if you know of other materials that I might be interested to learn about!
+
+# Learning Objectives
+
+* Given preferences and an initial allocation, students will be able to identify whether an alternative allocation is individually rational, Pareto Efficient, and in the Core.
+* Students will be able to find the unique core allocation using the top trading cycles algorithm.
+* 
+
+# Key Concepts and Algorithms
+
+# Materials
+
+[Lecture Slides]()
+[Practice Problems]()
+
+# Lesson Plan and Commentary
+
+# Common Mistakes and Misconceptions
+

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Static Pricing for Multi-Unit Prophet Inequalities | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Static Pricing for Multi-Unit Prophet Inequalities</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2020/09/25</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>On Tuesday, I had the pleasure of seeing <a href="https://www.nikhildevanur.com/">Nikhil Devanur</a> present <a href="https://arxiv.org/pdf/2007.07990.pdf">Static pricing for multi-unit prophet inequalities</a>, which is joint with <a href="https://teddlyk.github.io/">Thodoris Lykouris</a> and <a href="http://pages.cs.wisc.edu/~shuchi/">Shuchi Chawla</a>.</p>
+<p>I liked the work, and want to bring it to other’s attention. In this post, I describe some of the main ideas in the paper. An <a href="/blog/iidprophet">accompanying post</a> presents some new results that I derived after seeing the talk.</p>
+<div id="the-setting" class="section level1">
+<h1><span class="header-section-number">1</span> The Setting</h1>
+<p>You are presented with a sequence of <span class="math inline">\(n\)</span> values <span class="math inline">\(V_1, \ldots, V_n\)</span>. In period <span class="math inline">\(i\)</span>, you are shown <span class="math inline">\(v_i\)</span>, and must make an irrevocable decision to keep or dismiss it. You can keep at most <span class="math inline">\(k\)</span> values, and earn a reward equal to the sum of kept values. You do not initially know <span class="math inline">\(\{V_i\}_{i = 1}^n\)</span>, but know that they are drawn independently from distributions <span class="math inline">\({\bf F}= \{F_i\}_{i = 1}^n\)</span>. We assume that the <span class="math inline">\(F_i\)</span> are continuous distributions with finite mean, although all ideas can be extended to the case where the <span class="math inline">\(F_i\)</span> are discrete.</p>
+<p>Although one could solve for the optimal policy using dynamic programming, we will instead focus on a class of much simpler policies.</p>
+<p><strong>Static Threshold Policies.</strong> Set a static threshold <span class="math inline">\(t\)</span>. Keep item <span class="math inline">\(i\)</span> if and only if <span class="math inline">\(V_i &gt; t\)</span> and fewer than <span class="math inline">\(k\)</span> items have been kept so far. Let <span class="math inline">\(ST_k^t({\bf F})\)</span> denote the expected performance of this policy.</p>
+<p>We will benchmark these policies against a “prophet” who knows the values <span class="math inline">\(V_i\)</span> in advance, and keeps the <span class="math inline">\(k\)</span> highest.</p>
+<p><strong>Omniscient Benchmark.</strong> Let <span class="math inline">\(OMN_k({\bf F})\)</span> denote the expected sum of the <span class="math inline">\(k\)</span> highest values.</p>
+<p>We wish to know, if we choose the threshold <span class="math inline">\(t\)</span> well, how much worse can a static threshold policy be than the omniscient solution? In other words, we want to compute <span class="math display">\[\inf\limits_{{\bf F}} \sup \limits_t  \frac{ST_k^t({\bf F})}{OMN_k({\bf F})}.\]</span></p>
+<p>Computing this value is hard, so this paper gives a lower bound by (i) proposing an elegant way to choose <span class="math inline">\(t\)</span>, and (ii) analyzing the resulting performance.</p>
+</div>
+<div id="what-was-already-known" class="section level1">
+<h1><span class="header-section-number">2</span> What Was Already Known?</h1>
+<p>The most studied case is <span class="math inline">\(k = 1\)</span>. In that case, it is well-known that a suitable static threshold guarantees half of the omniscient value. (This is actually a pretty amazing fact, when you think about it.) No better guarantee is possible, as the following simple example shows that even the optimal policy guarantees only half of the omniscient value. Let <span class="math inline">\(V_1\)</span> be deterministically equal to 1, and let <span class="math inline">\(V_2\)</span> be <span class="math inline">\(1/\epsilon\)</span> with probability <span class="math inline">\(\epsilon\)</span>, and <span class="math inline">\(0\)</span> otherwise. Any optimal policy obtains expected reward of <span class="math inline">\(1\)</span>, whereas the omniscient policy obtains expected reward of <span class="math inline">\(2 - \epsilon\)</span>.</p>
+<p>There are several ways to choose the threshold <span class="math inline">\(t\)</span> to guarantee <span class="math inline">\(1/2\)</span> of omniscient. One especially elegant method from <a href="https://projecteuclid.org/download/pdf_1/euclid.aop/1176993150">Samuel-Cahn (1984)</a> is the “median strategy”: take <span class="math inline">\(t\)</span> to be the median of the distribution of the maximum of the <span class="math inline">\(V_i\)</span>. Another approach is the “mean strategy” of <a href="https://arxiv.org/pdf/1201.4764.pdf">Kleinberg and Weinberg (2012)</a>: take <span class="math inline">\(t\)</span> to be half of the mean of the distribution of the maximum of the <span class="math inline">\(V_i\)</span>.</p>
+<p>The latter approach generalizes to the case <span class="math inline">\(k &gt; 1\)</span>, producing an identical guarantee of <span class="math inline">\(1/2\)</span>. However, this guarantee is far from optimal. When <span class="math inline">\(k\)</span> is large, the law of large numbers kicks in, and you can do pretty well by choosing a threshold <span class="math inline">\(t\)</span> such that the expected number of items with value above <span class="math inline">\(t\)</span> is just a bit below <span class="math inline">\(k\)</span>. <a href="https://www.aaai.org/Papers/AAAI/2007/AAAI07-009.pdf">Hajiaghayi, Kleinberg and Sandholm (2007)</a> show that static threshold policies can achieve a fraction of <span class="math inline">\(OMN\)</span> that is <span class="math inline">\(1 - \mathcal{O}(\sqrt{\log(k)/k})\)</span>. Note in particular that this guarantee goes to <span class="math inline">\(1\)</span> as <span class="math inline">\(k \rightarrow \infty\)</span>. However, the constants established in that work are such that for <span class="math inline">\(k \leq 20\)</span>, the best known guarantee is <span class="math inline">\(1/2\)</span>.</p>
+</div>
+<div id="their-algorithm-and-results" class="section level1">
+<h1><span class="header-section-number">3</span> Their Algorithm and Results</h1>
+<p>The goal of the paper is to generalize the median strategy to arbitrary <span class="math inline">\(k &gt; 1\)</span>.</p>
+<div id="key-step-1-balancing-two-risks" class="section level2">
+<h2><span class="header-section-number">3.1</span> Key Step #1: Balancing Two Risks</h2>
+When setting <span class="math inline">\(t\)</span>, we face a tradeoff. Set <span class="math inline">\(t\)</span> too high, and we might not keep very many items. Set <span class="math inline">\(t\)</span> too low, and we might might take <span class="math inline">\(k\)</span> items early, and miss out on a valuable item later. The crux of the algorithm will be to find a way to balance these concerns. Define
+<span class="math display">\[\begin{align}
+D_t(V) &amp; = \sum_{i = 1}^n {\bf 1}(V_i &gt; t) \\
+\delta_k(t,F) &amp; = \mathbb{P}_{V \sim F}(D_t(V) &lt; k)\\
+\mu_k(t,F) &amp;  = \frac{1}{k} \mathbb{E}_{V \sim F}[\min(D_t(V),k)]
+\end{align}\]</span>
+<p>That is, <span class="math inline">\(D_t(V)\)</span> is the “demand” at <span class="math inline">\(t\)</span> (number of values above <span class="math inline">\(t\)</span>), <span class="math inline">\(\delta_k\)</span> gives the probability of keeping fewer than <span class="math inline">\(k\)</span> items when using threshold <span class="math inline">\(t\)</span>, and <span class="math inline">\(\mu_k\)</span> is our expected “fill rate” (the expected number of items that we keep, divided by <span class="math inline">\(k\)</span>). The following result relates the performance of <span class="math inline">\(ST_k^t\)</span> to <span class="math inline">\(\delta_k\)</span> and <span class="math inline">\(\mu_k\)</span>.</p>
+
+<div class="proposition">
+<span id="prp:min" class="proposition"><strong>Proposition 3.1  </strong></span>For all <span class="math inline">\({\bf F}\)</span>, <span class="math inline">\(k\)</span>, <span class="math inline">\(t\)</span>, we have <span class="math display">\[ \frac{ST_k^t({\bf F})}{OMN_k({\bf F})} \geq \min(\delta_k(t,{\bf F}),\mu_k(t,{\bf F})).\]</span>
+</div>
+
+<p>The key idea is that when we consider any value <span class="math inline">\(V_i\)</span>, the probability that we have not yet kept <span class="math inline">\(k\)</span> items (and could therefore choose <span class="math inline">\(V_i\)</span> if we wish) is at least <span class="math inline">\(\delta_k\)</span>. Meanwhile, if <span class="math inline">\(\mu_k\)</span> is high, then we don’t lose much due to keeping too few items.</p>
+<p><strong>An Algorithm For Choosing <span class="math inline">\(t\)</span>.</strong> Proposition <a href="#prp:min">3.1</a> immediately implies the following. <span class="math display">\[ \inf_{{\bf F}} \sup_{t} \frac{ST_k^t({\bf F})}{OMN_k({\bf F})} \geq \inf_{{\bf F}} \sup_{t} \min\left(\delta_k(t,{\bf F}),\mu_k(t,{\bf F})\right).\]</span></p>
+<p>This suggests an algorithm for choosing <span class="math inline">\(t\)</span>: since <span class="math inline">\(\delta_k\)</span> is increasing in <span class="math inline">\(t\)</span>, and <span class="math inline">\(\mu_k\)</span> is decreasing in <span class="math inline">\(t\)</span>, the supremum is obtained at a threshold <span class="math inline">\(t\)</span> such that <span class="math inline">\(\delta_k(t,{\bf F}) = \mu_k(t,{\bf F})\)</span>. When <span class="math inline">\(k = 1\)</span>, we have <span class="math inline">\(\mu_1(t,{\bf F}) = 1 - \delta_1(t,{\bf F})\)</span> for all <span class="math inline">\(t\)</span> and <span class="math inline">\({\bf F}\)</span>. This implies that at their crossing point, both are equal to <span class="math inline">\(1/2\)</span>. In other words, we set a threshold <span class="math inline">\(t\)</span> such that our probability of keeping any item is <span class="math inline">\(1/2\)</span>: this is the median algorithm of <a href="https://projecteuclid.org/download/pdf_1/euclid.aop/1176993150">Samuel-Cahn (1984)</a>!</p>
+<strong>Notes on the Proof.</strong> The proof establishes a lower bound on <span class="math inline">\(ST_k^t({\bf F})\)</span>, expressed in terms of the following function:<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>
+<span class="math display">\[\begin{equation} U(t,{\bf F}) =  \mathbb{E}_{V \sim {\bf F}}\left[\sum_{i = 1}^n\max(V_i - t,0) \right] = \sum_{i = 1}^n \int_t^\infty(1 - F_i(x))dx. \end{equation}\]</span>
+The second inequality above uses my one of my favorite facts: for a non-negative random variable <span class="math inline">\(X\)</span>, <span class="math display">\[\mathbb{E}[X] = \int_0^\infty \mathbb{P}(X &gt; x) dx.\]</span> 
+<div class="lemma">
+<span id="lem:lower" class="lemma"><strong>Lemma 3.1  </strong></span>For all <span class="math inline">\(t, k, {\bf F}\)</span>, we have <span class="math inline">\(ST_k^t({\bf F}) \geq \mu_k(t,{\bf F}) \cdot k \cdot t + \delta_k(t,{\bf F}) \cdot U(t,{\bf F})\)</span>.
+</div>
+
+<span class="math inline">\(\\\)</span> It also establishes an upper bound on OMN. Define
+<span class="math display">\[\begin{equation} B_k(t,{\bf F})  = k \cdot t + U(t,{\bf F}).\end{equation}\]</span>
+
+<div class="lemma">
+<span id="lem:upper" class="lemma"><strong>Lemma 3.2  </strong></span>For all <span class="math inline">\(t, k, {\bf F}\)</span>, we have <span class="math inline">\(OMN_k({\bf F}) \leq B_k(t,{\bf F}).\)</span>
+</div>
+<p> Jointly, Lemmas <a href="#lem:lower">3.1</a> and <a href="#lem:upper">3.2</a> imply Proposition <a href="#prp:min">3.1</a>. In fact, the resulting guarantee holds even against the benchmark of an LP relaxation of OMN, which is permitted to keep at most <span class="math inline">\(k\)</span> values <em>in expectation</em>, rather than for <em>every realization</em>. This relaxation sets a threshold <span class="math inline">\(t_k^{LP}({\bf F})\)</span> such that the expected demand is equal to <span class="math inline">\(k\)</span>, and then accepts all such items. Its expected payout is <span class="math display">\[LP_k({\bf F}) = \mathbb{E}_{V \sim {\bf F}} \left[\sum_{i = 1}^n V_i {\bf 1}(V_i &gt; t_k^{LP}({\bf F})) \right] = \min_t B_k(t,{\bf F}).\]</span></p>
+</div>
+<div id="key-step-2-determining-the-worst-case" class="section level2">
+<h2><span class="header-section-number">3.2</span> Key Step #2: Determining the Worst Case</h2>
+<p>We now need to find a worst case choice of the distributions <span class="math inline">\({\bf F}\)</span>. One key advantage of this analysis is that the functions <span class="math inline">\(\delta_k\)</span> and <span class="math inline">\(\mu_k\)</span> depend only on the distribution of <span class="math inline">\(D_t(V)\)</span>, which is a sum of independent Bernoulli random variables. Therefore, instead of optimizing over the space of all distributions, it is enough to optimize over the success probabilities (referred to as “biases” in the paper) <span class="math inline">\(b_i = (1 - F_i(t))\)</span>.</p>
+<p>The most involved step in their analysis is to show that the worst case is when the biases are equal, and <span class="math inline">\(D_t\)</span> follows a binomial distribution. We let <span class="math inline">\(X_{n,p}\)</span> denote a binomial random variable with <span class="math inline">\(n\)</span> trials and success probability <span class="math inline">\(p\)</span>.</p>
+
+<div class="proposition">
+<span id="prp:unnamed-chunk-4" class="proposition"><strong>Proposition 3.2  </strong></span>For all <span class="math inline">\(n,k\)</span>, <span class="math display">\[\inf_{{\bf F}} \sup_{t} \min\left(\delta_k(t,{\bf F}),\mu_k(t,{\bf F})\right) \geq \sup_{p \in [0,1]} \min \left(\frac{1}{k} \mathbb{E}[\min(X_{n,p},k)],\mathbb{P}(X_{n,p} &lt; k) \right) =  \gamma_{k,n}.\]</span>
+</div>
+
+<p>We can use the following code to compute the values <span class="math inline">\(\gamma_{k,n}\)</span>.</p>
+<pre class="r"><code>delta_binom = function(n,k,p){
+  return(pbinom(k-1,n,p))
+}
+mu_binom = function(n,k,p){
+  prob = dbinom(0:(k-1),n,p)
+  prob = c(prob,1-sum(prob))
+  return(sum(prob*c(0:k))/k)
+}
+guarantee_at_p = function(n,k){
+  return(Vectorize(function(p){return(min(delta_binom(n,k,p),mu_binom(n,k,p)))}))
+}
+guarantee_finite = Vectorize(function(n,k){
+  return(optimize(guarantee_at_p(n,k),interval=c(0,1),maximum=TRUE)$objective)
+})
+kVals = c(2:4)
+colors = rainbow(length(kVals))
+nMax = 10 
+plot(NULL,xlim=c(2,nMax),ylim=c(0.5,0.75),las=1,xlab=&#39;n&#39;,ylab=&#39;&#39;,main=&#39;Performance Guarantee&#39;)
+for(i in 1:length(kVals)){
+  lines(c(kVals[i]:nMax),guarantee_finite(c(kVals[i]:nMax),kVals[i]),col=colors[i])
+}
+legend(2,.58,col=colors,lty=rep(&#39;solid&#39;,length(kVals)),legend = kVals)</code></pre>
+<p><img src="/Blog/StaticPricing_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>The guarantee <span class="math inline">\(\gamma_{k,n}\)</span> is increasing in <span class="math inline">\(k\)</span> and decreasing in <span class="math inline">\(n\)</span>, but depends much more on <span class="math inline">\(k\)</span> than <span class="math inline">\(n\)</span>. If we take <span class="math inline">\(n \rightarrow \infty\)</span>, the binomial distribution becomes a Poisson, and we obtain bounds that hold for all <span class="math inline">\(n\)</span>.</p>
+<pre class="r"><code>delta_pois = function(lambda,k){return(ppois(k-1,lambda))}
+mu_pois = function(lambda,k){
+  prob = dpois(0:(k-1),lambda)
+  prob = c(prob,1-sum(prob))
+  return(sum(prob*c(0:k))/k)
+}
+guarantee_at_lambda = function(k){
+  return(Vectorize(function(lambda){
+    return(min(delta_pois(lambda,k),mu_pois(lambda,k)))
+  }))
+}
+guarantee_pois = Vectorize(function(k){
+  return(optimize(guarantee_at_lambda(k),interval=c(0,k),maximum=TRUE)$objective)
+})
+kVals = c(1:10)
+round(guarantee_pois(kVals),3)</code></pre>
+<pre><code>##  [1] 0.500 0.586 0.631 0.660 0.682 0.699 0.713 0.724 0.734 0.742</code></pre>
+<p>For <span class="math inline">\(k = 1\)</span>, we recover the guarantee of <span class="math inline">\(1/2\)</span>, but this paper provides the first guarantee above <span class="math inline">\(1/2\)</span> for <span class="math inline">\(k = 2\)</span>. The guarantee converges to <span class="math inline">\(1\)</span> (at an optimal rate) as <span class="math inline">\(k \rightarrow \infty\)</span>.</p>
+</div>
+</div>
+<div id="closing-thoughts" class="section level1">
+<h1><span class="header-section-number">4</span> Closing Thoughts</h1>
+<p>What do I like about this paper?</p>
+<ol style="list-style-type: decimal">
+<li>It asks a clean question: I appreciate the simplicity of static threshold policies.</li>
+<li>It offers a simple policy. Although the optimal threshold depends on the order in which the <span class="math inline">\(V_i\)</span> are presented, the authors’ proposed choice of <span class="math inline">\(t\)</span> does not.</li>
+<li>The analysis is elegant:
+<ul>
+<li>The first step offers clear intuition about balancing the risks of setting the threshold too high and too low.</li>
+<li>The second step leverages the fact that their bound depends only on the values <span class="math inline">\(1 - F_i(t_i)\)</span>, rather than the full distributions <span class="math inline">\(F_i\)</span>.</li>
+</ul></li>
+<li>The final result is a tight analysis of the performance of their policy.</li>
+<li>The paper is written exceptionally clearly throughout, and is a joy to read.</li>
+</ol>
+<p>The authors seem to have found the “right” generalization of the Samuel-Cahn median strategy, which is not at all obvious: <a href="https://arxiv.org/pdf/1201.4764.pdf">Kleinberg and Weinberg (2012)</a> write “it is hard to surpass the elegance of Samuel-Cahn’s proof”, but argue that the advantage of their approach is that “it generalizes to arbitrary matroids.” Meanwhile, these <a href="http://www.cs.cmu.edu/~anupamg/ipco17/ipco-talk3.pdf">lecture notes</a> call the median strategy “beautiful,” but “somewhat mysterious, and difficult to generalize.”</p>
+<p>One special case of interest is when the <span class="math inline">\(V_i\)</span> are iid. Although this seems like an easier setting, simple examples show that their algorithm’s performance may match the lower bound of <span class="math inline">\(\gamma_{k,n}\)</span> even with iid values. In this <a href="/blog/iidprophet">follow-up post</a>, I explore a simple algorithm that improves upon this guarantee.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The authors use an extended analogy linking this setting to one in which an auctioneer has <span class="math inline">\(k\)</span> copies of an item and wishes to allocate them to the buyers with the highest values. The quantity <span class="math inline">\(U\)</span> can thus be interpreted as the total buyer surplus if each buyer allowed to purchase for price <span class="math inline">\(t\)</span>.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

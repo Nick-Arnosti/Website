@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Introduction to Reserves | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Introduction to Reserves</b></span></h1>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2024/05/31</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<div id="learning-objectives" class="section level2">
+<h2>Learning Objectives</h2>
+<p>Students will be able to discuss differences between reserves and minimum quotas, and between different reserve algorithms. (Reserves quite different from maximum quotas…)</p>
+<p><em>Concepts and Definitions</em></p>
+<ul>
+<li>Non-wasteful (= maximal matching in reserve graph).</li>
+<li>No justified envy</li>
+<li>Priority domination</li>
+</ul>
+<p><em>Algorithms</em></p>
+<ul>
+<li>Minimum Guarantee, Exemptions First, (do all as hard reserves)</li>
+<li>Over and Above</li>
+<li>Reserved-Unreserved</li>
+<li>Unreserved-Reserved</li>
+</ul>
+<p><em>Applications</em>
+* Discuss consequences of policy changes for H1B visa allocation
+* Discuss relationship to school choice in Boston</p>
+<p>Accommodate reserve policies = Feasibility.</p>
+<p>Priority domination implies non-wasteful, respecting priorities. (Converse is not true. Non-wasteful might not maximize selected applicants, and thus might be non-wasteful and respect priorities but still be priority dominated.)</p>
+</div>
+<div id="general-graphs" class="section level1">
+<h1>General Graphs</h1>
+<p>Often, positions are reserved for multiple different groups. For example, in Chile, spots in schools are reserved for low-income students, high-achieving students, and students with disabilities. In India, civil service positions are reserved for members of disadvantaged castes, women, and people with disabilities.</p>
+<p>We can model this as follows. There is a set of individuals <span class="math inline">\(\mathcal{I}\)</span> and a set of positions <span class="math inline">\(\mathcal{P}\)</span>. For each position <span class="math inline">\(p \in P\)</span>, there is a set of eligible individuals <span class="math inline">\(\mathcal{I}_p \subseteq \mathcal{I}\)</span>. This general reserve structure can be captured by a bipartite graph <span class="math inline">\(G = (\mathcal{I},\mathcal{P}, \mathcal{E})\)</span>, which has an edge from individual <span class="math inline">\(i\)</span> to position <span class="math inline">\(p\)</span> if <span class="math inline">\(i\)</span> is eligible for <span class="math inline">\(p\)</span>. We seek a <em>matching</em> <span class="math inline">\(\mathcal{M}\)</span>, which is a subset of edges in <span class="math inline">\(\mathcal{E}\)</span> such that each individual and position is involved in at most one edge of <span class="math inline">\(\mathcal{M}\)</span>. Each matching <span class="math inline">\(\mathcal{M}\)</span> determines an associated <em>selection</em> <span class="math inline">\(\mathcal{S} \subseteq \mathcal{I}\)</span>, which is the set of individuals who are included in some edge of <span class="math inline">\(\mathcal{M}\)</span>.</p>
+<p>We assume that positions are indistinguishable to applicants. That is, a reserve-eligible applicant does not care whether they receive an open or reserved visa (although this choice may have consequences for other applicants). The positions are created by the system operator, to determine a selection procedure and ensure adequate representation of different groups.</p>
+<p>Thus, when analyzing applicant welfare, the selection <span class="math inline">\(\mathcal{S}\)</span> is all that matters. However, the matching <span class="math inline">\(M\)</span> explains how each selected individual was “counted” by the designer.</p>
+<p><strong>Remark.</strong> The H1B setting above is one with two types of positions, “open” and “reserved”: for each open position, <span class="math inline">\(\mathcal{I}_p = \mathcal{I}\)</span>, and for each “reserved” position <span class="math inline">\(\mathcal{I}_p = \mathcal{R}\)</span> is the set of reserve-eligible candidates. A reserve-eligible applicant can be assigned either an open position or a reserved one. The matching <span class="math inline">\(\mathcal{M}\)</span> specifies how each individual is being “counted” (i.e. which type of position they get).</p>
+<p>Do we talk about feasible <em>matchings</em> or feasible <em>selections</em>.</p>
+<p>For each position <span class="math inline">\(p\)</span>, define the set of individuals that are eligible for <span class="math inline">\(p\)</span> to be <span class="math inline">\(E_p\)</span>. If the <span class="math inline">\(E_p\)</span> are nested, then either of the following algorithms should find a priority dominating feasible assignment:</p>
+<ol style="list-style-type: decimal">
+<li>Start at top of list, always match people to most specific position for which they are eligible. (Well defined because of nested.)</li>
+<li>Start with most specific positions, choose highest priority applicants.</li>
+</ol>
+<p>Can see either as DA between positions and applicants, where applicants always rank more selective positions higher, and positions rank only eligible applicants, but among these rank them in priority order. In this case, there is a unique stable matching, and you can find it with student proposing or school proposing.</p>
+<p>(So far this is sounding like Quotas – when nested, simple greedy algorithms work well.)</p>
+<p>However, now even if there are not nested categories, we can find a priority dominating selection in poly time!</p>
+<p>In particular, imagine doing a max weight matching. For <em>any</em> weights consistent with the priority order, we will find the same selection of applicants!</p>
+<p><strong>Mention matroids and top down algorithm.</strong></p>
+</div>
+<div id="bonus-material-soft-reserves" class="section level1">
+<h1>Bonus Material: Soft Reserves</h1>
+<p>Reference Aygun-Turhan, Arnosti-Bonet-Sethuraman, possibly others? Presumably, soft reserves are pretty common.</p>
+</div>
+<div id="reserves-vs-quotas" class="section level1">
+<h1>Reserves vs Quotas</h1>
+<p>**Proposition.* There exist maximum quotas that induce feasible sets that cannot be reproduced by any reserve system.</p>
+<p>Let there be 6 individuals, 2 from each of 3 countries. There is a maximum quota of 1 on each country, and of 2 individuals overall. Thus, there are 12 feasible selections with two applicants (any except those that take two from the same country).</p>
+<p>No reserve can reproduce this. Suppose we have two positions. Fix the two individuals from country A. Both must be eligible for a position (since there are feasible selections involving each individual), but they must not be eligible for different positions (or else we could take both). So they both must be eligible for the same position. Same for countries <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>. But then by the pigeonhole principle, there must be two countries that overlap in “their” position, implying that it is not possible to take people from both countries.</p>
+<p><strong>Theorem</strong> For any graph <span class="math inline">\(G\)</span>, there is a set of quotas that leads to an equivalent set of feasible collections.</p>
+<p><em>Proof.</em> For each <span class="math inline">\(S \subseteq \mathcal{I}\)</span>, define the upper quota <span class="math inline">\(u_S = |N_G(S)|\)</span>. It is clear that any collection that is feasible in <span class="math inline">\(\mathcal{F}^{hard}(G)\)</span> must comply with all of these upper quotas. We will prove the reverse: given a set of individuals <span class="math inline">\(I\)</span> that complies with all upper quotas, there must be a matching of <span class="math inline">\(G\)</span> that includes all of these individuals.</p>
+<p>This follows from the extension of Hall’s marriage theorem below. By definition, if a set of individuals <span class="math inline">\(I\)</span> satisfies all upper quotas, then <span class="math inline">\(|S| &lt;= |N_G(S)|\)</span> for all <span class="math inline">\(S \subseteq I\)</span>, so by Hall’s extension, there is a matching of <span class="math inline">\(G\)</span> that matches the individuals in <span class="math inline">\(I\)</span>.</p>
+<p><em>This shows that we can reproduce reserves using only (a very large number of) maximum quotas. Under some reasonable conditions, can we do the same with minimum quotas?</em></p>
+<p><strong>Hall’s Marriage Generalization (simple).</strong> Suppose that for each <span class="math inline">\(S \subseteq I\)</span>, <span class="math inline">\(|S| &lt;= |N_G(S)\)</span>. Then there is a matching of <span class="math inline">\(G\)</span> matches all of <span class="math inline">\(I\)</span>.</p>
+<p>Clearly, this implies that <span class="math inline">\(|I|\)</span> is at most the number of positions. If it is strictly fewer, add dummy individuals that are connected to all positions. Clearly, Hall’s condition is satisfied in the new graph if and only if it is satisfied for subsets of <span class="math inline">\(I\)</span>. Thus, we have a perfect matching in the extended graph, which implies a matching of all individuals in <span class="math inline">\(I\)</span> in the original graph.</p>
+<p><strong>Definition</strong> For reserves, define <span class="math inline">\(\mathcal{P}\)</span> quota categories to be <span class="math inline">\(N_G(p)\)</span> for each <span class="math inline">\(p \in \mathcal{P}\)</span>. Say that reserves are <em>nested</em> if for each <span class="math inline">\(p_1\)</span> and <span class="math inline">\(p_2\)</span>, either <span class="math inline">\(N_G(p_1)\)</span> and <span class="math inline">\(N_G(p_2)\)</span> are disjoint, or one contains the other.</p>
+<p><strong>Proposition.</strong> A nested reserve system can be reproduced using only minimum quotas and one global maximum quota. A nested quota system can be reproduced by reserves.</p>
+<p><em>Idea of proof:</em> Should be fairly straightforward, but I haven’t developed the language to describe.</p>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a> 2023
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

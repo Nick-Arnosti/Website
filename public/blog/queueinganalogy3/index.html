@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>An Analogy Between Matching and Queueing, Part III: A Striking Correspondence | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">An Analogy Between Matching and Queueing, Part III: A Striking Correspondence</span></h1>
+<h2 class="author">Nick Arnosti</h2>
+<h2 class="date">2020/08/30</h2>
+</div>
+
+<main>
+
+
+
+<p>Coming Soon!</p>
+<p>... OR NOT.</p>
+<p>Let's study a fluid model of an Erlang A queueing system. Agents arrive at rate <span class="math inline">\(\lambda\)</span>, depart at rate <span class="math inline">\(d\)</span>, and are serviced at rate <span class="math inline">\(\mu\)</span>. The fluid model predicts a queue length <span class="math inline">\(L\)</span> satisfying <span class="math inline">\(Ld + \mu \geq \lambda\)</span> with equality if <span class="math inline">\(L &gt; 0\)</span>, implying <span class="math inline">\(L = (\lambda - \mu)_+/d\)</span>. By Little's Law, average time in system is</p>
+<p><span class="math display">\[T = \frac{L}{\lambda} =  \frac{(1 - \mu/\lambda)_+}{d}. \]</span></p>
+<p>Now, let's study the Azevedo-Leshno fluid model with iid priorities. To match exponential departures, assuming that student list length follows a geometric distribution with mean <span class="math inline">\(1/q\)</span> (so the probability of listing more than <span class="math inline">\(k\)</span> schools is <span class="math inline">\((1-q)^k\)</span>). Suppose that <span class="math inline">\(n\)</span> students compete for <span class="math inline">\(m\)</span> seats. If <span class="math inline">\(n \leq m\)</span>, then the model predicts that every school has a cutoff of zero (<span class="math inline">\(p = 1\)</span>), so students experience no rejections. Otherwise, the success probability is set such that the expected number of students who match is <span class="math inline">\(m\)</span>. After summing a geometric series, we get the following consistency condition for <span class="math inline">\(p\)</span>: <span class="math display">\[\frac{p}{1 - (1-q)(1-p)} = \frac{m}{n}.\]</span> The average number of applications sent by each student is <span class="math inline">\(\frac{1}{1 - (1-q)(1-p)}\)</span>, and the average number of rejections experienced by students is <span class="math inline">\(\frac{1-p}{1 - (1-q)(1-p)}\)</span>. Using the consistency condition, solving for <span class="math inline">\(p\)</span> and substituting, we see that the average number of rejections <span class="math inline">\(R\)</span> is <span class="math display">\[R = \frac{(1 - m/n)_+}{q}. \]</span></p>
+<p>Note that the equations for average wait <span class="math inline">\(W\)</span> and average rank <span class="math inline">\(R\)</span> are exactly parallel, with number of students = arrival rate, number of seats = service rate, and average list length = average time to departure absent service.</p>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a> 2021
+  
+  </footer>
+  </body>
+</html>

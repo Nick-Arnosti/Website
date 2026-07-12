@@ -1,0 +1,97 @@
+---
+title: 'A Better Way to Schedule Vaccinations'
+date: "2021-04-21"
+author: Nick Arnosti
+tags:
+  Matching Theory
+  COVID-19
+categories:
+  Market Design 
+---
+
+
+
+<p>Over the past months, eligibility for COVID-19 vaccination has expanded, and it was recently announced that <a href="https://www.nytimes.com/2021/04/19/world/adults-eligible-covid-vaccine.html">all Americans are now eligible</a>. However, just because you are eligible doesn't mean you can schedule an appointment, and I know a lot of people who have spent hours refreshing webpages in an effort to book one.</p>
+<p>In a <a href="/blog/centralizedcovidvaccines/">previous post</a>, I expressed concerns that the system for scheduling vaccination appointments is (i) a challenging and frustrating process, and (ii) inequitable, as the challenges are likely most acute for elderly and low-income populations that have been hardest-hit by the virus.</p>
+<p>My concerns arise from two distinct features of the system: decentralized information about availability, and first come first served scheduling. My previous post focused on the first concern, and argued for the creation of a single site showing all available appointments across the state. This post will explain why I think it important to move beyond first come first served, and what an alternative might look like.</p>
+<div id="concerns-with-first-come-first-served" class="section level1">
+<h1>Concerns With First Come First Served</h1>
+<p>First come first served systems encourage applicants to log on as soon as appointments become available. If this time is well-publicized, the system could become overloaded: appointment slots may appear available only to disappear, servers may crash, websites may not load, and frustration will ensue. Perhaps for this reason, many clinics don't announce when new appointment slots will become available. This reduces congestion, but favors people with inside connections, or with time to check frequently throughout the day.</p>
+<p>First come first served also makes it difficult for the state to assist people who can't book appointments for themselves. Even if you have staff answering calls of senior citizens, what good does it do if these staff log on only to see that no appointments are available?</p>
+<p>One way to mitigate these concerns is to limit eligibility. This can ensure that appointments will be available to high-priority applicants, but also creates a risk that valuable slots will go unclaimed. States are left facing an unappealing tradeoff: restrict eligibility and waste slots, or expand eligibility and create a mad scramble that may not vaccinate those who most need it.</p>
+</div>
+<div id="outlining-an-alternative" class="section level1">
+<h1>Outlining an Alternative</h1>
+<p>Fortunately, there is a solution which is used in many markets where demand exceeds supply: instead of allocating on a rolling basis, have a registration period, and wait to finalize the allocation until this period has ended.</p>
+<p>Here's how this might work. Each state maintains a central vaccination hub. Anyone interested in being vaccinated would start by visiting this website and creating a profile.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> The profile would include any information necessary to determine priority status (such as age, underlying medical conditions, and area of employment). After creating a profile, people would see a list of locations offering vaccinations in the next week, and would indicate which locations and times worked for them.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> Each week, the website would take this information, along with information about available doses, and use it to schedule appointments and notify applicants of the outcome. For example, the algorithm might run every Saturday morning, and produce an appointment schedule for the upcoming week (Monday - Sunday). It would then notify applicants of the outcome (sending either an appointment time and location, or a notice that they did not receive an appointment and will have to reapply).</p>
+<!--This gives people 2-9 days notice about the timing and location of their appointment.-->
+<p>In principle, this system has several positive features:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>More Equitable.</strong> Anyone who registered before the weekly match run would be processed in order of their priority, <em>not</em> in the order they signed up. This removes the need to constantly check for new appointments, and also ensures an allocation that better aligns with the state's priority rules.</p></li>
+<li><p><strong>More Efficient.</strong> People would only have to log on once per week to apply and indicate their availability. This is far less effort than daily (or hourly) refreshing. Additionally, unlike the current system, there would be no need to explicitly declare groups of people &quot;eligible&quot; or &quot;ineligible.&quot; Even a healthy 20-year-old without a job could apply -- they just wouldn't be scheduled unless they were available at a time and date with a surplus of appointments after higher-priority applicants were considered. As a result, states would no longer face a choice between potentially wasting slots if eligibility criteria are too strict and failing to prioritize appropriately if eligibility criteria are too loose.</p></li>
+<li><p><strong>Up-to-date Information.</strong> Each week, applicants would be asked their availability for the following week. If desired, matches could be run more frequently (such as twice per week) in order to ensure that people know their availability (limiting no-shows) and the state knows its supply (limiting cancellations).<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></p></li>
+</ol>
+<!--, 
+5. **Match Frequency** Running the match once per week would require that people know their schedule (and the state to know dose availability) 10 or more days in advance. Running matches twice per week (at announced times) could reduce no-shows and cancellations.
+
+say on Sunday and Thursday nights. Anyone could log in on Friday, Saturday, or Sunday to indicate their availability for the following Friday-Sunday. Similarly, people who logged in on Monday-Thursday could indicate their availability for the following Monday-Thursday, and would be notified about the outcome on Thursday night.-->
+</div>
+<div id="a-scheduling-algorithm" class="section level1">
+<h1>A Scheduling Algorithm</h1>
+<p>The preceding section gave a broad overview of the proposed system, and outlined its potential benefits. However, it skipped over one important detail: how would appointments actually be scheduled? This section discusses an algorithm that could be used to assign applicants to (time, location) pairs (referred to as &quot;slots&quot; below). I assume that we have a strict priority order over all applicants (we can break any ties in priority using a lottery).</p>
+<p>One natural approach is what matching theorists call a &quot;serial dictatorship&quot;: line everyone up in priority order, and assign each person to their favorite slot that still has doses available. However, there are two concerns with this approach. First, it may be cumbersome for applicants to rank slots in order of desirability. Second, we may schedule a flexible applicant in a way that prevents us from scheduling a less-flexible applicant later.<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a></p>
+<p>Instead, I propose an algorithm that only requires applicants to report which slots are acceptable (with no ranking). To define this algorithm, I introduce some notation. Denote the set of applicants by <span class="math inline">\(A\)</span> and the set of slots by <span class="math inline">\(S\)</span>. For each applicant <span class="math inline">\(a\)</span>, we have a set of acceptable slots <span class="math inline">\(S_a\)</span>, and for each slot <span class="math inline">\(s\)</span>, we have a number of available doses <span class="math inline">\(d_s\)</span>. In addition, write <span class="math inline">\(a&#39; \succ a\)</span> to indicate that <span class="math inline">\(a&#39;\)</span> has higher priority than <span class="math inline">\(a\)</span>.</p>
+<p>A <em>matching</em> is a function <span class="math inline">\(\mu: A \rightarrow S \cup \{\emptyset\}\)</span>. Applicant <span class="math inline">\(a\)</span> is <em>matched</em> by <span class="math inline">\(\mu\)</span> if <span class="math inline">\(\mu(a) \in S\)</span>. We let <span class="math inline">\(M(\mu)\)</span> be the set of matched applicants under <span class="math inline">\(\mu\)</span>.</p>
+<blockquote>
+<p><strong>Definition 1.</strong> Matching <span class="math inline">\(\mu\)</span> is <strong>feasible</strong> if two conditions hold:</p>
+<ul>
+<li>Each matched applicant <span class="math inline">\(a\)</span> is assigned an acceptable slot: <span class="math inline">\(\mu(a) \in S_a\)</span>.</li>
+<li>Each slot <span class="math inline">\(s\)</span> is assigned to at most <span class="math inline">\(d_s\)</span> applicants: <span class="math inline">\(|\{a : \mu(a) = s\}| \leq d_s\)</span>.</li>
+</ul>
+</blockquote>
+<p>Feasibility is a weak requirement: it is always feasible to turn everyone away. Ideally, we'd like to schedule as many appointments as possible.</p>
+<blockquote>
+<p><strong>Definition 2.</strong> A feasible matching <span class="math inline">\(\mu\)</span> <strong>maximizes appointments</strong> if no feasible matching matches more applicants: <span class="math inline">\(|M(\mu)| \geq |M(\mu&#39;)|\)</span> for all feasible <span class="math inline">\(\mu&#39;\)</span>.</p>
+</blockquote>
+<p>We can efficiently find a matching that maximizes appointments using a maximum flow algorithm. However, in general, there will be many such matchings. Ideally, we would like to schedule high-priority applicants. This is captured in the following definition.</p>
+<blockquote>
+<p><strong>Definition 3.</strong> A feasible matching <span class="math inline">\(\mu\)</span> <strong>respects priorities</strong> if, for each unassigned applicant <span class="math inline">\(a\)</span>, it is impossible to schedule them without displacing a higher-priority applicant: there is no feasible matching that matches <span class="math inline">\(a\)</span> along with <span class="math inline">\(\{ a&#39; \in M(\mu) : a&#39; \succ a\}\)</span>.</p>
+</blockquote>
+<!-- (i) Applicants should never be assigned to a slot that they marked as infeasible.
+(ii) Slots should never be assigned more applicants than there are available doses.
+(iii) The number of assigned applicants should be as large as possible, given constraints (i) and (ii).
+(iv) For any applicant who does not receive an appointment, it is impossible to schedule them without displacing a higher-priority applicant.
+-->
+<p>Here's an algorithm that respects priorities.<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a> Number applicants in order of priority, so that <span class="math inline">\(a_1 \succ a_2 \succ \cdots \succ a_{|A|}\)</span>. We will greedily construct a set of applicants <span class="math inline">\(M\)</span> that we commit to matching. At each step <span class="math inline">\(k\)</span>, commit to matching <span class="math inline">\(a_k\)</span> if it is possible to do so while maintaining our existing commitments.</p>
+<blockquote>
+<p><strong>Algorithm 1.</strong> Set <span class="math inline">\(M_0 = \emptyset\)</span>. For <span class="math inline">\(k \in \{1, ... , |A|\}\)</span>, If there is a feasible matching that matches everyone in <span class="math inline">\(M_{k-1} \cup \{a_k\}\)</span>, set <span class="math inline">\(M_k = M_{k-1} \cup \{a_k\}\)</span>. Otherwise, set <span class="math inline">\(M_k = M_{k-1}\)</span>. At the end, choose an arbitrary feasible schedule that matches all applicants in <span class="math inline">\(M_{|A|}\)</span>.</p>
+</blockquote>
+<!--In other words, this algorithm is greedy when deciding which applicants will be matched, but is patient when deciding which slots to match them to.-->
+<p>It fairly clear that this algorithm is feasible and respects priorities: by definition, an applicant is scheduled unless scheduling them would come at the expense of a higher-priority applicant. In addition, it has other nice properties: it is comutationally efficient (each step can be formulated as a max flow problem), and incentivizes applicants to reveal all acceptable slots.<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> However, there seems to be tension between respecting priority and maximizing appointments: by committing to match high-priority (but potentially inflexible) applicants, are we matching fewer applicants than we could? Somewhat surprisingly, the answer is no.</p>
+<blockquote>
+<p><strong>Theorem 1.</strong> The matching produced by Algorithm 1 is feasible, respects priorities, and maximizes appointments.</p>
+</blockquote>
+<p>As a corollary, we get something even stronger than respecting priorities: the set of applicants matched by this algorithm &quot;dominates&quot; the set of applicants matched in any other feasible matching.</p>
+<blockquote>
+<p><strong>Corollary 1.</strong> Let <span class="math inline">\(M^*\)</span> be the set of applicants matched Algorithm 1, and let <span class="math inline">\(\mu\)</span> be <em>any</em> feasible matching. Then <span class="math inline">\(|M^*| \geq |M(\mu)|\)</span>, and and for each <span class="math inline">\(k \leq |M^*|\)</span>, the <span class="math inline">\(k^{th}\)</span>-highest priority applicant in <span class="math inline">\(M^*\)</span> has weakly higher priority than the <span class="math inline">\(k^{th}\)</span>-highest priority applicant in <span class="math inline">\(M(\mu)\)</span>.</p>
+</blockquote>
+<p>These results are possible because feasible sets of applicants form a matroid (called the <em>matching matroid</em> in Example 6 of these <a href="http://www-math.mit.edu/~goemans/18438F09/lec8.pdf">lecture notes</a>), and optimization problems with matroid constraints can be solved greedily. It is important to note that although the algorithm is greedy when deciding which applicants will be matched, it <em>waits until the end</em> to decide which slots to assign them to.</p>
+</div>
+<div id="final-thoughts" class="section level1">
+<h1>Final Thoughts</h1>
+<p>When supply exceeds demand, first come first served is a frustrating and inequitable system. This post outlines an alternative which I believe would be superior. For the most part, my alternative would be simple to implement: the biggest barrier is probably the creation of a centralized database that knows the number of available doses at each location. This is an important step: if each clinic runs its own system, many patients will end up double-booked, leading to no-shows and last-minute cancellations (this <a href="https://www.wsj.com/articles/got-your-covid-19-vaccine-now-cancel-your-extra-appointments-11617796160">is already ocurring</a> across the country).</p>
+<p>Hopefully, we will soon have enough vaccines available that anyone who wants an appointment will be able to book one easily. <strong>If you've made it this far, I'd love to hear from you in the comments below!</strong> What are other contexts where you have scrambled to book something as soon as it becomes available? In those cases, would this system be an improvement?</p>
+<!--In fact, this algorithm can be thought of as version of Serial Dictatorship which has been generalized to permit indifferences. An analogous algorithm could be defined if applicants express partial preferences. For example, if applicants rank slots in several tiers, the algorithm could guarantee each applicant $t$ a slot in the highest indifference tier that is feasible, given existing commitments to applicants $1$ through $t-1$.-->
+<!-- ^[In other contexts, such as school choice, breaking ties in priority using a lottery imposes additional constraints and can cause unnecessary welfare losses. In this case, the lottery never causes welfare loss: we will always match the maximum possible number of applicants, and furthermore, within each priority tier, we will match the maximum possible number of applicants, given the number of higher priority applicants that have been selected. **IS THIS TRUE** ] -->
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The state could also create a hotline, staffed by employees prepared to create profiles on behalf of technologically impaired callers.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>There's a separate question of how to design the user interface allowing people to indicate their availability. The simplest interface might consist of two checklists: one to indicate feasible locations, and another to indicate feasible times. Although a well-designed user interface is important, I won't focus on this aspect of the system in this post.<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>If cancellations did occur -- for example, due to the recent pause in the Johnson and Johnson vaccine -- anyone whose appointment was cancelled could be given priority in subsequent periods, thereby mitigating the damage. To disincentivize no-shows, anyone who failed to show up for a scheduled appointment could be penalized, perhaps by being prohibited from re-applying for several periods. Note that anyone who forgot to log on in and apply during a period would not be scheduled, but would also be able to apply in subsequent periods with no penalty.<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>Consider a simple example with two applicants and two slots (morning and afternoon). Suppose that applicant A has highest priority and is available all day, while applicant B is available only in the morning. In a serial dictatorship, if A expresses a preference for morning, then A will get the morning slot, and B will go unassigned. The afternoon slot will either go to waste, or will be given to an applicant with lower priority than B. It seems better to schedule B for the morning, and A for the afternoon.<a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p>This algorithm is equivalent to the first phase of the &quot;horizontal envelope choice rule&quot; described in <a href="https://www.tayfunsonmez.net/wp-content/uploads/2020/02/OverlappingReserves-January2020.pdf">this paper</a> by Tayfun Sonmez and Bumin Yenmez. Unlike that paper, we have &quot;hard&quot; feasibility constraints: it is never feasible to assign someone to an unacceptable slot (even if that slot will otherwise go to waste).<a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p>More precisely, listing additional acceptable slots can never cause an applicant to go from matched to unmatched. Therefore, if applicants are indifferent between acceptable slots, they will want to list all such slots. An applicant who prefers some slots over others may have a non-trivial decision to make about whether to list the less-preferred slots. However, I think most applicants won't have a strong preference, and an applicant who loses out on a slot due to &quot;strategic&quot; behavior presumably isn't too desperate to get vaccinated.<a href="#fnref6">↩</a></p></li>
+</ol>
+</div>

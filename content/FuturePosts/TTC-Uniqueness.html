@@ -1,0 +1,53 @@
+---
+title: "Question from Kris Iyer"
+author: "Nick Arnosti"
+date: '2025-04-05'
+output: html
+draft: true
+---
+
+
+
+<p>#Question</p>
+<p>There are <span class="math inline">\(n\)</span> agents. Each agent <span class="math inline">\(i\)</span> has a unique endowed object <span class="math inline">\(o_i\)</span>. Let <span class="math inline">\(\mathcal{O} = \bigcup_i o_i\)</span> be the set of objects. Each agent has a utility function <span class="math inline">\(u_i : \mathcal{O} \rightarrow [0,1]\)</span>. We assume strict preferences, meaning that for any two objects <span class="math inline">\(o,o&#39; \in \mathcal{O}\)</span> and any <span class="math inline">\(i\)</span>, <span class="math inline">\(u_i(o) \neq u_i(o&#39;)\)</span>.</p>
+<p>A mechanism takes as input the <span class="math inline">\(u_i\)</span>, and produces a randomized assignment (a distribution over assignments). We say that a mechanism is {} if this distribution depends only on the ordinal ranking <span class="math inline">\(\succ_i\)</span> induces by <span class="math inline">\(u_i\)</span> (that is, if <span class="math inline">\(u_i\)</span> and <span class="math inline">\(u_i&#39;\)</span> correspond to the same ordinal ranking, then the mechanism produces the same randomized assignment).</p>
+<p>A mechanism <span class="math inline">\(\pi\)</span> is truthful if for all <span class="math inline">\(u_i\)</span> and deviating report <span class="math inline">\(u_i&#39;\)</span>, <span class="math inline">\(\sum_{o} u_i(o) \pi_i(o; u_i) \ge \sum_{o} u_i(o) \pi_i(o; u_i&#39;)\)</span>.</p>
+<p>A mechanism is (ex post) Pareto efficient and Individually Rational if it only places positive mass on Pareto efficient and Individually Rational allocations. (One could imagine only requiring ex ante IR, but in many contexts, it would be easy for agents to deviate if not ex post IR.)</p>
+<p>A celebrated result of Ma (1994) says that there is a unique ordinal mechanism that is Pareto efficient, Individually Rational, and Truthful, and it is TTC.</p>
+<p>The question: could there be a non-ordinal mechanism that satisfies the other three properties?</p>
+<div id="example-truthful-ir-non-ordinal" class="section level1">
+<h1>Example: Truthful + IR + non-ordinal</h1>
+<p>As a starting point, let us construct a non-ordinal mechanism that is truthful and individually rational. There are three agents (1, 2, 3) endowed with objects (a, b, c).</p>
+<p>If 1 ranks <span class="math inline">\(c\)</span> above <span class="math inline">\(a\)</span> and 2 ranks <span class="math inline">\(c\)</span> above <span class="math inline">\(b\)</span>, then offer 3 the choice between the following:</p>
+<ul>
+<li>abc with probability 1</li>
+<li>acb with probability 1</li>
+<li>cba with probability 0.5 and abc with probability 0.5</li>
+</ul>
+<p>If either 1 or 2 prefers their own object to <span class="math inline">\(c\)</span>, then give every agent their endowment (abc).</p>
+<p>This is clearly individually rational. It is also truthful for 3 (who either has no agency or gets to choose most preferred bundle) and for 1 and 2 (if they prefer <span class="math inline">\(c\)</span> to their object, they want to enable trades; if they do not, then enabling trades cannot help them). Finally, it is not ordinal. Note that if <span class="math inline">\(c\)</span> reports utilities <span class="math inline">\(u(a) = 1, u(b) = 0.9, u(c) = 0\)</span> then the mechanism selects acb, but if <span class="math inline">\(u(b) = 0.1\)</span>, then the mechanism selects the coin flip between cba and abc. Note that these two reports imply the same ordinal preferences.</p>
+<p>#Example: Truthful + PE + non-ordinal</p>
+<p>This gets harder to construct. Here are some thoughts.</p>
+<p>If 1 reports <span class="math inline">\(b &gt; c &gt; a\)</span> and 2 reports <span class="math inline">\(a &gt; c &gt; b\)</span>, then regardless of the report of 3, there are (at most) 3 possible Pareto efficient allocations: bca, cab, and bac.</p>
+<p>In this case, I want to offer agent 3 a choice between the following:</p>
+<ul>
+<li>bac with probability 1</li>
+<li>cab with probability 1</li>
+<li>bca with probability 0.5 and bac with probability 0.5</li>
+</ul>
+<p>Note that in some cases (some preferences of Agent 3), some of these options are not Pareto efficient, but in these cases, the non-PE allocations are never chosen. (For example, if Agent 3 ranks c first, then only bac is Pareto efficient, but this is the option chosen by Agent 3).</p>
+<p>It is clear that this mechanism is not ordinal: if agent 3 ranks objects <span class="math inline">\(a &gt; b &gt; c\)</span>, then their choice between the second and third option depends on the exact utility value <span class="math inline">\(u_3(b)\)</span>.</p>
+<p>However, it’s not obvious how to extend this idea into a Truthful + PE mechanism. In particular, we can’t simply say “in other cases, give agents their endowment” (like we could in the preceding example) because this might not be PE.</p>
+</div>
+<div id="tasks" class="section level1">
+<h1>Tasks</h1>
+<ol style="list-style-type: decimal">
+<li><p>Construct a non-ordinal mechanism that is PE + Truthful (but need not be IR).</p></li>
+<li><p>Construct a non-ordinal mechanism that is PE + Truthful + IR.</p></li>
+</ol>
+</div>
+<div id="related-but-not-directly" class="section level1">
+<h1>Related (but not directly)</h1>
+<p>Get a clean characterization of RSD in a setting without endowments. Say that a mechanism is ex post truthful if it randomizes over truthful deterministic mechanisms. Ex post truthful obviously implies other notions of truthfulness, but is not implied by them (see earlier blog post using example from Unver and Pycia).</p>
+<p>Is any mechanism that is ex post PE, ex post IR and ex post truthful equivalent to RSD?</p>
+</div>

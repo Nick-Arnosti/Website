@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Gambling on b</title>
+    <link>/tags/gambling/</link>
+    <description>Recent content in Gambling on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Dec 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/gambling/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Why You Should Bet on Favorites</title>
+      <link>/blog/racetrackgambling/</link>
+      <pubDate>Tue, 03 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/racetrackgambling/</guid>
+      <description>Today’s post is about a topic that caught my eye during my first year of graduate school: inferring win probabilities from betting lines. It is an empirical fact that conventional betting line estimates systematically understate the favorite’s chance of winning. Traditional explainations argue that bettors are irrational. This post points out that the bias could appear even with rational bettors, due to the fact that bookies set the odds to minimize their exposure.</description>
+    </item>
+    
+  </channel>
+</rss>

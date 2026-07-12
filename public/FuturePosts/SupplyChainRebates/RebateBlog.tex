@@ -1,0 +1,62 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[margin=1 in]{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{wasysym}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+
+\usepackage{listings}
+\newcommand{\link}[2]{{\color{blue} \href{#1}{\underline{#2}}}}
+%SetFonts
+
+%SetFonts
+\usepackage{xcolor}
+\usepackage{float}
+
+\title{\vspace{-.3 in} Rebates}
+\author{Nick Arnosti}
+\date{August 9, 2018}							% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+%\section{}
+%\subsection{}
+
+\begin{quote}
+{\em At two for a penny, if I take too many Weasel just makes me eat 'em after.} \\ \centerline{ -- Lyrics, ``Carrying the Banner"}
+\end{quote}
+
+\section{Background}
+
+Around the turn of the century, newspapers relied on ``newsboys" for distribution. These newsboys purchased bundles of 100 papers for $50\cent$, and sold each paper for $1\cent$. As the lyric from the song ``Carrying the Banner" (above) indicates, newsboys lost money for each unsold paper. Two prominent papers, {\em New York Evening Journal} and {\em The Evening World}, raised the price to $60\cent$ for a bundle, prompting a strike in 1899.\footnote{According to \link{https://en.wikipedia.org/wiki/Newsboys\%27_strike_of_1899}{Wikipedia}, multiple papers had raised their prices during the Spanish American War. The strike occurred when the World and the Journal refused to lower their prices again after the war ended.} The strike ended with a compromise: the papers kept the price at $60\cent$, but agreed to buy back any unsold copies at the end of the day.
+
+The newsboys faced a forecasting challenge every day: order many newspapers, and risk being stuck with unsold copies, or order fewer and risk losing sales. This tradeoff is common to many retailers, and is captured by a classic inventory model -- appropriately titled ``the Newsvendor Model" -- which I teach in my Operations Management class at Columbia. This post will focus not on the newsboys, but rather on the problem facing the villains in the story -- the World and the Journal. Suppose that the retail price of a newspaper is fixed to be $1\cent$, and the papers are trying to determine a profit-maximizing price. The higher the wholesale price, the higher the cost to the newsboys of being stuck with unsold papers, and therefore the fewer papers they will buy. Any wholesale price above the cost of printing the paper results in lower circulation than the newspaper would choose if they operated their own newsstands.\footnote{1. Like a tax 2. }
+
+%Charge too much, and newsboys will significantly curtail purchases, due to the high cost of being stuck with unsold papers. Lowering prices encourages the newsboys to buy more papers, but may reduce profit. Any price that is set will 
+
+\section{A Simple Model}
+
+I consider a model in which the retail price is set in advance. The publisher chooses a wholesale price and a rebate policy, the retailer chooses an order quantity, and then demand for the book is realized, with unsold books returned to the publisher for the specified rebate.\footnote{Of course, this simple model cannot capture all factors relevant to publishers in practice. For example, publishers may wish for their title to land on a \link{http://independentpublisher.com/article.php?page=987}{bestseller list}.}
+
+{\color{blue} Mention that unsold items have no value? Could motivate this by practical concerns (only book covers returned), or say that model could easily accommodate it.}
+
+Main findings: a monopolist publisher charges a high wholesale price, and offers a full rebate to the retailer. (Note that this is more profitable and more palatable than offering different prices to different bookstores.) Competition induces publishers to lower prices {\em and rebates}.
+
+\section{Conclusions}
+
+Maybe the World and Journal got exactly what they wanted -- by offering to buy back unsold copies, they might encourage newsboys to buy more copies, thereby increasing circulation and profit.
+
+
+
+\end{document}  

@@ -1,0 +1,93 @@
+---
+title: 'Lung Allocation'
+date: '2025-10-02'
+author: Nick Arnosti
+
+draft: true
+nurmarkdownumber_sections: true
+---
+
+
+
+<pre class="r"><code>library(data.table)
+initial_patients = c()
+arriving_patients = c(1,2,3)
+donor_data = data.table(match_id = c(7,8,9,10))
+patient_data = data.table(px_id=arriving_patients,n_accept=c(1,0,1),match_runs=c(4,0,2))</code></pre>
+<p>Let’s look at what happened.</p>
+<p>In this time horizon, we had</p>
+<pre class="r"><code>length(arriving_patients)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>arriving patients and</p>
+<pre class="r"><code>length(donor_data$match_id)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>arriving donors.</p>
+<p>Of our arriving patients,</p>
+<pre class="r"><code>sum(patient_data$n_accept &gt; 0) </code></pre>
+<pre><code>## [1] 2</code></pre>
+<p>accepted at least one offer.</p>
+<div id="unmatchable-agents" class="section level1">
+<h1>Unmatchable Agents</h1>
+<p>There are</p>
+<pre class="r"><code>unmatchable_patients = patient_data[match_runs==0,px_id] 
+length(unmatchable_patients)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<p>patients in the data set who never receive a sequence number. That is, these patients are screened out of every match_run that occurs while they are present.</p>
+<p>Of these,</p>
+<pre class="r"><code>sum(unmatchable_patients %in% initial_patients)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p>are patients who were waiting at the beginning of the window.</p>
+</div>
+<div id="measuring-organ-availability-and-prioritizing-hard-to-match-patients" class="section level1">
+<h1>Measuring Organ Availability and Prioritizing Hard to Match Patients</h1>
+<p>It is generally acknowledged that some patients are harder to match, due to concerns such as blood type, tissue antibodies, and height. As a result, organ policies often give “priority” to certain groups to try to “level the playing field” and compensate for their disadvantage. For example, for lungs, patients with type <span class="math inline">\(O\)</span> blood are given 5 priority points, and for kidneys, patients with high CPRA are prioritized (how?).</p>
+<p>The goal of this note is to examine whether these policies help to make the allocation more “fair.” To answer this question, we must propose a definition of fairness. In addition, we propose a measure of organ availability.</p>
+<p>We first consider a static model with a fixed population of patients <span class="math inline">\(P\)</span> and donors <span class="math inline">\(D\)</span>. There is an edge from <span class="math inline">\(p\)</span> to <span class="math inline">\(d\)</span> if that match is feasible (this edge could consider both medical compatibility and temporal overlap). We denote the set of edges by <span class="math inline">\(E\)</span>.</p>
+<p>One natural measure of how many organs are available to a patient <span class="math inline">\(p\)</span> is the number of outgoing edges. (In a dynamic model, this would correspond to the rate at which compatible organs arrive to the market.) To see why this is a flawed metric, consider the following example.</p>
+<p><strong>Example 1</strong>. <em>There are <span class="math inline">\(75\)</span> patients with blood type <span class="math inline">\(A\)</span> and <span class="math inline">\(25\)</span> with blood type <span class="math inline">\(B\)</span>. There are <span class="math inline">\(65\)</span> donors with blood type <span class="math inline">\(A\)</span> and <span class="math inline">\(35\)</span> with blood type <span class="math inline">\(B\)</span>.</em></p>
+<p>In this example, the type <span class="math inline">\(A\)</span> patients are compatible with more organs than the type <span class="math inline">\(B\)</span> patients are, but the type <span class="math inline">\(B\)</span> patients should have no trouble receiving a transplant (there is a surplus of type <span class="math inline">\(B\)</span> donors) whereas some type <span class="math inline">\(A\)</span> patients will go without. In other words, organs will be more “available” to a type <span class="math inline">\(B\)</span> patient.</p>
+<p>The problem with only looking at number of outgoing edges is that it does not consider the competition from other patients (i.e. how many patients are seeking the same organs).</p>
+<p>I propose the following measure of organ availability.</p>
+<p><span class="math display">\[\begin{align}
+\max \sum_{p \in P} m_p \log(q_p) \\
+\sum_{d \in D} x_{pd} &amp; = q_p \nonumber \\
+\sum_{p \in P}m_p x_{pd} &amp; \le n_d \nonumber \\
+x_{pd} &amp; \le {\bf 1}((p,d) \in E) \nonumber \\
+q_p &amp; \le 1 \nonumber
+\end{align}\]</span>
+<em>Baseline, <span class="math inline">\(m_p = n_d = 1\)</span>. But this also works if <span class="math inline">\(p\)</span> and <span class="math inline">\(d\)</span> represent types of patients and donors, and <span class="math inline">\(m_p\)</span> and <span class="math inline">\(n_d\)</span> represent the number of patients or donors of these types.</em></p>
+<div class="theorem">
+<p><span id="thm:label_name" class="theorem"><strong>(#thm:label_name) (Theorem Name) </strong></span>Let <span class="math inline">\(x^*\)</span> be an optimal solution. Then there exist costs <span class="math inline">\(c_d\)</span> that support <span class="math inline">\(x^*\)</span> as a competitive equilibrium from equal incomes.</p>
+</div>
+<p>There may be some patients with no compatible donors, for whom <span class="math inline">\(q_p\)</span> is necessarily zero. We can remove these patients from the objective function above before solving the optimization problem.</p>
+<p>The quantity <span class="math inline">\(q_p\)</span> will be our measure of “availability” for patient <span class="math inline">\(p\)</span>. In particular, for Example 1 with <span class="math inline">\(m_A = 75\)</span>, <span class="math inline">\(m_B = 25\)</span>, <span class="math inline">\(n_A = 65\)</span> and <span class="math inline">\(n_B = 35\)</span>, we would have <span class="math inline">\(q_A = 65/75\)</span> and <span class="math inline">\(q_B = 1\)</span>. More generally, <span class="math inline">\(q_A &lt; q_B\)</span> will imply <span class="math inline">\(m_A/n_A &lt; m_B/n_B\)</span>.</p>
+<p>Let’s consider a different example.</p>
+<p><strong>Example 1</strong>. <em>There are <span class="math inline">\(60\)</span> patients with blood type <span class="math inline">\(O\)</span> and <span class="math inline">\(40\)</span> with blood type <span class="math inline">\(A\)</span>. There are <span class="math inline">\(60\)</span> donors with blood type <span class="math inline">\(O\)</span> and <span class="math inline">\(30\)</span> with blood type <span class="math inline">\(A\)</span>.</em></p>
+<p>In this example, note that if we naively compute the ratios <span class="math inline">\(m_O/n_O\)</span> and <span class="math inline">\(m_A/n_A\)</span>, we see that the former is larger. So we might expect that organs are more available to <span class="math inline">\(O\)</span> patients. But of course this ignores that <span class="math inline">\(O\)</span> organs can also be given to <span class="math inline">\(A\)</span> patients. Since the set of organs available to <span class="math inline">\(A\)</span> patients is a superset of those available to <span class="math inline">\(O\)</span> patients, we might argue that organs are more available to <span class="math inline">\(A\)</span> patients. But if we solve the optimization problem above, we get <span class="math inline">\(q_O = q_A = 0.9\)</span>, in an allocation where 6 <span class="math inline">\(O\)</span> organs are given to <span class="math inline">\(A\)</span> patients. More generally, if we change the numbers in Example 2, we will see that so long as <span class="math inline">\(m_O/n_O \ge m_A/n_A\)</span>, <span class="math inline">\(q_O\)</span> will be equal to <span class="math inline">\(q_A\)</span>. If <span class="math inline">\(m_O/n_O &lt; m_A/n_A\)</span> and <span class="math inline">\(m_O/n_O &lt; 1\)</span>, then we will have <span class="math inline">\(q_O &lt; q_A\)</span>.</p>
+<p>The following gives our definition of what it means for an allocation to be fairer than another.
+::: {.definition #label_name name=“Definition Name”}
+Given <span class="math inline">\(q \in [0,1]^P\)</span>, let <span class="math inline">\(q_{(k)}\)</span> denote the <span class="math inline">\(k^{th}\)</span> smallest value of <span class="math inline">\(q\)</span>. We say that <span class="math inline">\(q\)</span> <strong>Lorentz Dominates</strong> <span class="math inline">\(q&#39;\)</span> if for all <span class="math inline">\(k \in \{1, \ldots, |P|\}\)</span>, we have <span class="math inline">\(\sum_{j = 1}^k q_{(j)} \ge \sum_{j = 1}^k q&#39;_{(j)}\)</span>.
+:::</p>
+<p>Note that this intuitively captures both fairness and efficiency: if <span class="math inline">\(q\)</span> Lorentz dominates <span class="math inline">\(q&#39;\)</span>, then <span class="math inline">\(q\)</span> must allocate at least as much in aggregate as <span class="math inline">\(q&#39;\)</span>. In particular, any Pareto improvement upon <span class="math inline">\(q&#39;\)</span> will Lorentz dominate <span class="math inline">\(q&#39;\)</span>. In this context, I think this is appropriate: nobody is suggesting that we waste certain organs that could go to more advantaged patients in order to make the allocation more “fair”.</p>
+<div class="theorem">
+<p><span id="thm:label_name" class="theorem"><strong>(#thm:label_name) (Theorem Name) </strong></span>Let <span class="math inline">\(x\)</span> be feasible for <span class="math inline">\(\eqref{eq:}\)</span>, and let <span class="math inline">\(x^*\)</span> be optimal for <span class="math inline">\(\eqref{eq:}\)</span>. Then <span class="math inline">\(q(x^*)\)</span> Lorentz dominates <span class="math inline">\(q(x)\)</span>.</p>
+</div>
+<p>(Note that <span class="math inline">\(x^*\)</span> may not be unique, but <span class="math inline">\(q(x^*)\)</span> is unique.)</p>
+<p><strong>Example 3</strong> (Non-uniqueness). There are 60 <span class="math inline">\(O\)</span>, 30 <span class="math inline">\(A\)</span>, 10 <span class="math inline">\(AB\)</span> patients, and 60 <span class="math inline">\(O\)</span>, 27 <span class="math inline">\(A\)</span> and 3 <span class="math inline">\(AB\)</span> donors. Then one optimal solution gives 6 <span class="math inline">\(O\)</span> organs to AB patients. However, any solution of the form <span class="math inline">\(X_{O-O} = 54\)</span>, <span class="math inline">\(X_{AB-AB} = 3\)</span>, <span class="math inline">\(X_{AB-O} = k\)</span>, <span class="math inline">\(X_{AB-O} = k\)</span>, <span class="math inline">\(X_{AB-A} = 6-k\)</span>, <span class="math inline">\(X_{A-O} = 6-k\)</span>, <span class="math inline">\(X_{A-A} = 21+k\)</span> is optimal. (90% of each group is matched.)</p>
+<p>We can now do a calibrated exercise where we choose the arrival rates of patients and organs based on the data. If we include all arrivals, we simply get <span class="math inline">\(q_T = 1\)</span> for all blood types <span class="math inline">\(T\)</span>. Therefore, we will include only arrivals that were ultimately accepted by some patient. In this case, we see very few <span class="math inline">\(AB\)</span> donors, but nevertheless, all agents have the same <span class="math inline">\(q\)</span>.</p>
+<p><strong>Future Work</strong> Incorporate agent preferences for being matched sooner? Look at outcomes in some sort of serial dictatorship (in organ arrival order) or DA?</p>
+<p>Could we look at acceptance patterns (correlation between height of donor and height of patient)? Use to come up with a model of which height ranges can accept each other (based on horseshoe shape).</p>
+</div>
+<div id="dynamic-matching-the-surprising-effectiveness-of-first-come-first-served" class="section level1">
+<h1>Dynamic Matching: the surprising effectiveness of First Come First Served</h1>
+<p>Consider a dynamic model where paients of type <span class="math inline">\(p\)</span> arrive according to a Poisson process at rate <span class="math inline">\(\lambda_p\)</span> and abandon after a sojourn time that is drawn from distribution <span class="math inline">\(F\)</span>. Donors of type <span class="math inline">\(d\)</span> arrive according to a Poisson process at rate <span class="math inline">\(\lambda_d\)</span>, and must be matched immediately or discarded. There is a set of edges <span class="math inline">\(E\)</span> which indicates which donor types can be allocated to each patient type.</p>
+<p>A first come first served processing rule always gives an organ to the patient who has waited longest, among those who are compatible with it.</p>
+<p>For <span class="math inline">\(p\in P\)</span> and <span class="math inline">\(d \in D\)</span>, define <span class="math inline">\(A_p(t)\)</span> to be the number of patients of type <span class="math inline">\(p\)</span> who arrive in the interval <span class="math inline">\([0,t]\)</span> and define <span class="math inline">\(N_{pd}(t)\)</span> to be the number of transplants between a patient of type <span class="math inline">\(p\)</span> and a donor of type <span class="math inline">\(d\)</span> on this interval. Define <span class="math inline">\(x^{FCFS}_{pd}(t) = N_{pd}(t)/A_p(t)\)</span>.</p>
+<div class="lemma">
+<p><span id="lem:label_name" class="lemma"><strong>(#lem:label_name) (Lemma Name) </strong></span>For any arrival rates <span class="math inline">\(\lambda\)</span>, edges <span class="math inline">\(E\)</span>, and sojourn time distribution <span class="math inline">\(F\)</span>, <span class="math inline">\(x^{FCFS}_{pd}(t)\)</span> converges almost surely to <span class="math inline">\(\overline{x}^{FCFS}_{pd}\)</span>. <em>Of course, <span class="math inline">\(\overline{x}\)</span> depends on <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(E\)</span>, but I suspect that it does not depend on <span class="math inline">\(F\)</span>.</em></p>
+</div>
+<div class="theorem">
+<p><span id="thm:label_name" class="theorem"><strong>(#thm:label_name) (Theorem Name) </strong></span>Fix <span class="math inline">\(E\)</span>. As <span class="math inline">\(n \rightarrow \infty\)</span>, <span class="math inline">\(\overline{x}^{FCFS}_{pd}(n \lambda)\)</span> converges to an optimal solution to <span class="math inline">\(\eqref{eq:}\)</span>.</p>
+</div>
+<p>Note that this holds for any <span class="math inline">\(\lambda\)</span> and any <span class="math inline">\(E\)</span> and any <span class="math inline">\(F\)</span>.</p>
+</div>

@@ -1,0 +1,187 @@
+---
+title: 'Famous Open Question Resolved... since 2014?!?!'
+date: "2023-09-24"
+author: Nick Arnosti
+---
+
+
+# Motivation
+
+Suppose I have a set of objects to give away. What goals should I have? Of course, the answer depends on the setting, but two natural goals are *efficiency* and *fairness*. If I don't know people's preferences, I also need to design a system that incentivizes people to tell me their true preferences.
+
+Skipping over the mathematical definitions of **efficiency**, **fairness**, and **truthfulness** (more detail on these below), I assert that there is a simple mechanism that satisfies all three goals: line people up, and have the first person choose their favorite object, the second their favorite from those that remain, and so on. This results in an efficient outcome (no set of trades can unambiguously improve upon it) and is clearly truthful: you can't affect which objects are available when it is your turn, and you get your favorite of these objects. To make it fair, we can make the order in which people choose random. This mechanism is often called ``Random Serial Dictatorship`` (RSD) or ``Random Priority``.
+
+Another approach that is efficient, fair, and truthful starts by giving out objects at random, and then runs the Top Trading Cycles algorithm to find Pareto-improving trades. A famous result by Knuth and Abdulkadiroglu and Sonmez says that although this "top trading cycles from random endowments" sounds very different from RSD, it actually induces the same distribution over final outcomes, no matter what people's preferences are!
+
+This is a very surprising result, first proved by [Knuth](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://nickarnosti.com/IE5080/Session3/Knuth_1995.pdf) and  [Abdulkadiroglu and Sonmez](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.tayfunsonmez.net/wp-content/uploads/2013/10/AbdulkadirogluSonmez-Econometrica98.pdf). It has since been generalized by a series of papers showing that many seemingly different mechanisms are in fact equivalent to random priority. An important open question -- highlighted in this [video blog of mine](https://nickarnosti.com/blog/randompriority/) from 2022 -- is whether EVERY efficient, fair, and truthful mechanism is equivalent to RSD. 
+
+At least, that is what I have been telling my students for the past several years. Many smart researchers have spent a lot of time trying to prove or disprove this conjecture. And yet, last week, Clay Thomas pointed me to a paper by Aytek Erdil, [Strategy-Proof Stochastic Assignment](https://www.sciencedirect.com/science/article/abs/pii/S0022053113001828), published in JET in 2014, which seems to resolve the question by showing that other efficient, fair, and truthful mechanisms exist. 
+
+I didn't believe him at first -- surely, if this result existed, I would know about it! But after looking through the proof, I am 95\% convinced (the 5\% remains because the proof involves some case-checking that I could have screwed up). This post will dive into the details of this important result. While the organization and exposition is different from that in the paper, all ideas at their core come from Erdil.
+
+
+# Definitions
+
+There is a set of agents $\mathcal{A}$ and a set of objects $\mathcal{O}$. 
+
+* A *deterministic allocation* is a one-to-one function from $\mathcal{A}$ to $\mathcal{O}$. 
+* A *random allocation* is a distribution over deterministic allocations.
+* A *preference profile* specifies for each agent a strict ordering over  $\mathcal{O} \cup \{\emptyset\}$. 
+* A *random mechanism* maps each preference profile to a random allocation.
+
+Each random allocation induces a (random) outcome for each agent, which specifies the probability with which the agent gets each object. Say that allocation $x$ *$\succ$-stochastically dominates* $y$ if for each $k$, the probability of receiving a top-$k$ object (according to $\succ$) under $x$ is weakly higher than the corresponding probability under $y$.
+
+
+**Definition** A mechanism is ex post Pareto efficient if, for each preference profile, it only places positive probability on Pareto efficient allocations.
+
+**Definition** A mechanism is truthful if, for each preference profile and each agent $i$, the outcome that $i$ receives from reporting truthfully $\succ_i$-stochastically dominates the outcome that $i$ receives from any other report.
+
+
+
+# Constructing A Different Mechanism
+
+**Example 1** There are 3 objects (a, b, c) and 4 agents (1, 2, 3, 4). Preferences are as follows:
+
+1   | 2   | 3   | 4
+--- | --- | --- | ---
+a   | c   | c   | c
+b   | a   | b   | 
+
+Note that agents do not list all objects -- they rank the outside option $\emptyset$ above some objects in $\mathcal{O}$.
+
+In Example 1, there are 6 Pareto efficient allocations. RSD selects these allocations with the following probabilities.
+
+\text{ }  | RSD  | $\phi$   
+--- | --- | --- 
+$acb\emptyset$ | 8/24 | 8/24
+$a\emptyset bc$ | 5/24 | $\color{green}{7/24}$
+$a\emptyset c\emptyset$ | 5/24 | $\color{red}{3/24}$
+$bac\emptyset$ | 3/24 | $\color{green}{5/24}$
+$ba\emptyset c$ | 1/24 | 1/24
+$\emptyset abc$ | 2/24 | $\color{red}{0/24}$
+
+The allocation $\phi$ reduces the probability of allocations $a \emptyset c \emptyset$ and $\emptyset abc$ (in red), in favor of $a \emptyset bc$ and $bac \emptyset$ (in green).
+
+Note that agent 1 strictly prefers the random allocation from $\phi$ to RSD, and all other agents are indifferent. That is, although RSD is *ex post* Pareto efficient, it is not *ex ante* efficient.
+
+This fact has been known at least since 2001, when Bogomolnaia and Moulin pointed it out and proposed an ex ante efficient mechanism that they called ``Probabilistic Serial`` (their paper is called "A new solution to the random assignment problem" and was published in JET). However, Probabilistic Serial is not truthful.
+
+Aytek Erdil's paper shows how to modify $RSD$ to get a new mechanism that is still not ex ante efficient, but *is* truthful. We will proceed in two steps. First, define a complete mechanism $\phi$ that is truthful and Pareto efficient. Then, adjust this mechanism to make it symmetric.
+
+Define the mechanism $\phi$ as follows.
+
+1. On any profile where the reported preferences of agents $2, 3, 4$ are not identical to those above, $\phi = RSD$. 
+2. If agents $2, 3, 4$ report as above and agent $1$ does not list both $a$ and $b$ as acceptable, then $\phi = RSD$.
+3. For any report such that agent $1$ lists both $a$ and $b$ as acceptable, let $z \in \{a, b\}$ be the less preferred object between $a$ and $b$. Under RSD, there is a $2/24$ chance that $1$ gets nothing (whenever $4$ picks first and $1$ picks last), and at least a $2/24$ chance that $z$ is not allocated (whenever the agent among $\{2, 3\}$ who would accept $z$ chooses first, and agent 1 chooses second). Modify the allocation of RSD using the approach from Example 1, to give agent $1$ object $z$ instead of nothing, while keeping the outcome the same for all other agents.
+
+# Truthfulness of $\phi$
+
+The modification in Case 3 maintains ex post Pareto efficiency, so the key is to show that $\phi$ is truthful. It is clear that agents $2, 3, 4$ cannot manipulate, as from their perspective, the allocation is equivalent to $RSD$. 
+
+To see why agent $1$ cannot manipulate, let $R_0$ be the set of reports in Case 2: $a$ and $b$ are not both acceptable, and $\phi = RSD$. Let $R = R_a \cup R_b$ be the set of reports in Case 3: both $a$ and $b$ are acceptable, and $\phi \ne RSD$. Let $R_a$ denoting the set of these reports that rank $a$ ahead of $b$, and conversely for $R_b$.
+
+* It is clear that agent $1$ never wants to deviate to a report in $R_0$. (Suppose her true preference is $r$ and she is considering a deviation to $r_0 \in R_0$. We have $\phi(r_0) = RSD(r_0)$, which is no better than $RSD(r)$ by truthfulness of $RSD$. But $\phi(r)$ is weakly better than $RSD(r)$ for all $r$ by construction.)
+* If agent 1's true preference is in $R_a$, deviating to any report in $R_a$ results in the same outcome from her perspective, and deviating to a report in $R_b$ results in a worse outcome.
+* If agent 1's true preference is in $R_0$, she can increase her probability of being allocated something by changing to a report in $R$. However, crucially, she cannot increase her probability of receiving an object that she truly considers acceptable: adding an object to the bottom of her list only increases her probability of receiving *that* object, and moving it higher up the list just reduces her probability of receiving something else. (Some case checking is needed to convince yourself of this.) 
+
+# Adding Symmetry
+
+Let $\sigma$ be a permutation of $\mathcal{A}$. For any preference profile $\succ = \{\succ_a\}_{a \in \mathcal{A}}$, let $\sigma(\succ)$ denote the preference profile obtained by swapping the reports of the agents according to $\sigma$. For any deterministic allocation $\mu : \mathcal{A} \rightarrow \mathcal{O}$, let $\sigma(\mu)$ denote the allocation obtained by swapping objects according to $\sigma$.
+
+**Definition.** Mechanism $M$ is symmetric if for any permutation $\sigma$, any preference profle $\succ$, and any allocation $\mu$, $\mathbb{P}(M(\succ) = \mu) = \mathbb{P}(M(\sigma(\succ)) = \sigma(\mu))$.
+
+One simple way to construct symmetric mechanisms from asymmetric ones is assign agents to "roles" uniformly at random. In this case, this means randomizing who gets to be agent 1, agent 2, etc. This does not affect Pareto efficiency or truthfulness, and clearly the mechanism remains different from RSD after adding symmetry, as the expected number of allocated objects is different.
+
+# Objections and Reflections
+
+Honestly, I am surprised that I didn't hear about this result before, as I am in touch with many scholars who have worked on closely related results, and didn't seem to know of this one. 
+
+I admit, I am a little disappointed about this result. It would be so beautiful if RSD *were* the only mechanism that is efficient, truthful, and fair. I will close by considering two possible objections to Erdil's result, each of which might allow us to recover a uniqueness result for RSD. As you will see, I think the first objection is somewhat silly, while the second seems promising.
+
+### Objection #1: Agents Do Not List All objects
+
+Some people may object to the fact that agents do not rank every object. I personally think this is a somewhat silly objection: in practice, most settings where RSD is used do not require agents to list every object. Even in my class, when giving away fruit, I allow students not to take a piece if they are not excited about any of the remaining options when their turn comes. 
+
+One can also easily fix this objection by adding "dummy" objects that stand in for the outside option. In Example 1, this would require adding objects $d$ and $e$ in between the acceptable and unacceptable objects from $\{a, b, c\}$ on each agent's preference list. This would result in an example with $5$ objects and $4$ agents who rank all of these objects.
+
+It's not clear whether we can embed Example 1 into a balanced market (equal number of agents and objects) where agents list all objects as acceptable. Thus, one might still hope that in a balanced market with complete preferences, RSD is unique.^[Earlier this year, Pete Troyan and Marek Pycia posted [this paper](https://petertroyan.com/files/Pycia-Troyan-RP.pdf), which shows that in a balanced market, RSD is <u> not</u> the only mechanism that is efficient, truthful, and satisfies equal treatment of equals. However, equal treatment of equals is a *much* weaker requirement than symmetry, so it remains possible that the uniqueness of RSD is restored once we impose symmetry.]
+Addressing this question is worthwhile, but in my mind, even if this is correct (which I no longer expect), Erdil's result addresses the more practically relevant question.
+
+### Objection #2: Wrong Definition of Truthfulness
+
+
+There is something slightly incongruous about our definitions of truthfulness and efficiency. Our definition of truthfulness depends on the fractional allocation received by each individual agent. In other words, to check whether a random allocation is truthful, we only need to see the matrix of size $\mathcal{A} \times \mathcal{O}$ which specifies agents' marginal assignment probabilities at each preference profile. 
+
+Meanwhile, this same information is *not* sufficient to check whether a mechanism always produces an ex post Pareto efficient assignment. To see this, consider Example 1. Suppose that on this profile, mechanism $M$ flips a coin to decide between the allocations $a \emptyset c \emptyset$ and $\emptyset a b c$. Mechanism $M'$ flips a coin to decide between the allocations $a \emptyset b c$ and $\emptyset a c \emptyset$. These two mechanisms lead to identical *marginal* assignment probabilities for each agent, but both allocations selected by $M$ are Pareto efficient, while one of the allocations selected by $M'$ is not. Thus, to verify ex post Pareto efficiency, we really need to know the distribution over all possible joint allocations, which is a much higher dimensional object.
+
+Researchers in this space have often been frustrated by the need to go back and forth between looking at marginal assignment probabilities for individual agents, and looking at joint assignments. We could get rid of this difficulty by using an efficiency criteria that can be checked based only on the marginal outcome for each agent. The natural such notion is ordinal efficiency, defined by Bogolmanaia and Moulin in their 2001 paper. However, RSD is not ordinally efficient! Furthermore, they show that *no* mechanism is ordinally efficient, truthful, and satisfies equal treatment of equals.
+
+Alternatively, we could modify (strengthen) our definition of truthfulness. Specifically, I am curious about the following. 
+
+**Open Problem.** Suppose that you start with any *deterministic* mechanism that is Pareto efficient and truthful, and make it symmetric by randomly assigning agents to roles. Is it true that this mechanism must be equivalent to RSD?
+
+Sophie Bade proved a closely related result in her paper [Random Serial Dictatorship: The One and Only](https://pubsonline.informs.org/doi/abs/10.1287/moor.2019.0987?casa_token=07gPG07t85wAAAAA:Wgs1UvLSCUFhKO28E5KzYqoHtpbg7YDB9Z_6VuK_1e6716c0ThMmxH_SEMeRjsd_PqbFRDBLiJyF), but needed one additional condition -- non-bossiness -- to get uniqueness.
+
+I expect this result to be difficult to show, but I don't think that many people have tried, since most researchers were focused on the definition of truthfulness used for most of this post. The stronger truthfulness requirement could be motivated by the thought that even if agents could observe the random seed used by the mechanism (in addition to the reports of others), they could never benefit from misreporting. This is not true for the mechanism $\phi$.
+
+**Note:** If you've read this far, you should check out my follow-up post discussing [ex post vs ex ante truthfulness](https://nickarnosti.com/blog/exanteexpost/) in more detail.
+
+
+# Appendix: RSD Outcomes
+
+For anyone who wants to dive into the details of checking truthfulness, it may be helpful to have the assignment probabilities under RSD associated with every possible report by agent 1. There are 16 possible reports. Below, I consider all allocations where $b$ is not ranked ahead of $a$. For cases where $b$ is ranked ahead of $a$, the solution can be obtained by appeal to the symmetric case where $a$ is ahead of $b$. I will specify *marginal* allocation probabilities for each agent-object pair. 
+
+When agent 1 submits any of the three reports $a \succ b, a \succ b \succ c$, or $a \succ c \succ b$, RSD produces the following:
+
+\text{ }  | 1  | 2 | 3 | 4   
+--- | --- | --- | --- | ---
+$a$ |18/24 | 6/24 | - | - 
+$b$ | 4/24 | - | 15/24 | - 
+$c$ | - | 8/24 | 8/24 | 8/24
+$\emptyset$ | 2/24 | 10/24 | 1/24 | 16/24
+
+When agent $1$ reports $c \succ a \succ b$, RSD produces the following: 
+
+\text{ }  | 1  | 2 | 3 | 4   
+--- | --- | --- | --- | ---
+$a$ |12/24 | 12/24 | - | - 
+$b$ | 4/24 | - | 15/24 | - 
+$c$ | 6/24 | 6/24 | 6/24 | 6/24
+$\emptyset$ | 2/24 | 6/24 | 1/24 | 18/24
+
+When agent 1 reports $c \succ a \succ \emptyset$, RSD produces the following:
+
+\text{ }  | 1  | 2 | 3 | 4   
+--- | --- | --- | --- | ---
+$a$ | 12/24 | 12/24 | - | - 
+$b$ | - | - | 18/24 | - 
+$c$ | 6/24 | 6/24 | 6/24 | 6/24
+$\emptyset$ | 6/24 | 6/24 | - | 18/24
+
+When agent 1 reports $a \succ c$ or $a \succ \emptyset$, RSD produces the following:
+
+\text{ }  | 1  | 2 | 3 | 4   
+--- | --- | --- | --- | ---
+$a$ | 18/24 | 6/24 | - | - 
+$b$ | - | - | 16/24 | - 
+$c$ | - | 8/24 | 8/24 | 8/24
+$\emptyset$ | 6/24 | 10/24 | - | 16/24
+
+When agent 1 reports $c \succ \emptyset$, RSD produces the following:
+
+$c \succ \emptyset$  | 1  | 2 | 3 | 4   
+--- | --- | --- | --- | ---
+$a$ | - | 18/24 | - | - 
+$b$ | - | - | 18/24 | - 
+$c$ | 6/24 | 6/24 | 6/24 | 6/24
+$\emptyset$ | 18/24 | - | - | 18/24
+
+When agent 1 reports $\emptyset$, RSD produces the following:
+
+$\emptyset$  | 1  | 2 | 3 | 4   
+--- | --- | --- | --- | ---
+$a$ | - | 16/24 | - | - 
+$b$ | - | - | 16/24 | - 
+$c$ | - | 8/24 | 8/24 | 8/24
+$\emptyset$ | 24/24 | - | - | 16/24
+

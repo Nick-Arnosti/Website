@@ -1,0 +1,31 @@
+---
+title: 'Building on Akbarpour Li Gharan'
+date: "2024-05-29"
+author: Nick Arnosti
+draft: true
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Arrivals at rate <span class="math inline">\(m\)</span></p>
+<p>Departures at rate <span class="math inline">\(1\)</span></p>
+<p>Probability of compatibility <span class="math inline">\(p = d/m\)</span>.</p>
+<p>If we fix <span class="math inline">\(d\)</span>, loss doesn’t really depend on <span class="math inline">\(m\)</span>.</p>
+<p>Suppose <span class="math inline">\(m = d\)</span>, so <span class="math inline">\(p = 1\)</span>. Then loss of greedy is <span class="math inline">\(1/(2d+1)\)</span>. (And presumably greedy is optimal, since loss is exactly expected pool size divided by <span class="math inline">\(m\)</span>.)</p>
+<p>Let <span class="math inline">\(S\)</span> be the pool size (in steady state), divided by <span class="math inline">\(m\)</span>. Then by PASTA, the probability of matching upon arrival is <span class="math inline">\(1 - (1 - d/m)^{mS}\)</span>. Since every match formed by greedy involves one new arrival and one waiting agent, the total fraction of agents that match is <span class="math inline">\(2\mathbb{E}[1 - (1 - d/m)^{mS}]\)</span>. But because we have exponential departures, the fraction of agents that depart must be equal to <span class="math inline">\(\mathbb{E}[S]\)</span>. Thus, the steady-state distribution of <span class="math inline">\(S\)</span> under greedy must satisfy
+<span class="math display">\[2\mathbb{E}[1 - (1 - d/m)^{mS}] + \mathbb{E}[S] = 1\]</span>
+<span class="math inline">\(2\mathbb{E}[1 - e^{-m \cdot log(1-d/m)S}] + \mathbb{E}[S] = 1\)</span></p>
+<p>By concavity, we have
+<span class="math inline">\(2(1 - e^{-m \cdot log(1-d/m)\mathbb{E}[S]}) + \mathbb{E}[S] \ge 1.\)</span>
+Thus, <span class="math inline">\(\mathbb{E}[S]\)</span> is at leas the solution <span class="math inline">\(x\)</span> to <span class="math inline">\(2(1-e^{-m \cdot log(1-d/m)x})+x=1\)</span>. This lower bound is increasing in <span class="math inline">\(m\)</span>.</p>
+<p>So this doesn’t quite get us that loss is increasing in <span class="math inline">\(m\)</span> (though simulations suggest that is correct). But we can analyze <span class="math inline">\(m = d\)</span> and <span class="math inline">\(m \rightarrow \infty\)</span>.</p>
+<p><em>Claim</em> Suppose lifetimes are exponential with mean 1, and fix <span class="math inline">\(d &gt; 0\)</span>. When <span class="math inline">\(m = d\)</span>, loss of greedy is <span class="math inline">\(1/(2d+1)\)</span>. As <span class="math inline">\(m \rightarrow \infty\)</span>, loss of greedy converges to solution <span class="math inline">\(x\)</span> to <span class="math inline">\(2(1 - e^{-dx}) + x = 1\)</span>.</p>
+<p>Natural thing to do is to compare these two bounds to each other.</p>
+<p>Now, let’s bound loss of any online algorithm. Again, let <span class="math inline">\(S\)</span> be the steady state normalized pool size.</p>
+<p>On the one hand, loss is at least <span class="math inline">\(\mathbb{E}[S]\)</span>. On the other, loss is at least <span class="math inline">\(\mathbb{E}[(1-d/m)^{mS}]/(d+1)\)</span>, as this is the probability that a new arrival (i) doesn’t have anyone compatible in the pool upon arrival, and (ii) doesn’t have anyone compatible show up before they depart. Noting that <span class="math inline">\(\mathbb{E}[(1-d/m)^{mS}] \ge (1-d/m)^{m\mathbb{E}[S]}\)</span>, we conclude that if <span class="math inline">\(\mathbb{E}[S] = x\)</span>, loss is at least <span class="math inline">\(\max(x,(1-d/m)^{mx})\)</span>. A-L-G do some work to show that the solution <span class="math inline">\(x\)</span> is always at least <span class="math inline">\(1/(2d+1)\)</span>. <strong>This should show that greedy is in fact optimal when <span class="math inline">\(p = 1\)</span>.</strong></p>
+</div>
+<div id="beyond-exponential-maximum-sojourn-times" class="section level1">
+<h1>Beyond Exponential Maximum Sojourn Times</h1>
+</div>

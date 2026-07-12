@@ -1,0 +1,8 @@
+---
+title: 'A Simple Analysis of Random Matching Markets'
+date: '2025-03-09'
+author: Nick Arnosti
+---
+
+
+In 

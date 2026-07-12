@@ -1,0 +1,89 @@
+
+
+<p>In February 2019, the Brookings Institution published <a href="https://www.brookings.edu/research/the-opportunities-and-risks-of-k-12-student-placement-algorithms/">The Opportunities and Risks of K-12 Student Placement Algorithms</a>, which includes the following quote:</p>
+<blockquote>
+<p>Even if DA algorithms are relatively simple, predicting how student assignment policies will affect enrollment and outcomes is difficult.</p>
+</blockquote>
+<p>In this post, I explore both parts of this claim: what makes the Deferred Acceptance (DA) algorithm simple, and why is it difficult to predict the effect of using it?</p>
+<p>#Is Deferred Acceptance Simple?</p>
+<p>I can think of several desirable ways in which Deferred Acceptance is simple:</p>
+<ul>
+<li><strong>Strategic Simplicity</strong> It is in applicants’ best interest to list their true preferences, regardless of what others do.</li>
+<li><strong>Computational Simplicity</strong> The algorithm runs quickly, even on large data sets.</li>
+<li><strong>Conceptual Simplicity</strong> After the fact, decisions can be rationalized by “admissions cutoffs” for each school. Posting these cutoffs allows students to verify that they have been assigned to their favorite school where their priority exceeded the cutoff.</li>
+</ul>
+<p>Despite these advantages, DA is often characterized as a complicated and unintuitive “black box.” This post offers one possible explanation for this: the outcome of DA is <strong>unpredictable</strong>. By this, I mean that small changes to the input can have a large effect on the output.</p>
+<p>#An Example</p>
+<p>Consider the example shown below. In a market consisting of only Schools A, B, C and students 1, 2, 3, each student gets their first choice – pretty good! Unsurprisingly, adding a fourth student can harm the first three students. Perhaps more surprisingly, in this example, adding student 4 causes students 1, 2 and 3 to each be assigned to their <em>last</em> choice. This occurs despite the fact that student 4 is not assigned to any school!<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 1: </span>An example where adding student 4 dramatically affects the final assignment.</caption>
+<tbody>
+<tr class="odd">
+<td align="left">A:</td>
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left"></td>
+<td align="left">1:</td>
+<td align="left">A</td>
+<td align="left">B</td>
+<td align="left">C</td>
+</tr>
+<tr class="even">
+<td align="left">B:</td>
+<td align="left">3</td>
+<td align="left">4</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left"></td>
+<td align="left">2:</td>
+<td align="left">B</td>
+<td align="left">C</td>
+<td align="left">A</td>
+</tr>
+<tr class="odd">
+<td align="left">C:</td>
+<td align="left">1</td>
+<td align="left">2</td>
+<td align="left">3</td>
+<td align="left">4</td>
+<td align="left"></td>
+<td align="left">3:</td>
+<td align="left">C</td>
+<td align="left">A</td>
+<td align="left">B</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">4:</td>
+<td align="left">A</td>
+<td align="left">B</td>
+<td align="left">C</td>
+</tr>
+</tbody>
+</table>
+<p>This example can be generalized: for any <span class="math inline">\(n\)</span>, there is an example with <span class="math inline">\(n\)</span> students and <span class="math inline">\(n\)</span> schools where each student gets his or her first choice, but adding a new student results in each original student getting their <span class="math inline">\(n^{th}\)</span> choice, and the new student going unassigned.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>#Defining Predictability</p>
+<p>In the preceding example, a “small” change (adding one student) had a “large” effect on the outcome (moving all other students from their first to their last choice). We could formalize this observation by defining the <em>externality</em> of one student to be the sum of the improvement in ranks experienced by other students if this student is removed from the market. So if removing student x moves student y from their third choice to their first, moves student z from their fourth choice to their third, and leaves the assignment of all other students the same, the externality of student x is <span class="math inline">\((3-1) + (4-3) = 3\)</span>.</p>
+<p>The preceding example shows that in a market with <span class="math inline">\(n\)</span> students and <span class="math inline">\(m\)</span> schools, the externality of a student under DA can be as large as <span class="math inline">\(n \times (m-1)\)</span>. By contrast, the following result states that other commonly-studied mechanisms result in much smaller externalities.</p>
+<blockquote>
+<p><strong>Proposition.</strong> In a market with <span class="math inline">\(n\)</span> students and <span class="math inline">\(m\)</span> schools, when using Serial Dictatorship or the Boston Mechanism, the externality froma single student is at most <span class="math inline">\(m\)</span>.</p>
+</blockquote>
+<p>Informally, under these other mechanisms, adding one student could either (i) slightly harm many other students or (ii) significantly harm a few other students, but not both.</p>
+<p>#Why This Matters</p>
+<p>Participants in matching markets often want to know what to expect. This is especially important during preference formation. Parents have to decide which schools to research, and medical students have to decide where to interview. Without good information about what options will be available, they may waste a lot of time and money exploring irrelevant alternatives. Historical data can offer guidance, but the examples in this post suggest that even relatively small changes from year-to-year (i.e. slightly fewer residency positions, or slightly fewer students applying) can render this information fairly useless.</p>
+<p>The unpredictability of DA also matters to policymakers who must decide school priorities. It’s possible to construct examples similar to those above, showing that seemingly small changes to priorities can have large effects on the final outcome. Meanwhile, large changes to priorities can have almost no effect (for one real-world example, see <a href="http://www.tayfunsonmez.net/wp-content/uploads/2017/03/busing_jpe_final.pdf">this paper</a>.)</p>
+<p>Even academics whose full-time job is to study stable matching algorithms struggle to predict what outcomes will arise when they are deployed. For most practical questions, we resort to simulations, with theory following decades later, if at all. I’ve been working on a new model of stable matching, which makes accurate predictions while maintaining analytical tractability. Stay tuned for more!</p>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>The fact that adding a student can harm others <em>even if the new student goes unassigned</em> may seem surprising: one might expect some sort of “irrelevance of unmatched students” property. In the academic literature this property is called “non-bossiness.” Although Deferred Acceptance is bossy (not non-bossy), other commonly-studied mechanisms such as Random Serial Dictatorship, Top Trading Cycles, and the Boston Mechanism are all non-bossy.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>These examples rely on carefully constructed preferences. It is natural to wonder whether such large changes are “typical.” A partial answer is given in <a href="http://www.columbia.edu/~yk2577/Unequalmatch-JPE.pdf">this paper</a> by <a href="https://web.stanford.edu/~iashlagi/">Itai Ashlagi</a>, <a href="http://www.columbia.edu/~yk2577/">Yash Kanoria</a> and <a href="https://jleshno.weebly.com/">Jacob Leshno</a>, which shows that adding one student to a balanced one-to-one market has a dramatic effect even when preferences and priorities are drawn uniformly at random.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

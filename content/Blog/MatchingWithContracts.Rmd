@@ -1,0 +1,111 @@
+---
+title: "When Do Stable Matchings Exist?"
+date: "2026-07-05"
+bibliography: ../../static/matching-with-contracts.bib
+output: html_document
+---
+
+
+I just attended MATCHUP 2026 in Paris. There, I learned of the paper "[Matching with Attributes](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7077278)" by Aytek Erdil and Battal Dogan (also accepted to EC 2026). This paper gives a creative and satisfying resolution to a longstanding research question: in many-to-one matching with contracts (for concreteness of language, imagine matching doctors to hospitals), what are minimal conditions on hospital choice functions that ensure the existence of a stable matching?
+
+**Warning.** This is a fairly technical topic. I have not written papers in this area, but I am a fairly informed consumer of this line of research. I will try to keep this post somewhat light, but if you don't already know the matching with contracts model of @hatfield-milgrom_2005, this is probably not a post for you.
+
+
+# Background and Prior Work
+
+Let's revisit the definition of substitutability.
+
+* A choice function is **substitutable** if, whenever a contract $c$ is chosen from a set of contracts $C$, it is also chosen from any subset $C' \subseteq C$ that contains $c$.
+
+One way to think about this (which I use when explaining the concept to my students) is that this formalizes the idea that "more competition is bad news for existing contracts (doctors)": adding new contracts (doctors) to the set of options never causes a previously-rejected contract (doctor) to be chosen.
+
+In a model without contracts (meaning that the terms are fully determined by the (doctor,hospital) pair), substitutability is sufficient^[The meaning of "sufficient" is that if all hospital preferences are substitutable, then a stable matching exists. In the literature, there is some inconsistency about whether the primitives are specified as choice functions or as a ranking of sets of contracts. In the former case, a property known as *consistency* or *irrelevance of rejected contracts* is also needed -- see @aygun-sonmez_2013. In the latter case, this property is automatically satisfied. @erdil-dogan_2026 assume the latter convention, and I will do the same in this post to avoid having to repeatedly mention consistency.] and also necessary^[The meaning of "necessary" is slightly subtle as even when some hospitals have non-substitutable choice functions, a stable matching could exist. In this post, I use it to mean that for any hospital preference that is not substitutable, there exist substitutable preferences for everyone else such that no stable matching exists. This is sometimes referred to as a "maximal domain" result and has become the standard notion of necessity in the literature.] to ensure existence of a stable matching.
+
+When you introduce contracts -- meaning multiple different terms that a given doctor and hospital could agree to -- @hatfield-milgrom_2005 show that substitutability remains sufficient. They also claim incorrectly that this condition is necessary. @hatfield-kojima_2008 point out the error, and identify a weaker condition (which they call "weak substitutes") which is in fact necessary. 
+
+* A choice function is **weakly substitutable** if it is substitutable when restricted to contract sets $C$ that include at most one contract for each doctor.
+
+Follow-up work has identified settings where substitutability is not satisfied and yet a stable matching is guaranteed to exist, and has worked to close the gap between the sufficient condition (subtitutability) and the necessary one (weak substitutability). 
+
+* *Unilateral substitutability* and *bilateral substitutability* [@hatfield-kojima_2010]
+* *Hidden substitutability/substitutable completability* [@hatfield-kominers_2019]
+* *Observable substitutability* [@hatfield-kominers-westkamp_2021]
+
+I won't define these, but the point is that the literature was fairly messy, with many similar but subtly different (and increasingly technical) definitions. The first several of these conditions were sufficient but not necessary for existence. Observable substitutability is necessary for the existence of a stable *and strategy-proof* mechanism, but only sufficient in the presence of another complex condition which the authors called  "non-manipulable via contractual terms."
+
+# The Simple Message From This Paper
+
+The message from @erdil-dogan_2026 is "All these definitions are not really useful. In practice, the simpler and weaker condition of weak substitutability is sufficient." What a breath of fresh air! They spared us from having to dive into the details of these other conditions.
+
+But wait, isn't this too good to be true? After all, @hatfield-kojima_2008 provide an example showing that weak substitutes is *not* sufficient for existence of a stable matching. @erdil-dogan_2026 make one key innovation/modeling choice in order to circumvent this type of bad example. Hospital preferences must be defined, not only on the applicants who happened to exist this year, but also on for a wide range of hypothetical applicants who *could* have been present in the market. 
+
+Going into more detail on this point, past work assumed a finite set of doctors $D$, and hospital choice functions defined on subsets of $D$. @erdil-dogan_2026 observe that in practice, choice functions must be specified before the exact set of available doctors is known, and must be able to be applied to a range of possible markets. To model this, they assume an infinite space of potential doctor types $\Theta$, and that choice functions are defined on finite subsets $D \subseteq \Theta$. Weak substitutability for *all potential markets* imposes more structure on preferences than weak substitutability for *only a single market*. 
+
+On its own, this isn't enough: we could simply take the bad example from @hatfield-kojima_2008, and add an infinite set of unnacceptable (irrelevant) doctors to make $\Theta$. So they also require that each hospital's choice function satisfy a "density" condition, which means that for each set of doctors $D$ and each doctor $d \in D$, there exists a doctor $d' \in \Theta \backslash D$ that the hospital considers "equivalent" to $d$ in the context of $D$. This means that if we start with any two sets of contracts $Y$, $Z$ involving doctors from $D$ that include at most one contract per doctor, and replace a specific contract involving $d$ with the corresponding contact involving $d'$, then we haven't changed how the hospital ranks the sets.^[The choice of $d'$ can depend on $D$ and on the individual hospital, so that two doctors viewed as similar by one hospital need not be viewed as similar by another.] Density is immediately implied if doctors can be represented in continuous type space, with hospital utilities continuous in each doctor's type.
+
+The main result of @erdil-dogan_2026 is that if each hospital has dense and weakly substitutable preferences, then a stable matching exists! In other words, dense substitutable preferences impose enough structure to eliminate the counter-examples observed in finite markets by prior work. As the authors write,^[The quote is actually from an earlier working paper version and does not appear in the latest version, but I think it offers a nice perspective.]
+
+> Denseness imposes coherence of preferences across market realizations, which in turn disciplines the preference rankings that can arise in any given realization. As a result, ad hoc constructions tailored to a single realization may be incompatible with attribute-based preferences. As such, our result provides a formal sense in which these constructions are not economically meaningful when firms’ preferences are understood as being driven by workers’ attributes.
+
+We've probably all seen (in various domains) counter-examples that feel "unnatural" or "contrived." @erdil-dogan_2026 have found a really nice way to formalize this idea and conclude "these examples cannot arise if preferences are required to behave well across a wide range of potential applicant pools."
+
+Their paper also provides an analogous result if we want to ensure the existence of a stable and *strategy-proof* mechanism. Conventionally, this is ensured by assuming that in addition to substitutability, hospital choice functions satisfy a **size monotonocity** property (called the **law of aggregate demand** by @hatfield-milgrom_2005), which says that when new contracts become available, the set of selected contracts never shrinks. @erdil-dogan_2026 show that when hospital preferences are dense, a weaker version of this (which holds only on sets of contracts that include at most one contract for each doctor) is sufficient (alongside weak substitutability) to ensure existence of a stable and strategy-proof mechanism.
+
+
+# What I Like About This Paper
+
+1. **The topic is foundational.** Matching with contracts is arises in many applications, and there have been a long line of papers proposing subtle variations on substitutability, which seek (among other things) to explain why stable outcomes exist in specific applications.
+2. **The approach is creative**, and convincing (to me). It takes some imagination to go beyond the standard approach of defining choice functions on a single finite set of doctors. At the same time, it is clear that in practice, procedures are defined in advance of knowing the exact set of applicants, and must function for any realization. Furthermore, there are many potential "nearly interchangeable" applicants. The authors' definition of dense preferences seems like a good way to capture these observations.
+3. **The message is simple.** It cleans up a very complex and technical line of research by arguing that much simpler conditions (weak substitutability and weak size monotonicity) are sufficient in any practical scenario.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+
+Some background: 
+
+* A choice function satisfies *size monotonicity* (or the law of aggregate demand) if expanding the set of available options weakly increases the number of accepted contracts: $C' \subseteq C \Rightarrow |Ch(C')| \le |Ch(C)|$.
+
+* A choice function satisfies *weak size monotonicity* if the size monotonicity condition on contract sets $C$ that include at most one contract for each doctor.
+
+* We say that property $X$ is sufficient for existence of a stable mechanism if, whenever all choice functions satisfy property $X$, then a stable matching is guaranteed to exists. 
+
+* We say that property $X$ is necessary for existence of a stable mechanism if, for any choice function that does not satisfy $X$, there exist choice functions for the remaining hospitals that do satisfy $X$, and preferences for the doctors, such that the resulting market has no stable matching.
+
+
+The key innovation is that they require the choice functions to be defined not only on the set of doctors $D$ that actually exist in the market, but also on *any* finite subset of an infinite set of *possible doctor types* $\mathcal{D}$.
+
+
+
+> The literature has made gradual progress toward narrowing the gap between substitutes, which is a sufficient condition (Hatfield and Milgrom, 2005), and weak substitutes, which is a necessary condition (Hatfield and Kojima, 2008), for guaranteeing the existence of a stable allocation. Yet a characterization has remained elusive.
+
+-->
+
+
+
+
+
+
+
+
+
+<style>
+#refs .csl-entry {
+  margin-bottom: 1.25em;
+}
+</style>
+
+# References

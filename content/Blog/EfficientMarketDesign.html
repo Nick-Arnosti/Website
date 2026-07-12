@@ -1,0 +1,48 @@
+---
+title: 'Reflections on "Efficient Market Design"'
+date: '2023-01-06'
+author: Nick Arnosti
+tags:
+  
+categories:
+  Market Design, Matching
+---
+
+
+
+<p>I recently read the working paper “Efficient Market Design” by Isa Hafalir, Fuhito Kojima, and Bumin Yenmez. There has been a surge of recent papers looking at matching with distributional constraints. I am trying to stay abreast of this literature, so I was excited to take a look. In this post, I briefly summarize the paper, and then offer some thoughts on the applicability of the model.</p>
+<p><strong>Disclaimer.</strong> This is part of a series of posts in which I discuss others’ work. My goal with these posts is to organize my thoughts, and share these thoughts with the authors (and anyone else who may be interested). However, I want to make several things clear.</p>
+<ol style="list-style-type: decimal">
+<li>To prevent the task from being overwhelming, I am not trying to be “comprehensive” (as I would if I officially reviewed the paper). Instead, I will focus on the aspects of the paper that catch my attention.</li>
+<li>While my comments may come across as critical, my goal is to understand and discuss ideas. I would not be writing these posts if I did not find the ideas in the papers interesting or worthwhile.</li>
+<li>These posts are not intended for a general audience. Read only if you are interested in the topic.</li>
+</ol>
+<div id="brief-summary" class="section level1">
+<h1>Brief Summary</h1>
+<p>The setting is as follows. There is a set of schools (each with a known capacity), and a set of students (each of a known type). Students have (unknown) preferences over schools. The designer has preferences over how student types are allocated to schools: for any matching <span class="math inline">\(\mu\)</span>, the designer assigns it a score which depends on the number of students of each type matched to each school. Finally, there is an initial “default” matching <span class="math inline">\(\mu_0\)</span>.</p>
+<p>The goal is to use reported student preferences to find a matching <span class="math inline">\(\mu\)</span> that Pareto improves upon <span class="math inline">\(\mu_0\)</span> when considering both student and designer preferences (that is, the designer’s score for <span class="math inline">\(\mu\)</span> is weakly higher than the score for <span class="math inline">\(\mu_0\)</span>), and to do this in a truthful manner.</p>
+<p>In general, this may be impossible: the authors give an example where there are two matchings that Pareto improve on <span class="math inline">\(\mu_0\)</span>, but no matter which is chosen, some student could improve their outcome by changing their report to “block” this matching and ensure the other.</p>
+<p>However, the authors show that if the scoring function satisfies a property that they call pseudo-<span class="math inline">\(M^\natural\)</span> concavity, then it is always possible to use a generalization of Top Trading Cycles to find a Pareto efficient matching that weakly improves upon <span class="math inline">\(\mu_0\)</span>. They then provide several examples of objectives that satisfy pseudo-<span class="math inline">\(M^\natural\)</span> concavity.</p>
+</div>
+<div id="reflections" class="section level1">
+<h1>Reflections</h1>
+<p>I will comment on three modeling assumptions.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Presence of a distributional objective.</strong> In practice, it seems to be rare for designers to specify a “distributional objective” (function to score a matching). Much more common is to impose constraints (i.e. the school must have a certain number of low-income students).</p>
+<p>The authors call such constraints a “distributional goal.” As they point out, any distributional objective can be naturally turned into a constraint by requiring that the score of the final matching exceeds a specified threshold. Conversely, constraints can be converted to a simple distributional objective that is <span class="math inline">\(1\)</span> if the constraints are satisfied and <span class="math inline">\(0\)</span> otherwise. So assuming that the designer has distributional objective doesn’t seem too problematic.</p></li>
+<li><p><strong>Exogenous <span class="math inline">\(\mu_0\)</span>.</strong> The premise of the paper is that we have a default matching <span class="math inline">\(\mu_0\)</span> that we want to improve upon. I found myself wondering about where this <span class="math inline">\(\mu_0\)</span> comes from.</p>
+<p>The most natural answer is that it results from applying some mechanism to students’ reported preferences (i.e. run DA without diversity considerations). However, the authors’ result that a variant of TTC is truthful relies on the assumption that <span class="math inline">\(\mu_0\)</span> is exogenous to reported preferences: it is well-known that (for example) calculating an initial matching <span class="math inline">\(\mu_0\)</span> with DA and then applying TTC is not truthful, even though both DA and TTC are truthful in isolation.</p>
+<p>While I am sure that there are some contexts where an exogenous <span class="math inline">\(\mu_0\)</span> arises (i.e. neighborhood assignment in school choice), the assumption of an exogenous <span class="math inline">\(\mu_0\)</span> seems to limit the applicability of the model.</p></li>
+<li><p><strong><span class="math inline">\(M^\natural\)</span>-concave distributional goal.</strong> The authors claim that several natural distributional objectives are <span class="math inline">\(M^\natural\)</span>-concave. This may be true, but my sense is that many more distributional objectives are not. For example, the designer may wish for each school to have balanced gender <em>and</em> socio-economic demographics.</p>
+<p>To be more specific, suppose that there are two schools, each with two seats, and that the designer wishes for each school to have one male and one female student, and one low-income and one high-income student. If there are four students who are respectively a low-income male, a low-income female, a high-income male and a high-income female, this distributional goal can be achieved. However, it is not <span class="math inline">\(M^\natural\)</span> convex.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>The examples of <span class="math inline">\(M^\natural\)</span>-convex constraints that they give in the paper are all very simple (much simpler than most constraints that I see arising in practice), and they point out that the intersection of <span class="math inline">\(M^\natural\)</span>-convex constraints need not be <span class="math inline">\(M^\natural\)</span>-convex. Thus, I am not convinced that their positive result will directly apply in many contexts.</p></li>
+</ol>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>An astute reader may notice that previously I referred to <span class="math inline">\(M^\natural\)</span>-concavity, and now I say convexity. This is an unfortunate consequence of terminology: a pseudo-<span class="math inline">\(M^\natural\)</span>-concave distributional objective induces <span class="math inline">\(M^\natural\)</span>-convex constraints, and vice versa (Theorem 2).<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>This claim may seem to contradict their Proposition 1, which establishes that target minimum and maximum quotas for each type <em>do</em> result in <span class="math inline">\(M^\natural\)</span> convexity. But it’s important to note that in their model, each student has only one type. Thus, to satisfy Proposition 1, the designer would have to separately specify quotas on the number of low-income males, low-income females, high-income males, and high-income females.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

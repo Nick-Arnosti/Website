@@ -1,0 +1,17 @@
+---
+title: 'A Model World'
+date: ''
+---
+
+I often find myself translating real-world scenarios into mathematical models. This helps to make claims precise, and clarify the assumptions on which they rest. On this blog, I share some of these perspectives with you!
+
+My hope for this blog is to spark conversations with those around me. I thrive on exchange of ideas, so please add comments to the posts! Your comments will help refine my thinking, and will also make my life better.
+
+Finally, the blog features different types of posts. While I hope that many are accessible to a broad audience, some require a fair degree of technical sophistication. If you reach a post that wasn't meant for you, just find another!
+
+Posts are listed in chronological order below. 
+
+
+<!--Alternatively, you can see my posts on [market design](/categories/market-design/), [business and operations](/categories/operations/), [sports](/categories/sports/), or browse [posts by topic](/tags/).
+-->
+

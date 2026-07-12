@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Should Government Programs be Means-Tested? | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Should Government Programs be Means-Tested?</span></h1>
+<h2 class="author">Nick Arnosti</h2>
+<h2 class="date">2020/01/07</h2>
+</div>
+
+<main>
+
+
+
+<p>Today, we’ll address a question that comes up frequently in policy discussions: whether government programs should be means-tested. For example, should a “basic income” program be available to all, or only those making below a certain income level? Similarly, one might ask whether it should be paid for by taxes on all, or only on the rich. This post raises a simple but important point, and is largely copied from <a href="https://scholar.harvard.edu/files/mankiw/files/how_to_increase_taxes_on_the_rich.pdf">Greg Mankiw</a>. To make our question concrete, let’s compare the following basic income policies:</p>
+<p><strong>Policy A</strong>: a universal basic income of $1,000/month, paid for with a flat tax of 20% on income.</p>
+<p><strong>Policy B</strong>: a means-tested transfer of $1,000 per month aimed at the truly needy. The full amount goes to those with zero income. The transfer is phased out: recipients lose 20 cents of it for every dollar of income they earn. These transfers are financed by a progressive income tax: The government taxes 20 percent on all income above $60,000 per year</p>
+<p>The latter policy seems much more progressive: it gives the largest transfer to those with the lowest incomes, and only taxes those with high incomes. In fact, the two policies are mathematically equivalent: the net transfer is identical for every income level! We can see this in Figure <a href="#fig:equivalence">1</a> (code included below). This shows that the discussion of who benefits and who pays for policies can be very misleading.</p>
+<pre class="r"><code>flat_tax = Vectorize(function(x){return(.2*x)})
+universal_income = Vectorize(function(x){return(-12)})
+
+progressive_tax = Vectorize(function(x){return(0.2*max(x-60,0))})
+meanstested_income = Vectorize(function(x){return(-.2*max(60-x,0))})
+
+plot(flat_tax,xlim=c(0,140),ylim=c(-15,30),las=1,ylab=&#39;&#39;,xlab=&#39;Income&#39;,xaxs=&#39;i&#39;,yaxs=&#39;i&#39;,col=&#39;red&#39;)
+plot(universal_income,xlim=c(0,140),add=TRUE)
+plot(function(x){return(flat_tax(x)+universal_income(x))},xlim=c(0,140),add=TRUE,lwd=2,lty=&#39;dashed&#39;)
+
+
+plot(progressive_tax,xlim=c(0,140),ylim=c(-15,30),las=1,ylab=&#39;&#39;,xlab=&#39;Income&#39;,col=&#39;red&#39;)
+plot(meanstested_income,xlim=c(0,140),add=TRUE)
+plot(function(x){progressive_tax(x)+meanstested_income(x)},xlim=c(0,140),add=TRUE,lwd=2,lty=&#39;dashed&#39;)</code></pre>
+<div class="figure"><span id="fig:equivalence"></span>
+<img src="/Blog/FuturePosts/UBI_files/figure-html/equivalence-1.png" alt="Two proposed policies. Taxes paid in red, benefits received in black. The policy on the left has universal benefits funded by a flat tax, while the one on the right has progressive taxes and benefits. However, the combined effect of the two policies (dashed lines) is identical." width="50%" /><img src="/Blog/FuturePosts/UBI_files/figure-html/equivalence-2.png" alt="Two proposed policies. Taxes paid in red, benefits received in black. The policy on the left has universal benefits funded by a flat tax, while the one on the right has progressive taxes and benefits. However, the combined effect of the two policies (dashed lines) is identical." width="50%" />
+<p class="caption">
+Figure 1: Two proposed policies. Taxes paid in red, benefits received in black. The policy on the left has universal benefits funded by a flat tax, while the one on the right has progressive taxes and benefits. However, the combined effect of the two policies (dashed lines) is identical.
+</p>
+</div>
+<p>To me, this suggests that there are advantages to making benefits universal, rather than means-tested. One reason (often raised by those on the right) is that this avoids the overhead of setting up offices to verify eligibility. Another (which may appeal to those on the left) is that this will ensure that benefits are awarded fairly, rather than being granted inconsistently by potentially biased administrators.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> Additionally, on the messaging side, universality may make the policy more popular, and reduce stigma against the beneficiaries. For example, there is a lot of stigma against welfare recipients, but social security is <a href="https://socialsecurityworks.org/2019/03/26/social-security-polling/">very popular</a> and not stigmatized.</p>
+<p>What other factors should we consider when choosing between a means-tested program and a universal one? Give me your thoughts below!</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>One could argue that if people must “prove” their eligibility, only those who really need benefits will claim them, so support will be more effectively targeted to the needy. I’m concerned, however, that in many cases those who claim benefits are those who are best informed or have been guided through the process, rather than those most in need.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+
+</main>
+
+  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+  
+  <hr/>
+  &copy; <a href="https://nickarnosti.com">Nick Arnosti</a> 2019
+  
+  </footer>
+  </body>
+</html>

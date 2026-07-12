@@ -1,0 +1,185 @@
+---
+title: 'The Fallacy of the Hot Hand Fallacy'
+date: '2024-12-06'
+author: Nick Arnosti
+categories:
+  Probability and Statistics
+---
+
+
+
+<p>Harry and Tom decide to play a game. They flip a fair coin <span class="math inline">\(n\)</span> times. Each time the coin comes up heads, there is an opportunity to score. Harry scores a point if the next flip is heads, and Tom scores if the next flip is tails. A player wins if after all <span class="math inline">\(n\)</span> tosses, their score is higher than their opponents. Who is more likely to win?</p>
+<p>A natural instinct is that because each flip is fair (and independent of the past), both players are equally likely to win. But this is wrong! Surprisingly, Tom is more likely to win.</p>
+<p>To see this, let’s take the case <span class="math inline">\(n = 3\)</span>. In that case, there are eight possible sequences:</p>
+<ul>
+<li>HHH: Harry 2, Tom 0</li>
+<li>HHT: Harry 1, Tom 1</li>
+<li>HTH: Harry 0, Tom 1</li>
+<li>HTT: Harry 0, Tom 1</li>
+<li>THH: Harry 1, Tom 0</li>
+<li>THT: Harry 0, Tom 1</li>
+<li>TTH: Harry 0, Tom 0</li>
+<li>TTT: Harry 0, Tom 0</li>
+</ul>
+<p>Across all 8 sequences, Harry wins 2 times, Tom wins 3 times, and there are 3 ties. If <span class="math inline">\(n = 4\)</span>, we see that Tom still has an advantage:</p>
+<ul>
+<li>HHHH: Harry 3, Tom 0</li>
+<li>HHHT: Harry 2, Tom 1</li>
+<li>HHTH: Harry 1, Tom 1</li>
+<li>HHTT: Harry 1, Tom 1</li>
+<li>HTHH: Harry 1, Tom 1</li>
+<li>HTHT: Harry 0, Tom 2</li>
+<li>HTTH: Harry 0, Tom 1</li>
+<li>HTTT: Harry 0, Tom 1</li>
+<li>THHH: Harry 2, Tom 0</li>
+<li>THHT: Harry 1, Tom 1</li>
+<li>THTH: Harry 0, Tom 1</li>
+<li>THTT: Harry 0, Tom 1</li>
+<li>TTHH: Harry 1, Tom 0</li>
+<li>TTHT: Harry 0, Tom 1</li>
+<li>TTTH: Harry 0, Tom 0</li>
+<li>TTTT: Harry 0, Tom 0</li>
+</ul>
+<p>Across all 16 sequences, Harry wins 4 times, Tom wins 6, and there are 6 ties.</p>
+<p>What is going on here? First, notice that on <em>average</em>, both players score the same number of points (an average of 0.5 points with <span class="math inline">\(n = 3\)</span>, and <span class="math inline">\(0.75\)</span> points with <span class="math inline">\(n = 4\)</span>). This makes sense. However, Harry is more likely to rack up “big wins”, while Tom pulls out 1-0 nail-biters.</p>
+<p>The reason for this is that each time Harry scores a point, it creates a new scoring opportunity, giving Tom a chance to make up ground. When Tom scores a point, it reduces the number of scoring opportunities, making it harder for Harry to catch up. For example, when <span class="math inline">\(n = 3\)</span>, if Tom scores a point on the second flip, he will win for sure (as the third flip will not score for either player), while if Harry scores a point on the second flip, Tom gets a chance to tie the game.</p>
+<div id="the-hot-hand" class="section level1">
+<h1>The Hot Hand</h1>
+<p>It is well established that people are bad at making up random sequences. If asked to do so, they tend to alternate between heads and tails too frequently. Put another way, suppose you show someone a series of heads and tails, and ask them if they think the sequence was generated randomly. People will often reject truly random sequences, because these sequences have relatively long streaks of consecutive heads or tails that “feel” non-random.</p>
+<p>Let’s connect this to the game of basketball. Players and coaches often speak about a player being “hot”, meaning that they are shooting better than they usually do. It’s certainly true that sometimes players will make a number of shots in a row, but are these streaks any more common than what we would expect from repeatedly flipping a coin?</p>
+<p>A famous study by Gilovich, Vallone, and Tversky (henceforth GVT) tries to assess this using several sources of data. We will focus on a controlled shooting experiment that they did with college basketball players, in which there was no defense to confound things. They got make/miss data in which 26 players each took 100 shots. They then asked, does being “hot” increase the probability of making the next shot?</p>
+<p>To answer this question, you need to define what it means for a player to be “hot”. GVT defined this as a string of <span class="math inline">\(k\)</span> consecutive made shots. Similarly, a player is “cold” if they have just missed <span class="math inline">\(k\)</span> consecutive shots. GVT sought to compare success rate when hot to success rate when cold.</p>
+<p>Let’s make this concrete. Suppose <span class="math inline">\(k = 2\)</span> and the sequence is TTHTHHHTHHTTHT, with T representing a miss and H a make. During this sequence, the player was hot a total of three times, of which they made 1 of those shots, so we calculate <span class="math inline">\(\hat{P}(Make | Hot) = 1/3 \approx 33\%\)</span>. Meanwhile, the player was cold twice, and made both of those shots, so <span class="math inline">\(\hat{P}(Make | Cold) = 2/2 = 100\%\)</span>.</p>
+<p>It seems reasonable to believe that if the data itself is iid, then on average, <span class="math inline">\(\hat{P}(Make | Hot)\)</span> should equal <span class="math inline">\(\hat{P}(Make | Cold)\)</span>. Reasonable, but wrong!</p>
+<p>I’m going to try to explain why this is wrong in three ways. First, with an example (calculations for the case <span class="math inline">\(k = 1, n = 3\)</span>). Second, with an analysis of this example that uses mathy terms such as “expectation” and “unbiased”. Finally, with an explanation that uses more “intuitive” language, and connects this intuition back to our opening example. Hopefully you find at least one of these helpful!</p>
+<p><span class="math display">\[\begin{array}{|c|c c| c c | }
+\hline
+\textbf{Sequence} &amp; \hat{P}(Make|Hot) &amp; &amp; \hat{P}(Make|Cold) &amp;  \\
+\hline
+HHH &amp; 100\%  &amp; (2/2) &amp; NA &amp; (0/0) \\
+HHT &amp; 50\%  &amp; (1/2) &amp; NA &amp; (0/0)\\
+HTH &amp; 0\%  &amp; (0/1) &amp; 100\% &amp; (1/1) \\
+HTT &amp; 0\%  &amp; (0/1) &amp; 0\% &amp;  (0/1) \\
+THH &amp; 100\%  &amp; (1/1) &amp; 100\% &amp; (1/1) \\
+THT &amp; 0\%  &amp; (0/1) &amp; 100\% &amp; (1/1) \\
+TTH &amp; NA  &amp; (0/0) &amp; 50\% &amp; (1/2)\\
+TTT &amp; NA  &amp; (0/0) &amp; 0\% &amp; (0/2)\\
+\hline \textbf{Avg} &amp; 41.7\% &amp; &amp; 58.3\% &amp;  \\
+\hline
+\end{array}
+\]</span>
+Let’s take a look at what is going on here. Notice that on some sequences, <span class="math inline">\(\hat{P}(Make|Hot)\)</span> is not well-defined, because the shooter was never hot. Thus, when I write <span class="math inline">\(\mathbb{E}[\hat{P}(Make|Hot)]\)</span>, I actually mean the expectation of this quantity, conditioned on being hot at least once. To get this, we calculate <span class="math inline">\((100\% + 50\% + 0\% + 0\% + 100\% + 0\%)/6 = 41.7\%\)</span>.</p>
+<p>The source of the bias is that we are taking an expectation of the <strong>ratio</strong> “# hot makes” to “# times hot”. The expected number of hot makes is the same as the expected number of hot misses, so if the denominator (# times hot) were the same for all sequences, we would have an unbiased estimate. In reality, though, the denominator varies across sequences, and <strong>is larger for sequences with more makes</strong>. Specifically, the hot makes are concentrated in sequences where the denominator equals two (HHH and HHT), while the hot misses are concentrated in sequences where the denominator equals one.</p>
+<p>That was a lot of math talk. Let’s try translating it to English. The reason for the bias is similar to that for the opening problem with Harry and Tom.</p>
+<p><em>Every time a player is hot and makes a shot, they are still hot, and have a chance to bring <span class="math inline">\(\hat{P}(Make | Hot)\)</span> down. Put another way, the made shot will be combined with the next shot, reducing its influence on the overall average <span class="math inline">\(\hat{P}(Make | Hot)\)</span>. Similarly, every time a player is cold and misses a shot, they are still cold and have a chance to bring <span class="math inline">\(\hat{P}(Make | Cold)\)</span> up.</em></p>
+<p>As a result of this, if data is iid with probability <span class="math inline">\(p\)</span> of success, <span class="math inline">\(\mathbb{E}[\hat{P}(Make | Hot)]\)</span> is less than <span class="math inline">\(p\)</span>, while <span class="math inline">\(\mathbb{E}[\hat{P}(Make | Cold)]\)</span> is greater than <span class="math inline">\(p\)</span>. How large is the bias? That depends on the streak length <span class="math inline">\(k\)</span>, the sequence length <span class="math inline">\(n\)</span>, and the probability of success <span class="math inline">\(p\)</span>. In general, the bias is largest when players are only hot or cold a few times. In other words, increasing <span class="math inline">\(k\)</span> tends to increase the bias, while increasing <span class="math inline">\(n\)</span> tends to reduce it. We can explore the magnitude of the bias with the following code.</p>
+<pre class="r"><code>#shots is a binary vector (0 = miss, 1 = make)
+#A player is &quot;hot&quot; if they have made k consecutive shots, &quot;cold&quot; if missed k consecutive shots
+#Returns a matrix result, where e.g. result[&#39;Hot&#39;,&#39;Make&#39;] is the number of makes when hot
+streak_analysis &lt;- function(shots, k) {
+  n &lt;- length(shots)
+  
+  #Identify shots when the player was hot and cold
+  if(k == 1) { 
+    hot &lt;- c(FALSE, shots[1:(n-1)] == 1)
+    cold &lt;- c(FALSE, shots[1:(n-1)] == 0)
+  } else {  
+    shot_sequences &lt;- embed(shots, k+1)
+    current_shots &lt;- shot_sequences[, 1]
+    prev_k_shots &lt;- shot_sequences[, 2:(k+1)]
+    # Pad with FALSE for first k observations
+    hot &lt;- c(rep(FALSE, k), rowSums(prev_k_shots) == k)
+    cold &lt;- c(rep(FALSE, k), rowSums(prev_k_shots) == 0)
+  }
+  
+  #Create and return 2x2 table of results
+  hot_makes &lt;- sum(shots[hot] == 1)
+  hot_misses &lt;- sum(shots[hot] == 0)
+  cold_makes &lt;- sum(shots[cold] == 1)
+  cold_misses &lt;- sum(shots[cold] == 0)
+  return(matrix(c(hot_makes, cold_makes, hot_misses, cold_misses), 
+                  nrow = 2, 
+                  dimnames = list(c(&quot;Hot&quot;, &quot;Cold&quot;), c(&quot;Make&quot;, &quot;Miss&quot;))))
+}
+
+proportions = function(counts){
+	x = c(counts[&#39;Hot&#39;,&#39;Make&#39;]/sum(counts[&#39;Hot&#39;,]),counts[&#39;Cold&#39;,&#39;Make&#39;]/sum(counts[&#39;Cold&#39;,]))
+	names(x) = c(&#39;Hot&#39;,&#39;Cold&#39;)
+	return(x)
+}
+
+set.seed(2024)
+n_shots= 100
+n_players = 10000
+streak_length = 3
+shots = matrix(runif(n_shots*n_players)&lt;0.5,nrow=n_shots) #Generate random shot outcomes
+#data[&#39;Hot&#39;,i] is P(Make | Hot) for player i; data[&#39;Cold&#39;,i] is P(Make | Cold) for player i
+data = apply(shots,2,function(x){return(proportions(streak_analysis(x,streak_length)))}) 
+mean(data[&#39;Hot&#39;,],na.rm=TRUE) #Average of P(Make | Hot)</code></pre>
+<pre><code>## [1] 0.4628902</code></pre>
+<pre class="r"><code>mean(data[&#39;Cold&#39;,],na.rm=TRUE) #Average of P(Make | Cold)</code></pre>
+<pre><code>## [1] 0.5408251</code></pre>
+<p>This shows that when <span class="math inline">\(p = 0.5\)</span>, each player takes <span class="math inline">\(n = 100\)</span> shots, and hot and cold are defined by streaks of length <span class="math inline">\(k = 3\)</span>, <span class="math inline">\(\mathbb{E}[P(Make | Hot)]\)</span> is approximately <span class="math inline">\(0.46\)</span>, and <span class="math inline">\(\mathbb{E}[P(Make | Cold)]\)</span> is approximately <span class="math inline">\(0.54\)</span>.</p>
+</div>
+<div id="conclusions" class="section level1">
+<h1>Conclusions</h1>
+<p>Although the original study was conducted in 1985 and generated a lot of attention and follow-up work, the error was not caught for over 30 years, until it was pointed out by <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=2627354">Miller and Sanjurjo</a>. Their conclusion (which I agree with) is that the bias in the procedure used by GVT is large enough to overturn their null results. Feel free to read these papers for a more thorough discussion and analysis. The raw shooting data from the original study is available <a href="/GilovichValloneTversky--CognitivePsychology--1985_CornellData.xls">here</a>.</p>
+<p>What do I make of this? Well, one simple take-away is that probability and statistics can be very tricky! It’s easy for me to see how this mistake occurred. It seems so natural to assume that for an iid sequence, <span class="math inline">\(\hat{P}(Make | Hot)\)</span> should (on average) equal <span class="math inline">\(\hat{P}(Make | Cold)\)</span>.</p>
+<p>On the other hand, I’m somewhat surprised that the error wasn’t caught sooner. After all, it is very easy to generate random data, and notice that something seems wrong (that is, <span class="math inline">\(\mathbb{E}[P(Make | Hot)]\)</span> and <span class="math inline">\(\mathbb{E}[P(Make | Cold)]\)</span> are not equal to <span class="math inline">\(p\)</span>). I did it in about 30 lines of code above. If this paper had been written in the modern age, I suspect that the authors would have done this. Back in 1985, simulations were not so common.</p>
+<p>I think the failure of others to catch the error is probably due to multiple factors. First, when doing a replication, you often try to stay as close as possible to the original. There are many ways one could have defined and tested for the “hot hand”, but once GVT defined a procedure, people probably just followed this procedure (using new data) without really thinking about whether the procedure made sense.</p>
+<p>Second, the conclusion of GVT was probably appealing to many psychologists, preventing it from facing scrutiny. We know of lots of ways in which people are superstitious and/or misunderstand probability – if I were reading this paper, I would suspect that the “hot hand” isn’t real even before being presented with the evidence. As a result, I wouldn’t look all that closely at the evidence.</p>
+<p>As a math-oriented person, the next question would be “what analysis should we do instead?” Inspired by the game in the opening section, one might be tempted to just count total successes when hot, and compare it to total successes when cold (aggregated across all players). If all players are equally good shooters, this correction would work. Otherwise, it could fail miserably. For an extreme example, suppose that one player shoots 90% and another shoots 10%. Most hot streaks would involve the 90% shooter (and thus would be followed by a make), while most cold streaks would involve the 10% shooter (and thus would be followed by a miss). In other words, it would look like the hot hand was real, even if both player’s shots were iid.</p>
+<p>A much better approach is to use what is known in statistics as a <em>permutation test</em>. These are very cool and there’s a lot to say about them, so I hope to return to this topic in a future post.</p>
+</div>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<p>Let’s return briefly to the game played by Tom and Harry. As we saw, when the coin was unbiased, the game itself was biased in favor of Tom. However, if the coin always came up heads, then of course Harry would always win. Thus, we can ask the question, “how much bias does the <em>coin</em> have to have to make the <em>game</em> fair?”</p>
+<p>When <span class="math inline">\(n = 3\)</span>, this is a fairly simple algebra problem: if the coin has probability <span class="math inline">\(p\)</span> of coming up heads, then the total probability of the three sequences on which Tom wins (<span class="math inline">\(THT, HTT, HTH\)</span>) is <span class="math inline">\(2p(1-p)^2+p^2(1-p)\)</span>. The probability of the two sequences on which Harry wins (<span class="math inline">\(THH, HHH\)</span>) is <span class="math inline">\(p^3 + p^2(1-p)\)</span>. Setting these equal, rearranging, and applying the quadratic formula yields <span class="math inline">\(p = 2 - \sqrt(2) \approx 0.586\)</span>. In other words, Tom is more likely to win so long as the probability of heads less than <span class="math inline">\(2 - \sqrt(2)\)</span>.</p>
+<p>We can also consider a different model, inspired by the hot hand idea. Suppose that the first flip is equally likely to be heads or tails. From there, each flip is the same as the previous one with probability <span class="math inline">\(q\)</span>, and is different from the previous one with probability <span class="math inline">\(1-q\)</span>. For any <span class="math inline">\(q \in (0,1)\)</span>, in the long run, half of flips will be heads and half will be tails. When <span class="math inline">\(q &gt; 1/2\)</span>, we have a “hot hand” effect: heads are more likely after a previous heads. Note that if <span class="math inline">\(q \approx 1\)</span>, Harry wins half the time (when the first flip is heads), while Tom never wins (if the first flip is tails, neither player will have the opportunity to score points). We might wonder “how strong does the hot hand effect have to be in order for Harry to be favored?” Now, the probability of a winning sequence for Tom is <span class="math inline">\(q(1-q)/2 + (1-q)^2\)</span>, and the probability of a winning sequence for Harry is <span class="math inline">\(q(1-q)/2+q^2/2 = q/2\)</span>. After some algebra, we again get that the break-even point is <span class="math inline">\(q = 2 - \sqrt{2}\)</span>.</p>
+<pre class="r"><code>#Calculate number of made and missed shots when hot
+#Hot is defined as having made previous streak_length shots
+score = function(streak_length=1){ 
+	return(function(s){ #s is a sequence of outcomes
+		hot = 1+which(filter(as.numeric(s[-length(s)]), rep(1, streak_length), sides = 1) == streak_length) #Identify positions that follow k consecutive makes
+		score = c(sum(s[hot]),sum(1-s[hot]))
+		names(score) = c(&#39;made_shots_when_hot&#39;,&#39;missed_shots_when_hot&#39;)
+		return(score)
+	})
+}
+
+
+#Calculate probability of observing sequence s, if shots are iid with success prob p
+accuracy_likelihood = function(p){
+	return(function(s){
+		return(p^sum(s)*(1-p)^(sum(1-s)))
+	})
+}
+
+#Calculate probability of observing sequence s, if first shot is 50-50, and subsequent shots match preceding outcome with probability q
+hot_hand_likelihood = function(q){
+	return(function(s){
+		return(q^(length(s)-1)*((1-q)/q)^sum(abs(diff(s)))/2)
+	})
+}
+
+#Given a number of flips n, a likelihood function that gives probability of each sequence of length n, and a score function that calculates score for each sequence of length n, calculate the probability that each player wins
+calculate_win_probability = function(n,likelihood_function,scoring_function){
+	S = expand.grid(replicate(n, 0:1, simplify = FALSE))
+	Q = apply(S,1,likelihood_function) #Should give vector where Q[i] = probability of sequence S[i,], given p (so sum(Q) = 1)
+	score = t(apply(S,1,scoring_function)) #Scoring each sequence
+	hh = sum((score[,1]&gt;score[,2])*Q,na.rm=TRUE)
+	ht = sum((score[,1]&lt;score[,2])*Q,na.rm=TRUE)
+	x = c(hh,ht,1-hh-ht)
+	names(x) = c(&#39;HH&#39;,&#39;HT&#39;,&#39;TIE&#39;)
+	return(x)
+}
+
+n = 3
+plot(Vectorize(function(p){ #Plotting win probability for player 1 (Harry)
+ 	return(calculate_win_probability(n,accuracy_likelihood(p),score(1))[1])
+ }),xlab=&#39;p&#39;,ylab=&#39;P(win)&#39;,las=1)
+plot(Vectorize(function(p){ #Plotting win probability for player 2 (Tom)
+ 	return(calculate_win_probability(n,accuracy_likelihood(p),score(1))[2])
+}),add=TRUE)</code></pre>
+<p><img src="/Blog/HotHand_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>

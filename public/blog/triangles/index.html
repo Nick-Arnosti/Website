@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Where is the Center of a Triangle? | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Where is the Center of a Triangle?</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2025/03/09</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<p>My wife is a middle-school math teacher, and this spring, she is teaching geometry to some of her students. This gave me a chance to learn some geometry! Her upcoming unit is different notions of the center of a triangle. She gave me a quick primer on a few definitions, and then I went to think about things on my own. This post is what resulted from that thinking, and is not endorsed for use on middle-schoolers.</p>
+<p>In particular, I have managed to write a post about geometry that includes no pictures! This is truly a shameful thing to do. But including pictures would take more time, and I have decided that it’s not worth it in this case. But if you read on, please draw your own pictures! Start by drawing a triangle, and labeling its three corners A, B, and C.</p>
+<p><strong>The Prompt.</strong> We are given a triangle, and we want to find its “center”. How should we define this?</p>
+<p>This is not so clear. The center of a circle is obvious. The center of a square is also fairly clear. But the center of a triangle?</p>
+<p>After further consideration, several possible definitions come to mind:</p>
+<ul>
+<li>A point that is equally far from all vertices (corners) of the triangle.</li>
+<li>A point that is equally far from all three <em>sides</em> of the triangle.</li>
+<li>A point that, when lines are drawn from it to the three vertices, divides the triangle into three smaller triangles of <em>equal area</em>.</li>
+</ul>
+<p>In all three cases, a natural question is whether such a point exists, and if it does, whether it is unique. Furthermore, we might wonder how to find these points procedurally, and whether the definitions above turn out to identify the same point, or three different points.</p>
+<p>It turns out that for each of the above definitions, there is a unique point that satisfies it: these points are called the <strong>circumcenter</strong>, the <strong>incenter</strong> and the <strong>centroid</strong> respectively. Each of these points can be found at the intersection of three special lines, and in general they are all different (though of course they coincide in special cases, such as for an equilateral triangle).</p>
+<div id="circumcenter" class="section level1">
+<h1>Circumcenter</h1>
+<p>How would we go about finding a circumcenter? Well, we could start by looking for points that are equally far from A and B. One such point is easy to find: the midpoint of AB! But from this, we can find others! Draw a line through this midpoint, that is perpendicular to AB. (That is, draw the perpendicular bisector of AB).</p>
+<p><strong>Claim</strong> Any point on the perpendicular bisector of AB is equally far from A and B.</p>
+<p><em>Proof</em>. Let M be the midpoint of AB and let P be a point on the perpendicular bisector. Then AMP and BMP are congruent right triangles, so their hypotenuses have the same length (which can be found using the Pythagorean theorem).</p>
+<p><strong>Claim</strong> Any point that is <em>not</em> on the perpendicular bisector of AB is <em>not</em> equally far from A and B.</p>
+<p><em>Proof</em>. Pick a point P, which necessarily is either on “side A” of the perpendicular bisector, or on “side B”. Suppose without loss of generality that it is on “side A”. We will show that this point P is closer to A than to B. (Middleschoolers would likely look at a drawing and say this is obvious, but I find the explanation that follows elegant and satisfying.) Draw the line from P to B. Necessarily, this line will cross the perpendicular bisector at some point X. Draw the line from X to A. Because X is on the perpendicular bisector, XA and XB have equal length. It follows that the distance from P to B (which is PX + XB) is the same as the distance traveled when going from P to A <em>by way of X</em> (PX + XA). This is of course (by the triangle inequality) longer than the distance from P to A directly.</p>
+<p>Thus, we have found all points that are equally far from A and B. If there is a circumcenter, it must lie on this line. However, it also must lie on the perpendicular bisector of BC. Because these perpendicular bisectors are not parallel, they intersect at exactly one candidate point – call this M. (This establishes that we cannot have more than one circumcenter.) Note that the distance from M to A is the same as the distance from M to B, which is the same as the distance from M to C. Therefore, we have found the circumcenter!</p>
+<p>By the second claim above, M must also lie on the perpendicular bisector of AC, so we have also proven that the three perpendicular bisectors intersect at a single point.</p>
+<p><strong>Fun Facts:</strong></p>
+<ul>
+<li>This is called the circumcenter because it is the center of the circle that circumscribes ABC.</li>
+<li>The circumcenter can lie <em>outside</em> of the boundaries of the triangle! It’s kind of fun to think about when this occurs. (It turns out, this occurs whenever the triangle has an obtuse angle. If the triangle has a right angle, then the circumcenter is the midpoint of the hypotenuse.)</li>
+<li>The previous fun fact is closely related to the (fairly magical) inscribed angle theorem: if I fix two points A and C on a circle and slide point B along the circumference of the circle, the angle ABC does not change as B moves. (And this angle is half the angle AMC, where M is the middle of the circle.)</li>
+<li>The previous fun fact was relevant to navigation without compass or GPS. Suppose I am at sea. I see two landmarks that are on my map, and can calculate the angle between them. However, I cannot tell my distance from these landmarks, nor do I have a compass. Where could I be? (The answer is that the set of possible points forms a circle, which is the circle circumscribing the triangle involving the two landmarks and my true location. I should further be easily able to determine which <em>side</em> of the chord AC I lie on by determining which of the landmarks is to the left and which to the right.)</li>
+</ul>
+</div>
+<div id="incenter" class="section level1">
+<h1>Incenter</h1>
+<p>What about finding a point that is equally far from all three sides? To do this, we need to revisit what we mean by the distance from a point to a line. We mean the distance to the <em>closest</em> point on the line, which can be found by drawing a perpendicular to the line that passes through the point.</p>
+<p>As before, looking for a point that is equally far from three lines seems hard, but finding a point that is equally far from the lines AB and AC is easy! Just choose the point A (distance zero from each line). More generally, it is easy to see that any point P along the angle bisector of A will be equidistant from AB and AC: drawing the perpendicular from P to each of these lines results in two congruent right triangles.</p>
+<p>We can apply the same logic to conclude that any point along the bisector of angle B is equidistant from AB and BC. But these bisectors are not parallel, and thus will meet at exactly one point. This point is equidistant from AB, AC, and BC. Furthermore, this is the only point with this property (like for the circumcenter, it is not hard to see that the bisector of A contains <em>all</em> points that are equidistant from AB and AC, from which this claim follows).</p>
+<p><strong>Fun Fact</strong></p>
+<ul>
+<li>This is called the “incenter” because it is the center of the largest circle that can be inscribed in ABC.</li>
+<li>This is the point in the interior of the triangle that is “as far as possible” from the exterior of the triangle.</li>
+</ul>
+</div>
+<div id="centroid" class="section level1">
+<h1>Centroid</h1>
+<p>Now, let’s look for a point <span class="math inline">\(P\)</span> that, when line segments are drawn from <span class="math inline">\(P\)</span> to <span class="math inline">\(A, B, C\)</span>, divides the triangle into three smaller triangles of equal area.</p>
+<p>It is easy to see that if such a point exists, it must be unique. Suppose that we have such a point <span class="math inline">\(P\)</span>. Any other point <span class="math inline">\(M\)</span> inside of the triangle must lie within at least one of ABP, ACP, or BCP (if M is on segment AP, say that it lies in both ABP and ACP). But if <span class="math inline">\(M \ne P\)</span> lies within ABP, then ABM has strictly smaller area than ABP, and thus M does not divide ABC into three triangles of equal area.</p>
+<p>But how do we find such a point? Well, dividing ABC into three equal areas seems tricky, but dividing it into two equal areas doesn’t seem so bad – just draw a line from A to the midpoint of BC (call this <span class="math inline">\(M\)</span>). By definition, the two resulting triangles have the same base, and the same height (the perpendicular from A to BC), so they have the same area. Furthermore, for any point <span class="math inline">\(P\)</span> on <span class="math inline">\(AM\)</span>, the triangles ABP and ACP have the same area. This is because
+<span class="math display">\[Area(ABP) + Area(BPM) = Area(ABM) = Area(ACM) = Area(ACP) + Area(CPM)\]</span>
+It is easy to see that BPM and CPM have the same area (again – same base, and same height). Therefore, the above equation implies <span class="math inline">\(Area(ABP) = Area(ACP)\)</span>.</p>
+<p>From this, we can now slide <span class="math inline">\(P\)</span> from <span class="math inline">\(M\)</span> to <span class="math inline">\(P\)</span>: BCP starts with area zero, and eventually becomes the whole triangle ABC, so somewhere along the line, it must have area equal to <span class="math inline">\(1/3\)</span> the area of ABC.</p>
+<p>This makes sense, but <em>where</em> along line AM is the centroid? One way to find this is to draw the line from B to the midpoint of AC. By the same argument as above, the centroid must lie along this line, so it must be the point where this line intersects with AM. (This shows that all three medians intersect at a common point.)</p>
+<p><strong>Fun Facts</strong>:</p>
+<ul>
+<li>It turns out that the centroid always lies 1/3 of the way from <span class="math inline">\(M\)</span> to <span class="math inline">\(A\)</span>. The reason is that the area of BCP is proportional to the height of BCP, which is proportional to the distance traveled along <span class="math inline">\(MA\)</span>. Since we want the area of BCP to be 1/3 the total area of the triangle, we must travel 1/3 the distance from <span class="math inline">\(M\)</span> to <span class="math inline">\(A\)</span>.</li>
+<li>If we represent ABC on a coordinate plane, the centroid can be found by simply averaging the coordinates of A, B, and C. This is easy to see from the previous fun fact: <span class="math inline">\(M = \frac{1}{2}B + \frac{1}{2}C\)</span>, and the centroid is <span class="math inline">\(\frac{2}{3}M + \frac{1}{3}A = \frac{1}{3}A + \frac{1}{3}B + \frac{1}{3}C\)</span>.</li>
+<li>The centroid is also the “center of mass” of the triangle (assuming uniform density).</li>
+</ul>
+</div>
+<div id="summary-and-closing-thoughts" class="section level1">
+<h1>Summary and Closing Thoughts</h1>
+<p>This point has discussed three classical definitions of the center of a triangle, as well as methods for finding them.</p>
+<p><strong>Circumcenter</strong>: a point equidistant from all three vertices. Can be found as the intersection of the perpendicular bisectors of each side.</p>
+<p><strong>Incenter</strong>: a point equidistant from all three sides. Can be found as the intersection of the angle bisectors.</p>
+<p><strong>Centroid</strong> a point that divides the triangle into three equal-sized smaller regions. Can be found as the intersection of medians (lines from a corner to the midpoint of the opposite side).</p>
+<p>There’s also a point called the <strong>orthocenter</strong>, which lies at the intersection of the three “perpendiculars” dropped from each corner to the opposite line segment. Note that if the triangle is obtuse, you will need to extend this line, and the orthocenter (like the circumcenter) will lie outside of the triangle. There’s a fun fact that says the circumcenter, centroid, and orthocenter are colinear (lie along the “Euler line”), and that the centroid is 1/3 of the way from the circumcenter to the orthocenter. But I haven’t easily been able to motivate for myself why the orthocenter is independently interesting (i.e. in what sense can it be considered the “center” of ABC). So I de-emphasized it in this post.</p>
+<p>As I thought about this, it seemed pretty magical that we kept having three lines intersecting at the same point! (For the circumcenter, the three perpendicular bisectors; for the incenter, the three angle bisectors; for the centroid the three medians; and for the orthocenter, the three altitudes.) It turns out there’s something called <a href="https://en.wikipedia.org/wiki/Ceva%27s_theorem">Ceva’s Theorem</a> which explains this.</p>
+<p>In the sheet my wife showed me, the points of center were <em>defined</em> as the intersection of three lines of interest. However, it’s not clear a priori why these lines should intersect in a common point, or why this point should be considered a “center”, To me, it makes more sense to define the center in terms of distances and/or areas, and then to conclude that this point lies at the intersection of lines of interest (as I did in this post).</p>
+<!--
+# Other Fun Triangle Facts
+
+Imagine taking a triangle, cutting out the corners, and putting them all together. You always get 180 degrees! This is actually somewhat surprising (though I didn't appreciate it when I was younger), but easy to prove by considering a line parallel to AB through C.
+-->
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

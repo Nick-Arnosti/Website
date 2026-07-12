@@ -1,0 +1,42 @@
+---
+title: 'Marijuana License Lotteries'
+date: "2024-04-19"
+author: Nick Arnosti
+draft: true
+---
+
+The other day, I was reading the newspaper, and stumbled across this [Want to open a cannabis business in Minnesota? You might need some luck.](https://www.startribune.com/want-to-open-a-cannabis-business-in-minnesota-you-might-need-some-luck/600356676/)
+
+
+
+## Why is supply limited? 
+
+Many industries have licensing requirements, but give licenses to every application that fulfills those requirements. In this case, some people are concerned about dispensaries becoming too abundant, so some states or cities impose caps on the number of licenses that will be issued (typically specified on a per capita basis). I believe that the law in Minnesota specifies only a *minimum* number of licenses issued of [1 per 12,500 residents](https://mjbizdaily.com/minnesota-needs-to-issue-more-adult-use-cannabis-licenses/#:~:text=Tim%20Walz%2C%20the%20state's%20Office,consumer%20demand%20and%20other%20metrics.), with no maximum. But administrators are preparing for the possibility of cities imposing upper limits, as they have in other states.
+
+## Why not raise prices?
+
+The typical answer to scarce supply is to raise prices to lower demand. If there is uncertainty about the market-clearing price, it can be discovered by using an auction to allocate licenses. This approach has the advantage of raising revenue for the state. In addition, it would likely result in licenses going to well-capitalized (wealthy) businesses, which is a plus if you are hoping for stores to open quickly.
+
+I think an important piece of context is that many of the people who have advocated for marijuana legalization see it as a way to partially make amends for the war on drugs. That is, in addition to economic arguments for legalization, there is a strong social justice motivation. According to this narrative, criminalizing marijuana caused disproportionate harm to low income communities of color, and it would be unfair for the primary economic beneficiaries of legalization to be large corporations with white leaders.
+
+## Concerns With "Merit Based" Systems
+
+Minnesota originally intended to have a "merit-based" review process, where applicants would submit business plans (i.e. financing, location, etc) which would be scored, with the highest-scoring applicants receiving licenses. Apparently a similar approach was tried in Illinois, but license distribution was delayed by lawsuits alleging that identical applications were scored differently. To avoid the perception of unfairness, Illinois introduced license lotteries.
+
+In addition to litigation-related delays, another concern that the article mentions is that merit-based systems might reward deep-pocketed companies that can pay consultants to carefully craft applications that are optimized for the scoring criteria. This is likely not aligned with the social justice objective to give licenses to less professionalized and well-financed applicants.
+
+## Downsides of a Lottery
+
+One obvious downside of a Lottery is "ballot stuffing", or increasing your odds by submitting many applications. Apparently this happened in Connecticut, where some businesses paid hundreds of thousands of dollars in application fees to [submit over 800 applications each](https://www.ctinsider.com/news/article/Winners-of-CT-cannabis-licenses-spent-hundreds-of-17519954.php).
+
+This can partially be addressed by 
+
+
+
+
+## Social Equity Lottery 
+
+Similar systems in Maryland, Connecticut, Missouri, Illinois (check this)
+
+Washington State's [Social Equity scoring rubric](https://lcb.wa.gov/sites/default/files/publications/Social_Equity/Social%20Equity%20Application%20Scoring%20Rubric%202-17-23.pdf)
+

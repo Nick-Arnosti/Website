@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #000000; background-color: #000000; background-color: rgba(0, 0, 0, 0); min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #000000; -webkit-text-stroke: #b80e3d; background-color: #000000; background-color: rgba(0, 0, 0, 0)}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1"><!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Famous Open Question Resolved... since 2014?!?! | b</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/research/">Research</a></li>
+      
+      <li><a href="/teaching/">Teaching</a></li>
+      
+      <li><a href="/blog/">Blog</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+</span></p>
+<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Famous Open Question Resolved&hellip; since 2014?!?!</b></span></h1>
+<p class="p1"><span class="s1"></span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>Nick Arnosti</b></span></h2>
+<p class="p1"><span class="s1"> </span></p>
+<h2 style="margin: 0.0px 0.0px 14.9px 0.0px; font: 18.0px Times; color: #000000; -webkit-text-stroke: #000000"><span class="s1"><b>2023/09/24</b></span></h2>
+<p class="p1"><span class="s1"><span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">
+
+
+<div id="motivation" class="section level1">
+<h1>Motivation</h1>
+<p>Suppose I have a set of objects to give away. What goals should I have? Of course, the answer depends on the setting, but two natural goals are <em>efficiency</em> and <em>fairness</em>. If I don’t know people’s preferences, I also need to design a system that incentivizes people to tell me their true preferences.</p>
+<p>Skipping over the mathematical definitions of <strong>efficiency</strong>, <strong>fairness</strong>, and <strong>truthfulness</strong> (more detail on these below), I assert that there is a simple mechanism that satisfies all three goals: line people up, and have the first person choose their favorite object, the second their favorite from those that remain, and so on. This results in an efficient outcome (no set of trades can unambiguously improve upon it) and is clearly truthful: you can’t affect which objects are available when it is your turn, and you get your favorite of these objects. To make it fair, we can make the order in which people choose random. This mechanism is often called <code>Random Serial Dictatorship</code> (RSD) or <code>Random Priority</code>.</p>
+<p>Another approach that is efficient, fair, and truthful starts by giving out objects at random, and then runs the Top Trading Cycles algorithm to find Pareto-improving trades. A famous result by Knuth and Abdulkadiroglu and Sonmez says that although this “top trading cycles from random endowments” sounds very different from RSD, it actually induces the same distribution over final outcomes, no matter what people’s preferences are!</p>
+<p>This is a very surprising result, first proved by <a href="chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://nickarnosti.com/IE5080/Session3/Knuth_1995.pdf">Knuth</a> and <a href="chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.tayfunsonmez.net/wp-content/uploads/2013/10/AbdulkadirogluSonmez-Econometrica98.pdf">Abdulkadiroglu and Sonmez</a>. It has since been generalized by a series of papers showing that many seemingly different mechanisms are in fact equivalent to random priority. An important open question – highlighted in this <a href="https://nickarnosti.com/blog/randompriority/">video blog of mine</a> from 2022 – is whether EVERY efficient, fair, and truthful mechanism is equivalent to RSD.</p>
+<p>At least, that is what I have been telling my students for the past several years. Many smart researchers have spent a lot of time trying to prove or disprove this conjecture. And yet, last week, Clay Thomas pointed me to a paper by Aytek Erdil, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0022053113001828">Strategy-Proof Stochastic Assignment</a>, published in JET in 2014, which seems to resolve the question by showing that other efficient, fair, and truthful mechanisms exist.</p>
+<p>I didn’t believe him at first – surely, if this result existed, I would know about it! But after looking through the proof, I am 95% convinced (the 5% remains because the proof involves some case-checking that I could have screwed up). This post will dive into the details of this important result. While the organization and exposition is different from that in the paper, all ideas at their core come from Erdil.</p>
+</div>
+<div id="definitions" class="section level1">
+<h1>Definitions</h1>
+<p>There is a set of agents <span class="math inline">\(\mathcal{A}\)</span> and a set of objects <span class="math inline">\(\mathcal{O}\)</span>.</p>
+<ul>
+<li>A <em>deterministic allocation</em> is a one-to-one function from <span class="math inline">\(\mathcal{A}\)</span> to <span class="math inline">\(\mathcal{O}\)</span>.</li>
+<li>A <em>random allocation</em> is a distribution over deterministic allocations.</li>
+<li>A <em>preference profile</em> specifies for each agent a strict ordering over <span class="math inline">\(\mathcal{O} \cup \{\emptyset\}\)</span>.</li>
+<li>A <em>random mechanism</em> maps each preference profile to a random allocation.</li>
+</ul>
+<p>Each random allocation induces a (random) outcome for each agent, which specifies the probability with which the agent gets each object. Say that allocation <span class="math inline">\(x\)</span> <em><span class="math inline">\(\succ\)</span>-stochastically dominates</em> <span class="math inline">\(y\)</span> if for each <span class="math inline">\(k\)</span>, the probability of receiving a top-<span class="math inline">\(k\)</span> object (according to <span class="math inline">\(\succ\)</span>) under <span class="math inline">\(x\)</span> is weakly higher than the corresponding probability under <span class="math inline">\(y\)</span>.</p>
+<p><strong>Definition</strong> A mechanism is ex post Pareto efficient if, for each preference profile, it only places positive probability on Pareto efficient allocations.</p>
+<p><strong>Definition</strong> A mechanism is truthful if, for each preference profile and each agent <span class="math inline">\(i\)</span>, the outcome that <span class="math inline">\(i\)</span> receives from reporting truthfully <span class="math inline">\(\succ_i\)</span>-stochastically dominates the outcome that <span class="math inline">\(i\)</span> receives from any other report.</p>
+</div>
+<div id="constructing-a-different-mechanism" class="section level1">
+<h1>Constructing A Different Mechanism</h1>
+<p><strong>Example 1</strong> There are 3 objects (a, b, c) and 4 agents (1, 2, 3, 4). Preferences are as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>a</td>
+<td>c</td>
+<td>c</td>
+<td>c</td>
+</tr>
+<tr class="even">
+<td>b</td>
+<td>a</td>
+<td>b</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Note that agents do not list all objects – they rank the outside option <span class="math inline">\(\emptyset\)</span> above some objects in <span class="math inline">\(\mathcal{O}\)</span>.</p>
+<p>In Example 1, there are 6 Pareto efficient allocations. RSD selects these allocations with the following probabilities.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>RSD</th>
+<th><span class="math inline">\(\phi\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(acb\emptyset\)</span></td>
+<td>8/24</td>
+<td>8/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(a\emptyset bc\)</span></td>
+<td>5/24</td>
+<td><span class="math inline">\(\color{green}{7/24}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(a\emptyset c\emptyset\)</span></td>
+<td>5/24</td>
+<td><span class="math inline">\(\color{red}{3/24}\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(bac\emptyset\)</span></td>
+<td>3/24</td>
+<td><span class="math inline">\(\color{green}{5/24}\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(ba\emptyset c\)</span></td>
+<td>1/24</td>
+<td>1/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset abc\)</span></td>
+<td>2/24</td>
+<td><span class="math inline">\(\color{red}{0/24}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The allocation <span class="math inline">\(\phi\)</span> reduces the probability of allocations <span class="math inline">\(a \emptyset c \emptyset\)</span> and <span class="math inline">\(\emptyset abc\)</span> (in red), in favor of <span class="math inline">\(a \emptyset bc\)</span> and <span class="math inline">\(bac \emptyset\)</span> (in green).</p>
+<p>Note that agent 1 strictly prefers the random allocation from <span class="math inline">\(\phi\)</span> to RSD, and all other agents are indifferent. That is, although RSD is <em>ex post</em> Pareto efficient, it is not <em>ex ante</em> efficient.</p>
+<p>This fact has been known at least since 2001, when Bogomolnaia and Moulin pointed it out and proposed an ex ante efficient mechanism that they called <code>Probabilistic Serial</code> (their paper is called “A new solution to the random assignment problem” and was published in JET). However, Probabilistic Serial is not truthful.</p>
+<p>Aytek Erdil’s paper shows how to modify <span class="math inline">\(RSD\)</span> to get a new mechanism that is still not ex ante efficient, but <em>is</em> truthful. We will proceed in two steps. First, define a complete mechanism <span class="math inline">\(\phi\)</span> that is truthful and Pareto efficient. Then, adjust this mechanism to make it symmetric.</p>
+<p>Define the mechanism <span class="math inline">\(\phi\)</span> as follows.</p>
+<ol style="list-style-type: decimal">
+<li>On any profile where the reported preferences of agents <span class="math inline">\(2, 3, 4\)</span> are not identical to those above, <span class="math inline">\(\phi = RSD\)</span>.</li>
+<li>If agents <span class="math inline">\(2, 3, 4\)</span> report as above and agent <span class="math inline">\(1\)</span> does not list both <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> as acceptable, then <span class="math inline">\(\phi = RSD\)</span>.</li>
+<li>For any report such that agent <span class="math inline">\(1\)</span> lists both <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> as acceptable, let <span class="math inline">\(z \in \{a, b\}\)</span> be the less preferred object between <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>. Under RSD, there is a <span class="math inline">\(2/24\)</span> chance that <span class="math inline">\(1\)</span> gets nothing (whenever <span class="math inline">\(4\)</span> picks first and <span class="math inline">\(1\)</span> picks last), and at least a <span class="math inline">\(2/24\)</span> chance that <span class="math inline">\(z\)</span> is not allocated (whenever the agent among <span class="math inline">\(\{2, 3\}\)</span> who would accept <span class="math inline">\(z\)</span> chooses first, and agent 1 chooses second). Modify the allocation of RSD using the approach from Example 1, to give agent <span class="math inline">\(1\)</span> object <span class="math inline">\(z\)</span> instead of nothing, while keeping the outcome the same for all other agents.</li>
+</ol>
+</div>
+<div id="truthfulness-of-phi" class="section level1">
+<h1>Truthfulness of <span class="math inline">\(\phi\)</span></h1>
+<p>The modification in Case 3 maintains ex post Pareto efficiency, so the key is to show that <span class="math inline">\(\phi\)</span> is truthful. It is clear that agents <span class="math inline">\(2, 3, 4\)</span> cannot manipulate, as from their perspective, the allocation is equivalent to <span class="math inline">\(RSD\)</span>.</p>
+<p>To see why agent <span class="math inline">\(1\)</span> cannot manipulate, let <span class="math inline">\(R_0\)</span> be the set of reports in Case 2: <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are not both acceptable, and <span class="math inline">\(\phi = RSD\)</span>. Let <span class="math inline">\(R = R_a \cup R_b\)</span> be the set of reports in Case 3: both <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are acceptable, and <span class="math inline">\(\phi \ne RSD\)</span>. Let <span class="math inline">\(R_a\)</span> denoting the set of these reports that rank <span class="math inline">\(a\)</span> ahead of <span class="math inline">\(b\)</span>, and conversely for <span class="math inline">\(R_b\)</span>.</p>
+<ul>
+<li>It is clear that agent <span class="math inline">\(1\)</span> never wants to deviate to a report in <span class="math inline">\(R_0\)</span>. (Suppose her true preference is <span class="math inline">\(r\)</span> and she is considering a deviation to <span class="math inline">\(r_0 \in R_0\)</span>. We have <span class="math inline">\(\phi(r_0) = RSD(r_0)\)</span>, which is no better than <span class="math inline">\(RSD(r)\)</span> by truthfulness of <span class="math inline">\(RSD\)</span>. But <span class="math inline">\(\phi(r)\)</span> is weakly better than <span class="math inline">\(RSD(r)\)</span> for all <span class="math inline">\(r\)</span> by construction.)</li>
+<li>If agent 1’s true preference is in <span class="math inline">\(R_a\)</span>, deviating to any report in <span class="math inline">\(R_a\)</span> results in the same outcome from her perspective, and deviating to a report in <span class="math inline">\(R_b\)</span> results in a worse outcome.</li>
+<li>If agent 1’s true preference is in <span class="math inline">\(R_0\)</span>, she can increase her probability of being allocated something by changing to a report in <span class="math inline">\(R\)</span>. However, crucially, she cannot increase her probability of receiving an object that she truly considers acceptable: adding an object to the bottom of her list only increases her probability of receiving <em>that</em> object, and moving it higher up the list just reduces her probability of receiving something else. (Some case checking is needed to convince yourself of this.)</li>
+</ul>
+</div>
+<div id="adding-symmetry" class="section level1">
+<h1>Adding Symmetry</h1>
+<p>Let <span class="math inline">\(\sigma\)</span> be a permutation of <span class="math inline">\(\mathcal{A}\)</span>. For any preference profile <span class="math inline">\(\succ = \{\succ_a\}_{a \in \mathcal{A}}\)</span>, let <span class="math inline">\(\sigma(\succ)\)</span> denote the preference profile obtained by swapping the reports of the agents according to <span class="math inline">\(\sigma\)</span>. For any deterministic allocation <span class="math inline">\(\mu : \mathcal{A} \rightarrow \mathcal{O}\)</span>, let <span class="math inline">\(\sigma(\mu)\)</span> denote the allocation obtained by swapping objects according to <span class="math inline">\(\sigma\)</span>.</p>
+<p><strong>Definition.</strong> Mechanism <span class="math inline">\(M\)</span> is symmetric if for any permutation <span class="math inline">\(\sigma\)</span>, any preference profle <span class="math inline">\(\succ\)</span>, and any allocation <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\mathbb{P}(M(\succ) = \mu) = \mathbb{P}(M(\sigma(\succ)) = \sigma(\mu))\)</span>.</p>
+<p>One simple way to construct symmetric mechanisms from asymmetric ones is assign agents to “roles” uniformly at random. In this case, this means randomizing who gets to be agent 1, agent 2, etc. This does not affect Pareto efficiency or truthfulness, and clearly the mechanism remains different from RSD after adding symmetry, as the expected number of allocated objects is different.</p>
+</div>
+<div id="objections-and-reflections" class="section level1">
+<h1>Objections and Reflections</h1>
+<p>Honestly, I am surprised that I didn’t hear about this result before, as I am in touch with many scholars who have worked on closely related results, and didn’t seem to know of this one.</p>
+<p>I admit, I am a little disappointed about this result. It would be so beautiful if RSD <em>were</em> the only mechanism that is efficient, truthful, and fair. I will close by considering two possible objections to Erdil’s result, each of which might allow us to recover a uniqueness result for RSD. As you will see, I think the first objection is somewhat silly, while the second seems promising.</p>
+<div id="objection-1-agents-do-not-list-all-objects" class="section level3">
+<h3>Objection #1: Agents Do Not List All objects</h3>
+<p>Some people may object to the fact that agents do not rank every object. I personally think this is a somewhat silly objection: in practice, most settings where RSD is used do not require agents to list every object. Even in my class, when giving away fruit, I allow students not to take a piece if they are not excited about any of the remaining options when their turn comes.</p>
+<p>One can also easily fix this objection by adding “dummy” objects that stand in for the outside option. In Example 1, this would require adding objects <span class="math inline">\(d\)</span> and <span class="math inline">\(e\)</span> in between the acceptable and unacceptable objects from <span class="math inline">\(\{a, b, c\}\)</span> on each agent’s preference list. This would result in an example with <span class="math inline">\(5\)</span> objects and <span class="math inline">\(4\)</span> agents who rank all of these objects.</p>
+<p>It’s not clear whether we can embed Example 1 into a balanced market (equal number of agents and objects) where agents list all objects as acceptable. Thus, one might still hope that in a balanced market with complete preferences, RSD is unique.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+Addressing this question is worthwhile, but in my mind, even if this is correct (which I no longer expect), Erdil’s result addresses the more practically relevant question.</p>
+</div>
+<div id="objection-2-wrong-definition-of-truthfulness" class="section level3">
+<h3>Objection #2: Wrong Definition of Truthfulness</h3>
+<p>There is something slightly incongruous about our definitions of truthfulness and efficiency. Our definition of truthfulness depends on the fractional allocation received by each individual agent. In other words, to check whether a random allocation is truthful, we only need to see the matrix of size <span class="math inline">\(\mathcal{A} \times \mathcal{O}\)</span> which specifies agents’ marginal assignment probabilities at each preference profile.</p>
+<p>Meanwhile, this same information is <em>not</em> sufficient to check whether a mechanism always produces an ex post Pareto efficient assignment. To see this, consider Example 1. Suppose that on this profile, mechanism <span class="math inline">\(M\)</span> flips a coin to decide between the allocations <span class="math inline">\(a \emptyset c \emptyset\)</span> and <span class="math inline">\(\emptyset a b c\)</span>. Mechanism <span class="math inline">\(M&#39;\)</span> flips a coin to decide between the allocations <span class="math inline">\(a \emptyset b c\)</span> and <span class="math inline">\(\emptyset a c \emptyset\)</span>. These two mechanisms lead to identical <em>marginal</em> assignment probabilities for each agent, but both allocations selected by <span class="math inline">\(M\)</span> are Pareto efficient, while one of the allocations selected by <span class="math inline">\(M&#39;\)</span> is not. Thus, to verify ex post Pareto efficiency, we really need to know the distribution over all possible joint allocations, which is a much higher dimensional object.</p>
+<p>Researchers in this space have often been frustrated by the need to go back and forth between looking at marginal assignment probabilities for individual agents, and looking at joint assignments. We could get rid of this difficulty by using an efficiency criteria that can be checked based only on the marginal outcome for each agent. The natural such notion is ordinal efficiency, defined by Bogolmanaia and Moulin in their 2001 paper. However, RSD is not ordinally efficient! Furthermore, they show that <em>no</em> mechanism is ordinally efficient, truthful, and satisfies equal treatment of equals.</p>
+<p>Alternatively, we could modify (strengthen) our definition of truthfulness. Specifically, I am curious about the following.</p>
+<p><strong>Open Problem.</strong> Suppose that you start with any <em>deterministic</em> mechanism that is Pareto efficient and truthful, and make it symmetric by randomly assigning agents to roles. Is it true that this mechanism must be equivalent to RSD?</p>
+<p>Sophie Bade proved a closely related result in her paper <a href="https://pubsonline.informs.org/doi/abs/10.1287/moor.2019.0987?casa_token=07gPG07t85wAAAAA:Wgs1UvLSCUFhKO28E5KzYqoHtpbg7YDB9Z_6VuK_1e6716c0ThMmxH_SEMeRjsd_PqbFRDBLiJyF">Random Serial Dictatorship: The One and Only</a>, but needed one additional condition – non-bossiness – to get uniqueness.</p>
+<p>I expect this result to be difficult to show, but I don’t think that many people have tried, since most researchers were focused on the definition of truthfulness used for most of this post. The stronger truthfulness requirement could be motivated by the thought that even if agents could observe the random seed used by the mechanism (in addition to the reports of others), they could never benefit from misreporting. This is not true for the mechanism <span class="math inline">\(\phi\)</span>.</p>
+<p><strong>Note:</strong> If you’ve read this far, you should check out my follow-up post discussing <a href="https://nickarnosti.com/blog/exanteexpost/">ex post vs ex ante truthfulness</a> in more detail.</p>
+</div>
+</div>
+<div id="appendix-rsd-outcomes" class="section level1">
+<h1>Appendix: RSD Outcomes</h1>
+<p>For anyone who wants to dive into the details of checking truthfulness, it may be helpful to have the assignment probabilities under RSD associated with every possible report by agent 1. There are 16 possible reports. Below, I consider all allocations where <span class="math inline">\(b\)</span> is not ranked ahead of <span class="math inline">\(a\)</span>. For cases where <span class="math inline">\(b\)</span> is ranked ahead of <span class="math inline">\(a\)</span>, the solution can be obtained by appeal to the symmetric case where <span class="math inline">\(a\)</span> is ahead of <span class="math inline">\(b\)</span>. I will specify <em>marginal</em> allocation probabilities for each agent-object pair.</p>
+<p>When agent 1 submits any of the three reports <span class="math inline">\(a \succ b, a \succ b \succ c\)</span>, or <span class="math inline">\(a \succ c \succ b\)</span>, RSD produces the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>18/24</td>
+<td>6/24</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b\)</span></td>
+<td>4/24</td>
+<td>-</td>
+<td>15/24</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c\)</span></td>
+<td>-</td>
+<td>8/24</td>
+<td>8/24</td>
+<td>8/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset\)</span></td>
+<td>2/24</td>
+<td>10/24</td>
+<td>1/24</td>
+<td>16/24</td>
+</tr>
+</tbody>
+</table>
+<p>When agent <span class="math inline">\(1\)</span> reports <span class="math inline">\(c \succ a \succ b\)</span>, RSD produces the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>12/24</td>
+<td>12/24</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b\)</span></td>
+<td>4/24</td>
+<td>-</td>
+<td>15/24</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c\)</span></td>
+<td>6/24</td>
+<td>6/24</td>
+<td>6/24</td>
+<td>6/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset\)</span></td>
+<td>2/24</td>
+<td>6/24</td>
+<td>1/24</td>
+<td>18/24</td>
+</tr>
+</tbody>
+</table>
+<p>When agent 1 reports <span class="math inline">\(c \succ a \succ \emptyset\)</span>, RSD produces the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>12/24</td>
+<td>12/24</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b\)</span></td>
+<td>-</td>
+<td>-</td>
+<td>18/24</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c\)</span></td>
+<td>6/24</td>
+<td>6/24</td>
+<td>6/24</td>
+<td>6/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset\)</span></td>
+<td>6/24</td>
+<td>6/24</td>
+<td>-</td>
+<td>18/24</td>
+</tr>
+</tbody>
+</table>
+<p>When agent 1 reports <span class="math inline">\(a \succ c\)</span> or <span class="math inline">\(a \succ \emptyset\)</span>, RSD produces the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>18/24</td>
+<td>6/24</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b\)</span></td>
+<td>-</td>
+<td>-</td>
+<td>16/24</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c\)</span></td>
+<td>-</td>
+<td>8/24</td>
+<td>8/24</td>
+<td>8/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset\)</span></td>
+<td>6/24</td>
+<td>10/24</td>
+<td>-</td>
+<td>16/24</td>
+</tr>
+</tbody>
+</table>
+<p>When agent 1 reports <span class="math inline">\(c \succ \emptyset\)</span>, RSD produces the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(c \succ \emptyset\)</span></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>-</td>
+<td>18/24</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b\)</span></td>
+<td>-</td>
+<td>-</td>
+<td>18/24</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c\)</span></td>
+<td>6/24</td>
+<td>6/24</td>
+<td>6/24</td>
+<td>6/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset\)</span></td>
+<td>18/24</td>
+<td>-</td>
+<td>-</td>
+<td>18/24</td>
+</tr>
+</tbody>
+</table>
+<p>When agent 1 reports <span class="math inline">\(\emptyset\)</span>, RSD produces the following:</p>
+<table>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\emptyset\)</span></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(a\)</span></td>
+<td>-</td>
+<td>16/24</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b\)</span></td>
+<td>-</td>
+<td>-</td>
+<td>16/24</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(c\)</span></td>
+<td>-</td>
+<td>8/24</td>
+<td>8/24</td>
+<td>8/24</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\emptyset\)</span></td>
+<td>24/24</td>
+<td>-</td>
+<td>-</td>
+<td>16/24</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="footnotes footnotes-end-of-document">
+<hr />
+<ol>
+<li id="fn1"><p>Earlier this year, Pete Troyan and Marek Pycia posted <a href="https://petertroyan.com/files/Pycia-Troyan-RP.pdf">this paper</a>, which shows that in a balanced market, RSD is <u> not</u> the only mechanism that is efficient, truthful, and satisfies equal treatment of equals. However, equal treatment of equals is a <em>much</em> weaker requirement than symmetry, so it remains possible that the uniqueness of RSD is restored once we impose symmetry.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<span class="Apple-converted-space"> </span></span></p>
+<p class="p1"><span class="s1">  <footer>
+  <script src="//yihui.name/js/math-code.js"></script>
+<script async src="//mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script async src="//yihui.name/js/center-img.js"></script>
+
+<div id="commento"></div>
+<script src="https://cdn.commento.io/js/commento.js"></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-152747471-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  <hr/>
+  © <a href="https://nickarnosti.com">Nick Arnosti</a>
+  
+  </footer>
+  </body>
+</html><span class="Apple-converted-space"> </span></span></p>
+<p class="p4"><span class="s1"></span><br></p>
+<p class="p5"><span class="s1"></span></p>
+</body>
+</html>

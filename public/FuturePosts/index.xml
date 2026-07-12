@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>FuturePosts on b</title>
+    <link>/futureposts/</link>
+    <description>Recent content in FuturePosts on b</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="/futureposts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Notes from EC 2026</title>
+      <link>/futureposts/ec26/</link>
+      <pubDate>Sun, 05 Jul 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/ec26/</guid>
+      <description>Best Paper
+Stochastic optimization and coupling.
+Best Paper with a student lead author:
+Personalized Recommendations without Inducing Congestion: Mitigating Disparities in the NYC High School Match.
+Presenter (Erica) was employed at NYCPS over the last year (insider access).
+Goal is personalized recommendations of students to high-performing schools where they are likely to be admitted.
+Exemplary Papers
+ Competition and Welfare in Airport Slot Allocation, Sebastian Bauer (Stanford)
+ Calibrated Coarsening</description>
+    </item>
+    
+    <item>
+      <title>Dynamic Matching Papers</title>
+      <link>/futureposts/dynamicmatchingsurvey/</link>
+      <pubDate>Wed, 06 May 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/dynamicmatchingsurvey/</guid>
+      <description>This post collects a few papers on dynamic matching.
+Gupta gives a sum-of-squares greedy algorithm for multiway matching with bounded regret (Gupta 2024).
+Wei, Xu, and Yu propose a primal-dual policy for multi-way dynamic matching (Wei, Xu, and Yu 2023).
+Dynamic Matching Without Departures Kerimov, Ashlagi, and Gurvich have two papers which consider a very similar model, in which agents do not depart.
+TODO: describe the model.
+The first of these, Kerimov, Ashlagi, and Gurvich (2023), published in Management Science, considers a model in which some matches can involve more than two agents.</description>
+    </item>
+    
+    <item>
+      <title>College students are less prepared. Their grades don&#39;t show it</title>
+      <link>/futureposts/cse-calculusready/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/cse-calculusready/</guid>
+      <description>Kelsey Piper</description>
+    </item>
+    
+    <item>
+      <title>College students are less prepared. Their grades don&#39;t show it</title>
+      <link>/futureposts/dynamicmatchingreview/</link>
+      <pubDate>Wed, 01 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/dynamicmatchingreview/</guid>
+      <description>Kelsey Piper</description>
+    </item>
+    
+    <item>
+      <title>A Simple Analysis of Random Matching Markets</title>
+      <link>/futureposts/probabilisticpredictions/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/probabilisticpredictions/</guid>
+      <description>Ashlagi, Kanoria and Leshno
+Azevedo and Leshno
+This is really from my paper “Lottery Design for School Choice.” (Do a separate post for Probabilistic Predictions in Random Matching Markets.)
+Note that I have a chip on my shoulder.
+Without my work, this would be a dissertation. With my work, it becomes a class exercise for a PhD student. (Reference “which markets lead to stark effect of competition”?)
+If people aren’t using it, I need to do a better job of making it seem usable.</description>
+    </item>
+    
+    <item>
+      <title>A Simple Analysis of Random Matching Markets</title>
+      <link>/futureposts/probabilisticpredictions2/</link>
+      <pubDate>Sun, 09 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/probabilisticpredictions2/</guid>
+      <description>In</description>
+    </item>
+    
+    <item>
+      <title>Optimizing for Students</title>
+      <link>/futureposts/funwithda/</link>
+      <pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/funwithda/</guid>
+      <description>Increasingly, priorities viewed as design lever. Only two problems: not clear what objective is, and not clear how to achieve it.
+This post will go through a very stylized set of results.
+Designing DA Priorities Consider a market with \(n\) students and \(n\) schools, each with a single seat. We are going to assign students using the student-proposing deferred acceptance algorithm. The student preference profile \(P\) is drawn from known distribution \(D\).</description>
+    </item>
+    
+    <item>
+      <title>Looking for a serious critique of Mississippi&#39;s NAEP Scores</title>
+      <link>/futureposts/mississippimiracle2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/mississippimiracle2/</guid>
+      <description>In a previous post, I highlight that 4th grade math and reading scores are
+Some have called this the “Mississippi Miracle”. Karen Vaites has termed it the “Southern Surge.”
+People don’t know it’s happening. They question whether it is real. They claim – in contrast to the data – that Minnesota has some of the best educational outcomes in the country.
+A variety of skeptics have doubted the validity or relevance of Mississippi’s gains.</description>
+    </item>
+    
+    <item>
+      <title>School Choice Lotteries</title>
+      <link>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/futureposts/schoolchoicelotteries/lotterydesignforschoolchoice/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

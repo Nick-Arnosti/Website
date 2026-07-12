@@ -1,0 +1,231 @@
+---
+title: "Dynamic Matching Papers"
+date: "2026-05-06"
+bibliography: ../../static/dynamic-matching-references.bib
+output: html_document
+---
+
+This post collects a few papers on dynamic matching.
+
+Gupta gives a sum-of-squares greedy algorithm for multiway matching with bounded regret [@gupta_2024_greedy_multiway].
+
+The innovation in his model is that he has (i) offline resources, in quantities that scale linearly with $T$, (ii) online non-queable resources (must be matched immediately), and (iii) online queueable resources (wait indefinitely). In this way, it nests settings with "offline" resources and "online" customers, as well as stationary matching (without departures).
+
+He develops an algorithm that achieves constant guarantee when there are no interactions between types (ii) and (iii), but logarithmic regret otherwise. He also shows that better than logarithmic regret is not possible in the latter case.
+
+One observation is that his regret bound is polynomial in the number of types $n$ (not sure what degree polynomial). So as number of different types grows, regret could get very bad. Some dependence on $n$ is unavoidable: create $O(n)$ independent problems, and you get regret from each of them. But still, super-linear dependence on $n$ seems bad (as does dependence that persists from creating duplicate types).
+
+
+
+Wei, Xu, and Yu propose a primal-dual policy for multi-way dynamic matching [@wei_xu_yu_2023_primal_dual].
+
+The key benefit is that their algorithm doesn't need to know $\lambda$ (arrival rates) in advance. How interesting is this? In some sense, if we had a universal lower bound on $\lambda$, this is trivial: spend a bunch of time learning arrival rates, then match optimally. The challenge is that we need to learn even small $\lambda$. But maybe not: if we know the rewards in advance, we can choose a long enough learning time to identify rare-enough-to-be-irrelevant types. (Presumably, this is not actually what their algorithm does, but I am making the point that it's not clear how interesting "learning in a stationary environment" is.) However, if their algorithm is very simple, that could make it practically appealing (as we often don't really have $\lambda$ to put in as a parameter).
+
+
+# Dynamic Matching Without Departures
+
+Kerimov, Ashlagi, and Gurvich have two papers which consider a very similar model, in which agents do not depart.
+
+TODO: describe the model.
+
+
+
+The first of these, @kerimov_ashlagi_gurvich_2023_constant_regret, published in Management Science, considers a model in which some matches can involve more than two agents. It shows  "batching" policies
+
+
+The second, @kerimov_ashlagi_gurvich_2025_greedy published in Operations Research in 2025, assumes that we are matching pairs of agents. They consider "greedy" policies, which identify a set of acceptable matches, and make an acceptable match whenever possible. Greedy policies differ in how they select among acceptable matches when multiple are available. They consider one policy which always forms the acceptable match involving the longest queue. 
+
+
+Within the class of greedy policies are "static priority" policies, which have a ranking of matches that does not depend on the system state, and always perform the highest-priority match that is available.
+
+**Can "static priority" policies always achieve constant regret?** (I believe that this is open)
+
+
+Their periodic batching policy only forms matches in $M_+$, and @kerimov_ashlagi_gurvich_2023_constant_regret includes an example demonstrating that if you are willing to form all matches, you get in trouble. I guess this is sort of obvious -- with positive probability (albeit probability that vanishes exponentially in batch size $\tau$) you will only have "bad" matches available and you will do them (for example, no good organs arrive at time $\tau$). This leads to regret that grows linearly in $T$. 
+
+
+
+
+
+
+
+Here is a leading example, which we will use throughout. There are three types of agents: patients (arrival rate $\lambda_P$), high-quality items (arrival rate $\lambda_H$), and low-quality items (arrival rate $\lambda_L$). The value of matching a patient to a high-quality item is $v_H$, and to a low-quality item is $v_L$. Assume $v_H > v_L > 0$, and that there are enough items for everyone to get one $\lambda_H + \lambda_L > \lambda_P$.
+
+**What is the goal?** 
+
+Constant regret.
+
+Can think of nested set of goals:
+
+(i) Sub-linear regret (asymptotic optimality)
+(ii) Constant regret
+(iii) Constant regret with correct scaling with $\epsilon$.
+
+**What is the general position gap condition, and why is it necessary to achieve constant regret?**
+
+Informally, the condition says that small perturbations shouldn't change which matches we do. 
+
+Rather than getting into the technicalities, let's illustrate with our leading example. Consider three cases:
+
+
+* *There is a surplus of high-quality items* ($\lambda_H > \lambda_P$). Then each patient should wait for a high-quality item. More precisely, use a policy that discards low-value items, and forms a high-value match whenever possible.
+
+* *There is a shortage of high-quality items* ($\lambda_H < \lambda_P$). Then some patients must accept a low quality item. Use a policy that forms a high-value match whenever possible, and forms low-value matches if they are available and no high-value matches are.
+
+
+* *There are exactly enough high-quality items* ($\lambda_H = \lambda_P$). In this case, intuitively we want to follow the same policy as in the first case (match to only high-quality items). However, doing this does not achieve constant regret. After time $T$, with probability $1/2$, we will have more patients than high-quality items. In this cases, the expected surplus of patients is $\mathcal{O}(\sqrt{T})$. If we do not match them, then we have lost $\mathcal{O}(\sqrt{T})$ relative to offline optimal. However, if we do match them, then there is a 50\% chance that between $T$ and $2T$, there will be a surplus of high-value items. In this case, we end with some unmatched high-value items, and some patients matched to low-value items. This also results in $\mathcal{O}(\sqrt{T})$ regret. So it is impossible to achieve bounded regret at both $T$ and $2T$ (let alone for all times).
+
+
+Represent the state by a one-dimensional queue (positive = waiting patients, negative = waiting high-value items). In the first case, we might have patients queueing up. But the all time maximum state is bounded. In the second case, quickly we have an excess of low-value items accumulating.
+
+
+**Is it easy to achieve $\mathcal{O}(\sqrt{T})$ regret without the GP condition?**
+
+
+
+
+
+
+**Why do departures make the problem harder?**
+
+Note that adding departures means even sublinear regret becomes impossible. Consider our example, and suppose that there is a shortage of high-quality items. 
+
+If we add departures, these first two cases become much harder. Each time we have a patient wait for a high-value item, there is a positive probability that patient will depart, and we will irrevocably lose potential value $v_L$. However, if we have a patient match to a low-value item, there is a positive probability that a high-value item will arrive soon afterwards, and ultimately go to waste.
+
+Thus, it is easy to see that regret of any online algorithm must scale linearly with $T$ (we make mistakes at a constant rate).
+
+On some bad instances, we can lose half of the value of the static planning problem.
+
+**What are their algorithms?**
+
+The different papers consider different algorithms.
+
+1. Batching
+2. Greedy, longest queue with dismissal
+3. Static priority
+
+
+Below discusses #2. 
+
+In our running example, when there is a surplus of high-quality items, the authors actually propose an algorithm that throws away high-quality items that arrive when no patients are queued. In a sense, this is wasteful: if we didn't throw these items away, patients could match immediately. Instead, they must wait for future high-quality items to arrive. But you can show that this is not too costly, in the sense that the queue of waiting patients never gets too large. 
+
+More formally, if you fix any time $t$, the expected number of patients in the system at time $t$ is bounded by an absolute constant (independent of $t$).
+
+Let $N^\pi(t)$ be the number of waiting patients at time $t$. They show that under their policy, $\sup_t \mathbb{E}[N^\pi(t)] \le B$ for some $B = \mathcal{O}(\epsilon)$. However, $\mathbb{E}[\sup_t N^\pi(t)] = \infty$. That is, if the horizon is long enough, the queue will get long at some point, we just can't predict when that will be.
+
+In this example, a stronger guarantee is possible. If we use a policy $\pi^*$ that actually allows high-value items to queue, then $\mathbb{E}[\sup_t N^{\pi^*}(t)] < \infty$. That is, initially there might be a queue of patients, but after some point, we always have waiting items and future patients never have to wait.
+
+So the order of quantifiers matters. Expected regret at time $t$ is finite, but expected supremum of regret over time is not.
+
+**When is the residual graph cyclic?**
+
+If the matching network is bipartite, this will never happen. 
+
+Consider an example with three types, but now $12$, $23$, and $13$ matches are all valuable. 
+
+Start by considering a symmetric case where $\lambda_1 = \lambda_2 = \lambda_3 = 1$ and $r_{12} = r_{13} = r_{23} = 2$.
+
+Then the optimal matching rates are $x_{12} = x_{23} = x_{13} = 1/2$, and the optimal reward is $3$. This is the unique optimal solution. Furthermore, this remains optimal with perturbed rewards, so long as the maximum reward is greater than the sum of the remaining two rewards. Similarly, if we perturb arrival rates, the optimal $x$'s will satisfy
+
+$x_{ij} = (\lambda_i + \lambda_j - \lambda_k)/2$,
+
+so long as this quantity is positive for all $i,j$. So in this instance, we robustly want to do all three types of matches.
+
+**What are the challenges with dual-based (value-based) matching?**
+
+A natural approach is to identify values $u_i$, intuitively representing the value of keeping a type $i$ agent in the system. (For example, these might be dual values.) Then give each match $M$ a score $r_m - \sum_{i \in m} u_i$. Form matches with non-negative scores; ignore those with positive scores.
+
+Apply this to our leading example.
+
+If there is a surplus of high-value matches, then we will have that $u_P = v_H$, and $u_H = u_L = 0$.
+
+If there is a shortage of high-value matches, then we will have that $u_H = v_H - v_L$, and $u_P = v_L$, and $u_L = 0$.
+
+In either case, some matches will have negative scores, and others will have a score of zero (no matches will have a positive score). 
+
+In the latter case, we can't just use an arbitrary static priority policy to prioritize "acceptable matches" (those with a score of zero). Suppose we prioritized low-value matches above high-value ones. Then we would end up making too many low-value matches!
+
+So the value information tells us how objective will respond to changes in arrival rates, but it doesn't give us enough information to decide which matches to do.
+
+**Even in the case where $\mu \to 0$, our LP does not provide a lower bound that goes to 1**
+
+Consider an example where we wish to match two types, which have equal arrival rates. We should be able to match all agents. But our constraint requires that if there is no slack, there are no matches. Thus, we need to leave some slack (unmatched agents).
+
+**Why might short batches fail?**
+
+Consider the following multi-way matching problem (courtesy of ChatGPT).
+
+There are five types,
+\[
+A=\{1,2,3,4,5\},
+\]
+and three feasible matches:
+\[
+H=\{1,2,3\},\qquad L_1=\{1,4\},\qquad L_2=\{2,5\}.
+\]
+The rewards are
+\[
+r_H=3,\qquad r_{L_1}=r_{L_2}=1.
+\]
+The arrival probabilities are
+\[
+\lambda_1=\lambda_2=\frac{2}{11},\qquad
+\lambda_3=\frac{1}{11},\qquad
+\lambda_4=\lambda_5=\frac{3}{11}.
+\]
+
+The static planning problem is
+\[
+\max \; 3z_H+z_{L_1}+z_{L_2}
+\]
+subject to
+\[
+z_H+z_{L_1}+s_1=\frac{2}{11},
+\]
+\[
+z_H+z_{L_2}+s_2=\frac{2}{11},
+\]
+\[
+z_H+s_3=\frac{1}{11},
+\]
+\[
+z_{L_1}+s_4=\frac{3}{11},
+\]
+\[
+z_{L_2}+s_5=\frac{3}{11},
+\]
+\[
+z_H,z_{L_1},z_{L_2},s_1,\ldots,s_5\ge 0.
+\]
+
+The unique optimal solution is
+\[
+z_H^*=\frac{1}{11},\qquad
+z_{L_1}^*=\frac{1}{11},\qquad
+z_{L_2}^*=\frac{1}{11},
+\]
+with
+\[
+s_1^*=s_2^*=s_3^*=0,\qquad
+s_4^*=s_5^*=\frac{2}{11}.
+\]
+Thus the optimal value rate is
+\[
+3\cdot \frac{1}{11}
++
+\frac{1}{11}
++
+\frac{1}{11}
+=
+\frac{5}{11}.
+\]
+
+If we use $\tau = 1$ (match immediately within $M_+$), types $3, 4, 5$ all accumulate. but we end up doing all $(1,4)$ and $(2,5)$ matches, and no $(1,2,3)$ matches.)
+
+<style>
+#refs .csl-entry {
+  margin-bottom: 1.25em;
+}
+</style>
+
+# References

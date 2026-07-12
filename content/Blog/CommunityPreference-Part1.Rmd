@@ -1,0 +1,15 @@
+---
+title: 'Do "Community Preference" Policies Violate the Fair Housing Act? (Part 1)'
+date: '2022-02-06'
+author: Nick Arnosti
+---
+
+New York City faces a lawsuit alleging that its "Community Preference" policy creates a disparate racial impact. In this video, I explain why the analysis conducted by the plaintiffs' "expert witness" does not address this claim.
+
+The slides accompanying this lecture are [available here](/Beveridge_Commentary.pdf).
+
+```{r, eval=TRUE,echo=FALSE}
+blogdown::shortcode("youtube", "zHBNmHe4ERk")
+```
+
+

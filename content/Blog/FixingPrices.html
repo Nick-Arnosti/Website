@@ -1,0 +1,111 @@
+---
+title: 'Price Fixing in Exchange Markets'
+date: "2024-09-12"
+author: Nick Arnosti
+---
+
+
+
+<p>I recently attended MATCH-UP 2024 at Oxford, where I saw Julius Goedde present the paper “Pricing in markets without money: Theory and evidence from home exchanges”. I found it quite interesting! The paper considers platforms that enable home exchange – examples include <a href="https://tradetotravel.com/">Trade to Travel</a>, <a href="https://peoplelikeus.world/en">People Like Us</a>, and <a href="https://www.homeexchange.com/">Home Exchange</a>.</p>
+<p>The idea behind all of these sites is, you let strangers stay in your home, and in turn you can visit somewhere else in the world for free! Originally, most of these marketplaces sought simultaneous pairwise exchanges. That is, you find someone else on the platform, and swap homes for the week. As you can imagine, this can be difficult: if I want to visit Costa Rica in January, what’s the chance that someone from Costa Rica wants to visit Saint Paul at the same time? (Given average January temperatures, not so good.) Things become slightly easier if exchanges are allowed to be non-simultaneous. That is, I stay in a home in Costa Rica in January, and in return owe the owners of that home a future visit to Saint Paul at a mutually agreeable time (for example, July, when weather in Minnesota tends to be nicer). Of course, for this to work, I need to figure out where I will live when they visit!</p>
+<div id="credit-fake-money-systems-on-home-exchange-platforms" class="section level1">
+<h1>Credit (Fake Money) Systems on Home Exchange Platforms</h1>
+<p>What if I want to visit Costa Rica, but my hosts in Costa Rica don’t want to visit Minnesota at all? Well, maybe they want to visit Los Angeles, and someone in Los Angeles wants to visit Vancouver, and the person in Vancouver wants to visit Minnesota. But arranging a four-way swap seems totally impractical, so instead these platforms have created token (fake money) systems. I stay with the family in Costa Rica, and pay them credits which can be used to pay for future stays on the platform. To earn those credits, I have to host myself. Voila! These credits serve as a medium that enables exchange.</p>
+<p>Now, there’s something important to recognize. Not all homes offered on these platforms are equally nice. They have different they have different sizes, amenities, and locations. And yet, some platforms <strong>require all homes to cost the same number of credits</strong>. That is, each time someone hosts, they earn enough credit for a stay somewhere else. (For example, People Like Us calls these credits “globes” and writes “A Globe is worth one stay at another member’s place.”)</p>
+<p>This seems strange. If the “cost” of a stay (in credits) does not depend on how nice the home is, won’t everyone just stay in the nicest home they can find? Nice homes will get a flood of requests, while not-so-nice ones might not get any. This could prevent people with not-so-nice homes from obtaining any credits at all! To an economist, there is an obvious way to address these concerns: allows prices to adjust freely, so that less desirable homes cost fewer credits to book. In fact, many platforms (such as Trade to Travel) do something like this. Are platforms that fix prices making a big mistake, or could they be on to something?</p>
+<p>This paper argues the latter, and provides a very nice intuition. Each person can only go on so many vacations. If I have a very nice home that earns me a lot of credits each time it is booked, then hosting once or twice might give me enough credits for the entire year. Because hosting is a hassle, I won’t host any more than I need to. If the platform requires that I host once for every trip I want to do, I might choose to host more often. Thus, constraining prices could (somewhat surprisingly) <em>increase</em> the supply of high-quality homes on the platform.</p>
+<p>Another way to think about this is that requiring prices to be equal essentially makes people with nice homes “poorer” than they would be with market-clearing prices. As a result, they have to work harder (host more visitors) in order to be able to afford the trips they want to make.</p>
+<p>The paper includes both a stylized model and an empirical component using proprietary data from a home exchange platform. I’m not an empiricist, so I will mostly focus on the theoretical model.</p>
+<!--Constraining the price of nice homes prices to be lower could cause their owners to have to rent them out more frequently, thereby increasing supply of high-quality homes.-->
+</div>
+<div id="model" class="section level1">
+<h1>Model</h1>
+<p>In their model, users arrive and depart over time. There are several key assumptions:
+<!--There is a population of users, each of which owns a home. Over their lifetime on the platform, users may host at most twice, and may visit at most two other homes. (Think of this as a constraint that arises from having only two weeks of vacation, rather than an explicit constraint from the platform.)--></p>
+<ul>
+<li>Over the course of their lifetime, each person may host at most twice and may visit at most two homes. (Think of this as arising from having only two weeks of vacation – during which you can travel and/or let someone else live in your home – rather than an explicit constraint imposed by the platform.)</li>
+<li>Visiting others’ homes offers positive utility, but hosting is costly: people won’t do it unless they get something in return.</li>
+<li>Each visit costs virtual currency, which can only be earned by hosting. For each person, total virtual currency earned by hosting must at least equal virtual currency spent on visits. (Extra unspent virtual currency is worthless.)</li>
+<li>There are two types of homes, “low value” (L) and “high value” (H), in equal quantity. Everyone agrees that <span class="math inline">\(H\)</span> homes are preferable to <span class="math inline">\(L\)</span> homes.</li>
+</ul>
+<p>Payoffs are as follows. Each time an agent of type <span class="math inline">\(A \in \{L, H\}\)</span> visits a home of type <span class="math inline">\(B \in \{L, H\}\)</span>, the visitor incurs a reward of <span class="math inline">\(V_B^A\)</span> and the host incurs a cost of <span class="math inline">\(C\)</span> (which is the same for both types of homes, though this assumption could easily be relaxed). To compensate the host, the visitor pays <span class="math inline">\(p_B\)</span> in virtual currency to the host, which the host can spend on future trips. Importantly, this virtual currency has no use other than booking trips.</p>
+</div>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
+<p>The goal of the paper is to compare the outcome under market-clearing prices (where <span class="math inline">\(p_H\)</span> and <span class="math inline">\(p_L\)</span> are set to ensure that supply equals demand) to outcomes when the platform requires that prices for all homes are equal.</p>
+<p>First, consider market-clearing prices. Because everyone prefers <span class="math inline">\(H\)</span> homes, prices for these homes will necessarily be lower than those for <span class="math inline">\(L\)</span> homes. There are only two types of equilibria that can arise:</p>
+<ol style="list-style-type: decimal">
+<li>Separating equilibrium. The two markets function independently: high types host and visit other high types, and likewise for low types. (Everyone hosts twice and is a guest twice.)</li>
+<li>Trading equilibrium. The price for an <span class="math inline">\(H\)</span> home is twice the price for an <span class="math inline">\(L\)</span> home. Low types host twice, and use the proceeds to get a single stay at an <span class="math inline">\(H\)</span> home. High types host once, and use the proceeds to pay for two stays at <span class="math inline">\(L\)</span> homes.</li>
+</ol>
+<p>Note that in this second type of equilibrium, there are <span class="math inline">\(H\)</span> homes that are not being visited as frequently as they could be. The reason is that the owners are satiated: they are able to “afford” two trips already, so see little benefit to hosting more often. (They could choose to host twice in order to upgrade their accommodations from <span class="math inline">\(L\)</span> to <span class="math inline">\(H\)</span>, but the cost of hosting is large enough that they prefer not to do this.)</p>
+<p>Because multiplying utilities by a scalar has no effect on agent decisions, we can assume without loss of generality that <span class="math inline">\(V_L^H = V_L^L = 1\)</span>. This leaves three parameters: <span class="math inline">\(V_H^H, V_H^L\)</span> (both greater than <span class="math inline">\(1\)</span>), and <span class="math inline">\(C\)</span> (assumed to be less than <span class="math inline">\(1\)</span>). The following figure shows when each equilibrium arises, and what conditions the equilibrium “price” <span class="math inline">\(p_H/p_L\)</span> must satisfy.</p>
+<div class="figure"><span style="display:block;" id="fig:regimes"></span>
+<img src="../../../../../../_index_files/HomeExchangeRegimes.jpg" alt="In the red region, high and low types essentially form separate markets: people with $H$ homes host and visit others with $H$ homes, and likewise for those with $L$ homes. In the green region, those with $H$ homes choose to rent only once, and visit two $L$ homes. &quot;Price&quot; refers to the ratio of the price of an $H$ home to the price of an $L$ home."  />
+<p class="caption">
+Figure 1: In the red region, high and low types essentially form separate markets: people with <span class="math inline">\(H\)</span> homes host and visit others with <span class="math inline">\(H\)</span> homes, and likewise for those with <span class="math inline">\(L\)</span> homes. In the green region, those with <span class="math inline">\(H\)</span> homes choose to rent only once, and visit two <span class="math inline">\(L\)</span> homes. “Price” refers to the ratio of the price of an <span class="math inline">\(H\)</span> home to the price of an <span class="math inline">\(L\)</span> home.
+</p>
+</div>
+<p>For a trading equilibrium to occur, two conditions must be met. First, low types must prefer a single stay in an <span class="math inline">\(H\)</span> home to two stays in an <span class="math inline">\(L\)</span> home (<span class="math inline">\(V_H^L &gt; 2\)</span>). Second, high types must find hosting inconvenient enough that they prefer hosting once and staying in two <span class="math inline">\(L\)</span> homes to upgrading those stays by hosting a second time (after some algebra, this is true if <span class="math inline">\(V_H^H &lt; 1 + C/2\)</span>).</p>
+<p>The paper describes the regimes slightly differently. The “supermodular” region is where <span class="math inline">\(V_H^H &gt; V_H^L\)</span> (shown in red in Figure 2), the “strongly non-supermodular region” is where <span class="math inline">\(V_H^L &gt; 2\)</span> and <span class="math inline">\(V_H^H &lt; 1+C/2\)</span> (shown in Green), and the remaining “non-supermodular but not strongly non-supermodular” region is shown in blue. (Try saying that five times out loud.)</p>
+<div class="figure"><span style="display:block;" id="fig:regimes2"></span>
+<img src="../../../../../../_index_files/HomeExchangeRegimes_SM.jpg" alt="Summary of Proposition 3. Price controls always hurt $H$ types and help $L$ types; their effect on total welfare is ambiguous. In the green regime, price controls increase supply of $H$ type homes."  />
+<p class="caption">
+Figure 2: Summary of Proposition 3. Price controls always hurt <span class="math inline">\(H\)</span> types and help <span class="math inline">\(L\)</span> types; their effect on total welfare is ambiguous. In the green regime, price controls increase supply of <span class="math inline">\(H\)</span> type homes.
+</p>
+</div>
+<p>Now suppose the platform imposes price controls, requiring that prices for all homes are identical. In this case, there will be excess demand for <span class="math inline">\(H\)</span> homes. The paper assumes that this demand is rationed randomly. When you search for an <span class="math inline">\(H\)</span> home, half the time you succeed and half the time you can’t fine one and are forced to book an <span class="math inline">\(L\)</span> home instead. In this case, everyone hosts twice and visits twice: on average, each person visits one <span class="math inline">\(H\)</span> home and one <span class="math inline">\(L\)</span> home.</p>
+<p>This change has several effects.</p>
+<ul>
+<li><span class="math inline">\(H\)</span> agents are denied the opportunity to stay in two <span class="math inline">\(H\)</span> homes (due to rationing), and also denied the opportunity to make two stays while hosting only once (due to the imposition of identical prices). As a result, this reform always hurts <span class="math inline">\(H\)</span> agents.</li>
+<li><span class="math inline">\(L\)</span> agents suddenly have the opportunity to stay in one <span class="math inline">\(L\)</span> home and one <span class="math inline">\(H\)</span> home, which was not previously available to them. They always prefer this outcome to the market-clearing price equilibrium.</li>
+</ul>
+<p>Thus, we already see one possible motivation for price controls: they essentially serve to transfer utility from the “rich” (those with <span class="math inline">\(H\)</span> homes) to the “poor” (those with <span class="math inline">\(L\)</span> homes). The effect on total welfare can go either way, depending on which group has a stronger relative preference for <span class="math inline">\(H\)</span> homes. More precisely, in the supermodular region, price controls lower total welfare, while in the non-supermodular region, they raise it. (While I follow the math behind this conclusion, I think it should be taken with a grain of salt. As mentioned above, rescaling utilities for one type by a constant leaves their behavior unchanged, so it should only be possible to identify utilities up to a multiplicative factor. As a result, it is not clear that adding utilities across people is a meaningful way to calculate “total welfare.”)</p>
+<p>However, the most interesting effect arises in the “strongly non-supermodular” region where <span class="math inline">\(H\)</span> types were only renting their house out once. In this case, the price controls don’t merely redistribute visits that were already happening, they actually <strong>create more stays</strong>! The reason is that if <span class="math inline">\(H\)</span> types want to make two visits, they now have to host twice. While this lowers the utility of <span class="math inline">\(H\)</span> types, it offers clear benefits to the platform. (In the model it always raises aggregate welfare, though the caveat from the previous paragraph still applies).</p>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>The model in this paper is very stylized, but I thought it offered clear intuition.</p>
+<p>This intuition, in turn, helped me think about other markets. For example, there are competing theories about how changes to wages should affect hours worked. On the one hand, if my reward for working rises, it seems I have more incentive to work. On the other, the wealthier I become, the less I value additional money. To take one extreme, suppose I simply wish to earn enough money to live. Then increases to my wage will cause me to work <em>fewer</em> hours, as I can earn the money I need more quickly.</p>
+<p>Economists call these considerations “substitution effects” and the “income effects”, respectively. While both effects seem plausible, income effects seem quite relevant in the context of home exchange platforms. Platform credits only have one use – to book homes through the platform. Furthermore, people may be reluctant to accumulate too many credits, which become worthless if the platform collapses. Therefore, it seems plausible that people with many credits accrued will decide that they don’t need to host for a while. In comparison, real money has lots of uses, so it’s harder to get to a point where more money isn’t helpful.</p>
+<p>One important caveat is that the analysis in the paper assumes that all agents will participate in the platform. That is, agents do not have an “outside option”. In the model, controling price dispersion always hurts owners of high-quality homes (relative to simply letting markets clear). Thus, one might be worried that it could cause some of these owners to abandon the platform all together!</p>
+<p>In practice, this might work as follows. Owners of high quality homes choose instead to rent on Airbnb. Their homes get a high price, which allows them to pay for their own trips (also on Airbnb) and still pocket some extra cash. They seem to come out strictly ahead! Why wouldn’t they do this?</p>
+<p>The authors discuss this in the paper, and essentially conclude that several factors could be causing platform users to avoid Airbnb. For example, perhaps guests from home exchange platforms are more respectful of the property (either because of greater empathy for what it means to host, or because the types of people who are least respectful of rental properties do not tend to be property owners themselves). Alternatively, guests on exchange platforms may be less likely to expect hotel-level standards than guests on Airbnb.</p>
+<p>These hypotheses seem plausible, but they don’t explain why these users don’t go to another exchange platform that offers market-clearing prices. That is, even if a monopolist platform might find it beneficial to constrain prices, in the presence of platform competition, platforms that use market-clearing prices might attract more desirable properties. This could create an outcome where markets for different types property are essentially separated. From a quick scan, it seems this might be happening – Trade to Travel (which sets credit prices based on estimated rental value in dollars) bills itself as a place to find luxury properties, whereas People Like Us (which uses Globes exchanged one-to-one) seems to include more “standard” homes.</p>
+<p>The authors also briefly discuss other settings where fake money is (or could be) used. For example, some business schools use bidding systems with fake money to match students to classes, and Feeding America uses a fake money system to allocate food donations to food banks. However, as they point out, a key difference between home exchange and these systems is that in those settings, supply of goods is exogenous and agent budgets are set by the organization running the exchange. This means that there is much less potential to increase supply by constraining prices of popular goods.</p>
+<!--
+Goal: generalize model to allow more types, more heterogeneity.
+
+There is a finite set of home types $H$. An agent type $\theta$ consists of a home type $h \in H$, along with a vector $v \in \mathbb{R}^H$ and bounds on the number of times that the agent can be a guest $m_g$ or a host $m_h$. There is a measure $\Eta$ over the type space $\Theta = H \times \mathbb{R}^{H} \times \mathbb{R}_+^2$. Each type incurs unit costs from hosting (this is WLOG, as we can always rescale $v$ to make this true).
+
+Given a price vector $p \in \mathbb{R}_+^H$, agents of type $\theta = (h^\theta, v^\theta, m^\theta) choose their demand for each type of home $D \in \mathbb{R}_+^H$, and their supply $s$ to solve the following problem:
+
+\begin{align*}
+\max & v^\theta \cdot d - s \\
+s.t. & {\bf 1}\cdot d \le m_g^\theta \\
+& s \le m_h^\theta \\ 
+& p \cdot d \leq s p_{h^\theta}.
+\end{align*}
+Let $D_h(\theta; p)$ be the solution to this problem (presumably, typically unique, but not always). I think this should always have a solution with at most two non-zero demands, but need to think a bit more carefully about this.
+
+Let $\Theta_h = \{\theta: h^\theta = h\}$ be the set of people with type $h$ homes. The market clearing condition becomes
+\begin{align*}
+\int_{\Theta} D_h(\theta; p) d\eta(\theta) = \eta(\Theta_h)*S_h(\theta; p)
+\end{align*}
+We could also do this for a discrete type space, turning integrals to sums.
+
+This LP simplifies by allowing demand and supply to be non-integral, and removing timing constraints (essentially, moves to a static model).
+
+Next steps would include establishing existence and/or uniqueness of competitive equilibrium. more importantly, we need a definition of a rationing equilibrium!
+
+If we fix prices to be identical (keeps things simple), outcome should simply depend on ordinal rankings, with the hosting cost $c = 1$ determining the outside option (people won't stay in homes worth less than one to them).
+
+Everyone initially demands their favorite type. Now, some types are overdemanded. Those will have to ration. Can we basically use probabilistic serial to determine the $x$? Presumably not -- suppose 4 types. Types 1 and 2 like $h$ homes, and 3 and 4 like $h'$ homes. Probabilistic serial says 1 and 2 split $h$, 3 and 4 split $h'$, and 1 doesn't get any $h'$ (even if $h'$ is second.) Maybe this is right! Similar to SD -- if $h$ and $h'$ run out at same time, then nobody will get their least preferred of these.
+
+One twist is that supply is itself endogenous -- if I have a desirable home but only value 1 type more than $c$, and can't get that type frequently enough, then I will ration my supply (host less than I could).
+
+Fixing prices to be the same automatically might reduce supply of low-type apartments that previously supplied more than they traveled. Depends on what constrained supply: are they at their guest limit? For example, if $m_h > m_g$, they might previously have supplied more than $m_g$ (to earn enough to stay in nicer places), whereas now we know for a fact that their supply will be equal to their demand, which is at most $m_g$.
+
+Special case of interest: vector of values $v$ is on a line. Each home type $h$ has quality $q_h$, and $v_{ih} = \gamma_i q_h$. 
+-->
+</div>
